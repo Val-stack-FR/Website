@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Why AI adoption stalls: a field diagnosis — Valérian" />
+  <title>Why AI adoption stalls — Valérian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg:           #f5f1eb;
+      --surface:      #ece7de;
+      --surface-2:    #f9f6f1;
+      --text:         #111810;
+      --text-muted:   rgba(17,24,16,0.58);
+      --text-dim:     rgba(17,24,16,0.32);
+      --accent:       #2c8a52;
+      --accent-hover: #3aa868;
+      --accent-dark:  #1a5c3a;
+      --accent-fill:  rgba(44,138,82,0.10);
+      --border:       rgba(0,0,0,0.09);
+      --border-solid: rgba(0,0,0,0.15);
+    }}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Why AI adoption stalls: a field diagnosis",
+    "author": { "@type": "Person", "name": "Valérian" },
+    "datePublished": "2025-03-15",
+    "description": "Most AI adoption failures aren't technical. They're organisational."
+  }
+  </script>
+  <style>
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--accent);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    /* Footnote markers in text */
+    .fn {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      vertical-align: super;
+      line-height: 0;
+      cursor: default;
+    }
+
+    /* Highlight / annotation style */
+    .highlight {
+      background: rgba(26,92,58,0.10);
+      color: var(--text);
+      padding: 0 3px;
+    }
+
+    /* Sidebar TOC links */
+    .toc-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      display: block;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s;
+      text-decoration: none;
+    }
+    .toc-link:last-child { border-bottom: none; }
+    .toc-link:hover { color: var(--accent); }
+    .toc-link.toc-active { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="page">
+
+  <nav class="nav" aria-label="primary">
+    <a href="index.html" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="essays.html" class="nav-link active">Essays</a>
+      <a href="books.html" class="nav-link">Books</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="essay-layout">
+
+      <!-- Sidebar -->
+      <aside class="essay-sidebar">
+        <a href="essays.html" class="btn-back">← Essays</a>
+
+        <div>
+          <div class="essay-sidebar-label">Published</div>
+          <time class="essay-sidebar-value" datetime="2025-03-15">2025-03-15</time>
+        </div>
+
+        <div>
+          <div class="essay-sidebar-label">Reading time</div>
+          <div class="essay-sidebar-value">7 min</div>
+        </div>
+
+        <div>
+          <div class="essay-sidebar-label">Tags</div>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+            <span class="tag" style="display:inline-block; width:fit-content;">AI</span>
+            <span class="tag" style="display:inline-block; width:fit-content;">change management</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="essay-sidebar-label" style="margin-bottom:10px;">Contents</div>
+          <nav aria-label="Table of contents">
+            <a href="#section-1" class="toc-link">The actual bottleneck</a>
+            <a href="#section-2" class="toc-link">What freezing looks like</a>
+            <a href="#section-3" class="toc-link">A diagnostic heuristic</a>
+            <a href="#section-4" class="toc-link">References</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="essay-content">
+
+        <header style="margin-bottom: 52px; padding-bottom: 52px; border-bottom: 1px solid var(--border);">
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom: 20px;">
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.1em;">Essay № 01</span>
+            <span style="width:1px; height:12px; background:var(--border-solid); display:inline-block;"></span>
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim);">AI · change management</span>
+          </div>
+          <h1 class="essay-title">Why AI adoption stalls:<br>a field diagnosis</h1>
+          <p class="essay-desc">Most AI adoption failures aren't technical. They're organisational. Here's what I've observed over two years working at the intersection of AI strategy and change management.</p>
+        </header>
+
+        <div class="essay-body">
+
+          <p>Most companies approach AI adoption as an engineering problem. They hire data scientists, buy tools, stand up pilots. Then nothing scales. The pilot ends. The team disbands. Eighteen months later, they do it again.<span class="fn">[1]</span></p>
+
+          <p>This is the pattern I see most often in the field. And after watching it repeat across sectors — manufacturing, professional services, public institutions — I'm convinced the failure mode isn't technical.</p>
+
+          <!-- Pull quote -->
+          <div class="pull-quote">
+            <blockquote>"AI systems require something most organisations have systematically optimised away: tolerance for ambiguity in workflow design."</blockquote>
+            <cite>— Field observation, Ayming Innovation · 2024–2025</cite>
+          </div>
+
+          <h2 id="section-1">The actual bottleneck is organisational</h2>
+
+          <p>Traditional process improvement — six sigma, lean, ISO certification — rewards the elimination of variation. AI adoption requires <span class="highlight">reintroducing it, deliberately, at specific joints in the process</span>. The two impulses are structurally opposed.</p>
+
+          <p>The organisations that move fluidly into AI aren't the ones with the best data infrastructure. They're the ones where middle management has learned to hold two contradictory things simultaneously: clear accountability structures <em>and</em> undefined process edges.<span class="fn">[2]</span></p>
+
+          <h2 id="section-2">What freezing looks like</h2>
+
+          <p>The freeze isn't dramatic. There's no refusal. There's enthusiasm, even — workshops, roadmaps, an AI committee. What's missing is the willingness to let a process be partially broken while it's being redesigned.</p>
+
+          <p>So the pilot runs in parallel with the old system, never replacing it. Costs double. The AI system atrophies from lack of real data. Eventually it's quietly retired.</p>
+
+          <!-- Second pull quote -->
+          <div class="pull-quote">
+            <blockquote>"The pilot runs in parallel with the old system, never replacing it. The AI atrophies from lack of real data."</blockquote>
+            <cite>— Pattern observed across 6 enterprise pilots, 2024</cite>
+          </div>
+
+          <h2 id="section-3">A diagnostic heuristic</h2>
+
+          <p>One question I ask early: <em>Who is allowed to make a mistake that affects a client, and what happens to them?</em><span class="fn">[3]</span></p>
+
+          <p>In organisations where the answer is <em>"no one, and it's catastrophic"</em>, AI adoption will stall at the pilot stage. Every time. The error-handling culture has to change before the tooling can.</p>
+
+          <p>This isn't a comfortable finding. It implicates leadership decisions made years before anyone thought about AI. But it's actionable — which is the point.</p>
+
+        </div>
+
+        <!-- References section -->
+        <div class="references" id="section-4">
+          <div class="references-heading">References</div>
+
+          <div class="reference-item">
+            <span class="ref-num">[1]</span>
+            <div class="ref-text">
+              Davenport, T. H. &amp; Mittal, N. (2023). <em>All-in on AI: How Smart Companies Win Big with Artificial Intelligence.</em> Harvard Business Review Press. Chapter 4: "The Pilot Trap."
+            </div>
+          </div>
+
+          <div class="reference-item">
+            <span class="ref-num">[2]</span>
+            <div class="ref-text">
+              Weick, K. E. (1995). <em>Sensemaking in Organizations.</em> SAGE Publications. On the role of ambiguity tolerance in adaptive organisations — a framework I return to constantly.
+            </div>
+          </div>
+
+          <div class="reference-item">
+            <span class="ref-num">[3]</span>
+            <div class="ref-text">
+              The heuristic emerged from field interviews conducted at Ayming, 2024. It has held across every sector we've worked in. I intend to write a longer piece on error-culture as the hidden variable in digital transformation.
+            </div>
+          </div>
+
+          <div class="reference-item">
+            <span class="ref-num">[4]</span>
+            <div class="ref-text">
+              Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams." <em>Administrative Science Quarterly</em>, 44(2), 350–383. <a href="#">doi:10.2307/2666999</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Next essay -->
+        <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end;">
+          <a href="essay-detail.html" style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; color: inherit; text-decoration: none; transition: opacity 0.15s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+            <span style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim);">Next essay →</span>
+            <span style="font-family: var(--font-head); font-weight: 500; font-size: 15px; letter-spacing: -0.02em; color: var(--text); text-align: right;">The CIR as a mirror</span>
+          </a>
+        </div>
+
+      </div><!-- /essay-content -->
+    </div><!-- /essay-layout -->
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="essays.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← All essays</a>
+  </footer>
+
+</div>
+<script>
+  document.body.classList.add('visible');
+
+  // Reading progress bar
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+
+  // TOC active state
+  const sections = document.querySelectorAll('[id^="section-"]');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Books — Valérian's reading list: science fiction and thinking tools." />
+  <title>Books — Valérian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg:           #e8f2ed;
+      --surface:      #ece7de;
+      --surface-2:    #f9f6f1;
+      --text:         #111810;
+      --text-muted:   rgba(17,24,16,0.58);
+      --text-dim:     rgba(17,24,16,0.32);
+      --accent:       #2c8a52;
+      --accent-hover: #3aa868;
+      --accent-dark:  #1a5c3a;
+      --accent-fill:  rgba(44,138,82,0.10);
+      --border:       rgba(0,0,0,0.09);
+      --border-solid: rgba(0,0,0,0.15);
+    }}
+  </style>
+  <style>
+    .books-header {
+      padding: 64px 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .books-heading {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: clamp(48px, 8vw, 100px);
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      line-height: 0.9;
+      margin-bottom: 40px;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 0;
+    }
+
+    .tab-btn {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      padding: 16px 28px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      position: relative;
+      top: 1px;
+    }
+
+    .tab-btn:hover { color: var(--text-muted); }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+    .books-section {
+      padding: 48px 48px 80px;
+      display: none;
+    }
+
+    .books-section.active { display: block; }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .book-card {
+      background: var(--bg);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+
+    .book-card:hover { background: var(--surface); }
+
+    .book-cover {
+      width: 72px;
+      height: 104px;
+      background: var(--surface);
+      border: 1px solid var(--border-solid);
+      margin-bottom: 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .book-cover { background: var(--accent-dark); }
+    .book-cover-init {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      color: #e8f2ed;
+      z-index: 1;
+    }
+
+    /* Subtle stripe texture on cover */
+    .book-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(26,92,58,0.05) 3px,
+        rgba(26,92,58,0.05) 4px
+      );
+    }
+
+    .book-cover-accent {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--accent-dark);
+    }
+
+    .book-title {
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+
+    .book-card:hover .book-title { color: var(--accent); }
+
+    .book-author {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* Hover note overlay */
+    .book-note {
+      position: absolute;
+      inset: 0;
+      padding: 24px 28px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.22s;
+      border-top: 2px solid var(--accent);
+      z-index: 2;
+    }
+
+    .book-card:hover .book-note { opacity: 1; }
+
+    .book-note-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .book-note-cta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .books-header { padding: 40px 20px 0; }
+      .tab-btn { padding: 14px 16px; font-size: 11px; }
+      .books-section { padding: 32px 20px 60px; }
+      .books-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .books-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav" aria-label="primary">
+    <a href="index.html" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="essays.html" class="nav-link">Essays</a>
+      <a href="books.html" class="nav-link active">Books</a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <header class="books-header">
+      <h1 class="books-heading">Books</h1>
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="scifi">Sci-Fi</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="personal">Personal Development</button>
+      </div>
+    </header>
+
+    <!-- Sci-Fi -->
+    <section class="books-section active" id="tab-scifi" aria-label="Sci-fi books">
+      <div class="books-grid">
+
+        <a href="book-review.html" class="book-card">
+          <div class="book-cover">
+            <span class="book-cover-init">BL</span>
+            <div class="book-cover-accent"></div>
+          </div>
+          <div class="book-title">Blindsight</div>
+          <div class="book-author">Peter Watts</div>
+          <div class="book-note">
+            <p class="book-note-text">The most unsettling argument against consciousness ever written. Watts asks whether awareness is an evolutionary dead end.</p>
+            <span class="book-note-cta">Read review →</span>
+          </div>
+        </a>
+
+        <a href="book-review.html" class="book-card">
+          <div class="book-cover">
+            <span class="book-cover-init">3B</span>
+            <div class="book-cover-accent"></div>
+          </div>
+          <div class="book-title">The Three-Body Problem</div>
+          <div class="book-author">Liu Cixin</div>
+          <div class="book-note">
+            <p class="book-note-text">Scale as a literary device. The universe as a dark forest. Changed how I think about civilisational risk.</p>
+            <span class="book-note-cta">Read review →</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Personal Dev -->
+    <section class="books-section" id="tab-personal" aria-label="Personal development books">
+      <div class="books-grid">
+
+        <a href="book-review.html" class="book-card">
+          <div class="book-cover">
+            <span class="book-cover-init">TS</span>
+            <div class="book-cover-accent"></div>
+          </div>
+          <div class="book-title">Thinking in Systems</div>
+          <div class="book-author">Donella Meadows</div>
+          <div class="book-note">
+            <p class="book-note-text">The clearest introduction to systems thinking I've encountered. Every page has a sentence worth underlining.</p>
+            <span class="book-note-cta">Read review →</span>
+          </div>
+        </a>
+
+        <a href="book-review.html" class="book-card">
+          <div class="book-cover">
+            <span class="book-cover-init">RM</span>
+            <div class="book-cover-accent"></div>
+          </div>
+          <div class="book-title">The Righteous Mind</div>
+          <div class="book-author">Jonathan Haidt</div>
+          <div class="book-note">
+            <p class="book-note-text">Essential for anyone who works on change management. Why smart people hold incompatible moral frameworks.</p>
+            <span class="book-note-cta">Read review →</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="index.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← Home</a>
+  </footer>
+
+</div>
+<script>
+  document.body.classList.add('visible');
+
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('.books-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', t === tab); });
+      sections.forEach(s => s.classList.toggle('active', s.id === 'tab-' + target));
+    });
+  });
+</script>
+</body>
+</html>

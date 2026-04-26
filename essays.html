@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Essays by Valérian — AI adoption, organisational behaviour, and speculative futures." />
+  <title>Essays — Valérian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg:           #e8f2ed;
+      --surface:      #d5e6db;
+      --surface-2:    #eff7f2;
+      --text:         #0d1a0f;
+      --text-muted:   rgba(13,26,15,0.60);
+      --text-dim:     rgba(13,26,15,0.35);
+      --accent:       #1a5c3a;
+      --accent-hover: #2d7a52;
+      --accent-dark:  #0d3d25;
+      --accent-fill:  rgba(26,92,58,0.12);
+      --border:       rgba(0,0,0,0.10);
+      --border-solid: rgba(0,0,0,0.18);
+    }
+  </style>
+  <style>
+    .essays-header {
+      padding: 64px 48px 48px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+    }
+
+    .essays-heading {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: clamp(48px, 8vw, 100px);
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      line-height: 0.9;
+    }
+
+    .essays-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: right;
+      padding-bottom: 6px;
+    }
+
+    .essays-count strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text-muted);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .tag-bar {
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag-bar-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .essays-list { padding: 0 48px; }
+
+    .essay-row {
+      display: grid;
+      grid-template-columns: 60px 130px 1fr auto;
+      align-items: center;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+      margin: 0 -48px;
+      padding: 0 48px;
+    }
+
+    .essay-row:hover { background: rgba(255,255,255,0.035); }
+
+    .essay-row-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      padding: 28px 0;
+    }
+
+    .essay-row-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 28px 24px 28px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .essay-row-body {
+      padding: 28px 32px;
+    }
+
+    .essay-row-title {
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 6px;
+      transition: color 0.15s;
+      text-wrap: pretty;
+    }
+
+    .essay-row:hover .essay-row-title { color: var(--accent); }
+
+    .essay-row-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .essay-row-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .essay-tag-inline {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid var(--accent-dark);
+      padding: 2px 8px;
+    }
+
+    .essay-row-meta {
+      padding: 28px 0 28px 24px;
+      text-align: right;
+      border-left: 1px solid var(--border);
+    }
+
+    .essay-row-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .essay-row-arrow {
+      font-size: 14px;
+      color: var(--text-dim);
+      display: block;
+      margin-top: 8px;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .essay-row:hover .essay-row-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .empty-state {
+      padding: 80px 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 768px) {
+      .essays-header { padding: 40px 20px 32px; grid-template-columns: 1fr; }
+      .essays-count { display: none; }
+      .tag-bar { padding: 16px 20px; flex-wrap: wrap; }
+      .essays-list { padding: 0 20px; }
+      .essay-row {
+        grid-template-columns: 1fr auto;
+        margin: 0 -20px;
+        padding: 0 20px;
+        grid-template-areas: "body meta" "num num";
+      }
+      .essay-row-num { display: none; }
+      .essay-row-date { display: none; }
+      .essay-row-body { padding: 24px 0; grid-area: body; }
+      .essay-row-meta { padding: 24px 0 24px 16px; grid-area: meta; border-left: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav" aria-label="primary">
+    <a href="index.html" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="essays.html" class="nav-link active">Essays</a>
+      <a href="books.html" class="nav-link">Books</a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <header class="essays-header">
+      <h1 class="essays-heading">Essays</h1>
+<div></div>
+    </header>
+
+    <div class="tag-bar">
+      <span class="tag-bar-label">Filter ↗</span>
+      <button class="tag active" data-tag="all">All</button>
+      <button class="tag" data-tag="AI">AI</button>
+      <button class="tag" data-tag="R&D">R&D</button>
+      <button class="tag" data-tag="futures">futures</button>
+      <button class="tag" data-tag="change management">change management</button>
+      <button class="tag" data-tag="CIR">CIR</button>
+    </div>
+
+    <section class="essays-list" aria-label="Essay list">
+      <div id="essay-list">
+
+        <a href="essay-detail.html" class="essay-row" data-tags='["AI","change management"]'>
+          <span class="essay-row-num">01</span>
+          <time class="essay-row-date" datetime="2025-03-15">2025-03-15</time>
+          <div class="essay-row-body">
+            <div class="essay-row-title">Why AI adoption stalls: a field diagnosis</div>
+            <div class="essay-row-desc">Most AI adoption failures aren't technical. They're organisational. Here's what I've observed.</div>
+            <div class="essay-row-tags">
+              <span class="essay-tag-inline">AI</span>
+              <span class="essay-tag-inline">change management</span>
+            </div>
+          </div>
+          <div class="essay-row-meta">
+            <span class="essay-row-time">7 min</span>
+            <span class="essay-row-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="essay-detail.html" class="essay-row" data-tags='["R&D","CIR"]'>
+          <span class="essay-row-num">02</span>
+          <time class="essay-row-date" datetime="2025-01-20">2025-01-20</time>
+          <div class="essay-row-body">
+            <div class="essay-row-title">The CIR as a mirror: what R&D tax credits reveal about how firms think about innovation</div>
+            <div class="essay-row-desc">The questions companies struggle to answer for the CIR are the same ones they struggle to answer internally.</div>
+            <div class="essay-row-tags">
+              <span class="essay-tag-inline">R&D</span>
+              <span class="essay-tag-inline">CIR</span>
+            </div>
+          </div>
+          <div class="essay-row-meta">
+            <span class="essay-row-time">9 min</span>
+            <span class="essay-row-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+      <p class="empty-state" id="empty-state" style="display:none;">No essays match this filter.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="index.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← Home</a>
+  </footer>
+
+</div>
+<script>
+  document.body.classList.add('visible');
+
+  const tags = document.querySelectorAll('.tag[data-tag]');
+  const rows = document.querySelectorAll('.essay-row[data-tags]');
+  const countEl = document.getElementById('visible-count');
+  const emptyEl = document.getElementById('empty-state');
+
+  let activeTag = 'all';
+
+  function filter(tag) {
+    activeTag = tag;
+    tags.forEach(t => t.classList.toggle('active', t.dataset.tag === tag));
+
+    let visible = 0;
+    rows.forEach(row => {
+      const rowTags = JSON.parse(row.dataset.tags);
+      const show = tag === 'all' || rowTags.includes(tag);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    countEl.textContent = visible;
+    emptyEl.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  tags.forEach(t => t.addEventListener('click', () => filter(t.dataset.tag)));
+</script>
+</body>
+</html>

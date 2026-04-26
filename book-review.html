@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Blindsight by Peter Watts — review by Valérian" />
+  <title>Blindsight — Valérian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg:           #e8f2ed;
+      --surface:      #ece7de;
+      --surface-2:    #f9f6f1;
+      --text:         #111810;
+      --text-muted:   rgba(17,24,16,0.58);
+      --text-dim:     rgba(17,24,16,0.32);
+      --accent:       #2c8a52;
+      --accent-hover: #3aa868;
+      --accent-dark:  #1a5c3a;
+      --accent-fill:  rgba(44,138,82,0.10);
+      --border:       rgba(0,0,0,0.09);
+      --border-solid: rgba(0,0,0,0.15);
+    }}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "Blindsight",
+    "author": { "@type": "Person", "name": "Peter Watts" }
+  }
+  </script>
+  <style>
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--accent);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    /* Category badge */
+    .category-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 4px 12px;
+      border: 1px solid var(--accent-dark);
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    /* Highlight */
+    .highlight {
+      background: rgba(26,92,58,0.10);
+      color: var(--text);
+      padding: 0 3px;
+    }
+
+    /* Related books */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    .related-card {
+      background: var(--bg);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+      display: block;
+    }
+
+    .related-card:hover { background: var(--surface); }
+
+    .related-title {
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+      transition: color 0.15s;
+    }
+
+    .related-card:hover .related-title { color: var(--accent); }
+
+    .related-author {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* Sidebar TOC */
+    .toc-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      display: block;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s;
+      text-decoration: none;
+    }
+    .toc-link:last-child { border-bottom: none; }
+    .toc-link:hover { color: var(--accent); }
+    .toc-link.toc-active { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="page">
+
+  <nav class="nav" aria-label="primary">
+    <a href="index.html" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="essays.html" class="nav-link">Essays</a>
+      <a href="books.html" class="nav-link active">Books</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="review-layout">
+
+      <!-- Left panel: cover + meta -->
+      <aside class="review-cover-panel">
+
+        <a href="books.html" class="btn-back" style="margin-bottom: 32px;">← Books</a>
+
+        <div class="book-cover-placeholder">
+          <span class="book-cover-initials">BL</span>
+          <div class="book-cover-label">cover placeholder</div>
+        </div>
+
+        <div class="review-meta-item">
+          <div class="review-meta-label">Author</div>
+          <div class="review-meta-value">Peter Watts</div>
+        </div>
+
+        <div class="review-meta-item">
+          <div class="review-meta-label">Published</div>
+          <div class="review-meta-value"><time datetime="2006">2006</time></div>
+        </div>
+
+        <div class="review-meta-item">
+          <div class="review-meta-label">Category</div>
+          <div class="review-meta-value">Sci-Fi · Hard SF</div>
+        </div>
+
+        <div class="review-meta-item">
+          <div class="review-meta-label">Read</div>
+          <div class="review-meta-value"><time datetime="2024-11">November 2024</time></div>
+        </div>
+
+        <div class="review-meta-item">
+          <div class="review-meta-label">Rating</div>
+          <div class="review-rating" style="border:none; padding: 8px 0 0; margin:0;">
+            <div class="rating-dots">
+              <div class="rating-dot filled"></div>
+              <div class="rating-dot filled"></div>
+              <div class="rating-dot filled"></div>
+              <div class="rating-dot filled"></div>
+              <div class="rating-dot filled"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: auto;">
+          <div class="review-meta-label" style="margin-bottom: 10px;">In this review</div>
+          <nav aria-label="Review sections">
+            <a href="#premise" class="toc-link">The premise</a>
+            <a href="#argument" class="toc-link">The real argument</a>
+            <a href="#relevance" class="toc-link">Why it matters</a>
+            <a href="#references" class="toc-link">References</a>
+          </nav>
+        </div>
+
+      </aside>
+
+      <!-- Review body -->
+      <div class="review-content">
+
+        <span class="category-badge">Book review · Sci-Fi</span>
+
+        <h1 class="review-book-title">Blindsight</h1>
+        <div class="review-author">Peter Watts · 2006</div>
+
+        <!-- Epigraph -->
+        <div class="book-epigraph">
+          <blockquote>"You can't imagine what it's like to see everything and feel nothing — to be the most self-aware being in the room and understand, at the same time, that self-awareness is a bug, not a feature."</blockquote>
+          <cite>— Peter Watts, Blindsight</cite>
+        </div>
+
+        <div class="review-body">
+
+          <h2 id="premise" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§01</span>
+            The premise
+          </h2>
+
+          <p>A first-contact novel in which the aliens are less frightening than the question they force us to ask about ourselves. The crew of the <em>Theseus</em> encounters something vast and utterly foreign near the edge of the solar system — and Watts uses that encounter as a scalpel to dissect what consciousness actually <em>is</em>.</p>
+
+          <p>The book is a genuine work of speculative neuroscience. Every claim Watts makes about cognition, perception, and the self is grounded — he cites his sources, openly, in the text. <span class="highlight">It reads like an academic paper that learned to be terrifying.</span></p>
+
+          <!-- Mid-review pull quote -->
+          <div class="pull-quote">
+            <blockquote>"Watts's central argument: consciousness is metabolically expensive, evolutionarily unnecessary, and possibly the thing that will get us all killed."</blockquote>
+            <cite>— Personal reading notes, November 2024</cite>
+          </div>
+
+          <h2 id="argument" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§02</span>
+            The real argument
+          </h2>
+
+          <p>The novel's thesis is uncomfortable and hard to argue with: consciousness — the felt experience of being aware — may be epiphenomenal. A side effect. Something the brain does <em>after</em> the actual computation is complete, to narrate what already happened. The aliens in the book are intelligent without being aware. They process, respond, adapt — without any "lights on" inside.</p>
+
+          <p>Watts is asking: if intelligence doesn't require consciousness, what exactly is consciousness <em>for</em>? The question doesn't resolve. That's the point.</p>
+
+          <h2 id="relevance" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§03</span>
+            Why it matters now
+          </h2>
+
+          <p>I read this while working on a piece about AI adoption, and the timing was unsettling. <span class="highlight">We are building systems that are intelligent without being aware</span> — and we have no serious theory of what that means for the humans working alongside them.</p>
+
+          <p>Blindsight is not a warning or a comfort. It's a rigorous thought experiment about what kind of thing intelligence is, and it leaves you renegotiating assumptions you didn't know you'd made.</p>
+
+        </div>
+
+        <!-- References -->
+        <div class="references" id="references">
+          <div class="references-heading">References &amp; further reading</div>
+
+          <div class="reference-item">
+            <span class="ref-num">[1]</span>
+            <div class="ref-text">
+              Watts, P. (2006). <em>Blindsight.</em> Tor Books. Full text available free at <a href="#">rifters.com</a> — Watts released it under Creative Commons.
+            </div>
+          </div>
+
+          <div class="reference-item">
+            <span class="ref-num">[2]</span>
+            <div class="ref-text">
+              Dennett, D. C. (1991). <em>Consciousness Explained.</em> Little, Brown. The philosophical counterweight — Dennett argues consciousness <em>is</em> the computation, not a separate layer. Read alongside Watts.
+            </div>
+          </div>
+
+          <div class="reference-item">
+            <span class="ref-num">[3]</span>
+            <div class="ref-text">
+              Chalmers, D. (1995). "Facing Up to the Problem of Consciousness." <em>Journal of Consciousness Studies</em>, 2(3), 200–219. The original articulation of the hard problem that Watts is implicitly arguing against.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Related books -->
+        <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);">
+          <div style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--text-dim); margin-bottom:4px;">If you read this, read next</div>
+          <div class="related-grid">
+            <a href="book-review.html" class="related-card">
+              <div class="related-title">The Three-Body Problem</div>
+              <div class="related-author">Liu Cixin</div>
+            </a>
+            <a href="book-review.html" class="related-card">
+              <div class="related-title">Thinking in Systems</div>
+              <div class="related-author">Donella Meadows</div>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /review-content -->
+    </div><!-- /review-layout -->
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="books.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← All books</a>
+  </footer>
+
+</div>
+<script>
+  document.body.classList.add('visible');
+
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+
+  // TOC active
+  const sections = ['premise','argument','relevance','references'].map(id => document.getElementById(id)).filter(Boolean);
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -65% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
