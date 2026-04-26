@@ -80,11 +80,11 @@ The organisations that navigate this well in the next twelve months will not nec
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Shata, A. (2025). Opting out of AI — faculty resistance. <em>Frontiers in Communication</em>. N=294. https://doi.org/10.3389/fcomm.2025.1614804</div>
+    <div class="ref-text">Shata, A. (2025). Opting out of AI — faculty resistance. <em>Frontiers in Communication</em>. N=294. <a href="https://doi.org/10.3389/fcomm.2025.1614804" target="_blank" rel="noopener">doi:10.3389/fcomm.2025.1614804</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Prasad, R., et al. (2025). Factors affecting AI adoption among IT employees. <em>Journal of Computer and Communications Engineering</em>. N=470. https://doi.org/10.47852/bonviewjcce52026127</div>
+    <div class="ref-text">Prasad, R., et al. (2025). Factors affecting AI adoption among IT employees. <em>Journal of Computer and Communications Engineering</em>. N=470. <a href="https://doi.org/10.47852/bonviewjcce52026127" target="_blank" rel="noopener">doi:10.47852/bonviewjcce52026127</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
@@ -96,7 +96,7 @@ The organisations that navigate this well in the next twelve months will not nec
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">McKinsey & Company. (2025). The state of AI 2025. N=1,993, 101 countries. mckinsey.com</div>
+    <div class="ref-text">McKinsey & Company. (2025). The state of AI 2025. N=1,993, 101 countries. <a href="https://www.mckinsey.com" target="_blank" rel="noopener">mckinsey.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
@@ -108,7 +108,7 @@ The organisations that navigate this well in the next twelve months will not nec
   </div>
   <div class="reference-item">
     <span class="ref-num">[10]</span>
-    <div class="ref-text">Westover, J. (2025). Sustainable AI transformation. <em>Sustainability</em>, 17(21). 127 organisations, 14 cases. https://doi.org/10.3390/su17219822</div>
+    <div class="ref-text">Westover, J. (2025). Sustainable AI transformation. <em>Sustainability</em>, 17(21). 127 organisations, 14 cases. <a href="https://doi.org/10.3390/su17219822" target="_blank" rel="noopener">doi:10.3390/su17219822</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[11]</span>
@@ -116,10 +116,10 @@ The organisations that navigate this well in the next twelve months will not nec
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>
-    <div class="ref-text">S&P Global / 451 Research. (2025). AI adoption trends. N=1,006. March 2025. spglobal.com</div>
+    <div class="ref-text">S&P Global / 451 Research. (2025). AI adoption trends. N=1,006. March 2025. <a href="https://www.spglobal.com" target="_blank" rel="noopener">spglobal.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[13]</span>
-    <div class="ref-text">Hartyándi, J. (2025). Distrust toward generative AI. <em>Interdisciplinary Description of Complex Systems</em>. https://doi.org/10.1556/204.2025.00002</div>
+    <div class="ref-text">Hartyándi, J. (2025). Distrust toward generative AI. <em>Interdisciplinary Description of Complex Systems</em>. <a href="https://doi.org/10.1556/204.2025.00002" target="_blank" rel="noopener">doi:10.1556/204.2025.00002</a></div>
   </div>
 </div>

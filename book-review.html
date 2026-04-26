@@ -162,9 +162,11 @@
 
         <a href="books.html" class="btn-back" style="margin-bottom: 32px;">← Books</a>
 
-        <div class="book-cover-placeholder">
+        <div class="book-cover-placeholder" id="cover-placeholder">
+          <img id="cover-img" alt=""
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;">
           <span class="book-cover-initials" id="cover-initials">—</span>
-          <div class="book-cover-label">cover placeholder</div>
+          <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
 
         <div class="review-meta-item">
@@ -286,6 +288,19 @@
     });
 
     document.getElementById('cover-initials').textContent = book.initials;
+    // Try loading a real cover image (jpg → png → webp), fall back to initials
+    const coverImg = document.getElementById('cover-img');
+    const exts = ['jpg', 'jpeg', 'png', 'webp'];
+    (function tryExt(i) {
+      if (i >= exts.length) return;
+      coverImg.onerror = () => tryExt(i + 1);
+      coverImg.onload = () => {
+        coverImg.style.display = 'block';
+        document.getElementById('cover-initials').style.display = 'none';
+        document.getElementById('cover-label').style.display = 'none';
+      };
+      coverImg.src = `books/covers/${book.slug}.${exts[i]}`;
+    })(0);
     document.getElementById('meta-author').textContent = book.author;
     document.getElementById('meta-published').textContent = book.published;
     document.getElementById('meta-published').setAttribute('datetime', String(book.published));

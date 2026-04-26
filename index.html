@@ -483,24 +483,7 @@
         <span class="preview-col-title">Recent essays</span>
         <a href="essays.html" class="preview-col-link">All →</a>
       </div>
-      <a href="essay-detail.html" class="essay-preview">
-        <div class="ep-meta">
-          <time class="ep-date" datetime="2025-03-15">2025-03-15</time>
-          <span class="ep-tag">AI</span>
-          <span class="ep-tag">change mgmt</span>
-        </div>
-        <div class="ep-title">Why AI adoption stalls: a field diagnosis</div>
-        <div class="ep-desc">Most AI adoption failures aren't technical. They're organisational.</div>
-      </a>
-      <a href="essay-detail.html" class="essay-preview">
-        <div class="ep-meta">
-          <time class="ep-date" datetime="2025-01-20">2025-01-20</time>
-          <span class="ep-tag">R&D</span>
-          <span class="ep-tag">CIR</span>
-        </div>
-        <div class="ep-title">The CIR as a mirror: what R&D tax credits reveal about how firms think about innovation</div>
-        <div class="ep-desc">The questions companies struggle to answer for the CIR are the same ones they struggle internally.</div>
-      </a>
+      <div id="essays-preview"></div>
     </div>
 
     <div class="preview-col">
@@ -508,31 +491,7 @@
         <span class="preview-col-title">Recently reviewed</span>
         <a href="books.html" class="preview-col-link">All →</a>
       </div>
-      <a href="book-review.html" class="book-preview">
-        <div class="bp-cover"><span class="bp-cover-init">BL</span></div>
-        <div style="flex:1; min-width:0;">
-          <div class="ep-meta" style="margin-bottom:5px;">
-            <time class="ep-date" datetime="2024-11">2024-11</time>
-            <span class="ep-tag">sci-fi</span>
-            <span class="ep-tag">hard sf</span>
-          </div>
-          <div class="bp-title">Blindsight</div>
-          <div class="bp-author">Peter Watts</div>
-          <div class="bp-note">The most unsettling argument against consciousness ever written.</div>
-        </div>
-      </a>
-      <a href="book-review.html" class="book-preview">
-        <div class="bp-cover"><span class="bp-cover-init">3B</span></div>
-        <div style="flex:1; min-width:0;">
-          <div class="ep-meta" style="margin-bottom:5px;">
-            <time class="ep-date" datetime="2024-09">2024-09</time>
-            <span class="ep-tag">sci-fi</span>
-          </div>
-          <div class="bp-title">The Three-Body Problem</div>
-          <div class="bp-author">Liu Cixin</div>
-          <div class="bp-note">Scale as a literary device. The universe as a dark forest.</div>
-        </div>
-      </a>
+      <div id="books-preview"></div>
     </div>
   </div>
 
@@ -702,6 +661,41 @@ document.addEventListener('DOMContentLoaded', () => {
   new ResizeObserver(resize).observe(hero);
   resize();
   requestAnimationFrame(draw);
+
+  // ── DYNAMIC PREVIEWS ──────────────────────────────
+  fetch('essays/index.json')
+    .then(r => r.json())
+    .then(essays => {
+      document.getElementById('essays-preview').innerHTML = essays.slice(0, 3).map(e => `
+        <a href="essay-detail.html?essay=${e.slug}" class="essay-preview">
+          <div class="ep-meta">
+            <time class="ep-date" datetime="${e.date}">${e.date}</time>
+            ${e.tags.map(t => `<span class="ep-tag">${t}</span>`).join('')}
+          </div>
+          <div class="ep-title">${e.title}</div>
+          <div class="ep-desc">${e.description}</div>
+        </a>`).join('');
+    })
+    .catch(() => {});
+
+  fetch('books/index.json')
+    .then(r => r.json())
+    .then(books => {
+      document.getElementById('books-preview').innerHTML = books.slice(0, 3).map(b => `
+        <a href="book-review.html?book=${b.slug}" class="book-preview">
+          <div class="bp-cover"><span class="bp-cover-init">${b.initials}</span></div>
+          <div style="flex:1; min-width:0;">
+            <div class="ep-meta" style="margin-bottom:5px;">
+              <time class="ep-date" datetime="${b.readDate}">${b.readDate}</time>
+              <span class="ep-tag">${b.category}</span>
+            </div>
+            <div class="bp-title">${b.title}</div>
+            <div class="bp-author">${b.author}</div>
+            <div class="bp-note">${b.note || b.description}</div>
+          </div>
+        </a>`).join('');
+    })
+    .catch(() => {});
 });
 </script>
 </body>
