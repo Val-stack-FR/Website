@@ -54,5 +54,34 @@
     "description": "Why smart people hold incompatible moral frameworks — and what to do about it.",
     "note": "Essential for anyone who works on change management. Why smart people hold incompatible moral frameworks.",
     "related": []
-  }
+  },
+  {
+  "slug": "genius-in-the-room",
+  "title": "Multipliers: How the Best Leaders Make Everyone Smarter",
+  "author": "Liz Wiseman",
+  "published": 2014,
+  "category": "Strategy",
+  "subcategory": "Management",
+  "readDate": "2024-11",
+  "rating": 4,
+  "initials": "MU",
+  "description": "The smartest person in the room is often its biggest bottleneck — not through malice, but through the accumulated habit of believing their contribution is indispensable.",
+  "note": "Read this after a project where I was the bottleneck without knowing it. The 'Accidental Diminisher' chapter named something I'd been doing for two years.",
+  "related": []
+},
+ 
+{
+  "slug": "stripping-away-the-degree",
+  "title": "Good Power",
+  "author": "Ginni Rometty",
+  "published": 2023,
+  "category": "Strategy",
+  "subcategory": "Management",
+  "readDate": "2026-02",
+  "rating": 4,
+  "initials": "GO",
+  "description": "The four-year degree was never a proxy for ability — it was a proxy for cheap filtering, and the skills gap it created is the compounding cost of that convenience.",
+  "note": "The Boundary Paradox section is worth the whole book. The claim that setting limits increases your perceived value rather than reducing it took me a while to fully believe, then I watched it work.",
+  "related": []
+}
 ]
