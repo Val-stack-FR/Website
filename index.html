@@ -683,7 +683,13 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(books => {
       document.getElementById('books-preview').innerHTML = books.slice(0, 3).map(b => `
         <a href="book-review.html?book=${b.slug}" class="book-preview">
-          <div class="bp-cover"><span class="bp-cover-init">${b.initials}</span></div>
+          <div class="bp-cover" style="position:relative;overflow:hidden;">
+            <img src="books/covers/${b.slug}.jpg"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;"
+                 onload="this.style.display='block';this.nextElementSibling.style.display='none'"
+                 onerror="this.src='books/covers/${b.slug}.png';this.onerror=null">
+            <span class="bp-cover-init">${b.initials}</span>
+          </div>
           <div style="flex:1; min-width:0;">
             <div class="ep-meta" style="margin-bottom:5px;">
               <time class="ep-date" datetime="${b.readDate}">${b.readDate}</time>
