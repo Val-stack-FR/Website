@@ -16,5 +16,14 @@
   "tags": ["change management","strategy"],
   "readTime": "9 min",
   "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
+},
+{
+  "slug": "the-human-bottleneck",
+  "num": "03",
+  "title": "The Human Bottleneck",
+  "date": "2026-04-26",
+  "tags": ["AI", "strategy", "futures"],
+  "readTime": "8 min",
+  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
 }
 ]
