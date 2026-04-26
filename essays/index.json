@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "why-ai-adoption-stalls",
+    "num": "01",
+    "title": "Why AI adoption stalls: a field diagnosis",
+    "date": "2025-03-15",
+    "tags": ["AI", "change management"],
+    "readTime": "7 min",
+    "description": "Most AI adoption failures aren't technical. They're organisational. Here's what I've observed over two years working at the intersection of AI strategy and change management."
+  },
+  {
+    "slug": "the-cir-as-a-mirror",
+    "num": "02",
+    "title": "The CIR as a mirror: what R&D tax credits reveal about how firms think about innovation",
+    "date": "2025-01-20",
+    "tags": ["R&D", "CIR"],
+    "readTime": "9 min",
+    "description": "The questions companies struggle to answer for the CIR are the same ones they struggle to answer internally."
+  }
+]
