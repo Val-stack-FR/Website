@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Blindsight by Peter Watts — review by Valérian" />
-  <title>Blindsight — Valérian</title>
+  <meta name="description" content="" id="meta-desc" />
+  <title id="page-title">Book Review — Valérian</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <script type="application/ld+json" id="schema-json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "",
+    "author": { "@type": "Person", "name": "" }
+  }
+  </script>
   <style>
     :root {
       --bg:           #e8f2ed;
@@ -23,17 +32,8 @@
       --accent-fill:  rgba(44,138,82,0.10);
       --border:       rgba(0,0,0,0.09);
       --border-solid: rgba(0,0,0,0.15);
-    }}
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Book",
-    "name": "Blindsight",
-    "author": { "@type": "Person", "name": "Peter Watts" }
-  }
-  </script>
-  <style>
+    }
+
     .progress-bar {
       position: fixed;
       top: 0; left: 0;
@@ -44,7 +44,6 @@
       transition: width 0.1s linear;
     }
 
-    /* Category badge */
     .category-badge {
       display: inline-block;
       font-family: var(--font-mono);
@@ -57,14 +56,12 @@
       margin-bottom: 24px;
     }
 
-    /* Highlight */
     .highlight {
       background: rgba(26,92,58,0.10);
       color: var(--text);
       padding: 0 3px;
     }
 
-    /* Related books */
     .related-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -102,7 +99,6 @@
       color: var(--text-dim);
     }
 
-    /* Sidebar TOC */
     .toc-link {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -116,6 +112,34 @@
     .toc-link:last-child { border-bottom: none; }
     .toc-link:hover { color: var(--accent); }
     .toc-link.toc-active { color: var(--accent); }
+
+    /* Markdown-rendered h2 inside review-body */
+    .review-body h2 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin: 48px 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-body h2::before {
+      content: attr(data-section);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .review-body p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+    .review-body em { font-style: italic; }
+    .review-body strong { font-weight: 700; color: var(--text); }
   </style>
 </head>
 <body>
@@ -139,51 +163,40 @@
         <a href="books.html" class="btn-back" style="margin-bottom: 32px;">← Books</a>
 
         <div class="book-cover-placeholder">
-          <span class="book-cover-initials">BL</span>
+          <span class="book-cover-initials" id="cover-initials">—</span>
           <div class="book-cover-label">cover placeholder</div>
         </div>
 
         <div class="review-meta-item">
           <div class="review-meta-label">Author</div>
-          <div class="review-meta-value">Peter Watts</div>
+          <div class="review-meta-value" id="meta-author">—</div>
         </div>
 
         <div class="review-meta-item">
           <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time datetime="2006">2006</time></div>
+          <div class="review-meta-value"><time id="meta-published">—</time></div>
         </div>
 
         <div class="review-meta-item">
           <div class="review-meta-label">Category</div>
-          <div class="review-meta-value">Sci-Fi · Hard SF</div>
+          <div class="review-meta-value" id="meta-category">—</div>
         </div>
 
         <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time datetime="2024-11">November 2024</time></div>
+          <div class="review-meta-value"><time id="meta-read">—</time></div>
         </div>
 
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
           <div class="review-rating" style="border:none; padding: 8px 0 0; margin:0;">
-            <div class="rating-dots">
-              <div class="rating-dot filled"></div>
-              <div class="rating-dot filled"></div>
-              <div class="rating-dot filled"></div>
-              <div class="rating-dot filled"></div>
-              <div class="rating-dot filled"></div>
-            </div>
+            <div class="rating-dots" id="rating-dots"></div>
           </div>
         </div>
 
         <div style="margin-top: auto;">
           <div class="review-meta-label" style="margin-bottom: 10px;">In this review</div>
-          <nav aria-label="Review sections">
-            <a href="#premise" class="toc-link">The premise</a>
-            <a href="#argument" class="toc-link">The real argument</a>
-            <a href="#relevance" class="toc-link">Why it matters</a>
-            <a href="#references" class="toc-link">References</a>
-          </nav>
+          <nav aria-label="Review sections" id="toc-nav"></nav>
         </div>
 
       </aside>
@@ -191,94 +204,17 @@
       <!-- Review body -->
       <div class="review-content">
 
-        <span class="category-badge">Book review · Sci-Fi</span>
+        <span class="category-badge" id="badge">Book review</span>
 
-        <h1 class="review-book-title">Blindsight</h1>
-        <div class="review-author">Peter Watts · 2006</div>
+        <h1 class="review-book-title" id="book-title"></h1>
+        <div class="review-author" id="book-author-year"></div>
 
-        <!-- Epigraph -->
-        <div class="book-epigraph">
-          <blockquote>"You can't imagine what it's like to see everything and feel nothing — to be the most self-aware being in the room and understand, at the same time, that self-awareness is a bug, not a feature."</blockquote>
-          <cite>— Peter Watts, Blindsight</cite>
-        </div>
-
-        <div class="review-body">
-
-          <h2 id="premise" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
-            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§01</span>
-            The premise
-          </h2>
-
-          <p>A first-contact novel in which the aliens are less frightening than the question they force us to ask about ourselves. The crew of the <em>Theseus</em> encounters something vast and utterly foreign near the edge of the solar system — and Watts uses that encounter as a scalpel to dissect what consciousness actually <em>is</em>.</p>
-
-          <p>The book is a genuine work of speculative neuroscience. Every claim Watts makes about cognition, perception, and the self is grounded — he cites his sources, openly, in the text. <span class="highlight">It reads like an academic paper that learned to be terrifying.</span></p>
-
-          <!-- Mid-review pull quote -->
-          <div class="pull-quote">
-            <blockquote>"Watts's central argument: consciousness is metabolically expensive, evolutionarily unnecessary, and possibly the thing that will get us all killed."</blockquote>
-            <cite>— Personal reading notes, November 2024</cite>
-          </div>
-
-          <h2 id="argument" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
-            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§02</span>
-            The real argument
-          </h2>
-
-          <p>The novel's thesis is uncomfortable and hard to argue with: consciousness — the felt experience of being aware — may be epiphenomenal. A side effect. Something the brain does <em>after</em> the actual computation is complete, to narrate what already happened. The aliens in the book are intelligent without being aware. They process, respond, adapt — without any "lights on" inside.</p>
-
-          <p>Watts is asking: if intelligence doesn't require consciousness, what exactly is consciousness <em>for</em>? The question doesn't resolve. That's the point.</p>
-
-          <h2 id="relevance" style="font-family:var(--font-head); font-weight:700; font-size:18px; letter-spacing:-0.025em; color:var(--text); margin: 0 0 18px; display:flex; align-items:center; gap:10px;">
-            <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:400;">§03</span>
-            Why it matters now
-          </h2>
-
-          <p>I read this while working on a piece about AI adoption, and the timing was unsettling. <span class="highlight">We are building systems that are intelligent without being aware</span> — and we have no serious theory of what that means for the humans working alongside them.</p>
-
-          <p>Blindsight is not a warning or a comfort. It's a rigorous thought experiment about what kind of thing intelligence is, and it leaves you renegotiating assumptions you didn't know you'd made.</p>
-
-        </div>
-
-        <!-- References -->
-        <div class="references" id="references">
-          <div class="references-heading">References &amp; further reading</div>
-
-          <div class="reference-item">
-            <span class="ref-num">[1]</span>
-            <div class="ref-text">
-              Watts, P. (2006). <em>Blindsight.</em> Tor Books. Full text available free at <a href="#">rifters.com</a> — Watts released it under Creative Commons.
-            </div>
-          </div>
-
-          <div class="reference-item">
-            <span class="ref-num">[2]</span>
-            <div class="ref-text">
-              Dennett, D. C. (1991). <em>Consciousness Explained.</em> Little, Brown. The philosophical counterweight — Dennett argues consciousness <em>is</em> the computation, not a separate layer. Read alongside Watts.
-            </div>
-          </div>
-
-          <div class="reference-item">
-            <span class="ref-num">[3]</span>
-            <div class="ref-text">
-              Chalmers, D. (1995). "Facing Up to the Problem of Consciousness." <em>Journal of Consciousness Studies</em>, 2(3), 200–219. The original articulation of the hard problem that Watts is implicitly arguing against.
-            </div>
-          </div>
-
-        </div>
+        <div class="review-body" id="review-body"></div>
 
         <!-- Related books -->
-        <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);">
+        <div id="related-block" style="display:none; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);">
           <div style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--text-dim); margin-bottom:4px;">If you read this, read next</div>
-          <div class="related-grid">
-            <a href="book-review.html" class="related-card">
-              <div class="related-title">The Three-Body Problem</div>
-              <div class="related-author">Liu Cixin</div>
-            </a>
-            <a href="book-review.html" class="related-card">
-              <div class="related-title">Thinking in Systems</div>
-              <div class="related-author">Donella Meadows</div>
-            </a>
-          </div>
+          <div class="related-grid" id="related-grid"></div>
         </div>
 
       </div><!-- /review-content -->
@@ -301,20 +237,121 @@
     bar.style.width = pct + '%';
   });
 
-  // TOC active
-  const sections = ['premise','argument','relevance','references'].map(id => document.getElementById(id)).filter(Boolean);
-  const tocLinks = document.querySelectorAll('.toc-link');
+  function formatReadDate(readDate) {
+    if (!readDate) return '—';
+    const [year, month] = readDate.split('-');
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return (month ? months[parseInt(month) - 1] + ' ' : '') + year;
+  }
 
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
-      }
+  function setupTOC() {
+    const headings = document.querySelectorAll('.review-body h2');
+    const tocNav = document.getElementById('toc-nav');
+    tocNav.innerHTML = '';
+
+    headings.forEach((h, i) => {
+      if (!h.id) h.id = 'section-' + (i + 1);
+      h.dataset.section = '§0' + (i + 1);
+      const link = document.createElement('a');
+      link.href = '#' + h.id;
+      link.className = 'toc-link';
+      link.textContent = h.textContent;
+      tocNav.appendChild(link);
     });
-  }, { rootMargin: '-20% 0px -65% 0px' });
 
-  sections.forEach(s => obs.observe(s));
+    const tocLinks = tocNav.querySelectorAll('.toc-link');
+    if (headings.length === 0 || tocLinks.length === 0) return;
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-20% 0px -65% 0px' });
+
+    headings.forEach(s => obs.observe(s));
+  }
+
+  function populateMeta(book) {
+    document.getElementById('page-title').textContent = book.title + ' — Valérian';
+    document.getElementById('meta-desc').setAttribute('content', book.description);
+
+    document.getElementById('schema-json').textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Book',
+      name: book.title,
+      author: { '@type': 'Person', name: book.author }
+    });
+
+    document.getElementById('cover-initials').textContent = book.initials;
+    document.getElementById('meta-author').textContent = book.author;
+    document.getElementById('meta-published').textContent = book.published;
+    document.getElementById('meta-published').setAttribute('datetime', String(book.published));
+    document.getElementById('meta-category').textContent =
+      book.subcategory ? book.category + ' · ' + book.subcategory : book.category;
+    document.getElementById('meta-read').textContent = formatReadDate(book.readDate);
+    document.getElementById('meta-read').setAttribute('datetime', book.readDate || '');
+
+    const dots = document.getElementById('rating-dots');
+    for (let i = 1; i <= 5; i++) {
+      const d = document.createElement('div');
+      d.className = 'rating-dot' + (i <= book.rating ? ' filled' : '');
+      dots.appendChild(d);
+    }
+
+    document.getElementById('badge').textContent = 'Book review · ' + book.category;
+    document.getElementById('book-title').textContent = book.title;
+    document.getElementById('book-author-year').textContent = book.author + ' · ' + book.published;
+  }
+
+  function renderRelated(relatedSlugs, allBooks) {
+    if (!relatedSlugs || relatedSlugs.length === 0) return;
+    const relatedBooks = relatedSlugs.map(s => allBooks.find(b => b.slug === s)).filter(Boolean);
+    if (relatedBooks.length === 0) return;
+
+    const block = document.getElementById('related-block');
+    block.style.display = 'block';
+    document.getElementById('related-grid').innerHTML = relatedBooks.map(b => `
+      <a href="book-review.html?book=${b.slug}" class="related-card">
+        <div class="related-title">${b.title}</div>
+        <div class="related-author">${b.author}</div>
+      </a>`).join('');
+  }
+
+  async function loadReview() {
+    const params = new URLSearchParams(window.location.search);
+    const allBooks = await fetch('books/index.json').then(r => r.json());
+
+    let slug = params.get('book');
+    let book = allBooks.find(b => b.slug === slug);
+    if (!book) { book = allBooks[0]; slug = book.slug; }
+
+    populateMeta(book);
+
+    let res = await fetch('books/' + slug + '.md');
+    if (res.ok) {
+      document.getElementById('review-body').innerHTML = marked.parse(await res.text());
+    } else {
+      res = await fetch('books/' + slug + '.html');
+      if (res.ok) {
+        document.getElementById('review-body').innerHTML = await res.text();
+      } else {
+        document.getElementById('review-body').innerHTML =
+          '<p style="color:var(--text-dim);">Review content not found.</p>';
+      }
+    }
+
+    setupTOC();
+    renderRelated(book.related, allBooks);
+  }
+
+  loadReview().catch(err => {
+    document.getElementById('review-body').innerHTML =
+      '<p style="color:var(--text-dim);">Could not load review. Make sure the site is served over HTTP.</p>';
+    console.error(err);
+  });
 </script>
 </body>
 </html>

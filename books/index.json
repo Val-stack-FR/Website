@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "blindsight",
+    "title": "Blindsight",
+    "author": "Peter Watts",
+    "published": 2006,
+    "category": "Sci-Fi",
+    "subcategory": "Hard SF",
+    "readDate": "2024-11",
+    "rating": 5,
+    "initials": "BL",
+    "description": "A first-contact novel that uses aliens as a scalpel on the question of consciousness.",
+    "note": "The most unsettling argument against consciousness ever written. Watts asks whether awareness is an evolutionary dead end.",
+    "related": ["the-three-body-problem"]
+  },
+  {
+    "slug": "the-three-body-problem",
+    "title": "The Three-Body Problem",
+    "author": "Liu Cixin",
+    "published": 2008,
+    "category": "Sci-Fi",
+    "subcategory": "Hard SF",
+    "readDate": "2024-09",
+    "rating": 4,
+    "initials": "3B",
+    "description": "A civilisation-scale first-contact story that uses physics as its moral framework.",
+    "note": "Scale as a literary device. The universe as a dark forest. Changed how I think about civilisational risk.",
+    "related": ["blindsight"]
+  },
+  {
+    "slug": "thinking-in-systems",
+    "title": "Thinking in Systems",
+    "author": "Donella Meadows",
+    "published": 2008,
+    "category": "Personal Development",
+    "subcategory": "Systems",
+    "readDate": "2024-06",
+    "rating": 5,
+    "initials": "TS",
+    "description": "The clearest introduction to systems thinking available. A lens you can't unsee.",
+    "note": "The clearest introduction to systems thinking I've encountered. Every page has a sentence worth underlining.",
+    "related": []
+  },
+  {
+    "slug": "the-righteous-mind",
+    "title": "The Righteous Mind",
+    "author": "Jonathan Haidt",
+    "published": 2012,
+    "category": "Personal Development",
+    "subcategory": "Psychology",
+    "readDate": "2024-04",
+    "rating": 4,
+    "initials": "RM",
+    "description": "Why smart people hold incompatible moral frameworks — and what to do about it.",
+    "note": "Essential for anyone who works on change management. Why smart people hold incompatible moral frameworks.",
+    "related": []
+  }
+]

@@ -23,9 +23,8 @@
       --accent-fill:  rgba(44,138,82,0.10);
       --border:       rgba(0,0,0,0.09);
       --border-solid: rgba(0,0,0,0.15);
-    }}
-  </style>
-  <style>
+    }
+
     .books-header {
       padding: 64px 48px 0;
       border-bottom: 1px solid var(--border);
@@ -98,7 +97,7 @@
     .book-cover {
       width: 72px;
       height: 104px;
-      background: var(--surface);
+      background: var(--accent-dark);
       border: 1px solid var(--border-solid);
       margin-bottom: 20px;
       position: relative;
@@ -109,7 +108,6 @@
       flex-shrink: 0;
     }
 
-    .book-cover { background: var(--accent-dark); }
     .book-cover-init {
       font-family: var(--font-head);
       font-weight: 700;
@@ -119,7 +117,6 @@
       z-index: 1;
     }
 
-    /* Subtle stripe texture on cover */
     .book-cover::before {
       content: '';
       position: absolute;
@@ -158,7 +155,6 @@
       color: var(--text-dim);
     }
 
-    /* Hover note overlay */
     .book-note {
       position: absolute;
       inset: 0;
@@ -218,77 +214,10 @@
 
     <header class="books-header">
       <h1 class="books-heading">Books</h1>
-      <div class="tab-bar" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="scifi">Sci-Fi</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-tab="personal">Personal Development</button>
-      </div>
+      <div class="tab-bar" id="tab-bar" role="tablist"></div>
     </header>
 
-    <!-- Sci-Fi -->
-    <section class="books-section active" id="tab-scifi" aria-label="Sci-fi books">
-      <div class="books-grid">
-
-        <a href="book-review.html" class="book-card">
-          <div class="book-cover">
-            <span class="book-cover-init">BL</span>
-            <div class="book-cover-accent"></div>
-          </div>
-          <div class="book-title">Blindsight</div>
-          <div class="book-author">Peter Watts</div>
-          <div class="book-note">
-            <p class="book-note-text">The most unsettling argument against consciousness ever written. Watts asks whether awareness is an evolutionary dead end.</p>
-            <span class="book-note-cta">Read review →</span>
-          </div>
-        </a>
-
-        <a href="book-review.html" class="book-card">
-          <div class="book-cover">
-            <span class="book-cover-init">3B</span>
-            <div class="book-cover-accent"></div>
-          </div>
-          <div class="book-title">The Three-Body Problem</div>
-          <div class="book-author">Liu Cixin</div>
-          <div class="book-note">
-            <p class="book-note-text">Scale as a literary device. The universe as a dark forest. Changed how I think about civilisational risk.</p>
-            <span class="book-note-cta">Read review →</span>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- Personal Dev -->
-    <section class="books-section" id="tab-personal" aria-label="Personal development books">
-      <div class="books-grid">
-
-        <a href="book-review.html" class="book-card">
-          <div class="book-cover">
-            <span class="book-cover-init">TS</span>
-            <div class="book-cover-accent"></div>
-          </div>
-          <div class="book-title">Thinking in Systems</div>
-          <div class="book-author">Donella Meadows</div>
-          <div class="book-note">
-            <p class="book-note-text">The clearest introduction to systems thinking I've encountered. Every page has a sentence worth underlining.</p>
-            <span class="book-note-cta">Read review →</span>
-          </div>
-        </a>
-
-        <a href="book-review.html" class="book-card">
-          <div class="book-cover">
-            <span class="book-cover-init">RM</span>
-            <div class="book-cover-accent"></div>
-          </div>
-          <div class="book-title">The Righteous Mind</div>
-          <div class="book-author">Jonathan Haidt</div>
-          <div class="book-note">
-            <p class="book-note-text">Essential for anyone who works on change management. Why smart people hold incompatible moral frameworks.</p>
-            <span class="book-note-cta">Read review →</span>
-          </div>
-        </a>
-
-      </div>
-    </section>
+    <div id="books-content"></div>
 
   </main>
 
@@ -301,16 +230,68 @@
 <script>
   document.body.classList.add('visible');
 
-  const tabs = document.querySelectorAll('.tab-btn');
-  const sections = document.querySelectorAll('.books-section');
+  function slugifyCategory(cat) {
+    return cat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  }
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.tab;
-      tabs.forEach(t => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', t === tab); });
-      sections.forEach(s => s.classList.toggle('active', s.id === 'tab-' + target));
+  function renderCard(book) {
+    return `
+      <a href="book-review.html?book=${book.slug}" class="book-card">
+        <div class="book-cover">
+          <span class="book-cover-init">${book.initials}</span>
+          <div class="book-cover-accent"></div>
+        </div>
+        <div class="book-title">${book.title}</div>
+        <div class="book-author">${book.author}</div>
+        <div class="book-note">
+          <p class="book-note-text">${book.note || book.description}</p>
+          <span class="book-note-cta">Read review →</span>
+        </div>
+      </a>`;
+  }
+
+  function activateTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(t => {
+      const active = t.dataset.tab === tabId;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active);
     });
-  });
+    document.querySelectorAll('.books-section').forEach(s => {
+      s.classList.toggle('active', s.id === 'tab-' + tabId);
+    });
+  }
+
+  fetch('books/index.json')
+    .then(r => r.json())
+    .then(books => {
+      const categories = [...new Map(books.map(b => [b.category, b.category])).keys()];
+      const tabBar = document.getElementById('tab-bar');
+      const content = document.getElementById('books-content');
+
+      categories.forEach((cat, i) => {
+        const tabId = slugifyCategory(cat);
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+        btn.role = 'tab';
+        btn.setAttribute('aria-selected', i === 0);
+        btn.dataset.tab = tabId;
+        btn.textContent = cat;
+        btn.addEventListener('click', () => activateTab(tabId));
+        tabBar.appendChild(btn);
+
+        const booksInCat = books.filter(b => b.category === cat);
+        const section = document.createElement('section');
+        section.className = 'books-section' + (i === 0 ? ' active' : '');
+        section.id = 'tab-' + tabId;
+        section.setAttribute('aria-label', cat + ' books');
+        section.innerHTML = `<div class="books-grid">${booksInCat.map(renderCard).join('')}</div>`;
+        content.appendChild(section);
+      });
+    })
+    .catch(() => {
+      document.getElementById('books-content').innerHTML =
+        '<p style="padding:48px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">Could not load books. Make sure the site is served over HTTP.</p>';
+    });
 </script>
 </body>
 </html>
