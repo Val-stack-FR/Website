@@ -7,5 +7,17 @@
     "tags": ["AI", "change management", "strategy"],
     "readTime": "11 min",
     "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
-  }
+  },
+  {
+  "slug": "when-feedback-fails",
+  "num": "02",
+  "title": "When Feedback Fails",
+  "date": "2026-02-26",
+  "tags": [
+    "change management",
+    "strategy"
+  ],
+  "readTime": "9 min",
+  "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
+}
 ]
