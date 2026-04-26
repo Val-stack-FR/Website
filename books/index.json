@@ -40,5 +40,19 @@
     "description": "The four-year degree was never a proxy for ability — it was a proxy for cheap filtering, and the skills gap it created is the compounding cost of that convenience.",
     "note": "The Boundary Paradox section is worth the whole book. The claim that setting limits increases your perceived value rather than reducing it took me a while to fully believe, then I watched it work.",
     "related": ["genius-in-the-room"]
-  }
+  },
+  {
+  "slug": "war-for-kindness",
+  "title": "The War for Kindness",
+  "author": "Jamil Zaki",
+  "published": 2016,
+  "category": "Personal Development",
+  "subcategory": "Psychology",
+  "readDate": "2025-12",
+  "rating": 3.5,
+  "initials": "WF",
+  "description": "Empathy is not an individual trait but a systemic output—built or diminished by the institutions we inhabit.",
+  "note": "Strong diagnosis of why systems select against empathy. The prescription (rebuild kind systems) is less fully developed than the problem statement—which is where the book's limitations become visible.",
+  "related": []
+}
 ]
