@@ -1,29 +1,11 @@
 [
   {
-    "slug": "why-ai-adoption-stalls",
-    "num": "02",
-    "title": "Why AI adoption stalls: a field diagnosis",
-    "date": "2025-03-15",
-    "tags": ["AI", "change management"],
-    "readTime": "7 min",
-    "description": "Most AI adoption failures aren't technical. They're organisational. Here's what I've observed over two years working at the intersection of AI strategy and change management."
-  },
-  {
-    "slug": "the-cir-as-a-mirror",
-    "num": "03",
-    "title": "The CIR as a mirror: what R&D tax credits reveal about how firms think about innovation",
-    "date": "2025-01-20",
-    "tags": ["R&D", "CIR"],
-    "readTime": "9 min",
-    "description": "The questions companies struggle to answer for the CIR are the same ones they struggle to answer internally."
-  },
-  {
-  "slug": "genai-adoption-people-problem",
-  "num": "01",
-  "title": "The People Problem in GenAI Adoption",
-  "date": "2026-04-26",
-  "tags": ["AI", "change management", "strategy"],
-  "readTime": "11 min",
-  "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
-}
+    "slug": "genai-adoption-people-in-the-middle",
+    "num": "01",
+    "title": "The people in the middle of GenAI adoption",
+    "date": "2026-04-26",
+    "tags": ["AI", "change management", "strategy"],
+    "readTime": "11 min",
+    "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
+  }
 ]
