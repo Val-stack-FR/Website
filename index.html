@@ -215,8 +215,20 @@
     .preview-col {
       padding: 48px;
       border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
     }
     .preview-col:last-child { border-right: none; }
+
+    .preview-scroll {
+      overflow-y: auto;
+      max-height: 420px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-solid) transparent;
+    }
+    .preview-scroll::-webkit-scrollbar { width: 4px; }
+    .preview-scroll::-webkit-scrollbar-track { background: transparent; }
+    .preview-scroll::-webkit-scrollbar-thumb { background: var(--border-solid); border-radius: 2px; }
 
     .preview-col-header {
       display: flex;
@@ -483,7 +495,7 @@
         <span class="preview-col-title">Recent essays</span>
         <a href="essays.html" class="preview-col-link">All →</a>
       </div>
-      <div id="essays-preview"></div>
+      <div class="preview-scroll"><div id="essays-preview"></div></div>
     </div>
 
     <div class="preview-col">
@@ -491,7 +503,7 @@
         <span class="preview-col-title">Recently reviewed</span>
         <a href="books.html" class="preview-col-link">All →</a>
       </div>
-      <div id="books-preview"></div>
+      <div class="preview-scroll"><div id="books-preview"></div></div>
     </div>
   </div>
 
@@ -666,7 +678,8 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('essays/index.json')
     .then(r => r.json())
     .then(essays => {
-      document.getElementById('essays-preview').innerHTML = essays.slice(0, 3).map(e => `
+      essays.sort((a, b) => new Date(b.date) - new Date(a.date));
+      document.getElementById('essays-preview').innerHTML = essays.map(e => `
         <a href="essay-detail.html?essay=${e.slug}" class="essay-preview">
           <div class="ep-meta">
             <time class="ep-date" datetime="${e.date}">${e.date}</time>
@@ -681,7 +694,8 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('books/index.json')
     .then(r => r.json())
     .then(books => {
-      document.getElementById('books-preview').innerHTML = books.slice(0, 3).map(b => `
+      books.sort((a, b) => new Date(b.readDate) - new Date(a.readDate));
+      document.getElementById('books-preview').innerHTML = books.map(b => `
         <a href="book-review.html?book=${b.slug}" class="book-preview">
           <div class="bp-cover" style="position:relative;overflow:hidden;">
             <img src="books/covers/${b.slug}.jpg"
