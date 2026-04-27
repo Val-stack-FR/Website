@@ -3,7 +3,7 @@
     "slug": "genai-adoption-people-in-the-middle",
     "num": "02",
     "title": "The people in the middle of GenAI adoption",
-    "date": "2026-04-26",
+    "date": "2026-04-07",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "11 min",
     "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
@@ -12,7 +12,7 @@
   "slug": "when-feedback-fails",
   "num": "03",
   "title": "When Feedback Fails",
-  "date": "2026-02-26",
+  "date": "2026-02-13",
   "tags": ["change management","strategy"],
   "readTime": "9 min",
   "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
@@ -21,9 +21,18 @@
   "slug": "the-human-bottleneck",
   "num": "01",
   "title": "The Human Bottleneck",
-  "date": "2026-05-26",
+  "date": "2026-03-17",
   "tags": ["AI", "strategy", "futures"],
   "readTime": "8 min",
   "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
+},
+{
+  "slug": "who-is-conducting-whom",
+  "num": "04",
+  "title": "Who Is Conducting Whom?",
+  "date": "2026-04-27",
+  "tags": ["AI", "futures", "strategy"],
+  "readTime": "12 min",
+  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well."
 }
 ]
