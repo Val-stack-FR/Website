@@ -31,7 +31,7 @@
   "num": "01",
   "title": "Who Is Conducting Whom?",
   "date": "2026-04-27",
-  "tags": ["AI", "futures", "strategy"],
+  "tags": ["AI", "futures", "strategy", "philosophy"],
   "readTime": "12 min",
   "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well."
 },
@@ -40,7 +40,7 @@
   "num": "06",
   "title": "When the Train Comes Off the Tracks",
   "date": "2025-07-17",
-  "tags": ["change management", "AI", "strategy"],
+  "tags": ["change management", "AI", "crisis"],
   "readTime": "8 min",
   "description": "When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address."
 }
