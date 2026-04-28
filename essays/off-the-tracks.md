@@ -1,13 +1,3 @@
----
-slug: off-the-tracks
-num: "??"
-title: "When the Train Comes Off the Tracks"
-date: 2026-04-27
-tags: [change management, AI, strategy]
-readTime: "9 min"
-description: "When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address."
----
-
 Performance decline has a predictable secondary effect that is rarely studied as carefully as the decline itself. When organisations begin to underperform, the managerial reflex is almost invariably the same: centralise, tighten control, increase reporting frequency. It looks like corrective action. It functions, in practice, as a second failure — one that systematically destroys the information environment required to diagnose the first.
 
 The structural logic of this spiral is not obscure. But it keeps happening, in sector after sector, because it is emotionally legible in a way that its alternative is not. Control *feels* like response. Patience, communication, and the willingness to sit with ambiguous data feel, under pressure, like passivity.
