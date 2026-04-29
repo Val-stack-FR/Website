@@ -12,9 +12,9 @@ L'outil central que Wiseman propose est la *question difficile* — non pas la m
 
 ## Ownership, Not Delegation
 
-Avec la « règle des 51 % », le livre est à la fois le plus précis et le plus exigeant. Le Multiplier délègue d'une façon qui rend le transfert de responsabilité explicite et non négociable.
 <div class="pull-quote"><blockquote>"You have 51 percent of the vote; I have 49 percent."</blockquote><cite>— Liz Wiseman, <em>Multipliers</em></cite></div>
 
+Avec la « règle des 51 % », le livre est à la fois le plus précis et le plus exigeant. Le Multiplier délègue d'une façon qui rend le transfert de responsabilité explicite et non négociable.
 Le corollaire — ne jamais apporter un problème sans solution proposée — est le protocole F-I-X. Ce qu'il fait réellement : refuser d'accepter le retour passif de la charge cognitive. Quand un collaborateur arrive avec un problème sans direction, le Multiplier redonne le stylo : *je peux réfléchir avec toi, mais c'est toi qui mènes.*
 
 C'est là que le livre tranche dans le langage ambiant de la « sécurité psychologique ». Le Multiplier ne crée pas la sécurité en supprimant la pression — il la redistribue. Il place le poids de la responsabilité là où il peut construire quelque chose, plutôt que là où il donne l'apparence de protection tout en sabrant silencieusement la capacité d'agir. Une équipe protégée des conséquences n'est pas une équipe en sécurité. C'est une équipe infantilisée.
