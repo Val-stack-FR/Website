@@ -1,5 +1,4 @@
-# Le génie dans la salle, c'est le problème
-### *Multipliers : Comment les meilleurs leaders rendent tout le monde plus intelligent* — Liz Wiseman & Greg McKeown
+## *Multipliers : Comment les meilleurs leaders rendent tout le monde plus intelligent* — Liz Wiseman & Greg McKeown
 
 La vraie question du livre n'est pas « comment devenir un meilleur leader ? ». Elle est plus inconfortable : et si votre intelligence — celle-là même qui vous a amené jusqu'ici — était précisément ce qui freine votre équipe ?
 
