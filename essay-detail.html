@@ -36,6 +36,31 @@
       --border-solid: rgba(0,0,0,0.15);
     }
 
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lang-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .lang-btn:hover { color: var(--accent); }
+    .lang-btn.lang-active { color: var(--accent); font-weight: 500; }
+    .lang-sep {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--border-solid);
+    }
+
     /* Progress bar */
     .progress-bar {
       position: fixed;
@@ -127,6 +152,12 @@
       <aside class="essay-sidebar">
         <a href="essays.html" class="btn-back">← Essays</a>
 
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en" onclick="switchLang('en')">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr" onclick="switchLang('fr')">FR</button>
+        </div>
+
         <div>
           <div class="essay-sidebar-label">Published</div>
           <time class="essay-sidebar-value" id="sidebar-date">—</time>
@@ -184,13 +215,31 @@
 <script>
   document.body.classList.add('visible');
 
-  // Reading progress bar
   const bar = document.getElementById('progress');
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
     const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
     bar.style.width = pct + '%';
   });
+
+  let currentSlug = '';
+  let currentLang = 'en';
+
+  function setLangButtons(lang) {
+    document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('lang-active', lang === 'fr');
+  }
+
+  function switchLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    try { localStorage.setItem('site-lang', lang); } catch(e) {}
+    const params = new URLSearchParams(window.location.search);
+    if (lang === 'en') params.delete('lang'); else params.set('lang', lang);
+    history.replaceState(null, '', '?' + params.toString());
+    setLangButtons(lang);
+    loadContent();
+  }
 
   function setupTOC() {
     const headings = document.querySelectorAll('.essay-body h2');
@@ -249,7 +298,6 @@
     document.getElementById('essay-title').textContent = essay.title;
     document.getElementById('essay-desc').textContent = essay.description;
 
-    // Next essay link
     const idx = allEssays.findIndex(e => e.slug === essay.slug);
     const next = allEssays[idx + 1];
     if (next) {
@@ -260,6 +308,27 @@
     }
   }
 
+  async function loadContent() {
+    const bodyEl = document.getElementById('essay-body');
+    const prefix = currentLang === 'fr' ? 'essays/fr/' : 'essays/';
+
+    let res = await fetch(prefix + currentSlug + '.md');
+    if (res.ok) {
+      bodyEl.innerHTML = marked.parse(await res.text());
+    } else {
+      res = await fetch(prefix + currentSlug + '.html');
+      if (res.ok) {
+        bodyEl.innerHTML = await res.text();
+      } else if (currentLang !== 'en') {
+        bodyEl.innerHTML =
+          '<p style="color:var(--text-dim); font-style:italic;">This essay is not yet available in French.</p>';
+      } else {
+        bodyEl.innerHTML = '<p style="color:var(--text-dim);">Essay content not found.</p>';
+      }
+    }
+    setupTOC();
+  }
+
   async function loadEssay() {
     const params = new URLSearchParams(window.location.search);
     const allEssays = await fetch('essays/index.json').then(r => r.json());
@@ -268,26 +337,14 @@
     let essay = allEssays.find(e => e.slug === slug);
     if (!essay) { essay = allEssays[0]; slug = essay.slug; }
 
+    currentSlug = slug;
+    // URL param takes priority, then localStorage, then default 'en'
+    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
+    currentLang = params.get('lang') || savedLang || 'en';
+
+    setLangButtons(currentLang);
     populateMeta(essay, allEssays);
-
-    // Try .md first, fall back to .html
-    let text;
-    let res = await fetch('essays/' + slug + '.md');
-    if (res.ok) {
-      text = await res.text();
-      document.getElementById('essay-body').innerHTML = marked.parse(text);
-    } else {
-      res = await fetch('essays/' + slug + '.html');
-      if (res.ok) {
-        text = await res.text();
-        document.getElementById('essay-body').innerHTML = text;
-      } else {
-        document.getElementById('essay-body').innerHTML =
-          '<p style="color:var(--text-dim);">Essay content not found.</p>';
-      }
-    }
-
-    setupTOC();
+    await loadContent();
   }
 
   loadEssay().catch(err => {
