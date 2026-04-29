@@ -3,32 +3,32 @@
     "slug": "genai-adoption-people-in-the-middle",
     "num": "03",
     "title": "The people in the middle of GenAI adoption",
-    "date": "2026-04-07",
+    "date": "2026-02-07",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "11 min",
     "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
   },
   {
   "slug": "when-feedback-fails",
-  "num": "04",
+  "num": "02",
   "title": "When Feedback Fails",
-  "date": "2026-02-13",
+  "date": "2025-10-13",
   "tags": ["change management","strategy"],
   "readTime": "9 min",
   "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
 },
 {
   "slug": "the-human-bottleneck",
-  "num": "02",
+  "num": "04",
   "title": "The Human Bottleneck",
-  "date": "2026-03-17",
+  "date": "2026-04-17",
   "tags": ["AI", "strategy", "futures"],
   "readTime": "8 min",
   "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
 },
 {
   "slug": "who-is-conducting-whom",
-  "num": "01",
+  "num": "05",
   "title": "Who Is Conducting Whom?",
   "date": "2026-04-27",
   "tags": ["AI", "futures", "strategy", "philosophy"],
@@ -37,7 +37,7 @@
 },
 {
   "slug": "off-the-tracks",
-  "num": "05",
+  "num": "01",
   "title": "When the Train Comes Off the Tracks",
   "date": "2025-07-17",
   "tags": ["change management", "AI", "crisis"],
