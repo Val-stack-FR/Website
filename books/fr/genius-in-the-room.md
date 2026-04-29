@@ -1,5 +1,3 @@
-## *Multipliers : Comment les meilleurs leaders rendent tout le monde plus intelligent* — Liz Wiseman & Greg McKeown
-
 La vraie question du livre n'est pas « comment devenir un meilleur leader ? ». Elle est plus inconfortable : et si votre intelligence — celle-là même qui vous a amené jusqu'ici — était précisément ce qui freine votre équipe ?
 
 Wiseman trace une ligne nette entre deux archétypes. Le *Diminisher* extrait, au mieux, la moitié de l'intelligence disponible dans une salle. Le *Multiplier* en extrait presque le double — non pas en travaillant plus, mais en partant d'une hypothèse fondamentalement différente sur ce que le leadership est censé faire. Le Diminisher croit que l'organisation tourne grâce à *son* intelligence. Le Multiplier croit qu'elle tourne grâce à celle de *tous* — et que son rôle est de créer les conditions pour qu'elle émerge.
