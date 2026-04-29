@@ -1,5 +1,23 @@
 [
   {
+  "slug": "who-is-conducting-whom",
+  "num": "05",
+  "title": "Who Is Conducting Whom?",
+  "date": "2026-04-27",
+  "tags": ["AI", "futures", "strategy", "philosophy"],
+  "readTime": "12 min",
+  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well."
+  },
+  {
+  "slug": "the-human-bottleneck",
+  "num": "04",
+  "title": "The Human Bottleneck",
+  "date": "2026-04-17",
+  "tags": ["AI", "strategy", "futures"],
+  "readTime": "8 min",
+  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
+  },
+  {
     "slug": "genai-adoption-people-in-the-middle",
     "num": "03",
     "title": "The people in the middle of GenAI adoption",
@@ -16,24 +34,6 @@
   "tags": ["change management","strategy"],
   "readTime": "9 min",
   "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
-},
-{
-  "slug": "the-human-bottleneck",
-  "num": "04",
-  "title": "The Human Bottleneck",
-  "date": "2026-04-17",
-  "tags": ["AI", "strategy", "futures"],
-  "readTime": "8 min",
-  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
-},
-{
-  "slug": "who-is-conducting-whom",
-  "num": "05",
-  "title": "Who Is Conducting Whom?",
-  "date": "2026-04-27",
-  "tags": ["AI", "futures", "strategy", "philosophy"],
-  "readTime": "12 min",
-  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well."
 },
 {
   "slug": "off-the-tracks",
