@@ -19,6 +19,32 @@
   }
   </script>
   <style>
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .lang-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .lang-btn:hover { color: var(--accent); }
+    .lang-btn.lang-active { color: var(--accent); font-weight: 500; }
+    .lang-sep {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--border-solid);
+    }
+
     :root {
       --bg:           #e8f2ed;
       --surface:      #ece7de;
@@ -160,7 +186,13 @@
       <!-- Left panel: cover + meta -->
       <aside class="review-cover-panel">
 
-        <a href="books.html" class="btn-back" style="margin-bottom: 32px;">← Books</a>
+        <a href="books.html" class="btn-back" style="margin-bottom: 24px;">← Books</a>
+
+        <div class="lang-toggle" style="margin-bottom: 32px;">
+          <button class="lang-btn lang-active" id="btn-en" onclick="switchLang('en')">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr" onclick="switchLang('fr')">FR</button>
+        </div>
 
         <div class="book-cover-placeholder" id="cover-placeholder">
           <img id="cover-img" alt=""
@@ -239,6 +271,25 @@
     bar.style.width = pct + '%';
   });
 
+  let currentSlug = '';
+  let currentLang = 'en';
+
+  function setLangButtons(lang) {
+    document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('lang-active', lang === 'fr');
+  }
+
+  function switchLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    try { localStorage.setItem('site-lang', lang); } catch(e) {}
+    const params = new URLSearchParams(window.location.search);
+    if (lang === 'en') params.delete('lang'); else params.set('lang', lang);
+    history.replaceState(null, '', '?' + params.toString());
+    setLangButtons(lang);
+    loadContent();
+  }
+
   function formatReadDate(readDate) {
     if (!readDate) return '—';
     const [year, month] = readDate.split('-');
@@ -288,7 +339,6 @@
     });
 
     document.getElementById('cover-initials').textContent = book.initials;
-    // Try loading a real cover image (jpg → png → webp), fall back to initials
     const coverImg = document.getElementById('cover-img');
     const exts = ['jpg', 'jpeg', 'png', 'webp'];
     (function tryExt(i) {
@@ -335,6 +385,27 @@
       </a>`).join('');
   }
 
+  async function loadContent() {
+    const bodyEl = document.getElementById('review-body');
+    const prefix = currentLang === 'fr' ? 'books/fr/' : 'books/';
+
+    let res = await fetch(prefix + currentSlug + '.md');
+    if (res.ok) {
+      bodyEl.innerHTML = marked.parse(await res.text());
+    } else {
+      res = await fetch(prefix + currentSlug + '.html');
+      if (res.ok) {
+        bodyEl.innerHTML = await res.text();
+      } else if (currentLang !== 'en') {
+        bodyEl.innerHTML =
+          '<p style="color:var(--text-dim); font-style:italic;">This review is not yet available in French.</p>';
+      } else {
+        bodyEl.innerHTML = '<p style="color:var(--text-dim);">Review content not found.</p>';
+      }
+    }
+    setupTOC();
+  }
+
   async function loadReview() {
     const params = new URLSearchParams(window.location.search);
     const allBooks = await fetch('books/index.json').then(r => r.json());
@@ -343,22 +414,13 @@
     let book = allBooks.find(b => b.slug === slug);
     if (!book) { book = allBooks[0]; slug = book.slug; }
 
+    currentSlug = slug;
+    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
+    currentLang = params.get('lang') || savedLang || 'en';
+
+    setLangButtons(currentLang);
     populateMeta(book);
-
-    let res = await fetch('books/' + slug + '.md');
-    if (res.ok) {
-      document.getElementById('review-body').innerHTML = marked.parse(await res.text());
-    } else {
-      res = await fetch('books/' + slug + '.html');
-      if (res.ok) {
-        document.getElementById('review-body').innerHTML = await res.text();
-      } else {
-        document.getElementById('review-body').innerHTML =
-          '<p style="color:var(--text-dim);">Review content not found.</p>';
-      }
-    }
-
-    setupTOC();
+    await loadContent();
     renderRelated(book.related, allBooks);
   }
 
