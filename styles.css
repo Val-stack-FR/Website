@@ -330,6 +330,10 @@ button { cursor: pointer; font-family: var(--font-mono); background: none; borde
   position: relative;
   overflow: hidden;
 }
+.book-cover-placeholder.cover-loaded {
+  aspect-ratio: unset;
+  overflow: visible;
+}
 
 .book-cover-initials {
   font-family: var(--font-head);

@@ -196,7 +196,7 @@
 
         <div class="book-cover-placeholder" id="cover-placeholder">
           <img id="cover-img" alt=""
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top;display:none;">
+               style="width:100%;height:auto;display:none;">
           <span class="book-cover-initials" id="cover-initials">—</span>
           <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
@@ -238,7 +238,7 @@
       <!-- Review body -->
       <div class="review-content">
 
-        <a class="category-badge" id="badge" style="text-decoration:none;" href="books.html">Book review</a>
+        <a class="category-badge" id="badge" href="books.html" style="text-decoration:none;">Book review</a>
 
         <h1 class="review-book-title" id="book-title"></h1>
         <div class="review-author" id="book-author-year"></div>
@@ -346,6 +346,7 @@
       coverImg.onerror = () => tryExt(i + 1);
       coverImg.onload = () => {
         coverImg.style.display = 'block';
+        document.getElementById('cover-placeholder').classList.add('cover-loaded');
         document.getElementById('cover-initials').style.display = 'none';
         document.getElementById('cover-label').style.display = 'none';
       };
@@ -366,9 +367,7 @@
       dots.appendChild(d);
     }
 
-    const badge = document.getElementById('badge');
-    badge.textContent = 'Book review · ' + book.category;
-    badge.href = 'books.html?tab=' + book.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    document.getElementById('badge').textContent = 'Book review · ' + book.category;
     document.getElementById('book-title').textContent = book.title;
     document.getElementById('book-author-year').textContent = book.author + ' · ' + book.published;
   }
