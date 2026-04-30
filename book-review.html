@@ -196,7 +196,7 @@
 
         <div class="book-cover-placeholder" id="cover-placeholder">
           <img id="cover-img" alt=""
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;display:none;">
+               style="width:100%;height:auto;display:none;">
           <span class="book-cover-initials" id="cover-initials">—</span>
           <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
@@ -346,6 +346,7 @@
       coverImg.onerror = () => tryExt(i + 1);
       coverImg.onload = () => {
         coverImg.style.display = 'block';
+        document.getElementById('cover-placeholder').classList.add('cover-loaded');
         document.getElementById('cover-initials').style.display = 'none';
         document.getElementById('cover-label').style.display = 'none';
       };
