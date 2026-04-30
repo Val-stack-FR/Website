@@ -1,5 +1,8 @@
 document.body.classList.add('visible');
 
+const navEl = document.querySelector('.nav');
+if (navEl) document.documentElement.style.setProperty('--nav-h', navEl.offsetHeight + 'px');
+
 const bar = document.getElementById('progress');
 window.addEventListener('scroll', () => {
   const h = document.documentElement;

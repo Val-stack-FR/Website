@@ -45,11 +45,6 @@ html {
   scrollbar-width: thin;
   scrollbar-color: var(--accent-dark) transparent;
 }
-.essay-sidebar,
-.review-cover-panel {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-solid) transparent;
-}
 
 /* WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar              { width: 5px; }
@@ -57,10 +52,6 @@ html {
 ::-webkit-scrollbar-thumb        { background: var(--accent-dark); border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover  { background: var(--accent); }
 
-.essay-sidebar::-webkit-scrollbar-thumb,
-.review-cover-panel::-webkit-scrollbar-thumb        { background: rgba(0,0,0,0.18); }
-.essay-sidebar::-webkit-scrollbar-thumb:hover,
-.review-cover-panel::-webkit-scrollbar-thumb:hover  { background: var(--accent); }
 
 /* ─── NAV ────────────────────────────────────────────────────────────────── */
 .nav {
@@ -177,10 +168,8 @@ html {
   border-right: 1px solid var(--border);
   padding: 48px 32px;
   position: sticky;
-  top: 61px;
-  height: calc(100vh - 61px);
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  top: var(--nav-h, 67px);
+  align-self: start;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -336,10 +325,8 @@ html {
   border-right: 1px solid var(--border);
   padding: 48px 32px;
   position: sticky;
-  top: 61px;
-  height: calc(100vh - 61px);
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  top: var(--nav-h, 67px);
+  align-self: start;
   display: flex;
   flex-direction: column;
 }
