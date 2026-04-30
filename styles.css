@@ -180,6 +180,7 @@ html {
   top: 61px;
   height: calc(100vh - 61px);
   overflow-y: auto;
+  scrollbar-gutter: stable;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -338,6 +339,7 @@ html {
   top: 61px;
   height: calc(100vh - 61px);
   overflow-y: auto;
+  scrollbar-gutter: stable;
   display: flex;
   flex-direction: column;
 }
