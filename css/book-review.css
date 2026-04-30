@@ -1,0 +1,186 @@
+/* ── COLORS ─────────────────────────────────────────────── */
+:root {
+  --bg:           #e8f2ed;
+  --surface:      #ece7de;
+  --surface-2:    #f9f6f1;
+  --text:         #111810;
+  --text-muted:   rgba(17,24,16,0.58);
+  --text-dim:     rgba(17,24,16,0.32);
+  --accent:       #2c8a52;
+  --accent-hover: #3aa868;
+  --accent-dark:  #1a5c3a;
+  --accent-fill:  rgba(44,138,82,0.10);
+  --border:       rgba(0,0,0,0.09);
+  --border-solid: rgba(0,0,0,0.15);
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.lang-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.lang-active { color: var(--accent); font-weight: 500; }
+.lang-sep {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--border-solid);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+.category-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 4px 12px;
+  border: 1px solid var(--accent-dark);
+  color: var(--accent);
+  margin-bottom: 24px;
+  text-decoration: none;
+}
+
+.highlight {
+  background: rgba(26,92,58,0.10);
+  color: var(--text);
+  padding: 0 3px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 16px;
+}
+
+.related-card {
+  background: var(--bg);
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+  display: block;
+}
+
+.related-card:hover { background: var(--surface); }
+
+.related-title {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  transition: color 0.15s;
+}
+
+.related-card:hover .related-title { color: var(--accent); }
+
+.related-author {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.toc-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  display: block;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s;
+  text-decoration: none;
+}
+.toc-link:last-child { border-bottom: none; }
+.toc-link:hover { color: var(--accent); }
+.toc-link.toc-active { color: var(--accent); }
+
+.review-body h2 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin: 48px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-body h2::before {
+  content: attr(data-section);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 400;
+}
+.review-body p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+.review-body em { font-style: italic; }
+.review-body strong { font-weight: 700; color: var(--text); }
+
+/* Cover image */
+#cover-img { width: 100%; height: auto; display: none; }
+
+/* Panel extras */
+.btn-back--review { margin-bottom: 24px; }
+.lang-toggle--review { margin-bottom: 32px; }
+
+.review-rating--meta {
+  border: none;
+  padding: 8px 0 0;
+  margin: 0;
+}
+
+.toc-section-header { margin-top: auto; }
+
+.review-meta-label--toc { margin-bottom: 10px; }
+
+/* Related block */
+#related-block {
+  display: none;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.related-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+/* Error messages */
+.load-error { color: var(--text-dim); }
+.load-error-fr { font-style: italic; }

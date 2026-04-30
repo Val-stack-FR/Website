@@ -115,5 +115,35 @@ Use these to publish new content directly from any text format:
 - `/text-to-website_essay` — converts any text input into a properly formatted essay file and updates the registry
 - `/text-to-website_book-review` — converts notes/text into a book review file and updates the registry
 
+## File structure (scripts and styles)
+
+```
+css/
+  index.css          ← index.html page styles
+  essays.css         ← essays.html page styles
+  essay-detail.css   ← essay-detail.html page styles
+  books.css          ← books.html page styles
+  book-review.css    ← book-review.html page styles
+js/
+  index.js           ← index.html script
+  essays.js          ← essays.html script
+  essay-detail.js    ← essay-detail.html script
+  books.js           ← books.html script
+  book-review.js     ← book-review.html script
+```
+
+Each HTML page loads `styles.css` (shared) + its own `css/<page>.css` and `js/<page>.js`.
+
+## Security rules
+
+The site's CSP (`vercel.json`) has no `unsafe-inline`. **Always follow these rules** when adding or editing code:
+
+- **No inline scripts.** All JS goes in `js/<page>.js`. Never add a `<script>` block inside HTML.
+- **No inline styles.** All CSS goes in `css/<page>.css` or `styles.css`. Never add a `<style>` block or `style=` attribute on an HTML element — use named CSS classes instead.
+- **No inline event handlers.** Never use `onclick=`, `onmouseover=`, `onerror=` etc. in HTML. Attach all handlers via `addEventListener` in the JS file.
+- **SRI on all CDN scripts.** Any `<script src="https://...">` from a CDN must include `integrity="sha384-..."` and `crossorigin="anonymous"`. Compute the hash with: `curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A`
+- **CSP compliance.** The `vercel.json` CSP must never include `'unsafe-inline'` or `'unsafe-eval'`. When adding a new external domain (font provider, CDN), add it explicitly to the correct directive in `vercel.json`.
+- **Dynamic HTML.** When generating HTML via `innerHTML` or template literals, do not embed `style=` attributes or event handler attributes in the string. Use CSS classes and event delegation instead.
+
 ## Branch convention
 Work on `claude/<feature-name>` branches. Push and open PRs via GitHub MCP tools (mcp__github__*).

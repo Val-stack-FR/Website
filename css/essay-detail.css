@@ -1,0 +1,198 @@
+/* ── COLORS ─────────────────────────────────────────────── */
+:root {
+  --bg:           #f5f1eb;
+  --surface:      #ece7de;
+  --surface-2:    #f9f6f1;
+  --text:         #111810;
+  --text-muted:   rgba(17,24,16,0.58);
+  --text-dim:     rgba(17,24,16,0.32);
+  --accent:       #2c8a52;
+  --accent-hover: #3aa868;
+  --accent-dark:  #1a5c3a;
+  --accent-fill:  rgba(44,138,82,0.10);
+  --border:       rgba(0,0,0,0.09);
+  --border-solid: rgba(0,0,0,0.15);
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lang-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.lang-active { color: var(--accent); font-weight: 500; }
+.lang-sep {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--border-solid);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+.fn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  vertical-align: super;
+  line-height: 0;
+  cursor: default;
+}
+
+.highlight {
+  background: rgba(26,92,58,0.10);
+  color: var(--text);
+  padding: 0 3px;
+}
+
+.toc-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  display: block;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s;
+  text-decoration: none;
+}
+.toc-link:last-child { border-bottom: none; }
+.toc-link:hover { color: var(--accent); }
+.toc-link.toc-active { color: var(--accent); }
+
+.essay-body h2 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin: 52px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.essay-body h2::before {
+  content: '§';
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  opacity: 0.8;
+}
+.essay-body p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+.essay-body em { font-style: italic; }
+.essay-body strong { font-weight: 700; color: var(--text); }
+
+/* Sidebar extras */
+.sidebar-tags-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.essay-sidebar-label--toc { margin-bottom: 10px; }
+
+.sidebar-tag-link {
+  display: inline-block;
+  width: fit-content;
+  text-decoration: none;
+}
+
+/* Essay header */
+.essay-header {
+  margin-bottom: 52px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid var(--border);
+}
+
+.essay-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.essay-num-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.essay-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--border-solid);
+  display: inline-block;
+}
+
+.essay-tags-inline-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* Next essay block */
+#next-essay-block {
+  display: none;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  justify-content: flex-end;
+}
+
+.next-essay-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.next-essay-link:hover { opacity: 0.7; }
+
+.next-essay-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+.next-essay-title-text {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-align: right;
+}
+
+/* Error messages */
+.load-error { color: var(--text-dim); }
+.load-error-fr { font-style: italic; }

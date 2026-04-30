@@ -90,7 +90,8 @@ button { cursor: pointer; font-family: var(--font-mono); background: none; borde
   justify-content: space-between;
   align-items: center;
 }
-.footer-text { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; }
+.footer-text { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; transition: color 0.15s; }
+.footer-text:hover { color: var(--accent); }
 .footer-accent { color: var(--accent); }
 
 /* ─── PAGE WRAPPER ───────────────────────────────────────────────────────── */

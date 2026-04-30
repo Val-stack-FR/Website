@@ -1,0 +1,205 @@
+/* ── COLORS ─────────────────────────────────────────────── */
+:root {
+  --bg:           #e8f2ed;
+  --surface:      #ece7de;
+  --surface-2:    #f9f6f1;
+  --text:         #111810;
+  --text-muted:   rgba(17,24,16,0.58);
+  --text-dim:     rgba(17,24,16,0.32);
+  --accent:       #2c8a52;
+  --accent-hover: #3aa868;
+  --accent-dark:  #1a5c3a;
+  --accent-fill:  rgba(44,138,82,0.10);
+  --border:       rgba(0,0,0,0.09);
+  --border-solid: rgba(0,0,0,0.15);
+}
+
+.books-header {
+  padding: 64px 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.books-heading {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(48px, 8vw, 100px);
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin-bottom: 40px;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 0;
+}
+
+.tab-btn {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  padding: 16px 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  position: relative;
+  top: 1px;
+}
+
+.tab-btn:hover { color: var(--text-muted); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.books-section {
+  padding: 48px 48px 80px;
+  display: none;
+}
+
+.books-section.active { display: block; }
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.book-card {
+  background: var(--bg);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.book-card:hover { background: var(--surface); }
+
+.book-cover {
+  width: 72px;
+  height: 104px;
+  background: var(--accent-dark);
+  border: 1px solid var(--border-solid);
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.book-cover-init {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  color: #e8f2ed;
+  z-index: 1;
+}
+
+.book-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3px,
+    rgba(26,92,58,0.05) 3px,
+    rgba(26,92,58,0.05) 4px
+  );
+}
+
+.book-cover-accent {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent-dark);
+}
+
+.book-cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: none;
+}
+
+.book-title {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.book-card:hover .book-title { color: var(--accent); }
+
+.book-author {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.book-note {
+  position: absolute;
+  inset: 0;
+  padding: 24px 28px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.22s;
+  border-top: 2px solid var(--accent);
+  z-index: 2;
+}
+
+.book-card:hover .book-note { opacity: 1; }
+
+.book-note-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.book-note-cta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 12px;
+}
+
+.books-error {
+  padding: 48px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .books-header { padding: 40px 20px 0; }
+  .tab-btn { padding: 14px 16px; font-size: 11px; }
+  .books-section { padding: 32px 20px 60px; }
+  .books-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .books-grid { grid-template-columns: 1fr; }
+}
