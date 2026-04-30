@@ -105,6 +105,10 @@ async function loadContent() {
   const bodyEl = document.getElementById('essay-body');
   const prefix = currentLang === 'fr' ? 'essays/fr/' : 'essays/';
 
+  if (typeof marked === 'undefined') {
+    throw new Error('marked library failed to load — check network or CDN availability');
+  }
+
   let res = await fetch(prefix + currentSlug + '.md');
   if (res.ok) {
     bodyEl.innerHTML = marked.parse(await res.text());
