@@ -168,7 +168,7 @@ html {
   border-right: 1px solid var(--border);
   padding: 48px 32px;
   position: sticky;
-  top: 61px;
+  top: var(--nav-h, 67px);
   align-self: start;
   display: flex;
   flex-direction: column;
@@ -325,7 +325,7 @@ html {
   border-right: 1px solid var(--border);
   padding: 48px 32px;
   position: sticky;
-  top: 61px;
+  top: var(--nav-h, 67px);
   align-self: start;
   display: flex;
   flex-direction: column;
