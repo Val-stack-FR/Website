@@ -39,6 +39,29 @@ a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: var(--font-mono); background: none; border: none; }
 ::selection { background: var(--accent); color: var(--bg); }
 
+/* ─── SCROLLBARS ─────────────────────────────────────────────────────────── */
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-dark) transparent;
+}
+.essay-sidebar,
+.review-cover-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-solid) transparent;
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar              { width: 5px; }
+::-webkit-scrollbar-track        { background: transparent; }
+::-webkit-scrollbar-thumb        { background: var(--accent-dark); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover  { background: var(--accent); }
+
+.essay-sidebar::-webkit-scrollbar-thumb,
+.review-cover-panel::-webkit-scrollbar-thumb        { background: rgba(0,0,0,0.18); }
+.essay-sidebar::-webkit-scrollbar-thumb:hover,
+.review-cover-panel::-webkit-scrollbar-thumb:hover  { background: var(--accent); }
+
 /* ─── NAV ────────────────────────────────────────────────────────────────── */
 .nav {
   display: flex;
