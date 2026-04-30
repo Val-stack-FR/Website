@@ -68,7 +68,7 @@
     .essay-row {
       display: grid;
       grid-template-columns: 60px 130px 1fr auto;
-      align-items: center;
+      align-items: stretch;
       gap: 0;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
@@ -87,6 +87,8 @@
       color: var(--text-dim);
       letter-spacing: 0.08em;
       padding: 28px 0;
+      display: flex;
+      align-items: center;
     }
 
     .essay-row-date {
@@ -95,6 +97,8 @@
       color: var(--text-muted);
       padding: 28px 24px 28px 0;
       border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
     }
 
     .essay-row-body {
@@ -136,12 +140,23 @@
       color: var(--accent);
       border: 1px solid var(--accent-dark);
       padding: 2px 8px;
+      background: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .essay-tag-inline:hover {
+      background: var(--accent-dark);
+      color: #e8f2ed;
     }
 
     .essay-row-meta {
       padding: 28px 0 28px 24px;
       text-align: right;
       border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
     }
 
     .essay-row-time {
@@ -231,7 +246,7 @@
   let activeTag = 'all';
 
   function renderRow(essay) {
-    const tagsHtml = essay.tags.map(t => `<span class="essay-tag-inline">${t}</span>`).join('');
+    const tagsHtml = essay.tags.map(t => `<button class="essay-tag-inline" onclick="event.preventDefault();event.stopPropagation();filter('${t}')">${t}</button>`).join('');
     return `
       <a href="essay-detail.html?essay=${essay.slug}" class="essay-row" data-tags='${JSON.stringify(essay.tags)}'>
         <span class="essay-row-num">${essay.num}</span>
@@ -284,6 +299,8 @@
       allEssays = essays;
       document.getElementById('essay-list').innerHTML = essays.map(renderRow).join('');
       buildTagBar(essays);
+      const urlTag = new URLSearchParams(window.location.search).get('tag');
+      if (urlTag) filter(urlTag);
     })
     .catch(() => {
       document.getElementById('essay-list').innerHTML =
