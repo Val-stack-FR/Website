@@ -16,7 +16,7 @@ The data she offers on this is concrete: her own team, under a manager who treat
 
 <div class="pull-quote"><blockquote>"Most companies and managers will take whatever you are willing to give."</blockquote><cite>— Ginni Rometty, <em>Good Power</em></cite></div>
 
-The "Boundary Paradox" is where the book is most compressed and most useful. The conventional fear — that saying no will cost you the role, the opportunity, the relationship — turns out to be backward in environments where performance is genuinely valued. When you set limits with conviction, the organisation adapts to you, provided the quality of your output remains exceptional. The paradox is that availability and value are routinely conflated when they're actually orthogonal. Constant availability is a legible signal of scarcity — of someone who can't afford to be otherwise. Boundaries, set from a position of genuine contribution, signal the opposite.
+The "Boundary Paradox" is where the book is most compressed and most useful. The conventional fear — that saying no will cost you the role, the opportunity, the relationship — turns out to be backward in environments where performance is genuinely valued. When you set limits with conviction, the organisation adapts to you, provided the quality of your output remains exceptional. The paradox is that availability and value are routinely conflated when they're actually orthogonal. Constant availability is the opposite of scarcity — of someone who can afford to be available. Boundaries, set from a position of genuine contribution, signal the opposite.
 
 This isn't a claim about work-life balance. It's a claim about how value is perceived and maintained in organisations that run on expertise. The people who have internalised this tend not to announce it as a principle. They simply operate from it.
 
@@ -28,4 +28,4 @@ The question she leaves open is the one worth testing against your own CV: if yo
 
 ---
 
-*Read February 2026*
+*Read February 2025*
