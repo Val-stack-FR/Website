@@ -240,7 +240,7 @@
       <a href="book-review.html?book=${book.slug}" class="book-card">
         <div class="book-cover">
           <img src="books/covers/${book.slug}.jpg"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;display:none;"
                onload="this.style.display='block';this.nextElementSibling.style.display='none'"
                onerror="this.src='books/covers/${book.slug}.png';this.onerror=null">
           <span class="book-cover-init">${book.initials}</span>
@@ -273,20 +273,24 @@
       const tabBar = document.getElementById('tab-bar');
       const content = document.getElementById('books-content');
 
+      const urlTab = new URLSearchParams(window.location.search).get('tab');
+
       categories.forEach((cat, i) => {
         const tabId = slugifyCategory(cat);
+        const isDefault = urlTab ? tabId === urlTab : i === 0;
         const btn = document.createElement('button');
-        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+        btn.className = 'tab-btn' + (isDefault ? ' active' : '');
         btn.role = 'tab';
-        btn.setAttribute('aria-selected', i === 0);
+        btn.setAttribute('aria-selected', isDefault);
         btn.dataset.tab = tabId;
         btn.textContent = cat;
         btn.addEventListener('click', () => activateTab(tabId));
         tabBar.appendChild(btn);
 
         const booksInCat = books.filter(b => b.category === cat);
+        const isDefault = urlTab ? tabId === urlTab : i === 0;
         const section = document.createElement('section');
-        section.className = 'books-section' + (i === 0 ? ' active' : '');
+        section.className = 'books-section' + (isDefault ? ' active' : '');
         section.id = 'tab-' + tabId;
         section.setAttribute('aria-label', cat + ' books');
         section.innerHTML = `<div class="books-grid">${booksInCat.map(renderCard).join('')}</div>`;

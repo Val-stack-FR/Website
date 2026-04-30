@@ -290,7 +290,7 @@
 
     const tagsContainer = document.getElementById('sidebar-tags');
     tagsContainer.innerHTML = essay.tags.map(t =>
-      `<span class="tag" style="display:inline-block; width:fit-content;">${t}</span>`
+      `<a href="essays.html?tag=${encodeURIComponent(t)}" class="tag" style="display:inline-block; width:fit-content; text-decoration:none;">${t}</a>`
     ).join('');
 
     document.getElementById('essay-num').textContent = 'Essay № ' + essay.num;
