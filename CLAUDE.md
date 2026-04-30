@@ -141,7 +141,7 @@ The site's CSP (`vercel.json`) has no `unsafe-inline`. **Always follow these rul
 - **No inline scripts.** All JS goes in `js/<page>.js`. Never add a `<script>` block inside HTML.
 - **No inline styles.** All CSS goes in `css/<page>.css` or `styles.css`. Never add a `<style>` block or `style=` attribute on an HTML element — use named CSS classes instead.
 - **No inline event handlers.** Never use `onclick=`, `onmouseover=`, `onerror=` etc. in HTML. Attach all handlers via `addEventListener` in the JS file.
-- **SRI on all CDN scripts.** Any `<script src="https://...">` from a CDN must include `integrity="sha384-..."` and `crossorigin="anonymous"`. Compute the hash with: `curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A`
+- **SRI on all CDN scripts.** Any `<script src="https://...">` from a CDN should include `integrity="sha384-..."` and `crossorigin="anonymous"` when possible. Compute the hash **from a machine with real network access** (the Claude Code sandbox blocks external hosts, so hashes computed inside the sandbox will be wrong): `curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A`. A missing SRI is acceptable; a wrong SRI silently breaks the page.
 - **CSP compliance.** The `vercel.json` CSP must never include `'unsafe-inline'` or `'unsafe-eval'`. When adding a new external domain (font provider, CDN), add it explicitly to the correct directive in `vercel.json`.
 - **Dynamic HTML.** When generating HTML via `innerHTML` or template literals, do not embed `style=` attributes or event handler attributes in the string. Use CSS classes and event delegation instead.
 
