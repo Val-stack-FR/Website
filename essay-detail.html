@@ -9,7 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <link rel="stylesheet" href="css/essay-detail.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-rRoXxn2yHlrZYB587Ki9RO1tONhLdM6XfORg7Rw4uwH4/Fh/5nP7IUX91bkaKUgs"
+          crossorigin="anonymous"></script>
   <script type="application/ld+json" id="schema-json">
   {
     "@context": "https://schema.org",
@@ -20,118 +23,6 @@
     "description": ""
   }
   </script>
-  <style>
-    :root {
-      --bg:           #f5f1eb;
-      --surface:      #ece7de;
-      --surface-2:    #f9f6f1;
-      --text:         #111810;
-      --text-muted:   rgba(17,24,16,0.58);
-      --text-dim:     rgba(17,24,16,0.32);
-      --accent:       #2c8a52;
-      --accent-hover: #3aa868;
-      --accent-dark:  #1a5c3a;
-      --accent-fill:  rgba(44,138,82,0.10);
-      --border:       rgba(0,0,0,0.09);
-      --border-solid: rgba(0,0,0,0.15);
-    }
-
-    .lang-toggle {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .lang-btn {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-    .lang-btn:hover { color: var(--accent); }
-    .lang-btn.lang-active { color: var(--accent); font-weight: 500; }
-    .lang-sep {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--border-solid);
-    }
-
-    /* Progress bar */
-    .progress-bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: var(--accent);
-      width: 0%;
-      z-index: 200;
-      transition: width 0.1s linear;
-    }
-
-    /* Footnote markers in text */
-    .fn {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--accent);
-      vertical-align: super;
-      line-height: 0;
-      cursor: default;
-    }
-
-    /* Highlight / annotation style */
-    .highlight {
-      background: rgba(26,92,58,0.10);
-      color: var(--text);
-      padding: 0 3px;
-    }
-
-    /* Sidebar TOC links */
-    .toc-link {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      display: block;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.15s;
-      text-decoration: none;
-    }
-    .toc-link:last-child { border-bottom: none; }
-    .toc-link:hover { color: var(--accent); }
-    .toc-link.toc-active { color: var(--accent); }
-
-    /* Markdown-rendered h2 inside essay-body */
-    .essay-body h2 {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.025em;
-      color: var(--text);
-      margin: 52px 0 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .essay-body h2::before {
-      content: '§';
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--accent);
-      opacity: 0.8;
-    }
-    .essay-body p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.9;
-      margin-bottom: 28px;
-    }
-    .essay-body em { font-style: italic; }
-    .essay-body strong { font-weight: 700; color: var(--text); }
-  </style>
 </head>
 <body>
 <div class="progress-bar" id="progress"></div>
@@ -153,9 +44,9 @@
         <a href="essays.html" class="btn-back">← Essays</a>
 
         <div class="lang-toggle">
-          <button class="lang-btn lang-active" id="btn-en" onclick="switchLang('en')">EN</button>
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
           <span class="lang-sep">/</span>
-          <button class="lang-btn" id="btn-fr" onclick="switchLang('fr')">FR</button>
+          <button class="lang-btn" id="btn-fr">FR</button>
         </div>
 
         <div>
@@ -170,11 +61,11 @@
 
         <div>
           <div class="essay-sidebar-label">Tags</div>
-          <div id="sidebar-tags" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
+          <div id="sidebar-tags" class="sidebar-tags-list"></div>
         </div>
 
         <div>
-          <div class="essay-sidebar-label" style="margin-bottom:10px;">Contents</div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
           <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
@@ -182,11 +73,11 @@
       <!-- Content -->
       <div class="essay-content">
 
-        <header style="margin-bottom: 52px; padding-bottom: 52px; border-bottom: 1px solid var(--border);">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom: 20px;">
-            <span id="essay-num" style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.1em;">Essay №</span>
-            <span style="width:1px; height:12px; background:var(--border-solid); display:inline-block;"></span>
-            <span id="essay-tags-inline" style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim);"></span>
+        <header class="essay-header">
+          <div class="essay-meta-row">
+            <span id="essay-num" class="essay-num-label">Essay №</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label"></span>
           </div>
           <h1 class="essay-title" id="essay-title"></h1>
           <p class="essay-desc" id="essay-desc"></p>
@@ -195,10 +86,10 @@
         <div class="essay-body" id="essay-body"></div>
 
         <!-- Next essay -->
-        <div id="next-essay-block" style="display:none; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); justify-content: flex-end;">
-          <a id="next-essay-link" href="#" style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; color: inherit; text-decoration: none; transition: opacity 0.15s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-            <span style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim);">Next essay →</span>
-            <span id="next-essay-title" style="font-family: var(--font-head); font-weight: 500; font-size: 15px; letter-spacing: -0.02em; color: var(--text); text-align: right;"></span>
+        <div id="next-essay-block" class="next-essay-block">
+          <a id="next-essay-link" href="#" class="next-essay-link">
+            <span class="next-essay-label">Next essay →</span>
+            <span id="next-essay-title" class="next-essay-title-text"></span>
           </a>
         </div>
 
@@ -208,150 +99,10 @@
 
   <footer class="footer">
     <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
-    <a href="essays.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← All essays</a>
+    <a href="essays.html" class="footer-text">← All essays</a>
   </footer>
 
 </div>
-<script>
-  document.body.classList.add('visible');
-
-  const bar = document.getElementById('progress');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    bar.style.width = pct + '%';
-  });
-
-  let currentSlug = '';
-  let currentLang = 'en';
-
-  function setLangButtons(lang) {
-    document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-    document.getElementById('btn-fr').classList.toggle('lang-active', lang === 'fr');
-  }
-
-  function switchLang(lang) {
-    if (lang === currentLang) return;
-    currentLang = lang;
-    try { localStorage.setItem('site-lang', lang); } catch(e) {}
-    const params = new URLSearchParams(window.location.search);
-    if (lang === 'en') params.delete('lang'); else params.set('lang', lang);
-    history.replaceState(null, '', '?' + params.toString());
-    setLangButtons(lang);
-    loadContent();
-  }
-
-  function setupTOC() {
-    const headings = document.querySelectorAll('.essay-body h2');
-    const tocNav = document.getElementById('toc-nav');
-    tocNav.innerHTML = '';
-
-    headings.forEach((h, i) => {
-      if (!h.id) h.id = 'section-' + (i + 1);
-      const link = document.createElement('a');
-      link.href = '#' + h.id;
-      link.className = 'toc-link';
-      link.textContent = h.textContent.replace(/^§\s*/, '');
-      tocNav.appendChild(link);
-    });
-
-    const tocLinks = tocNav.querySelectorAll('.toc-link');
-    if (headings.length === 0 || tocLinks.length === 0) return;
-
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' });
-
-    headings.forEach(s => obs.observe(s));
-  }
-
-  function populateMeta(essay, allEssays) {
-    document.getElementById('page-title').textContent = essay.title + ' — Valérian';
-    document.getElementById('meta-desc').setAttribute('content', essay.description);
-
-    const schema = document.getElementById('schema-json');
-    schema.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: essay.title,
-      author: { '@type': 'Person', name: 'Valérian' },
-      datePublished: essay.date,
-      description: essay.description
-    });
-
-    document.getElementById('sidebar-date').textContent = essay.date;
-    document.getElementById('sidebar-date').setAttribute('datetime', essay.date);
-    document.getElementById('sidebar-readtime').textContent = essay.readTime;
-
-    const tagsContainer = document.getElementById('sidebar-tags');
-    tagsContainer.innerHTML = essay.tags.map(t =>
-      `<a href="essays.html?tag=${encodeURIComponent(t)}" class="tag" style="display:inline-block; width:fit-content; text-decoration:none;">${t}</a>`
-    ).join('');
-
-    document.getElementById('essay-num').textContent = 'Essay № ' + essay.num;
-    document.getElementById('essay-tags-inline').textContent = essay.tags.join(' · ');
-    document.getElementById('essay-title').textContent = essay.title;
-    document.getElementById('essay-desc').textContent = essay.description;
-
-    const idx = allEssays.findIndex(e => e.slug === essay.slug);
-    const next = allEssays[idx + 1];
-    if (next) {
-      const block = document.getElementById('next-essay-block');
-      block.style.display = 'flex';
-      document.getElementById('next-essay-link').href = 'essay-detail.html?essay=' + next.slug;
-      document.getElementById('next-essay-title').textContent = next.title;
-    }
-  }
-
-  async function loadContent() {
-    const bodyEl = document.getElementById('essay-body');
-    const prefix = currentLang === 'fr' ? 'essays/fr/' : 'essays/';
-
-    let res = await fetch(prefix + currentSlug + '.md');
-    if (res.ok) {
-      bodyEl.innerHTML = marked.parse(await res.text());
-    } else {
-      res = await fetch(prefix + currentSlug + '.html');
-      if (res.ok) {
-        bodyEl.innerHTML = await res.text();
-      } else if (currentLang !== 'en') {
-        bodyEl.innerHTML =
-          '<p style="color:var(--text-dim); font-style:italic;">This essay is not yet available in French.</p>';
-      } else {
-        bodyEl.innerHTML = '<p style="color:var(--text-dim);">Essay content not found.</p>';
-      }
-    }
-    setupTOC();
-  }
-
-  async function loadEssay() {
-    const params = new URLSearchParams(window.location.search);
-    const allEssays = await fetch('essays/index.json').then(r => r.json());
-
-    let slug = params.get('essay');
-    let essay = allEssays.find(e => e.slug === slug);
-    if (!essay) { essay = allEssays[0]; slug = essay.slug; }
-
-    currentSlug = slug;
-    // URL param takes priority, then localStorage, then default 'en'
-    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
-    currentLang = params.get('lang') || savedLang || 'en';
-
-    setLangButtons(currentLang);
-    populateMeta(essay, allEssays);
-    await loadContent();
-  }
-
-  loadEssay().catch(err => {
-    document.getElementById('essay-body').innerHTML =
-      '<p style="color:var(--text-dim);">Could not load essay. Make sure the site is served over HTTP.</p>';
-    console.error(err);
-  });
-</script>
+<script src="js/essay-detail.js" defer></script>
 </body>
 </html>

@@ -9,7 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <link rel="stylesheet" href="css/book-review.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-rRoXxn2yHlrZYB587Ki9RO1tONhLdM6XfORg7Rw4uwH4/Fh/5nP7IUX91bkaKUgs"
+          crossorigin="anonymous"></script>
   <script type="application/ld+json" id="schema-json">
   {
     "@context": "https://schema.org",
@@ -18,155 +21,6 @@
     "author": { "@type": "Person", "name": "" }
   }
   </script>
-  <style>
-    .lang-toggle {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .lang-btn {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-    .lang-btn:hover { color: var(--accent); }
-    .lang-btn.lang-active { color: var(--accent); font-weight: 500; }
-    .lang-sep {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--border-solid);
-    }
-
-    :root {
-      --bg:           #e8f2ed;
-      --surface:      #ece7de;
-      --surface-2:    #f9f6f1;
-      --text:         #111810;
-      --text-muted:   rgba(17,24,16,0.58);
-      --text-dim:     rgba(17,24,16,0.32);
-      --accent:       #2c8a52;
-      --accent-hover: #3aa868;
-      --accent-dark:  #1a5c3a;
-      --accent-fill:  rgba(44,138,82,0.10);
-      --border:       rgba(0,0,0,0.09);
-      --border-solid: rgba(0,0,0,0.15);
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: var(--accent);
-      width: 0%;
-      z-index: 200;
-      transition: width 0.1s linear;
-    }
-
-    .category-badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      padding: 4px 12px;
-      border: 1px solid var(--accent-dark);
-      color: var(--accent);
-      margin-bottom: 24px;
-    }
-
-    .highlight {
-      background: rgba(26,92,58,0.10);
-      color: var(--text);
-      padding: 0 3px;
-    }
-
-    .related-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 16px;
-    }
-
-    .related-card {
-      background: var(--bg);
-      padding: 20px;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.15s;
-      display: block;
-    }
-
-    .related-card:hover { background: var(--surface); }
-
-    .related-title {
-      font-family: var(--font-head);
-      font-weight: 500;
-      font-size: 13px;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
-      transition: color 0.15s;
-    }
-
-    .related-card:hover .related-title { color: var(--accent); }
-
-    .related-author {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-dim);
-    }
-
-    .toc-link {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      display: block;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.15s;
-      text-decoration: none;
-    }
-    .toc-link:last-child { border-bottom: none; }
-    .toc-link:hover { color: var(--accent); }
-    .toc-link.toc-active { color: var(--accent); }
-
-    /* Markdown-rendered h2 inside review-body */
-    .review-body h2 {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: -0.025em;
-      color: var(--text);
-      margin: 48px 0 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .review-body h2::before {
-      content: attr(data-section);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--accent);
-      font-weight: 400;
-    }
-    .review-body p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.9;
-      margin-bottom: 28px;
-    }
-    .review-body em { font-style: italic; }
-    .review-body strong { font-weight: 700; color: var(--text); }
-  </style>
 </head>
 <body>
 <div class="progress-bar" id="progress"></div>
@@ -186,17 +40,16 @@
       <!-- Left panel: cover + meta -->
       <aside class="review-cover-panel">
 
-        <a href="books.html" class="btn-back" style="margin-bottom: 24px;">← Books</a>
+        <a href="books.html" class="btn-back btn-back--review">← Books</a>
 
-        <div class="lang-toggle" style="margin-bottom: 32px;">
-          <button class="lang-btn lang-active" id="btn-en" onclick="switchLang('en')">EN</button>
+        <div class="lang-toggle lang-toggle--review">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
           <span class="lang-sep">/</span>
-          <button class="lang-btn" id="btn-fr" onclick="switchLang('fr')">FR</button>
+          <button class="lang-btn" id="btn-fr">FR</button>
         </div>
 
         <div class="book-cover-placeholder" id="cover-placeholder">
-          <img id="cover-img" alt=""
-               style="width:100%;height:auto;display:none;">
+          <img id="cover-img" alt="">
           <span class="book-cover-initials" id="cover-initials">—</span>
           <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
@@ -223,13 +76,13 @@
 
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
-          <div class="review-rating" style="border:none; padding: 8px 0 0; margin:0;">
+          <div class="review-rating review-rating--meta">
             <div class="rating-dots" id="rating-dots"></div>
           </div>
         </div>
 
-        <div style="margin-top: auto;">
-          <div class="review-meta-label" style="margin-bottom: 10px;">In this review</div>
+        <div class="toc-section-header">
+          <div class="review-meta-label review-meta-label--toc">In this review</div>
           <nav aria-label="Review sections" id="toc-nav"></nav>
         </div>
 
@@ -238,7 +91,7 @@
       <!-- Review body -->
       <div class="review-content">
 
-        <a class="category-badge" id="badge" href="books.html" style="text-decoration:none;">Book review</a>
+        <a class="category-badge" id="badge" href="books.html">Book review</a>
 
         <h1 class="review-book-title" id="book-title"></h1>
         <div class="review-author" id="book-author-year"></div>
@@ -246,8 +99,8 @@
         <div class="review-body" id="review-body"></div>
 
         <!-- Related books -->
-        <div id="related-block" style="display:none; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border);">
-          <div style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--text-dim); margin-bottom:4px;">If you read this, read next</div>
+        <div id="related-block" class="related-block">
+          <div class="related-label">If you read this, read next</div>
           <div class="related-grid" id="related-grid"></div>
         </div>
 
@@ -257,179 +110,10 @@
 
   <footer class="footer">
     <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
-    <a href="books.html" class="footer-text" style="transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">← All books</a>
+    <a href="books.html" class="footer-text">← All books</a>
   </footer>
 
 </div>
-<script>
-  document.body.classList.add('visible');
-
-  const bar = document.getElementById('progress');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    bar.style.width = pct + '%';
-  });
-
-  let currentSlug = '';
-  let currentLang = 'en';
-
-  function setLangButtons(lang) {
-    document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-    document.getElementById('btn-fr').classList.toggle('lang-active', lang === 'fr');
-  }
-
-  function switchLang(lang) {
-    if (lang === currentLang) return;
-    currentLang = lang;
-    try { localStorage.setItem('site-lang', lang); } catch(e) {}
-    const params = new URLSearchParams(window.location.search);
-    if (lang === 'en') params.delete('lang'); else params.set('lang', lang);
-    history.replaceState(null, '', '?' + params.toString());
-    setLangButtons(lang);
-    loadContent();
-  }
-
-  function formatReadDate(readDate) {
-    if (!readDate) return '—';
-    const [year, month] = readDate.split('-');
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return (month ? months[parseInt(month) - 1] + ' ' : '') + year;
-  }
-
-  function setupTOC() {
-    const headings = document.querySelectorAll('.review-body h2');
-    const tocNav = document.getElementById('toc-nav');
-    tocNav.innerHTML = '';
-
-    headings.forEach((h, i) => {
-      if (!h.id) h.id = 'section-' + (i + 1);
-      h.dataset.section = '§0' + (i + 1);
-      const link = document.createElement('a');
-      link.href = '#' + h.id;
-      link.className = 'toc-link';
-      link.textContent = h.textContent;
-      tocNav.appendChild(link);
-    });
-
-    const tocLinks = tocNav.querySelectorAll('.toc-link');
-    if (headings.length === 0 || tocLinks.length === 0) return;
-
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === '#' + id));
-        }
-      });
-    }, { rootMargin: '-20% 0px -65% 0px' });
-
-    headings.forEach(s => obs.observe(s));
-  }
-
-  function populateMeta(book) {
-    document.getElementById('page-title').textContent = book.title + ' — Valérian';
-    document.getElementById('meta-desc').setAttribute('content', book.description);
-
-    document.getElementById('schema-json').textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Book',
-      name: book.title,
-      author: { '@type': 'Person', name: book.author }
-    });
-
-    document.getElementById('cover-initials').textContent = book.initials;
-    const coverImg = document.getElementById('cover-img');
-    const exts = ['jpg', 'jpeg', 'png', 'webp'];
-    (function tryExt(i) {
-      if (i >= exts.length) return;
-      coverImg.onerror = () => tryExt(i + 1);
-      coverImg.onload = () => {
-        coverImg.style.display = 'block';
-        document.getElementById('cover-placeholder').classList.add('cover-loaded');
-        document.getElementById('cover-initials').style.display = 'none';
-        document.getElementById('cover-label').style.display = 'none';
-      };
-      coverImg.src = `books/covers/${book.slug}.${exts[i]}`;
-    })(0);
-    document.getElementById('meta-author').textContent = book.author;
-    document.getElementById('meta-published').textContent = book.published;
-    document.getElementById('meta-published').setAttribute('datetime', String(book.published));
-    document.getElementById('meta-category').textContent =
-      book.subcategory ? book.category + ' · ' + book.subcategory : book.category;
-    document.getElementById('meta-read').textContent = formatReadDate(book.readDate);
-    document.getElementById('meta-read').setAttribute('datetime', book.readDate || '');
-
-    const dots = document.getElementById('rating-dots');
-    for (let i = 1; i <= 5; i++) {
-      const d = document.createElement('div');
-      d.className = 'rating-dot' + (i <= book.rating ? ' filled' : '');
-      dots.appendChild(d);
-    }
-
-    document.getElementById('badge').textContent = 'Book review · ' + book.category;
-    document.getElementById('book-title').textContent = book.title;
-    document.getElementById('book-author-year').textContent = book.author + ' · ' + book.published;
-  }
-
-  function renderRelated(relatedSlugs, allBooks) {
-    if (!relatedSlugs || relatedSlugs.length === 0) return;
-    const relatedBooks = relatedSlugs.map(s => allBooks.find(b => b.slug === s)).filter(Boolean);
-    if (relatedBooks.length === 0) return;
-
-    const block = document.getElementById('related-block');
-    block.style.display = 'block';
-    document.getElementById('related-grid').innerHTML = relatedBooks.map(b => `
-      <a href="book-review.html?book=${b.slug}" class="related-card">
-        <div class="related-title">${b.title}</div>
-        <div class="related-author">${b.author}</div>
-      </a>`).join('');
-  }
-
-  async function loadContent() {
-    const bodyEl = document.getElementById('review-body');
-    const prefix = currentLang === 'fr' ? 'books/fr/' : 'books/';
-
-    let res = await fetch(prefix + currentSlug + '.md');
-    if (res.ok) {
-      bodyEl.innerHTML = marked.parse(await res.text());
-    } else {
-      res = await fetch(prefix + currentSlug + '.html');
-      if (res.ok) {
-        bodyEl.innerHTML = await res.text();
-      } else if (currentLang !== 'en') {
-        bodyEl.innerHTML =
-          '<p style="color:var(--text-dim); font-style:italic;">This review is not yet available in French.</p>';
-      } else {
-        bodyEl.innerHTML = '<p style="color:var(--text-dim);">Review content not found.</p>';
-      }
-    }
-    setupTOC();
-  }
-
-  async function loadReview() {
-    const params = new URLSearchParams(window.location.search);
-    const allBooks = await fetch('books/index.json').then(r => r.json());
-
-    let slug = params.get('book');
-    let book = allBooks.find(b => b.slug === slug);
-    if (!book) { book = allBooks[0]; slug = book.slug; }
-
-    currentSlug = slug;
-    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
-    currentLang = params.get('lang') || savedLang || 'en';
-
-    setLangButtons(currentLang);
-    populateMeta(book);
-    await loadContent();
-    renderRelated(book.related, allBooks);
-  }
-
-  loadReview().catch(err => {
-    document.getElementById('review-body').innerHTML =
-      '<p style="color:var(--text-dim);">Could not load review. Make sure the site is served over HTTP.</p>';
-    console.error(err);
-  });
-</script>
+<script src="js/book-review.js" defer></script>
 </body>
 </html>
