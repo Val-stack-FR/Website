@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body:has(.about-page) {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .about-page {
+    --about-bg: 195 43% 3%;
+    --about-text: 214 38% 96%;
+    --about-accent: 146 43% 52%;
+    --about-border: 214 38% 96% / 0.12;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: hsl(var(--about-bg));
+    color: hsl(var(--about-text));
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .about-starfield,
+  .about-stage {
+    position: fixed;
+    inset: 0;
+  }
+
+  .about-starfield {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .about-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px clamp(20px, 4vw, 48px);
+    border-bottom: 1px solid hsl(var(--about-border));
+    background: linear-gradient(to bottom, hsl(var(--about-bg) / 0.84), hsl(var(--about-bg) / 0));
+  }
+
+  .about-nav-logo,
+  .about-nav-link {
+    color: hsl(var(--about-text));
+    text-decoration: none;
+  }
+
+  .about-nav-logo {
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+
+  .about-nav-links {
+    display: flex;
+    min-width: 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-nav-link {
+    padding: 6px clamp(10px, 2vw, 20px);
+    color: hsl(var(--about-text) / 0.5);
+    border-left: 1px solid hsl(var(--about-border));
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .about-nav-link:last-child {
+    border-right: 1px solid hsl(var(--about-border));
+  }
+
+  .about-nav-link:hover {
+    color: hsl(var(--about-text));
+    background: hsl(var(--about-text) / 0.05);
+  }
+
+  .about-nav-link.active {
+    color: hsl(var(--about-accent));
+  }
+
+  .about-stage {
+    z-index: 2;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .about-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .about-line-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .about-intro-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: clamp(28px, 5vw, 56px);
+    pointer-events: none;
+  }
+
+  .about-intro-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    color: hsl(var(--about-accent));
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .about-intro-eyebrow::before,
+  .about-scroll-hint::after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .about-intro-name {
+    margin-bottom: 22px;
+    color: hsl(var(--about-text));
+    font-size: clamp(38px, 4.5vw, 68px);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .about-intro-sub,
+  .about-node-insight,
+  .about-location-readout,
+  .about-scroll-hint {
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .about-intro-sub {
+    max-width: 210px;
+    color: hsl(var(--about-text) / 0.5);
+    font-size: 11px;
+    line-height: 1.8;
+  }
+
+  .about-node-card {
+    position: absolute;
+    z-index: 3;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  .about-landing-card {
+    position: absolute;
+    z-index: 3;
+    padding-left: 18px;
+    border-left: 1px solid hsl(var(--about-accent) / 0.42);
+  }
+
+  .about-node-location {
+    margin-bottom: 6px;
+    color: hsl(var(--about-accent) / 0.9);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .about-node-date {
+    margin-bottom: 8px;
+    color: hsl(var(--about-text) / 0.58);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-node-doing {
+    margin-bottom: 8px;
+    color: hsl(var(--about-text));
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-wrap: pretty;
+  }
+
+  .about-node-insight {
+    color: hsl(var(--about-text) / 0.68);
+    font-size: 11px;
+    line-height: 1.72;
+    text-wrap: pretty;
+  }
+
+  .about-landing-card .about-node-doing {
+    font-size: 18px;
+  }
+
+  .about-landing-card .about-node-insight {
+    color: hsl(var(--about-text) / 0.76);
+  }
+
+  .about-progress {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    height: 1px;
+    background: hsl(var(--about-text) / 0.05);
+  }
+
+  .about-progress-fill {
+    height: 100%;
+    background: hsl(var(--about-accent));
+  }
+
+  .about-location-readout {
+    position: fixed;
+    right: clamp(20px, 4vw, 48px);
+    bottom: 24px;
+    z-index: 30;
+    color: hsl(var(--about-text) / 0.52);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .about-scroll-hint {
+    position: fixed;
+    bottom: 24px;
+    left: clamp(20px, 4vw, 48px);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: hsl(var(--about-text) / 0.22);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: opacity 500ms ease;
+  }
+
+  .about-scroll-hint.hidden {
+    opacity: 0;
+  }
+
+  @media (max-width: 700px) {
+    .about-nav {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .about-nav-links {
+      font-size: 10px;
+    }
+
+    .about-node-doing {
+      font-size: 12px;
+    }
+
+    .about-node-insight {
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .about-location-readout {
+      max-width: 46vw;
+    }
+  }
+}
