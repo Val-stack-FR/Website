@@ -55,7 +55,7 @@
 
 .essay-row {
   display: grid;
-  grid-template-columns: 60px 130px 1fr auto;
+  grid-template-columns: 60px 130px 1fr 72px;
   align-items: stretch;
   gap: 0;
   border-bottom: 1px solid var(--border);
