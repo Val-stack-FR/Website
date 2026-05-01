@@ -1,13 +1,3 @@
----
-slug: "linguistic-capital-ai-inequality"
-num: "??"
-title: "The Articulation Gap"
-date: "2026-05-01"
-tags: ["AI", "futures", "strategy"]
-readTime: "10 min"
-description: "The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built."
----
-
 The "AI super-user" has become the central figure of enterprise AI discourse. Every adoption report describes the same archetype: someone who gets disproportionate value from AI tools, produces better outputs faster, and seems to understand something about the interaction that most of their colleagues don't. The managerial response is predictable — identify these people, study them, and spread what they're doing. Prompting guides. Certification programmes. Prompt libraries.
 
 What almost none of this discourse addresses is the structural question: why do certain people extract more value from LLMs in the first place? Not which people — the empirical research on AI productivity gains is fairly clear about that — but *why*. The answer, when you follow it through the academic literature, is uncomfortable. It has very little to do with technical sophistication and almost everything to do with where you learned to write.
