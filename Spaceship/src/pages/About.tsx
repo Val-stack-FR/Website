@@ -86,6 +86,8 @@ const About = () => {
   const frameRef = useRef<number>();
   const resizeRef = useRef<number>();
 
+  const cardLayoutsRef = useRef<CardLayout[]>([]);
+  const pushSmoothedRef = useRef<number[]>(Array(ENTRIES.length).fill(0));
   const [cardLayouts, setCardLayouts] = useState<CardLayout[]>([]);
   const [progress, setProgress] = useState(0);
   const [location, setLocation] = useState("");
@@ -552,7 +554,18 @@ const About = () => {
       const apexSign = nearestSign; // -1 = arc upward, +1 = arc downward
       // Arc extends "backward" relative to current heading (visual loop goes back the way we came)
       const dirSign = -m.heading;
-      const desiredArcW = clamp(vw * 0.34, 380, 580);
+      // Target the nearest previous node so the arc lands under a milestone card.
+      let targetNodeX: number | null = null;
+      let nearestNodeDist = Infinity;
+      objPts.forEach(pt => {
+        const isBehind = m.heading === 1 ? pt.x < startX : pt.x > startX;
+        if (!isBehind) return;
+        const d = Math.abs(pt.x - startX);
+        if (d < nearestNodeDist) { nearestNodeDist = d; targetNodeX = pt.x; }
+      });
+      const desiredArcW = targetNodeX !== null
+        ? Math.abs(targetNodeX - startX)
+        : clamp(vw * 0.34, 380, 580);
       // Clamp to stay inside world bounds
       const maxBack = dirSign < 0 ? startX - 20 : (trackW - 20) - startX;
       const arcW = clamp(desiredArcW, 200, Math.max(200, maxBack));
@@ -732,7 +745,7 @@ const About = () => {
         motion.turnEndT = t;
         motion.turnCooldownUntil = t + TURN_COOLDOWN;
         motion.reverseAccum = 0;
-        // Snap targetX to current scrollX so post-turn input continues from here
+        // Arc already lands at the target node — hold position, no extra drift.
         motion.targetX = motion.scrollX;
       }
       if (motion.turning) {
@@ -772,9 +785,30 @@ const About = () => {
         const baseOp = Math.max(0, 1 - Math.abs(pt.x - leadX) / maxDist);
         const op = i === activeIndex ? Math.max(baseOp, 0.92) : baseOp * 0.5;
         card.style.opacity = `${op}`;
-        card.style.transform = `translate3d(0, ${(1 - op) * 10}px, 0)`;
         card.style.pointerEvents = op > 0.25 ? "auto" : "none";
         if (i === activeIndex) loc = ENTRIES[i].location;
+
+        // Organic push: as the ship approaches, nudge the card away via transform
+        // so it never overlaps the ship. JS lerp provides the smooth anticipation.
+        const layout = cardLayoutsRef.current[i];
+        const proximity = Math.max(0, 1 - Math.abs(pt.x - leadX) / (vw * 0.9));
+        let targetPush = 0;
+        if (layout && proximity > 0.01) {
+          const actualH = card.offsetHeight;
+          const shipY = pathY(pt.x);
+          const MIN_GAP = 18;
+          if (layout.above) {
+            const overshoot = (layout.top + actualH) - (shipY - MIN_GAP);
+            if (overshoot > 0) targetPush = -overshoot;
+          } else {
+            const overshoot = (shipY + MIN_GAP) - layout.top;
+            if (overshoot > 0) targetPush = overshoot;
+          }
+        }
+        pushSmoothedRef.current[i] = (pushSmoothedRef.current[i] ?? 0)
+          + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.08;
+        const push = pushSmoothedRef.current[i];
+        card.style.transform = `translate3d(0, ${(1 - op) * 10 + push}px, 0)`;
       });
       if (leadX >= stationX - Math.max(36, vw * 0.08)) loc = "Temporary Wait Station";
       setLocation(loc);
@@ -795,6 +829,37 @@ const About = () => {
       window.removeEventListener("keydown", onKey);
     };
   }, [drawTimeline, hsla, rebuild, runAutoIntro]);
+
+  // Keep cardLayoutsRef in sync so the animation loop always reads fresh layouts
+  useEffect(() => {
+    cardLayoutsRef.current = cardLayouts;
+  }, [cardLayouts]);
+
+  // Static correction: after cards render, use real offsetHeight to fix any
+  // overlap introduced by the estimatedH approximation in rebuild().
+  useEffect(() => {
+    if (cardLayouts.length === 0) return;
+    const { vh } = dimsRef.current;
+    const MIN_GAP = 18;
+    const adjusted = cardLayouts.map((layout, i) => {
+      const el = cardRefs.current[i];
+      if (!el) return layout;
+      const actualH = el.offsetHeight;
+      const pt = pointsRef.current.objPts[i];
+      if (!pt) return layout;
+      const shipPathY = pathY(pt.x);
+      let newTop = layout.top;
+      if (layout.above) {
+        const maxBottom = shipPathY - MIN_GAP;
+        if (newTop + actualH > maxBottom) newTop = maxBottom - actualH;
+      } else {
+        if (newTop < shipPathY + MIN_GAP) newTop = shipPathY + MIN_GAP;
+      }
+      newTop = clamp(newTop, 82, vh - actualH - 54);
+      return Math.abs(newTop - layout.top) < 1 ? layout : { ...layout, top: newTop };
+    });
+    if (adjusted.some((a, i) => a !== cardLayouts[i])) setCardLayouts(adjusted);
+  }, [cardLayouts, pathY]);
 
   return (
     <main className="about-page" aria-label="About Valérian Teissier flight log">
