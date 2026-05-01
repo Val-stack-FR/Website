@@ -1,9 +1,0 @@
-# Exclude React source and build artifacts from being served
-Spaceship/node_modules
-Spaceship/src
-Spaceship/public
-Spaceship/*.json
-Spaceship/*.ts
-Spaceship/*.js
-Spaceship/*.md
-Spaceship/*.lockb
