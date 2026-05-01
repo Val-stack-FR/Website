@@ -86,6 +86,7 @@ const About = () => {
   const frameRef = useRef<number>();
   const resizeRef = useRef<number>();
 
+  const cardLayoutsRef = useRef<CardLayout[]>([]);
   const [cardLayouts, setCardLayouts] = useState<CardLayout[]>([]);
   const [progress, setProgress] = useState(0);
   const [location, setLocation] = useState("");
@@ -732,8 +733,23 @@ const About = () => {
         motion.turnEndT = t;
         motion.turnCooldownUntil = t + TURN_COOLDOWN;
         motion.reverseAccum = 0;
-        // Snap targetX to current scrollX so post-turn input continues from here
-        motion.targetX = motion.scrollX;
+        // After turning, coast to the nearest node in the new heading direction
+        // so the ship always lands under a milestone card rather than mid-track.
+        const { objPts } = pointsRef.current;
+        const newHeading = motion.heading;
+        const currentLeadX = motion.scrollX + vw * SHIP_FRAC;
+        let bestTarget = motion.scrollX;
+        let bestDist = Infinity;
+        objPts.forEach(pt => {
+          const inFront = newHeading === 1
+            ? pt.x >= currentLeadX - vw * 0.15
+            : pt.x <= currentLeadX + vw * 0.15;
+          if (!inFront) return;
+          const tx = clamp(pt.x - vw * SHIP_FRAC, 0, dimsRef.current.maxScrollX);
+          const dist = Math.abs(tx - motion.scrollX);
+          if (dist < bestDist) { bestDist = dist; bestTarget = tx; }
+        });
+        motion.targetX = bestTarget;
       }
       if (motion.turning) {
         // Pin the ship to SHIP_FRAC within the viewport by driving scrollX from
@@ -775,6 +791,24 @@ const About = () => {
         card.style.transform = `translate3d(0, ${(1 - op) * 10}px, 0)`;
         card.style.pointerEvents = op > 0.25 ? "auto" : "none";
         if (i === activeIndex) loc = ENTRIES[i].location;
+
+        // Organic anticipation: nudge card away from the ship path as it approaches
+        const layout = cardLayoutsRef.current[i];
+        const proximity = Math.max(0, 1 - Math.abs(pt.x - leadX) / (vw * 0.9));
+        if (layout && proximity > 0.01) {
+          const actualH = card.offsetHeight;
+          const shipY = pathY(pt.x);
+          const MIN_GAP = 18;
+          let targetTop = layout.top;
+          if (layout.above) {
+            const maxBottom = shipY - MIN_GAP;
+            if (targetTop + actualH > maxBottom) targetTop = maxBottom - actualH;
+          } else {
+            if (targetTop < shipY + MIN_GAP) targetTop = shipY + MIN_GAP;
+          }
+          targetTop = clamp(targetTop, 82, dimsRef.current.vh - actualH - 54);
+          card.style.top = `${targetTop}px`;
+        }
       });
       if (leadX >= stationX - Math.max(36, vw * 0.08)) loc = "Temporary Wait Station";
       setLocation(loc);
@@ -795,6 +829,37 @@ const About = () => {
       window.removeEventListener("keydown", onKey);
     };
   }, [drawTimeline, hsla, rebuild, runAutoIntro]);
+
+  // Keep cardLayoutsRef in sync so the animation loop always reads fresh layouts
+  useEffect(() => {
+    cardLayoutsRef.current = cardLayouts;
+  }, [cardLayouts]);
+
+  // Static correction: after cards render, use real offsetHeight to fix any
+  // overlap introduced by the estimatedH approximation in rebuild().
+  useEffect(() => {
+    if (cardLayouts.length === 0) return;
+    const { vh } = dimsRef.current;
+    const MIN_GAP = 18;
+    const adjusted = cardLayouts.map((layout, i) => {
+      const el = cardRefs.current[i];
+      if (!el) return layout;
+      const actualH = el.offsetHeight;
+      const pt = pointsRef.current.objPts[i];
+      if (!pt) return layout;
+      const shipPathY = pathY(pt.x);
+      let newTop = layout.top;
+      if (layout.above) {
+        const maxBottom = shipPathY - MIN_GAP;
+        if (newTop + actualH > maxBottom) newTop = maxBottom - actualH;
+      } else {
+        if (newTop < shipPathY + MIN_GAP) newTop = shipPathY + MIN_GAP;
+      }
+      newTop = clamp(newTop, 82, vh - actualH - 54);
+      return Math.abs(newTop - layout.top) < 1 ? layout : { ...layout, top: newTop };
+    });
+    if (adjusted.some((a, i) => a !== cardLayouts[i])) setCardLayouts(adjusted);
+  }, [cardLayouts, pathY]);
 
   return (
     <main className="about-page" aria-label="About Valérian Teissier flight log">

@@ -183,7 +183,8 @@
     z-index: 3;
     opacity: 0;
     pointer-events: none;
-    will-change: opacity, transform;
+    will-change: opacity, transform, top;
+    transition: top 0.45s ease-out;
   }
 
   .about-landing-card {

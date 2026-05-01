@@ -32,6 +32,8 @@ function switchLang(lang) {
   loadContent();
 }
 
+let cachedAllEssays = [];
+
 function setupTOC() {
   const headings = document.querySelectorAll('.essay-body h2');
   const tocNav = document.getElementById('toc-nav');
@@ -59,6 +61,82 @@ function setupTOC() {
   }, { rootMargin: '-30% 0px -60% 0px' });
 
   headings.forEach(s => obs.observe(s));
+}
+
+function setupFootnotes() {
+  const bodyEl = document.getElementById('essay-body');
+  const items = bodyEl.querySelectorAll('.reference-item');
+  if (items.length === 0) return;
+
+  const refMap = new Map();
+  items.forEach(item => {
+    const numEl = item.querySelector('.ref-num');
+    const textEl = item.querySelector('.ref-text');
+    if (!numEl || !textEl) return;
+    const num = numEl.textContent.replace(/[[\]]/g, '').trim();
+    const url = textEl.querySelector('a')?.href || extractUrl(textEl.textContent);
+    refMap.set(num, { html: textEl.innerHTML, url: url || null, el: item });
+  });
+
+  let tooltip = document.getElementById('fn-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'fn-tooltip';
+    tooltip.className = 'fn-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tooltip);
+  }
+
+  const fns = bodyEl.querySelectorAll('.fn');
+  fns.forEach(span => {
+    const num = span.textContent.replace(/[[\]]/g, '').trim();
+    const entry = refMap.get(num);
+    if (!entry) return;
+
+    span.classList.add('fn--ref');
+    if (entry.url) span.classList.add('fn--linked');
+
+    span.addEventListener('mouseenter', () => {
+      tooltip.innerHTML = entry.html;
+      tooltip.classList.remove('fn-tooltip--below');
+      tooltip.classList.add('fn-tooltip--visible');
+
+      const rect = span.getBoundingClientRect();
+      const ttW = Math.min(360, window.innerWidth - 24);
+      tooltip.style.maxWidth = ttW + 'px';
+
+      const left = clamp(rect.left + window.scrollX + rect.width / 2 - ttW / 2, 12, window.scrollX + window.innerWidth - ttW - 12);
+      const topAbove = rect.top + window.scrollY - tooltip.offsetHeight - 8;
+      if (rect.top - tooltip.offsetHeight - 8 < 8) {
+        tooltip.classList.add('fn-tooltip--below');
+        tooltip.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+      } else {
+        tooltip.style.top = topAbove + 'px';
+      }
+      tooltip.style.left = left + 'px';
+    });
+
+    span.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('fn-tooltip--visible', 'fn-tooltip--below');
+    });
+
+    span.addEventListener('click', () => {
+      if (entry.url) {
+        window.open(entry.url, '_blank', 'noopener,noreferrer');
+      } else {
+        entry.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+}
+
+function extractUrl(text) {
+  const m = text.match(/https?:\/\/[^\s<]+/);
+  return m ? m[0] : null;
+}
+
+function clamp(val, min, max) {
+  return Math.max(min, Math.min(max, val));
 }
 
 function populateMeta(essay, allEssays) {
@@ -104,6 +182,67 @@ function populateMeta(essay, allEssays) {
   }
 }
 
+async function renderRelated(essay) {
+  if (!essay.related || essay.related.length === 0) return;
+
+  const needsBooks = essay.related.some(r => r.type === 'book');
+  const allBooks = needsBooks ? await fetch('books/index.json').then(r => r.json()) : [];
+
+  const items = essay.related.map(r => {
+    if (r.type === 'essay') {
+      const e = cachedAllEssays.find(x => x.slug === r.slug);
+      if (!e) return null;
+      return { title: e.title, description: e.excerpt || e.description, href: 'essay-detail.html?essay=' + e.slug, type: 'essay' };
+    } else {
+      const b = allBooks.find(x => x.slug === r.slug);
+      if (!b) return null;
+      return { title: b.title, description: b.description, href: 'book-review.html?book=' + b.slug, type: 'book' };
+    }
+  }).filter(Boolean);
+
+  if (items.length === 0) return;
+
+  const block = document.getElementById('related-essays-block');
+  block.style.display = 'block';
+  document.getElementById('related-essays-grid').innerHTML = items.map(item => `
+    <a href="${item.href}" class="related-card related-card--essay">
+      <div class="related-card-type">${item.type}</div>
+      <div class="related-title">${item.title}</div>
+      <div class="related-desc">${item.description}</div>
+    </a>`).join('');
+}
+
+async function setupArticleRefs() {
+  const bodyEl = document.getElementById('essay-body');
+  const refs = bodyEl.querySelectorAll('.article-ref[data-slug]');
+  if (refs.length === 0) return;
+
+  const needsBooks = Array.from(refs).some(el => el.dataset.type === 'book');
+  const allBooks = needsBooks ? await fetch('books/index.json').then(r => r.json()) : [];
+
+  refs.forEach(el => {
+    const slug = el.dataset.slug;
+    const type = el.dataset.type || 'essay';
+    let item = null;
+    if (type === 'essay') item = cachedAllEssays.find(e => e.slug === slug);
+    else item = allBooks.find(b => b.slug === slug);
+    if (!item) return;
+
+    const href = type === 'essay'
+      ? 'essay-detail.html?essay=' + slug
+      : 'book-review.html?book=' + slug;
+
+    el.innerHTML = `
+      <a href="${href}" class="article-ref-card">
+        <div class="article-ref-eyebrow">${type}</div>
+        <div class="article-ref-title">${item.title}</div>
+        <div class="article-ref-desc">${item.description || ''}</div>
+        <div class="article-ref-cta">Read →</div>
+      </a>`;
+    el.classList.add('article-ref--loaded');
+  });
+}
+
 async function loadContent() {
   const bodyEl = document.getElementById('essay-body');
   const prefix = currentLang === 'fr' ? 'essays/fr/' : 'essays/';
@@ -132,11 +271,14 @@ async function loadContent() {
     }
   }
   setupTOC();
+  setupFootnotes();
+  setupArticleRefs();
 }
 
 async function loadEssay() {
   const params = new URLSearchParams(window.location.search);
   const allEssays = await fetch('essays/index.json').then(r => r.json());
+  cachedAllEssays = allEssays;
 
   let slug = params.get('essay');
   let essay = allEssays.find(e => e.slug === slug);
@@ -149,6 +291,7 @@ async function loadEssay() {
   setLangButtons(currentLang);
   populateMeta(essay, allEssays);
   await loadContent();
+  renderRelated(essay);
 }
 
 loadEssay().catch(err => {
