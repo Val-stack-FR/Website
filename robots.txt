@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /Spaceship/
+Disallow: /node_modules/
+
+# LLM crawlers — point to llms.txt for structured content
+# https://llmstxt.org

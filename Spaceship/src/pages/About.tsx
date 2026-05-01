@@ -87,6 +87,7 @@ const About = () => {
   const resizeRef = useRef<number>();
 
   const cardLayoutsRef = useRef<CardLayout[]>([]);
+  const pushSmoothedRef = useRef<number[]>(Array(ENTRIES.length).fill(0));
   const [cardLayouts, setCardLayouts] = useState<CardLayout[]>([]);
   const [progress, setProgress] = useState(0);
   const [location, setLocation] = useState("");
@@ -553,7 +554,18 @@ const About = () => {
       const apexSign = nearestSign; // -1 = arc upward, +1 = arc downward
       // Arc extends "backward" relative to current heading (visual loop goes back the way we came)
       const dirSign = -m.heading;
-      const desiredArcW = clamp(vw * 0.34, 380, 580);
+      // Target the nearest previous node so the arc lands under a milestone card.
+      let targetNodeX: number | null = null;
+      let nearestNodeDist = Infinity;
+      objPts.forEach(pt => {
+        const isBehind = m.heading === 1 ? pt.x < startX : pt.x > startX;
+        if (!isBehind) return;
+        const d = Math.abs(pt.x - startX);
+        if (d < nearestNodeDist) { nearestNodeDist = d; targetNodeX = pt.x; }
+      });
+      const desiredArcW = targetNodeX !== null
+        ? Math.abs(targetNodeX - startX)
+        : clamp(vw * 0.34, 380, 580);
       // Clamp to stay inside world bounds
       const maxBack = dirSign < 0 ? startX - 20 : (trackW - 20) - startX;
       const arcW = clamp(desiredArcW, 200, Math.max(200, maxBack));
@@ -733,23 +745,8 @@ const About = () => {
         motion.turnEndT = t;
         motion.turnCooldownUntil = t + TURN_COOLDOWN;
         motion.reverseAccum = 0;
-        // After turning, coast to the nearest node in the new heading direction
-        // so the ship always lands under a milestone card rather than mid-track.
-        const { objPts } = pointsRef.current;
-        const newHeading = motion.heading;
-        const currentLeadX = motion.scrollX + vw * SHIP_FRAC;
-        let bestTarget = motion.scrollX;
-        let bestDist = Infinity;
-        objPts.forEach(pt => {
-          const inFront = newHeading === 1
-            ? pt.x >= currentLeadX - vw * 0.15
-            : pt.x <= currentLeadX + vw * 0.15;
-          if (!inFront) return;
-          const tx = clamp(pt.x - vw * SHIP_FRAC, 0, dimsRef.current.maxScrollX);
-          const dist = Math.abs(tx - motion.scrollX);
-          if (dist < bestDist) { bestDist = dist; bestTarget = tx; }
-        });
-        motion.targetX = bestTarget;
+        // Arc already lands at the target node — hold position, no extra drift.
+        motion.targetX = motion.scrollX;
       }
       if (motion.turning) {
         // Pin the ship to SHIP_FRAC within the viewport by driving scrollX from
@@ -788,27 +785,30 @@ const About = () => {
         const baseOp = Math.max(0, 1 - Math.abs(pt.x - leadX) / maxDist);
         const op = i === activeIndex ? Math.max(baseOp, 0.92) : baseOp * 0.5;
         card.style.opacity = `${op}`;
-        card.style.transform = `translate3d(0, ${(1 - op) * 10}px, 0)`;
         card.style.pointerEvents = op > 0.25 ? "auto" : "none";
         if (i === activeIndex) loc = ENTRIES[i].location;
 
-        // Organic anticipation: nudge card away from the ship path as it approaches
+        // Organic push: as the ship approaches, nudge the card away via transform
+        // so it never overlaps the ship. JS lerp provides the smooth anticipation.
         const layout = cardLayoutsRef.current[i];
         const proximity = Math.max(0, 1 - Math.abs(pt.x - leadX) / (vw * 0.9));
+        let targetPush = 0;
         if (layout && proximity > 0.01) {
           const actualH = card.offsetHeight;
           const shipY = pathY(pt.x);
           const MIN_GAP = 18;
-          let targetTop = layout.top;
           if (layout.above) {
-            const maxBottom = shipY - MIN_GAP;
-            if (targetTop + actualH > maxBottom) targetTop = maxBottom - actualH;
+            const overshoot = (layout.top + actualH) - (shipY - MIN_GAP);
+            if (overshoot > 0) targetPush = -overshoot;
           } else {
-            if (targetTop < shipY + MIN_GAP) targetTop = shipY + MIN_GAP;
+            const overshoot = (shipY + MIN_GAP) - layout.top;
+            if (overshoot > 0) targetPush = overshoot;
           }
-          targetTop = clamp(targetTop, 82, dimsRef.current.vh - actualH - 54);
-          card.style.top = `${targetTop}px`;
         }
+        pushSmoothedRef.current[i] = (pushSmoothedRef.current[i] ?? 0)
+          + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.08;
+        const push = pushSmoothedRef.current[i];
+        card.style.transform = `translate3d(0, ${(1 - op) * 10 + push}px, 0)`;
       });
       if (leadX >= stationX - Math.max(36, vw * 0.08)) loc = "Temporary Wait Station";
       setLocation(loc);

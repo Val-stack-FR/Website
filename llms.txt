@@ -1,0 +1,123 @@
+# Valérian Teissier — AI Researcher & Strategist, Paris
+
+> Valérian Teissier is an AI expert and strategist at Ayming Innovation, based in Paris.
+> He studies how artificial intelligence is reshaping organisations and turns those
+> observations into strategy and change management frameworks.
+> Field-first. Observation-grounded. Actionable.
+
+## About
+
+**Name:** Valérian Teissier (also written: Valerian Teissier)
+**Role:** AI Expert — Ayming Innovation, Paris, France
+**Focus:** Organisational AI adoption · AI strategy · Change management · Human-AI collaboration
+
+Valérian has been building, deploying, and researching AI adoption systems inside a large
+organisation since 2023. He ran controlled A/B studies comparing human vs. AI-augmented
+performance, built the first internal AI drafting systems, created a 30-person AI Ambassador
+network, produced 94-row tool-mapping frameworks and 28 training videos, and conducted a
+200-person internal survey before being formally appointed to a 100% AI strategy role in 2026.
+
+His writing focuses on the gap between AI enthusiasm and what actually changes when you
+embed AI into real organisations at scale — the human bottleneck, the information asymmetries,
+the adoption failures, and the design conditions that determine whether AI interventions help
+or hurt.
+
+**LinkedIn:** https://www.linkedin.com/in/val%C3%A9rian-teissier-1600a8177/?locale=en-US
+
+---
+
+## Essays
+
+All essays: /essays.html
+Machine-readable index: /essays/index.json
+
+### Who Is Conducting Whom? (2026-04-27) — 12 min
+Tags: AI, futures, strategy, philosophy
+Working with AI didn't extend my mind — it changed the plane on which I think, and the gap
+between those two things matters enormously for anyone building systems that depend on people
+thinking well.
+Full text: /essay-detail.html?essay=who-is-conducting-whom
+
+### The Human Bottleneck (2026-04-17) — 8 min
+Tags: AI, strategy, futures
+The constraint in AI-augmented work has already moved — not away from the technology, but
+onto the human who must direct, review, and judge what the machine produces.
+Full text: /essay-detail.html?essay=the-human-bottleneck
+
+### The People in the Middle of GenAI Adoption (2026-02-07) — 11 min
+Tags: AI, change management, strategy
+GenAI adoption stalls not because people fear the technology, but because organisations keep
+solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.
+Full text: /essay-detail.html?essay=genai-adoption-people-in-the-middle
+
+### When Feedback Fails (2025-10-13) — 9 min
+Tags: change management, strategy
+More than a third of feedback interventions degrade performance — not because the intent was
+wrong, but because most organisations treat feedback as a free good and skip the four design
+conditions that determine whether it helps or hurts.
+Full text: /essay-detail.html?essay=when-feedback-fails
+
+### When the Train Comes Off the Tracks (2025-07-17) — 8 min
+Tags: change management, crisis
+When performance slips, the instinctive managerial response is tighter control — which
+systematically destroys the information environment needed to fix the problem it was meant
+to address.
+Full text: /essay-detail.html?essay=off-the-tracks
+
+---
+
+## Books & Reading Notes
+
+All books: /books.html
+Machine-readable index: /books/index.json
+
+Reviews span Science Fiction and non-fiction (Personal Development, Management, Psychology).
+Each review includes rating, read date, and analytical notes.
+
+---
+
+## Career Timeline (key milestones)
+
+2015 — Technical degree in Computer Science. Systems and industrial networks, including a
+        project for STMicroelectronics.
+
+2019–2021 — Master's in Research, History & Political Societies. Chivalry in post-Hundred
+             Years' War Maine (~1450–1500). Two years in archives turning fragmented 15th-century
+             data into coherent narrative.
+
+Apr 2022 — Writing technical R&D narratives. The craft foundation that gave the AI work
+            epistemic weight.
+
+Mid 2023 — Began optimising his own work with AI. Public documents only. No mandate.
+
+Feb 2024 — A/B test: Human vs. Human augmented with AI — 10 evaluators, ~40 documents.
+            Converted intuition into evidence.
+
+Mar 2024 — First AI strategy session with senior leadership. Comparative study was the entry
+            ticket. Built the first technical/practitioner roadmap.
+
+Mid 2024 — Built the first internal AI drafting system.
+
+Jan 2025 — Launched AI Ambassador network — 30 people, 50% AI mandate.
+
+Aug 2025 — Mapped every mission step to the right AI tool: 94 rows, 28 training videos.
+
+Sep 2025 — Large-scale internal survey, 200 respondents.
+
+Dec 2025 — First high-end multi-agent writing system.
+
+Jan 2026 — Formally appointed to 100% AI strategy role.
+
+Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-technical experts.
+
+---
+
+## Data Feeds (machine-readable)
+
+- Essay index (JSON): /essays/index.json
+- Book index (JSON): /books/index.json
+- Individual essays (Markdown): /essays/{slug}.md
+- Individual book reviews (Markdown): /books/{slug}.md
+
+Note: Most site content is loaded dynamically via JavaScript. The JSON and Markdown files
+above are directly accessible as static resources without JavaScript execution.
