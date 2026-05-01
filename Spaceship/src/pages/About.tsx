@@ -47,7 +47,7 @@ const clamp = (value: number, min: number, max: number) => Math.max(min, Math.mi
 const rand = (a: number, b: number) => Math.random() * (b - a) + a;
 const stationDockX = (trackW: number, vw: number) => trackW - vw * (1 - SHIP_FRAC);
 
-const Index = () => {
+const About = () => {
   const starCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const lineCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -802,9 +802,9 @@ const Index = () => {
       <nav className="about-nav" aria-label="Primary navigation">
         <a href="/" className="about-nav-logo">VT—</a>
         <div className="about-nav-links">
-          <a href="/essays" className="about-nav-link">Essays</a>
-          <a href="/books" className="about-nav-link">Books</a>
-          <a href="/" className="about-nav-link active" aria-current="page">About</a>
+          <a href="/essays.html" className="about-nav-link">Essays</a>
+          <a href="/books.html" className="about-nav-link">Books</a>
+          <a href="/about/" className="about-nav-link active" aria-current="page">About</a>
         </div>
       </nav>
 
@@ -853,4 +853,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default About;
