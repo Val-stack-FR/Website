@@ -32,10 +32,12 @@ The sharpest result comes from Otis, Clarke, Delecourt et al.'s 2024 field exper
 
 <div class="pull-quote"><blockquote>"AI compresses inequality on narrow scripted tasks where it substitutes for absent linguistic capital, but amplifies inequality on open-ended tasks where it rewards meta-awareness, judgment and rhetorical sophistication."</blockquote><cite>— Synthesising hypothesis, across Noy/Zhang, Dell'Acqua et al., and Otis et al.</cite></div>
 
-I'd observed a version of this in field. The people who struggled most with our AI tools were not struggling because the technology was inaccessible. They were struggling at the level of articulation — at the moment of translating a professional intuition into a form the model could work with. That's at least partially a linguistic problem, my other guess being a lack of understanding of the realm of possibilities. But we were mostly treating it as a technical one. The adoption data I discussed in an earlier piece on the people problem in GenAI adoption documented the *who* of this dynamic.
+I'd observed a version of this in field. The people who struggled most with our AI tools were not struggling because the technology was inaccessible. They were struggling at the level of articulation — at the moment of translating a professional intuition into a form the model could work with. That's at least partially a linguistic problem, my other guess being a lack of understanding of the realm of possibilities. But we were mostly treating it as a technical one. 
+The adoption data I discussed in an earlier piece on the people problem in GenAI adoption documented the *who* of this dynamic.<span class="fn">[4]</span>
+
 <div class="article-ref" data-slug="genai-adoption-people-in-the-middle" data-type="essay">The question worth asking — before designing any adoption programme — is not "how do we get people to use AI?" but "what is actually blocking them, and is it what we think it is?"</div>
 
-Agirdag gives us the *why*.<span class="fn">[4]</span>
+Agirdag gives us the *why*.
 
 ## The machine's embedded preference
 
