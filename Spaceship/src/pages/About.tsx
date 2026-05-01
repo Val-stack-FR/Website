@@ -24,14 +24,17 @@ const ENTRIES: Entry[] = [
   { date: "Mar 2024", location: "Command Orbit", type: "ringedplanet", doing: "First AI strategy session with senior leadership.", insight: "The comparative study was the entry ticket. Not enthusiasm — data. We built the first technical/practionner roadmap." },
   { date: "Mid 2024", location: "Orbital Station", type: "station", doing: "Building the first internal AI drafting system.", insight: "The work expanded to fill the absence of anyone else doing it. That's how I learnt where the problems were." },
   { date: "Jan 2025", location: "Open Cluster", type: "cluster", doing: "AI Ambassador network — 30 people. 50% AI mandate.", insight: "What I had built for myself worked — in my hands. It turned out to be harder than i expected to transfer my knowledge to everyone else." },
-  { date: "Aug 2025", location: "Signal Beacon", type: "beacon", doing: "Mapping every mission steps, process-wise, to the right AI tool. 94 rows. The construction of 28 training videos.", insight: "Individual practice has a half-life. The only way to make it last is to make it legible." },
-  { date: "Sep 2025", location: "Survey Satellite", type: "satellite", doing: "Large-scale internal survey. 200 people. No real picture before.", insight: "We couldnt govern blindly, what we had not measured. The real move from builder to strategist started here." },
-  { date: "Dec 2025", location: "Deep Station Alpha", type: "complex", doing: "First high-end multi-agent writing system.", insight: "Technical sophistication and human adoptability are orthogonal problems." },
+  { date: "Apr 2025", location: "Signal Beacon", type: "beacon", doing: "Mapping every mission steps, process-wise, to the right AI tool. 94 rows. The construction of 28 training videos.", insight: "Individual practice has a half-life. The only way to make it last is to make it legible." },
+  { date: "Aug 2025", location: "Long-Range Array", type: "telescope", doing: "Mapping knowledge work onto 1, 3, and 5-year horizons — what the consultant role becomes when AI handles the first draft, then the structure, then the judgment call.", insight: "The document wasn't a forecast. It was a forcing function — making the organisation name what it was not yet willing to name." },
+  { date: "Sep 2025", location: "Proving Ground", type: "crater", doing: "Drafted a full internal AI roadmap solo — before the official governance workshops — to locate where the real disagreements would land before the room started shaping them.", insight: "The exercise wasn't preparation. It was a way of finding out what I actually believed." },
+  { date: "Oct 2025", location: "Survey Satellite", type: "satellite", doing: "Large-scale internal survey. 200 people. No real picture before.", insight: "We couldnt govern blindly, what we had not measured. The real move from builder to strategist started here." },
+  { date: "Nov 2025", location: "Deep Station Alpha", type: "complex", doing: "Authored the internal standard on AI-era critical review — why reading AI output requires more scrutiny, not less.", insight: "The harder argument to make isn't 'AI helps.' It's 'AI makes your job as a reader more demanding.'" },
+  { date: "Jan 2026", location: "Deep Station Alpha", type: "complex", doing: "First high-end multi-agent writing system.", insight: "Technical sophistication and human adoptability are orthogonal problems." },
   { date: "Jan 2026", location: "Primary Star", type: "sunstar", doing: "Formally appointed to 100% AI.", insight: "The recognition of the value brought along the past two years." },
   { date: "Mar 2026", location: "New World", type: "homeplanet", doing: "Claude Skills is the future of agentic creation for non-technical experts.", insight: "The answer to the adoption problem isn't always better tools. It would be giving people the means to build their own." },
 ];
 
-const NODE_Y_FRACS = [0.80, 0.15, 0.82, 0.16, 0.78, 0.20, 0.82, 0.15, 0.84, 0.72, 0.18, 0.76, 0.66];
+const NODE_Y_FRACS = [0.80, 0.15, 0.82, 0.16, 0.78, 0.20, 0.82, 0.15, 0.84, 0.17, 0.82, 0.16, 0.80, 0.18, 0.76, 0.66];
 const INTRO_W = 500;
 const CARD_RANGE_FRAC = 0.50;
 const SHIP_FRAC = 0.28;
@@ -202,6 +205,45 @@ const About = () => {
       [42, 30, 18, 8].forEach((r, i) => { ctx.beginPath(); ctx.arc(0, 0, r * (0.9 + 0.1 * pulse), 0, Math.PI * 2); ctx.strokeStyle = hsla("accent", (0.32 - i * 0.06) * dim); ctx.stroke(); }); glow(10, 0.85);
     } else if (type === "sunstar") {
       [72, 52, 30].forEach((r, i) => { const g = ctx.createRadialGradient(0, 0, 0, 0, 0, r * (0.7 + pulse * 0.3)); g.addColorStop(0, `hsl(51 100% 68% / ${(0.24 - i * 0.06) * dim})`); g.addColorStop(1, "transparent"); ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); });
+    } else if (type === "telescope") {
+      glow(40, 0.22);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(-30, -7, 52, 14);
+      ctx.fillStyle = `hsl(205 45% 38% / ${0.75 * dim})`; ctx.fill();
+      ctx.strokeStyle = `hsl(205 55% 60% / ${0.5 * dim})`; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath(); ctx.rect(-38, -4, 12, 8);
+      ctx.fillStyle = `hsl(205 35% 28% / ${0.85 * dim})`; ctx.fill();
+      const lensG = ctx.createRadialGradient(22, 0, 0, 22, 0, 18);
+      lensG.addColorStop(0, `hsl(200 100% 88% / ${(0.45 + pulse * 0.4) * dim})`);
+      lensG.addColorStop(0.5, `hsl(200 80% 55% / ${0.18 * dim})`);
+      lensG.addColorStop(1, "transparent");
+      ctx.beginPath(); ctx.arc(22, 0, 18, 0, Math.PI * 2); ctx.fillStyle = lensG; ctx.fill();
+      for (let r = 0; r < 3; r += 1) {
+        const a = (t * 0.0006 + r * 0.45) % (Math.PI * 0.5) - Math.PI * 0.25;
+        ctx.beginPath(); ctx.moveTo(30, 0); ctx.lineTo(30 + Math.cos(a) * 46, Math.sin(a) * 46);
+        ctx.strokeStyle = `hsl(200 100% 78% / ${0.12 * dim})`; ctx.lineWidth = 1; ctx.stroke();
+      }
+      ctx.restore();
+    } else if (type === "crater") {
+      glow(36, 0.18);
+      ctx.save();
+      ctx.rotate(t * 0.00006);
+      for (let r = 0; r < 7; r += 1) {
+        const a = (r / 7) * Math.PI * 2;
+        const len = 30 + Math.sin(a * 2.3) * 8;
+        ctx.beginPath(); ctx.moveTo(Math.cos(a) * 18, Math.sin(a) * 18);
+        ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len);
+        ctx.strokeStyle = `hsl(28 42% 48% / ${0.28 * dim})`; ctx.lineWidth = 1.2; ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(0, 0, 26, 0, Math.PI * 2);
+      ctx.strokeStyle = `hsl(28 38% 54% / ${0.65 * dim})`; ctx.lineWidth = 3; ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, 15, 0, Math.PI * 2);
+      ctx.strokeStyle = `hsl(28 33% 44% / ${0.5 * dim})`; ctx.lineWidth = 2; ctx.stroke();
+      const craterG = ctx.createRadialGradient(0, 0, 0, 0, 0, 11);
+      craterG.addColorStop(0, `hsl(28 58% 68% / ${(0.3 + pulse * 0.18) * dim})`);
+      craterG.addColorStop(1, "transparent");
+      ctx.beginPath(); ctx.arc(0, 0, 11, 0, Math.PI * 2); ctx.fillStyle = craterG; ctx.fill();
+      ctx.restore();
     } else {
       glow(40, 0.36); ctx.beginPath(); ctx.arc(0, 0, 27, 0, Math.PI * 2); ctx.fillStyle = `hsl(194 60% 46% / ${0.82 * dim})`; ctx.fill(); ctx.beginPath(); ctx.ellipse(-5, -5, 14, 9, 0.4, 0, Math.PI * 2); ctx.fillStyle = `hsl(142 45% 47% / ${0.7 * dim})`; ctx.fill();
     }
@@ -505,7 +547,7 @@ const About = () => {
     const { vw } = dimsRef.current;
     if (!first) return;
     const introTarget = vw < 700 ? 0 : Math.max(60, first.x - vw * SHIP_FRAC - 20);
-    const duration = 2200;
+    const duration = 4400;
     const start = performance.now();
     motionRef.current.introRunning = true;
     const ease = (n: number) => (n < 0.5 ? 4 * n * n * n : 1 - Math.pow(-2 * n + 2, 3) / 2);
@@ -795,18 +837,20 @@ const About = () => {
         let targetPush = 0;
         if (layout && proximity > 0.01) {
           const actualH = card.offsetHeight;
-          const shipY = pathY(pt.x);
-          const MIN_GAP = 18;
+          const currentShipY = pathY(leadX);
+          const SHIP_H = 18;
+          const PUSH_GAP = 12;
+          const MAX_PUSH = 90;
           if (layout.above) {
-            const overshoot = (layout.top + actualH) - (shipY - MIN_GAP);
-            if (overshoot > 0) targetPush = -overshoot;
+            const overshoot = (layout.top + actualH + SHIP_H + PUSH_GAP) - currentShipY;
+            if (overshoot > 0) targetPush = -Math.min(overshoot, MAX_PUSH);
           } else {
-            const overshoot = (shipY + MIN_GAP) - layout.top;
-            if (overshoot > 0) targetPush = overshoot;
+            const overshoot = currentShipY + SHIP_H + PUSH_GAP - layout.top;
+            if (overshoot > 0) targetPush = Math.min(overshoot, MAX_PUSH);
           }
         }
         pushSmoothedRef.current[i] = (pushSmoothedRef.current[i] ?? 0)
-          + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.08;
+          + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.18;
         const push = pushSmoothedRef.current[i];
         card.style.transform = `translate3d(0, ${(1 - op) * 10 + push}px, 0)`;
       });
@@ -879,7 +923,7 @@ const About = () => {
           <div className="about-intro-card">
             <div className="about-intro-eyebrow">Flight log</div>
             <h1 className="about-intro-name">How I<br />got here</h1>
-            <p className="about-intro-sub">2015 → 2026<br />13 locations.</p>
+            <p className="about-intro-sub">2015 → 2026<br />16 locations.</p>
           </div>
           {ENTRIES.map((entry, i) => {
             const layout = cardLayouts[i];
