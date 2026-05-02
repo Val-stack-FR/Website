@@ -946,20 +946,30 @@ export const drawDerelict = (ctx: CanvasRenderingContext2D, x: number, y: number
 // 19. Monolith (Clarke 1:4:9)
 export const drawMonolith = (ctx: CanvasRenderingContext2D, x: number, y: number, t: number, dim: number, _h: Hsla) => {
   ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 0.0003) * 0.02);
-  const aura = ctx.createRadialGradient(0, 0, 8, 0, 0, 28);
-  aura.addColorStop(0, `hsl(220 30% 8% / ${0.5 * dim})`);
+  // Wide, tinted aura so the slab reads against the dark sky
+  const aura = ctx.createRadialGradient(0, 0, 4, 0, 0, 40);
+  aura.addColorStop(0, `hsl(220 50% 40% / ${0.38 * dim})`);
+  aura.addColorStop(0.55, `hsl(220 35% 20% / ${0.18 * dim})`);
   aura.addColorStop(1, "transparent");
-  ctx.beginPath(); ctx.arc(0, 0, 28, 0, TAU); ctx.fillStyle = aura; ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, 40, 0, TAU); ctx.fillStyle = aura; ctx.fill();
   const w = 8, h = 32;
-  ctx.beginPath();
-  ctx.rect(-w / 2, -h / 2, w, h);
+  ctx.beginPath(); ctx.rect(-w / 2, -h / 2, w, h);
+  // Slab: still very dark but with enough mid-grey to be legible
   const slab = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
-  slab.addColorStop(0, `hsl(0 0% 8% / ${0.99 * dim})`);
-  slab.addColorStop(0.5, `hsl(0 0% 2% / ${0.99 * dim})`);
-  slab.addColorStop(1, `hsl(0 0% 6% / ${0.99 * dim})`);
+  slab.addColorStop(0, `hsl(0 0% 32% / ${0.95 * dim})`);
+  slab.addColorStop(0.45, `hsl(0 0% 10% / ${0.99 * dim})`);
+  slab.addColorStop(1, `hsl(0 0% 22% / ${0.95 * dim})`);
   ctx.fillStyle = slab; ctx.fill();
+  // Bright left-edge specular
   ctx.beginPath(); ctx.moveTo(-w / 2, -h / 2); ctx.lineTo(-w / 2, h / 2);
-  ctx.strokeStyle = `hsl(220 20% 25% / ${0.6 * dim})`; ctx.lineWidth = 0.5; ctx.stroke();
+  ctx.strokeStyle = `hsl(220 40% 72% / ${0.65 * dim})`; ctx.lineWidth = 0.8; ctx.stroke();
+  // Subtle right edge
+  ctx.beginPath(); ctx.moveTo(w / 2, -h / 2); ctx.lineTo(w / 2, h / 2);
+  ctx.strokeStyle = `hsl(220 20% 38% / ${0.35 * dim})`; ctx.lineWidth = 0.5; ctx.stroke();
+  // Slow-pulsing horizontal shimmer (star-field reflected in the surface)
+  const shimmer = 0.5 + 0.5 * Math.sin(t * 0.0006);
+  ctx.beginPath(); ctx.moveTo(-w / 2 + 1, -h * 0.12); ctx.lineTo(w / 2 - 1, h * 0.05);
+  ctx.strokeStyle = `hsl(0 0% 100% / ${shimmer * 0.22 * dim})`; ctx.lineWidth = 0.8; ctx.stroke();
   ctx.restore();
 };
 
