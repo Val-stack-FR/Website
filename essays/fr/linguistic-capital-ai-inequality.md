@@ -44,11 +44,15 @@ Il existe cependant un second mécanisme opérant sous la surface linguistique. 
 
 ## L'angle mort : là où l'argument atteint ses limites
 
-Il existe une lacune dans le cadre d'Agirdag. L'argument de la (l)iteracy du prompt est entièrement construit autour de l'interaction de base par chat. Mais une part croissante du déploiement de l'IA relève de pipelines multi-agents ou de workflows agentiques où l'humain ne compose plus du tout, ou alors uniquement partiellement ses prompts. Dans ces architectures, le capital linguistique qui importait en mode chat devient partiellement non pertinent au profit d'autres formes de capital : aisance technique, pensée systémique.
+Il existe une lacune dans le cadre d'Agirdag. L'argument de la (l)iteracy du prompt est principalement construit autour de l'interaction directe, de type chat. Or, une part croissante du déploiement de l'IA s'oriente vers des pipelines multi-agents ou des workflows agentiques où l'humain ne compose plus nécessairement de prompts au sens littéral, mais orchestre des processus complexes.
 
-La dimension coût-efficacité aggrave également le problème. De fait, les LLM en version gratuite, finissent subtilement optimisés pour produire des réponses plus courtes et moins coûteuses en calcul, poussant les utilisateurs vers les versions payantes pour une assistance plus performante.
+Dans ces architectures, le capital linguistique « littéraire » semble s'effacer au profit de ce que l'on appelle la pensée computationnelle (Computational Thinking). Pourtant, il serait réducteur de les opposer. Il s'agit plus probablement des deux faces d'une même pièce bourdieusienne : la capacité à décomposer un problème, à identifier des abstractions et à formaliser un système reste, par essence, un acte de langage.
 
-En entreprise, ce dernier point peut prendre une autre forme, la construction de workflows viables en PoC, sur des modèles performants, mais qui finiraient optimisés afin d’en *réduire* les coûts pourraient créer des effets déceptifs sur les utilisateurs.
+Ce que nous appelons « aisance technique » n'est peut-être que la métamorphose du capital linguistique en une capacité de formalisation. Si le mode chat récompense l'assurance rhétorique, l'agentique récompense l'assurance structurelle : la compétence à traduire une intuition professionnelle en une architecture de règles explicites. Au lieu de disparaître, le capital linguistique se déplace : de l'art de la conversation, il devient l'art de la spécification. La « langue légitime » n'est plus seulement celle qui est bien dite, c'est celle qui est assez bien structurée pour devenir un algorithme.
+
+La dimension coût-efficacité aggrave également le problème. De fait, les LLM en version gratuite finissent subtilement optimisés pour produire des réponses plus courtes et moins coûteuses en calcul, poussant les utilisateurs vers les versions payantes pour une assistance plus performante.
+
+En entreprise, ce dernier point peut prendre une autre forme : la construction de workflows viables en PoC, sur des modèles performants, mais qui finiraient optimisés afin d’en réduire les coûts pourrait créer des effets déceptifs sur les utilisateurs, creusant davantage le fossé entre ceux qui savent « piloter » l'économie du jeton et ceux qui subissent la dégradation de la qualité.
 
 ## Ce que le « prémâché » ne règle pas
 
