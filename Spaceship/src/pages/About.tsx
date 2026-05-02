@@ -1,4 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  drawRorschach, drawScrambler, drawLighthugger, drawCacheWeapon, drawInhibitor,
+  drawPatternJuggler, drawTreeship, drawFarcaster, drawBlackHole, drawQuasar,
+  drawMagnetar, drawWormhole, drawSupernova, drawGlobular, drawProtoDisk,
+  drawGasGiant, drawCometNucleus, drawAuroraWorld, drawEclipse, drawBrownDwarf,
+  drawJumpGate, drawDysonSwarm, drawRingworld, drawSolarSail, drawGenerationShip,
+  drawDerelict, drawMonolith, drawMiningRig, drawStormPlanet,
+} from "./LiteraryObjects";
 
 type Entry = {
   date: string;
@@ -25,10 +33,10 @@ const ENTRIES: Entry[] = [
   { date: "Mid 2024", location: "Orbital Station", type: "station", doing: "Building the first internal AI drafting system.", insight: "The work expanded to fill the absence of anyone else doing it. That's how I learnt where the problems were." },
   { date: "Jan 2025", location: "Open Cluster", type: "cluster", doing: "AI Ambassador network — 30 people. 50% AI mandate.", insight: "What I had built for myself worked — in my hands. It turned out to be harder than i expected to transfer my knowledge to everyone else." },
   { date: "Apr 2025", location: "Signal Beacon", type: "beacon", doing: "Mapping every mission steps, process-wise, to the right AI tool. 94 rows. The construction of 28 training videos.", insight: "Individual practice has a half-life. The only way to make it last is to make it legible." },
-  { date: "Aug 2025", location: "Long-Range Array", type: "telescope", doing: "Mapping knowledge work onto 1, 3, and 5-year horizons — what the consultant role becomes when AI handles the first draft, then the structure, then the judgment call.", insight: "The document wasn't a forecast. It was a forcing function — making the organisation name what it was not yet willing to name." },
+  { date: "Aug 2025", location: "Long-Range Array", type: "quasar", doing: "Mapping knowledge work onto 1, 3, and 5-year horizons — what the consultant role becomes when AI handles the first draft, then the structure, then the judgment call.", insight: "The document wasn't a forecast. It was a forcing function — making the organisation name what it was not yet willing to name." },
   { date: "Sep 2025", location: "Proving Ground", type: "crater", doing: "Drafted a full internal AI roadmap solo — before the official governance workshops — to locate where the real disagreements would land before the room started shaping them.", insight: "The exercise wasn't preparation. It was a way of finding out what I actually believed." },
   { date: "Oct 2025", location: "Survey Satellite", type: "satellite", doing: "Large-scale internal survey. 200 people. No real picture before.", insight: "We couldnt govern blindly, what we had not measured. The real move from builder to strategist started here." },
-  { date: "Nov 2025", location: "Deep Station Alpha", type: "complex", doing: "Authored the internal standard on AI-era critical review — why reading AI output requires more scrutiny, not less.", insight: "The harder argument to make isn't 'AI helps.' It's 'AI makes your job as a reader more demanding.'" },
+  { date: "Nov 2025", location: "Deep Station Alpha", type: "monolith", doing: "Authored the internal standard on AI-era critical review — why reading AI output requires more scrutiny, not less.", insight: "The harder argument to make isn't 'AI helps.' It's 'AI makes your job as a reader more demanding.'" },
   { date: "Jan 2026", location: "Deep Station Alpha", type: "complex", doing: "First high-end multi-agent writing system.", insight: "Technical sophistication and human adoptability are orthogonal problems." },
   { date: "Jan 2026", location: "Primary Star", type: "sunstar", doing: "Formally appointed to 100% AI.", insight: "The recognition of the value brought along the past two years." },
   { date: "Mar 2026", location: "New World", type: "homeplanet", doing: "Claude Skills is the future of agentic creation for non-technical experts.", insight: "The answer to the adoption problem isn't always better tools. It would be giving people the means to build their own." },
@@ -133,6 +141,20 @@ const About = () => {
   const pathAngle = useCallback((x: number) => Math.atan2(pathY(x + 4) - pathY(x - 4), 8), [pathY]);
 
   const drawObject = useCallback((ctx: CanvasRenderingContext2D, x: number, y: number, type: string, t: number, dim: number) => {
+    const libraryObjects: Record<string, (ctx: CanvasRenderingContext2D, x: number, y: number, t: number, dim: number, hsla: typeof hsla) => void> = {
+      rorschach: drawRorschach, scrambler: drawScrambler, lighthugger: drawLighthugger,
+      cacheweapon: drawCacheWeapon, inhibitor: drawInhibitor, patternjuggler: drawPatternJuggler,
+      treeship: drawTreeship, farcaster: drawFarcaster, blackhole: drawBlackHole,
+      quasar: drawQuasar, magnetar: drawMagnetar, wormhole: drawWormhole,
+      supernova: drawSupernova, globular: drawGlobular, protodisk: drawProtoDisk,
+      gasgiant: drawGasGiant, cometnucleus: drawCometNucleus, auroraworld: drawAuroraWorld,
+      eclipse: drawEclipse, browndwarf: drawBrownDwarf, jumpgate: drawJumpGate,
+      dysonswarm: drawDysonSwarm, ringworld: drawRingworld, solarsail: drawSolarSail,
+      generationship: drawGenerationShip, derelict: drawDerelict, monolith: drawMonolith,
+      miningrig: drawMiningRig, stormplanet: drawStormPlanet,
+    };
+    if (libraryObjects[type]) { libraryObjects[type](ctx, x, y, t, dim, hsla); return; }
+
     const pulse = 0.5 + 0.5 * Math.sin(t * 0.0018 + x * 0.008);
     ctx.save();
     ctx.translate(x, y);
