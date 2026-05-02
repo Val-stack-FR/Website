@@ -846,6 +846,11 @@ const About = () => {
       cardRefs.current.forEach((card, i) => {
         const pt = pointsRef.current.objPts[i];
         if (!card || !pt) return;
+        if (!cardLayoutsRef.current[i]) {
+          card.style.opacity = "0";
+          card.style.pointerEvents = "none";
+          return;
+        }
         const baseOp = Math.max(0, 1 - Math.abs(pt.x - leadX) / maxDist);
         const op = i === activeIndex ? Math.max(baseOp, 0.92) : baseOp * 0.5;
         card.style.opacity = `${op}`;
