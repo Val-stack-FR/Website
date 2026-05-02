@@ -62,11 +62,30 @@ La version inconfortable de cette conclusion est que les organisations qui dépl
 
 ---
 
-### Références
-
-1. **Agirdag, O. (2026).** Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. *Educational Theory*.
-2. **Zamfirescu-Pereira, J. D., et al. (2023).** Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. *CHI 2023*.
-3. **Dell'Acqua, F., et al. (2023).** Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality. *HBS Working Paper*.
-4. **Hofmann, V., et al. (2024).** Dialect prejudice predicts AI decisions about people's character, employability, and criminality. *Nature*.
-5. **Sofroniew, N., et al. (2026).** Emotion Concepts and their Function in a Large Language Model. *Anthropic*.
+<div class="references">
+  <div class="reference-item">
+    <span class="ref-num">[1]</span>
+    <div class="ref-text">Agirdag, O. (2026). Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. <em>Educational Theory</em>.</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[2]</span>
+    <div class="ref-text">Zamfirescu-Pereira, J. D., et al. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI 2023</em>. — Mollick, E. (2024). <em>Co-Intelligence</em>. Portfolio/Penguin.</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[3]</span>
+    <div class="ref-text">Dell'Acqua, F., McFowland, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., & Lakhani, K. R. (2023). Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality. <em>Harvard Business School Working Paper</em>.</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[4]</span>
+    <div class="ref-text">See "The People Problem in GenAI Adoption" — on the same site — for the adoption-level data on who uses AI tools and why most structured programmes underperform. This essay is the structural explanation for the patterns documented there.</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[5]</span>
+    <div class="ref-text">Hofmann, V., Kalluri, P. R., Jurafsky, D., & King, S. (2024). Dialect prejudice predicts AI decisions about people's character, employability, and criminality. <em>Nature</em>. — Lin, B., et al. (2024). ReDial: Dialect-Inclusive AI Reasoning. <em>ACL 2024</em>.</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[6]</span>
+    <div class="ref-text">Sofroniew, N., Kauvar, I., Saunders, W., Chen, R., et al. (2026). Emotion Concepts and their Function in a Large Language Model. <em>Transformer Circuits Thread</em>, Anthropic. https://transformer-circuits.pub/2026/emotions/index.html</div>
+  </div>
+</div>
 
