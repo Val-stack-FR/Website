@@ -175,9 +175,16 @@ Y fracs alternate high/low to create the wave path:
 Keep alternating when adding new entries to maintain the wave pattern.
 
 ### Available `type` values (controls the visual at each node)
-`asteroid` · `nebula` · `pulsar` · `binary` · `ringedplanet` · `station` · `cluster` · `beacon` · `satellite` · `complex` · `sunstar` · `homeplanet`
 
-Anything else silently falls back to the blue planet (`homeplanet`).
+**Inline (About.tsx):** `asteroid` · `nebula` · `pulsar` · `binary` · `ringedplanet` · `station` · `cluster` · `beacon` · `satellite` · `complex` · `sunstar` · `telescope` · `crater` · `homeplanet` (default fallback)
+
+**LiteraryObjects.ts — literary:** `rorschach` · `scrambler` · `lighthugger` · `cacheweapon` · `inhibitor` · `patternjuggler` · `treeship` · `farcaster`
+
+**LiteraryObjects.ts — cosmic (real):** `blackhole` · `quasar` · `magnetar` · `wormhole` · `supernova` · `globular` · `protodisk` · `gasgiant` · `cometnucleus` · `auroraworld` · `eclipse` · `browndwarf`
+
+**LiteraryObjects.ts — sci-fi / megastructures:** `jumpgate` · `dysonswarm` · `ringworld` · `solarsail` · `generationship` · `derelict` · `monolith` · `miningrig` · `stormplanet`
+
+Unknown types fall back to `homeplanet`.
 
 ### Building locally
 ```bash
