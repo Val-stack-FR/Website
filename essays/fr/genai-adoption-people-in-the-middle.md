@@ -72,11 +72,11 @@ Les organisations qui navigueront habilement à travers ces enjeux au cours des 
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Baym, N., Jaffe, S., & Dillon, K. (2026). Peer influence and AI rollout. <em>Harvard Business Review / Microsoft Research</em>, Mars 2026. N=557.</div>
+    <div class="ref-text">Baym, N., Jaffe, S., & Dillon, K. (2026). Peer influence and AI rollout. <em>Harvard Business Review / Microsoft Research</em>, Mars 2026. N=557. <a href="https://hbr.org/2026/03/peer-influence-can-make-or-break-your-ai-rollout" target="_blank" rel="noopener">hbr.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Brynjolfsson, E., Li, D., & Raymond, L. (2025). Generative AI at work. <em>Quarterly Journal of Economics</em>, 140(2). ECR, N=5 172.</div>
+    <div class="ref-text">Brynjolfsson, E., Li, D., & Raymond, L. (2025). Generative AI at work. <em>Quarterly Journal of Economics</em>, 140(2), 889–942. ECR, N=5 172. <a href="https://doi.org/10.1093/qje/qjae044" target="_blank" rel="noopener">doi:10.1093/qje/qjae044</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
@@ -88,11 +88,11 @@ Les organisations qui navigueront habilement à travers ces enjeux au cours des 
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Crane, L., Green, R., & Soto, C. (2025). Measuring AI adoption. <em>FEDS Notes</em>, Federal Reserve Board.</div>
+    <div class="ref-text">Crane, L., Green, R., & Soto, C. (2025). Measuring AI uptake in the workplace. <em>FEDS Notes</em>, Federal Reserve Board. <a href="https://doi.org/10.17016/2380-7172.3724" target="_blank" rel="noopener">doi:10.17016/2380-7172.3724</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Burton-Jones, A., & Straub, D. (2006). Reconceptualizing system usage. <em>Information Systems Research</em>, 17(3), 228–246.</div>
+    <div class="ref-text">Burton-Jones, A., & Straub, D. (2006). Reconceptualizing system usage. <em>Information Systems Research</em>, 17(3), 228–246. <a href="https://doi.org/10.1287/isre.1060.0096" target="_blank" rel="noopener">doi:10.1287/isre.1060.0096</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
@@ -100,7 +100,7 @@ Les organisations qui navigueront habilement à travers ces enjeux au cours des 
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
-    <div class="ref-text">MIT NANDA. (2025). GenAI deployment study. 52 entretiens + plus de 300 déploiements publics analysés. MIT Sloan, Août 2025.</div>
+    <div class="ref-text">MIT NANDA. (2025). The GenAI Divide : State of AI in Business 2025. 52 entretiens + plus de 300 déploiements publics analysés. MIT Sloan, Août 2025. <a href="https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/" target="_blank" rel="noopener">Couverture : Fortune</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>

@@ -69,7 +69,7 @@ That is not a bottleneck to remove. It is the job.
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Ronacher, A., & Poncela Cubeiro, C. (2024). <em>The friction is your judgment</em> [Video]. YouTube. AI Engineer World's Fair.</div>
+    <div class="ref-text">Ronacher, A., & Poncela Cubeiro, C. (2024). <em>The friction is your judgment</em> [Video]. YouTube. AI Engineer World's Fair. <a href="https://www.youtube.com/watch?v=_Zcw_sVF6hU" target="_blank" rel="noopener">youtube.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>

@@ -51,11 +51,11 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Kluger, A. N. & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. <em>Psychological Bulletin</em>, 119(2), 254–284.</div>
+    <div class="ref-text">Kluger, A. N. & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. <em>Psychological Bulletin</em>, 119(2), 254–284. <a href="https://doi.org/10.1037/0033-2909.119.2.254" target="_blank" rel="noopener">doi:10.1037/0033-2909.119.2.254</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Buckingham, M. & Goodall, A. (2019). The feedback fallacy. <em>Harvard Business Review</em>, March–April.</div>
+    <div class="ref-text">Buckingham, M. & Goodall, A. (2019). The feedback fallacy. <em>Harvard Business Review</em>, March–April. <a href="https://hbr.org/2019/03/the-feedback-fallacy" target="_blank" rel="noopener">hbr.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
@@ -71,7 +71,7 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Morrison, E. W. (2014). Employee voice and silence. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 1, 173–197. — Morrison, E. W. (2023). Employee voice and silence: Taking stock a decade later. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 10.</div>
+    <div class="ref-text">Morrison, E. W. (2014). Employee voice and silence. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 1, 173–197. <a href="https://doi.org/10.1146/annurev-orgpsych-031413-091328" target="_blank" rel="noopener">doi:10.1146/annurev-orgpsych-031413-091328</a> — Morrison, E. W. (2023). Employee voice and silence: Taking stock a decade later. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 10, 79–107. <a href="https://doi.org/10.1146/annurev-orgpsych-120920-054654" target="_blank" rel="noopener">doi:10.1146/annurev-orgpsych-120920-054654</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
@@ -83,15 +83,15 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>
-    <div class="ref-text">Antonioni, D. (1994). The effects of feedback accountability on upward appraisal ratings. <em>Personnel Psychology</em>, 47(2).</div>
+    <div class="ref-text">Antonioni, D. (1994). The effects of feedback accountability on upward appraisal ratings. <em>Personnel Psychology</em>, 47(2), 349–356. <a href="https://doi.org/10.1111/j.1744-6570.1994.tb01728.x" target="_blank" rel="noopener">doi:10.1111/j.1744-6570.1994.tb01728.x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[10]</span>
-    <div class="ref-text">Smither, J. W., London, M. & Reilly, R. R. (2005). Does performance improve following multisource feedback? A theoretical model, meta-analysis, and review of empirical findings. <em>Personnel Psychology</em>, 58(1), 33–66.</div>
+    <div class="ref-text">Smither, J. W., London, M. & Reilly, R. R. (2005). Does performance improve following multisource feedback? A theoretical model, meta-analysis, and review of empirical findings. <em>Personnel Psychology</em>, 58(1), 33–66. <a href="https://doi.org/10.1111/j.1744-6570.2005.514_1.x" target="_blank" rel="noopener">doi:10.1111/j.1744-6570.2005.514_1.x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[11]</span>
-    <div class="ref-text">Boud, D. & Molloy, E. (2018). Rethinking models of feedback for learning: The challenge of design. <em>Assessment & Evaluation in Higher Education</em>, 43(8).</div>
+    <div class="ref-text">Boud, D. & Molloy, E. (2013). Rethinking models of feedback for learning: The challenge of design. <em>Assessment & Evaluation in Higher Education</em>, 38(6), 698–712. <a href="https://doi.org/10.1080/02602938.2012.691462" target="_blank" rel="noopener">doi:10.1080/02602938.2012.691462</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>
@@ -99,7 +99,7 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
   </div>
   <div class="reference-item">
     <span class="ref-num">[13]</span>
-    <div class="ref-text">Pulakos, E. D. et al. (2015). Performance management can be fixed: An on-the-job experiential learning approach for complex behavior change. <em>Industrial and Organizational Psychology</em>, 8(1).</div>
+    <div class="ref-text">Pulakos, E. D. et al. (2015). Performance management can be fixed: An on-the-job experiential learning approach for complex behavior change. <em>Industrial and Organizational Psychology</em>, 8(1), 51–76. <a href="https://doi.org/10.1017/iop.2014.2" target="_blank" rel="noopener">doi:10.1017/iop.2014.2</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[14]</span>
@@ -115,14 +115,14 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
   </div>
   <div class="reference-item">
     <span class="ref-num">[17]</span>
-    <div class="ref-text">Gill, R. & Orgad, S. (2018). The amazing bounce-backable woman: Resilience and the psychological turn in neoliberalism. <em>Sociological Research Online</em>, 23(2).</div>
+    <div class="ref-text">Gill, R. & Orgad, S. (2018). The amazing bounce-backable woman: Resilience and the psychological turn in neoliberalism. <em>Sociological Research Online</em>, 23(2), 477–495. <a href="https://doi.org/10.1177/1360780418769673" target="_blank" rel="noopener">doi:10.1177/1360780418769673</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[18]</span>
-    <div class="ref-text">Gallup (2025). <em>State of the Global Workplace 2025</em>. gallup.com.</div>
+    <div class="ref-text">Gallup (2025). <em>State of the Global Workplace 2025</em>. <a href="https://www.gallup.com/workplace/349484/state-of-the-global-workplace.aspx" target="_blank" rel="noopener">gallup.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[19]</span>
-    <div class="ref-text">McKinsey & Company (2020). The boss factor: Making the world a better place through workplace relationships. <em>McKinsey Quarterly</em>.</div>
+    <div class="ref-text">McKinsey & Company (2020). The boss factor: Making the world a better place through workplace relationships. <em>McKinsey Quarterly</em>. <a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-boss-factor-making-the-world-a-better-place-through-workplace-relationships" target="_blank" rel="noopener">mckinsey.com</a></div>
   </div>
 </div>

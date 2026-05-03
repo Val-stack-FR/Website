@@ -32,6 +32,8 @@ Le résultat le plus frappant provient de l'expérience de terrain menée en 202
 
 J'avais observé une dynamique similaire sur le terrain. Les personnes qui éprouvaient le plus de difficultés avec les outils d'IA ne luttaient pas nécessairement car la technologie était inaccessible. Elles luttaient au niveau de l'articulation — au moment de traduire une intuition professionnelle en une forme exploitable par le modèle. C'est, au moins partiellement, un problème linguistique, mon autre hypothèse reposant sur la lacune même au niveau de la compréhension du champ des possibles. Mais nous traitions en général ces problématiques en tant que problème technique.
 
+<div class="article-ref" data-slug="genai-adoption-people-in-the-middle" data-type="essay">La question à poser — avant de concevoir tout programme d'adoption — n'est pas « comment amener les gens à utiliser l'IA ? » mais « qu'est-ce qui les bloque réellement, et est-ce ce que nous pensons ? »</div>
+
 Agirdag nous donne le *pourquoi*.
 
 ## La préférence *intuitive* de la machine
@@ -69,27 +71,23 @@ La version inconfortable de cette conclusion est que les organisations qui dépl
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Agirdag, O. (2026). Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. <em>Educational Theory</em>.</div>
+    <div class="ref-text">Agirdag, O. (2026). Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. <em>Educational Theory</em>. (DOI not found)</div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Zamfirescu-Pereira, J. D., et al. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI 2023</em>. — Mollick, E. (2024). <em>Co-Intelligence</em>. Portfolio/Penguin.</div>
+    <div class="ref-text">Zamfirescu-Pereira, J. D., et al. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI 2023</em>. <a href="https://doi.org/10.1145/3544548.3581388" target="_blank" rel="noopener">doi:10.1145/3544548.3581388</a> — Mollick, E. (2024). <em>Co-Intelligence</em>. Portfolio/Penguin.</div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Dell'Acqua, F., McFowland, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., & Lakhani, K. R. (2023). Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality. <em>Harvard Business School Working Paper</em>.</div>
+    <div class="ref-text">Dell'Acqua, F., McFowland, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., & Lakhani, K. R. (2023). Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality. <em>Harvard Business School Working Paper 24-013</em>. <a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=64700" target="_blank" rel="noopener">hbs.edu</a> — Published as: Dell'Acqua et al. (2026). <em>Organization Science</em>. <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">doi:10.1287/orsc.2025.21838</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">See "The People Problem in GenAI Adoption" — on the same site — for the adoption-level data on who uses AI tools and why most structured programmes underperform. This essay is the structural explanation for the patterns documented there.</div>
+    <div class="ref-text">Hofmann, V., Kalluri, P. R., Jurafsky, D., & King, S. (2024). AI generates covertly racist decisions about people based on their dialect. <em>Nature</em>, 633, 147–154. <a href="https://doi.org/10.1038/s41586-024-07856-5" target="_blank" rel="noopener">doi:10.1038/s41586-024-07856-5</a> — Lin, B., et al. (2025). Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks. <em>ACL 2025</em>. <a href="https://doi.org/10.18653/v1/2025.acl-long.317" target="_blank" rel="noopener">doi:10.18653/v1/2025.acl-long.317</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Hofmann, V., Kalluri, P. R., Jurafsky, D., & King, S. (2024). Dialect prejudice predicts AI decisions about people's character, employability, and criminality. <em>Nature</em>. — Lin, B., et al. (2024). ReDial: Dialect-Inclusive AI Reasoning. <em>ACL 2024</em>.</div>
-  </div>
-  <div class="reference-item">
-    <span class="ref-num">[6]</span>
-    <div class="ref-text">Sofroniew, N., Kauvar, I., Saunders, W., Chen, R., et al. (2026). Emotion Concepts and their Function in a Large Language Model. <em>Transformer Circuits Thread</em>, Anthropic. https://transformer-circuits.pub/2026/emotions/index.html</div>
+    <div class="ref-text">Sofroniew, N., Kauvar, I., Saunders, W., Chen, R., et al. (2026). Emotion Concepts and their Function in a Large Language Model. <em>Transformer Circuits Thread</em>, Anthropic. <a href="https://transformer-circuits.pub/2026/emotions/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></div>
   </div>
 </div>
 
