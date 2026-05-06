@@ -63,7 +63,7 @@ The Gallup data for France is worth keeping in view throughout: 8% employee enga
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Taras, V., Kirkman, B. L. & Steel, P. (2013). Examining the impact of Culture's Consequences: A three-decade, multilevel, meta-analytic review of Hofstede's cultural value dimensions. <em>Journal of Management</em>, 39(2).</div>
+    <div class="ref-text">Taras, V., Kirkman, B. L. & Steel, P. (2013). Examining the impact of Culture's Consequences: A three-decade, multilevel, meta-analytic review of Hofstede's cultural value dimensions. <em>Journal of Management</em>, 39(2). <a href="https://pubmed.ncbi.nlm.nih.gov/20476824/" target="_blank" rel="noopener">PubMed</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>

@@ -101,11 +101,11 @@ I don't think that uncertainty is a problem to be solved. I think it's the accur
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Parisi, L. (2019). The alien subject of AI. <em>Subjectivity</em>, 12(1), 27–48. https://doi.org/10.1057/s41286-018-00064-3</div>
+    <div class="ref-text">Parisi, L. (2019). The alien subject of AI. <em>Subjectivity</em>, 12(1), 27–48. <a href="https://doi.org/10.1057/s41286-018-00064-3" target="_blank" rel="noopener">doi:10.1057/s41286-018-00064-3</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Grumbach, S. (2026). Cognitive assemblages: Living with algorithms. <em>Big Data and Cognitive Computing</em>, 10(2), 63. https://doi.org/10.3390/bdcc10020063</div>
+    <div class="ref-text">Grumbach, S. (2026). Cognitive assemblages: Living with algorithms. <em>Big Data and Cognitive Computing</em>, 10(2), 63. <a href="https://doi.org/10.3390/bdcc10020063" target="_blank" rel="noopener">doi:10.3390/bdcc10020063</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
@@ -113,11 +113,11 @@ I don't think that uncertainty is a problem to be solved. I think it's the accur
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Hayles, N. K. (2017). <em>Unthought: The power of the cognitive nonconscious</em>. University of Chicago Press. See also: Hayles, N. K. (2025). Modes of cognition: Implications for large language models. <em>Antikythera Journal</em>.</div>
+    <div class="ref-text">Hayles, N. K. (2017). <em>Unthought: The power of the cognitive nonconscious</em>. University of Chicago Press. <a href="https://ageingcompanions.constantvzw.org/books/Unthought_N._Katherine_Hayles.pdf" target="_blank" rel="noopener">PDF</a> — Hayles, N. K. (2025). Modes of cognition: Implications for large language models. <em>Antikythera Journal</em>. <a href="https://modesofcognition.antikythera.org/" target="_blank" rel="noopener">antikythera.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Clark, A. (2025). Extending minds with generative AI. <em>Nature Communications</em>, 16, 4627. https://doi.org/10.1038/s41467-025-59906-9</div>
+    <div class="ref-text">Clark, A. (2025). Extending minds with generative AI. <em>Nature Communications</em>, 16, 4627. <a href="https://doi.org/10.1038/s41467-025-59906-9" target="_blank" rel="noopener">doi:10.1038/s41467-025-59906-9</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>

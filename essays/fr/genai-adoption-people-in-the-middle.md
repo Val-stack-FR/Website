@@ -96,7 +96,7 @@ Les organisations qui navigueront habilement à travers ces enjeux au cours des 
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">McKinsey & Company. (2025). The state of AI 2025. N=1 993, 101 pays. <a href="https://www.mckinsey.com" target="_blank" rel="noopener">mckinsey.com</a></div>
+    <div class="ref-text">McKinsey & Company. (2025). The state of AI 2025. N=1 993, 101 pays. <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener">mckinsey.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
@@ -112,7 +112,7 @@ Les organisations qui navigueront habilement à travers ces enjeux au cours des 
   </div>
   <div class="reference-item">
     <span class="ref-num">[11]</span>
-    <div class="ref-text">Gartner. (2025). Hype Cycle for Artificial Intelligence. Gartner Research.</div>
+    <div class="ref-text">Gartner. (2025). Hype Cycle for Artificial Intelligence. Gartner Research. <a href="https://www.gartner.com/en/articles/hype-cycle-for-artificial-intelligence" target="_blank" rel="noopener">gartner.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>

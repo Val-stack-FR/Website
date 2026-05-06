@@ -71,7 +71,7 @@ La version inconfortable de cette conclusion est que les organisations qui dépl
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Agirdag, O. (2026). Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. <em>Educational Theory</em>. (DOI not found)</div>
+    <div class="ref-text">Agirdag, O. (2026). Beyond Prompt Engineering: Prompting (L)iteracy, Linguistic Capital, and Educational Inequality. <em>Educational Theory</em>. <a href="https://doi.org/10.1111/edth.70057" target="_blank" rel="noopener">doi:10.1111/edth.70057</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>

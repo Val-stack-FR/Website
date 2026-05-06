@@ -172,14 +172,8 @@ function populateMeta(essay, allEssays) {
   document.getElementById('essay-title').textContent = essay.title;
   document.getElementById('essay-desc').textContent = essay.description;
 
-  const idx = allEssays.findIndex(e => e.slug === essay.slug);
-  const next = allEssays[idx + 1];
-  if (next) {
-    const block = document.getElementById('next-essay-block');
-    block.style.display = 'flex';
-    document.getElementById('next-essay-link').href = 'essay-detail.html?essay=' + next.slug;
-    document.getElementById('next-essay-title').textContent = next.title;
-  }
+  // next-essay-block removed from HTML; guard retained for backward compatibility
+
 }
 
 async function renderRelated(essay) {
