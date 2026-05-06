@@ -107,7 +107,7 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[15]</span>
-    <div class="ref-text">Cabanas, E. & Illouz, E. (2018). <em>Happycratie</em>. Premier Parallèle.</div>
+    <div class="ref-text">Cabanas, E. & Illouz, E. (2018). <em>Happycratie</em>. Premier Parallèle. <a href="https://doi.org/10.7202/1065914ar" target="_blank" rel="noopener">doi:10.7202/1065914ar</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[16]</span>

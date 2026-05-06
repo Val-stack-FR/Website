@@ -61,11 +61,11 @@ Ce n'est pas un goulot d'étranglement à supprimer. C'est le travail *concret* 
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Salomon, I. (2024). <em>AgentCraft: Putting the orc in orchestration</em> [Video]. YouTube. AI Engineer World's Fair. https://www.youtube.com/watch?v=kR64LOqBBCU</div>
+    <div class="ref-text">Salomon, I. (2024). <em>AgentCraft: Putting the orc in orchestration</em> [Video]. YouTube. AI Engineer World's Fair. <a href="https://www.youtube.com/watch?v=kR64LOqBBCU" target="_blank" rel="noopener">youtube.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Zou, H. P., Huang, W. C., Wu, Y., Miao, C., Li, D., Liu, A., Zhou, Y., Chen, Y., Zhang, W., Li, Y., Fang, L., Jiang, R., & Yu, P. S. (2025). <em>A call for collaborative intelligence: Why human-agent systems should precede AI autonomy</em>. arXiv. https://arxiv.org/abs/2506.09420v1</div>
+    <div class="ref-text">Zou, H. P., Huang, W. C., Wu, Y., Miao, C., Li, D., Liu, A., Zhou, Y., Chen, Y., Zhang, W., Li, Y., Fang, L., Jiang, R., & Yu, P. S. (2025). <em>A call for collaborative intelligence: Why human-agent systems should precede AI autonomy</em>. arXiv. <a href="https://arxiv.org/abs/2506.09420v1" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
@@ -73,6 +73,6 @@ Ce n'est pas un goulot d'étranglement à supprimer. C'est le travail *concret* 
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Huang, W. C., Zhang, W., Liang, Y., Bei, Y., Chen, Y., Feng, T., Pan, X., Tan, Z., Wang, Y., Wei, T., Wu, S., Xu, R., Yang, L., Yang, R., Yang, W., Yeh, C. Y., Zhang, H., Zhang, H., Zhu, S., Zou, H. P., ... & Shu, K. (2026). <em>Rethinking memory mechanisms of foundation agents in the second half: A survey</em>. arXiv. https://arxiv.org/abs/2602.06052v3</div>
+    <div class="ref-text">Huang, W. C., Zhang, W., Liang, Y., Bei, Y., Chen, Y., Feng, T., Pan, X., Tan, Z., Wang, Y., Wei, T., Wu, S., Xu, R., Yang, L., Yang, R., Yang, W., Yeh, C. Y., Zhang, H., Zhang, H., Zhu, S., Zou, H. P., ... & Shu, K. (2026). <em>Rethinking memory mechanisms of foundation agents in the second half: A survey</em>. arXiv. <a href="https://arxiv.org/abs/2602.06052v3" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
 </div>
