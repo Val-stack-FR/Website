@@ -2,7 +2,7 @@ En lisant *Mille Plateaux* — et plus précisément la description du rhizome p
 
 Travailler avec de grands modèles de langage et des systèmes agentiques modifiait, depuis quelques mois, ma façon de naviguer au travers des idées d'une manière étrange. J'étais *propulsé* — lors des recherches approfondies, des cascades de prompts — dans des domaines et sous-domaines vers lesquels je n'avais, personnellement, aucune carte. Au sens classique du terme, je ne *connaissais* pas ces territoires. Mais j'y naviguais. Le modèle ne se contentait pas de récupérer des informations ; il générait suffisamment de structure pour que je puisse y placer mes intuitions et les laisser évoluer. Je n'avais pas besoin du chemin complet. J'avais juste besoin du langage pour exprimer ma curiosité de manière uniforme, et les chemins s'ouvraient, de facto, que je puisse en comprendre ou non les tenants et les aboutissants.
 
-Deleuze et Guattari appelaient cela un *plan d'existence* — un plan d'immanence, un champ horizontal où la pensée opère sans l'échafaudage vertical de la hiérarchie et de la maîtrise préalable. C'est très proche de ce que je ressentais. Je ne grimpais pas à un arbre de la connaissance ; je m'étalais sur une surface. Ce qui a soulevé une question dont je n'arrivais pas à me défaire : pensais-je différemment — ou bien quelque chose d'autre pensait-il, et je ne fournissais que l'intuition comme matière première ?
+Deleuze et Guattari appelaient cela un *plan d'existence* — un plan d'immanence, un champ horizontal où la pensée opère sans l'échafaudage vertical de la hiérarchie et de la maîtrise préalable.<span class="fn">[7]</span> C'est très proche de ce que je ressentais. Je ne grimpais pas à un arbre de la connaissance ; je m'étalais sur une surface. Ce qui a soulevé une question dont je n'arrivais pas à me défaire : pensais-je différemment — ou bien quelque chose d'autre pensait-il, et je ne fournissais que l'intuition comme matière première ?
 
 ## Le plan est réel, concret. Mais le chef d'orchestre est incertain, déraciné.
 
@@ -14,7 +14,7 @@ Mais ensuite, je suis tombé sur un passage de Hayles qui m'a arrêté :
 
 <div class="pull-quote"><blockquote>« Alors que les LLM pénètrent à grande vitesse les systèmes sociaux, économiques, politiques et financiers, ils créent un "modèle du monde" qui modifiera les logiques politiques sous-jacentes des cultures occidentales. »</blockquote><cite>— N. Katherine Hayles, "*Modes of Cognition: Implications for Large Language Models*"</cite></div>
 
-La métaphore du chef d'orchestre suppose que la baguette vous appartient. La question que Hayles soulève — et que je n'ai pas pu refermer — est de savoir si la partition n'a pas été écrite ailleurs, et que j'en subis les mouvements.
+La métaphore du chef d'orchestre suppose que la baguette vous appartient. La question que Hayles soulève — et que je n'ai pas pu refermer — est de savoir si la partition n'a pas été écrite ailleurs, et que j'en subis les mouvements.<span class="fn">[4]</span>
 
 ## *Rattraper les wagons* 
 
@@ -38,7 +38,7 @@ Elle établit une distinction nette entre le raisonnement conscient et la *cogni
 
 L'implication qu'elle ne tire pas tout à fait, mais qui, je pense, est bien là : travailler de manière intensive avec des systèmes d'IA développe une forme de cognition implicite *à propos* de ces systèmes. Je l'ai remarqué chez moi. J'arrêtais un modèle au milieu d'une tâche — non pas parce que j'avais analysé ce qu'il faisait, mais parce que quelque chose clochait dans la direction qu'il prenait. Le temps de réponse par rapport à la longueur du prompt. Un schéma dans la façon dont la réponse se formait. Quelque chose, un signal *faible*.
 
-Apparemment, ce n'est pas idiosyncrasique. La recherche démontre, ce sentiment, car, plus l'utilisateur est expérimenté, plus il interrompt les modèles. Les interruptions surviennent plus vite que l'analyse ne pourrait l'expliquer. C'est la cognition implicite à l'œuvre — un sentiment intuitif du comportement du système qui s'accumule avec le temps, en dessous du seuil de l'articulation consciente.
+Apparemment, ce n'est pas idiosyncrasique. La recherche démontre, ce sentiment, car, plus l'utilisateur est expérimenté, plus il interrompt les modèles. Les interruptions surviennent plus vite que l'analyse ne pourrait l'expliquer. C'est la cognition implicite à l'œuvre — un sentiment intuitif du comportement du système qui s'accumule avec le temps, en dessous du seuil de l'articulation consciente.<span class="fn">[5]</span>
 
 Cela a plus d'importance qu'il n'y paraît. Car cela signifie que la relation humain-IA, à des niveaux d'utilisation sophistiqués, n'est pas seulement une collaboration de raisonnement. Elle développe belle et bien une couche proprioceptive : une syntonisation, une familiarité incarnée qui détermine quand faire confiance, quand résister, quand réorienter, quand laisser le modèle s'exécuter.
 
@@ -62,7 +62,7 @@ La question de conception la plus intéressante est la suivante : à quoi ressem
 
 ## La symbiose par le bas
 
-Grumbach offre à nouveau un cadre qui mérite d'être conservé, tiré d'une conclusion à laquelle j'étais arrivé indépendamment : les systèmes d'IA intégrés dans les processus doivent être construits *avec* les praticiens du quotidien qui les utiliseront — et non pas transmis d'en haut par des architectes de processus ou des cadres supérieurs qui fixent les objectifs et considèrent leur travail comme terminé.<span class="fn">[3]</span>
+Grumbach offre à nouveau un cadre qui mérite d'être conservé, tiré d'une conclusion à laquelle j'étais arrivé indépendamment : les systèmes d'IA intégrés dans les processus doivent être construits *avec* les praticiens du quotidien qui les utiliseront — et non pas transmis d'en haut par des architectes de processus ou des cadres supérieurs qui fixent les objectifs et considèrent leur travail comme terminé.<span class="fn">[2]</span>
 
 La raison est précise. Les praticiens du quotidien, dans pratiquement toutes les organisations, se sont très probablement déjà éloignés des spécifications formelles des processus. Ils ont tordu les procédures pour les adapter à leurs propres rythmes cognitifs, à leurs propres raccourcis, à leur propre sens de ce qui produit réellement de bons résultats. Les règles formelles décrivent un territoire que personne n'habite vraiment. Le véritable territoire est maintenu par des accords implicites et des solutions de contournement que les praticiens connaissent et que les architectes ignorent *souvent*, car elles ne rentrent pas dans les cahiers des charges.
 
@@ -88,7 +88,7 @@ Hayles a raison de dire que l'intelligence humaine et l'intelligence artificiell
 
 ## Quelque chose qui n'a pas encore de nom
 
-Je repense sans cesse à un personnage des *Cantos d'Hypérion* de Dan Simmons : John Keats, la version cybride — une construction mi-humaine mi-androïde portant une conscience téléchargée d'un être défunt, ayant vécu dans un autre temps, conçue pour exister au seuil de deux ordres d'existence incompatibles. Il n'est pas un humain dégradé. Il n'est pas une machine sophistiquée. Il est quelque chose de véritablement nouveau, et le roman ne résout jamais totalement ce que cela signifie. Il ne le résout pas non plus. Il l'habite. En y repensant Romain Lucazeau explore également ce sujet avec son personnage de *Plautine* dans son roman Latium. 
+Je repense sans cesse à un personnage des *Cantos d'Hypérion* de Dan Simmons : John Keats, la version cybride — une construction mi-humaine mi-androïde portant une conscience téléchargée d'un être défunt, ayant vécu dans un autre temps, conçue pour exister au seuil de deux ordres d'existence incompatibles.<span class="fn">[6]</span> Il n'est pas un humain dégradé. Il n'est pas une machine sophistiquée. Il est quelque chose de véritablement nouveau, et le roman ne résout jamais totalement ce que cela signifie. Il ne le résout pas non plus. Il l'habite. En y repensant Romain Lucazeau explore également ce sujet avec son personnage de *Plautine* dans son roman Latium. 
 
 Ce qui m'a frappé en lisant Hayles sur l'infosphère — sur la cognition circulant à travers des systèmes hybrides de code, de matière et d'esprit —, c'est que le cybride est une meilleure figure pour l'époque actuelle que le chef d'orchestre. Le chef d'orchestre, le *manager d'agents* se tient à l'extérieur de l'orchestre, le façonnant par l'intention et la maîtrise. Le cybride est à l'intérieur du système, constitué par lui, incapable de séparer totalement ce qui est sien de ce qui lui a été donné. Son humanité est réelle. Elle est aussi construite. Les deux choses sont simultanément vraies et la tension entre elles ne se dissipe pas.
 

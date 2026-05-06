@@ -2,7 +2,7 @@ I was reading *A Thousand Plateaux* — specifically Deleuze and Guattari's acco
 
 Working with large language models and agentic systems had been, for some months, doing something strange to how I moved through ideas. I was being *propelled* — through deep searches, through cascades of prompts, through emergent answers — into fields and sub-fields I had no existing path through. In the classic sense, I didn't *know* these territories. But I was functioning in them. The model wasn't just retrieving information; it was generating enough structure for me to place my intuitions and let them move. I didn't need the full path. I just needed the language to express my curiosity evenly, and the paths opened.
 
-Deleuze and Guattari called this a *plan d'existence* — a plane of immanence, a horizontal field where thinking happens without the vertical scaffolding of hierarchy and prior mastery. That is close to what it felt like. I wasn't climbing a tree of knowledge; I was spreading across a surface. Which raised a question I couldn't shake: was I thinking differently — or was something else thinking, and I was providing the intuition as raw material?
+Deleuze and Guattari called this a *plan d'existence* — a plane of immanence, a horizontal field where thinking happens without the vertical scaffolding of hierarchy and prior mastery.<span class="fn">[7]</span> That is close to what it felt like. I wasn't climbing a tree of knowledge; I was spreading across a surface. Which raised a question I couldn't shake: was I thinking differently — or was something else thinking, and I was providing the intuition as raw material?
 
 ## The plane is real. The conductor is uncertain.
 
@@ -14,7 +14,7 @@ But then I hit a passage in Hayles that stopped it:
 
 <div class="pull-quote"><blockquote>"As LLMs penetrate social, economic, political, and financial systems at speed, they are creating a 'world model' that will shift the underlying political logics of Western cultures."</blockquote><cite>— N. Katherine Hayles, "Modes of Cognition: Implications for Large Language Models"</cite></div>
 
-The conductor metaphor assumes the baton is yours. The question Hayles opens — and that I couldn't close — is whether the score was written elsewhere.
+The conductor metaphor assumes the baton is yours. The question Hayles opens — and that I couldn't close — is whether the score was written elsewhere.<span class="fn">[4]</span>
 
 ## *Rattraper les wagons* 
 
@@ -38,7 +38,7 @@ She draws a clean distinction between conscious reasoning and *implicit cognitio
 
 The implication she doesn't quite draw, but which I think is there: working extensively with AI systems develops a form of implicit cognition *about* those systems. I noticed it in myself. I would stop a model mid-task — not because I had analysed what it was doing, but because something felt wrong about the direction. The response time relative to the prompt length. A pattern in how the output was forming. Something.
 
-Apparently this isn't idiosyncratic. The more experienced the user, the more they interrupt models. The interruptions come faster than analysis could explain. That's implicit cognition operating — a felt sense of system behaviour that accumulates over time, below the threshold of conscious articulation.
+Apparently this isn't idiosyncratic. The more experienced the user, the more they interrupt models. The interruptions come faster than analysis could explain. That's implicit cognition operating — a felt sense of system behaviour that accumulates over time, below the threshold of conscious articulation.<span class="fn">[5]</span>
 
 This matters more than it might seem. Because it means the human-AI relationship, at sophisticated levels of use, is not just a reasoning collaboration. It develops a proprioceptive layer: an attunement, an embodied familiarity that shapes when to trust, when to push back, when to let the model run.
 
@@ -62,7 +62,7 @@ The more interesting design question is: what would a system look like that acti
 
 ## Symbiosis from below
 
-Grumbach again offers a frame worth keeping, drawn from a conclusion I'd arrived at independently: AI systems embedded in processes must be built *with* the daily practitioners who will use them — not handed down from process architects or senior administrators who set goals from above and consider their work done.<span class="fn">[3]</span>
+Grumbach again offers a frame worth keeping, drawn from a conclusion I'd arrived at independently: AI systems embedded in processes must be built *with* the daily practitioners who will use them — not handed down from process architects or senior administrators who set goals from above and consider their work done.<span class="fn">[2]</span>
 
 The reason is specific. Daily practitioners, in virtually every organisation, have most likely already drifted from formal process specifications. They've bent procedures to fit their own cognitive rhythms, their own shortcuts, their own sense of what actually produces good outcomes. The formal rules describe a territory nobody quite lives in. The actual territory is maintained by implicit agreements and workarounds that the practitioners know and the architects don't.
 
@@ -88,7 +88,7 @@ Hayles is right that human and artificial intelligence will evolve together. The
 
 ## Something not yet named
 
-I keep returning to a figure from Dan Simmons' *Hyperion Cantos*: John Keats, the cybrid — a human/android construct carrying an uploaded consciousness, built to exist at the threshold between two incompatible orders of being. He is not a degraded human. He is not a sophisticated machine. He is something genuinely new, and the novel never fully resolves what that means. He doesn't resolve it either. He inhabits it.
+I keep returning to a figure from Dan Simmons' *Hyperion Cantos*: John Keats, the cybrid — a human/android construct carrying an uploaded consciousness, built to exist at the threshold between two incompatible orders of being.<span class="fn">[6]</span> He is not a degraded human. He is not a sophisticated machine. He is something genuinely new, and the novel never fully resolves what that means. He doesn't resolve it either. He inhabits it.
 
 What struck me, reading Hayles on the infosphere — on cognition circulating through hybrid systems of code, matter and mind — was that the cybrid is a better figure for the current moment than the conductor. The conductor stands outside the orchestra, shaping it through intention and mastery. The cybrid is inside the system, constituted by it, unable to fully separate what is his from what was given to him. His humanity is real. It's also constructed. Both things are true simultaneously and the tension between them doesn't dissolve.
 
