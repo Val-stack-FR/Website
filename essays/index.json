@@ -1,12 +1,16 @@
 [
     {
     "slug": "linguistic-capital-ai-inequality",
-    "num": "",
+    "num": "06",
     "title": "The Articulation Gap",
     "date": "2026-05-01",
     "tags": ["AI", "philosophy", "linguistic","change management"],
     "readTime": "10 min",
-    "description": "The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built."
+    "description": "The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.",
+    "related": [
+      { "type": "essay", "slug": "genai-adoption-people-in-the-middle" },
+      { "type": "essay", "slug": "the-human-bottleneck" }
+    ]
   },
   {
   "slug": "who-is-conducting-whom",
@@ -15,7 +19,11 @@
   "date": "2026-04-27",
   "tags": ["AI", "futures", "strategy", "philosophy"],
   "readTime": "12 min",
-  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well."
+  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.",
+  "related": [
+    { "type": "essay", "slug": "the-human-bottleneck" },
+    { "type": "essay", "slug": "linguistic-capital-ai-inequality" }
+  ]
   },
   {
   "slug": "the-human-bottleneck",
@@ -24,7 +32,11 @@
   "date": "2026-04-17",
   "tags": ["AI", "strategy", "futures"],
   "readTime": "8 min",
-  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces."
+  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.",
+  "related": [
+    { "type": "essay", "slug": "who-is-conducting-whom" },
+    { "type": "essay", "slug": "genai-adoption-people-in-the-middle" }
+  ]
   },
   {
     "slug": "genai-adoption-people-in-the-middle",
@@ -33,7 +45,11 @@
     "date": "2026-02-07",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "11 min",
-    "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself."
+    "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.",
+    "related": [
+      { "type": "essay", "slug": "when-feedback-fails" },
+      { "type": "essay", "slug": "linguistic-capital-ai-inequality" }
+    ]
   },
   {
   "slug": "when-feedback-fails",
@@ -42,7 +58,11 @@
   "date": "2025-10-13",
   "tags": ["change management","strategy"],
   "readTime": "9 min",
-  "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts."
+  "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.",
+  "related": [
+    { "type": "essay", "slug": "off-the-tracks" },
+    { "type": "essay", "slug": "genai-adoption-people-in-the-middle" }
+  ]
 },
 {
   "slug": "off-the-tracks",
@@ -51,6 +71,9 @@
   "date": "2025-07-17",
   "tags": ["change management", "crisis"],
   "readTime": "8 min",
-  "description": "When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address."
+  "description": "When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address.",
+  "related": [
+    { "type": "essay", "slug": "when-feedback-fails" }
+  ]
 }
 ]

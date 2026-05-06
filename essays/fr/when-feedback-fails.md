@@ -51,19 +51,19 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Kluger, A. N. & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. <em>Psychological Bulletin</em>, 119(2), 254–284.</div>
+    <div class="ref-text">Kluger, A. N. & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. <em>Psychological Bulletin</em>, 119(2), 254–284. <a href="https://doi.org/10.1037/0033-2909.119.2.254" target="_blank" rel="noopener">doi:10.1037/0033-2909.119.2.254</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Buckingham, M. & Goodall, A. (2019). The feedback fallacy. <em>Harvard Business Review</em>, March–April.</div>
+    <div class="ref-text">Buckingham, M. & Goodall, A. (2019). The feedback fallacy. <em>Harvard Business Review</em>, March–April. <a href="https://hbr.org/2019/03/the-feedback-fallacy" target="_blank" rel="noopener">hbr.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Anon. (2023). Feedback × perceived power. <em>European Journal of Social Psychology</em>.</div>
+    <div class="ref-text">Straub, L. M., Lin, E., Tremonte-Freydefont, L., & Schmid, P. C. (2023). Individuals' power determines how they respond to positive versus negative performance feedback. <em>European Journal of Social Psychology</em>, 53, 1402–1420. <a href="https://doi.org/10.1002/ejsp.2985" target="_blank" rel="noopener">doi:10.1002/ejsp.2985</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Taras, V., Kirkman, B. L. & Steel, P. (2013). Examining the impact of Culture's Consequences: A three-decade, multilevel, meta-analytic review of Hofstede's cultural value dimensions. <em>Journal of Management</em>, 39(2).</div>
+    <div class="ref-text">Taras, V., Kirkman, B. L. & Steel, P. (2013). Examining the impact of Culture's Consequences: A three-decade, multilevel, meta-analytic review of Hofstede's cultural value dimensions. <em>Journal of Management</em>, 39(2). <a href="https://pubmed.ncbi.nlm.nih.gov/20476824/" target="_blank" rel="noopener">PubMed</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
@@ -71,58 +71,58 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Morrison, E. W. (2014). Employee voice and silence. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 1, 173–197. — Morrison, E. W. (2023). Employee voice and silence: Taking stock a decade later. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 10.</div>
+    <div class="ref-text">Morrison, E. W. (2014). Employee voice and silence. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 1, 173–197. <a href="https://doi.org/10.1146/annurev-orgpsych-031413-091328" target="_blank" rel="noopener">doi:10.1146/annurev-orgpsych-031413-091328</a> — Morrison, E. W. (2023). Employee voice and silence: Taking stock a decade later. <em>Annual Review of Organizational Psychology and Organizational Behavior</em>, 10, 79–107. <a href="https://doi.org/10.1146/annurev-orgpsych-120920-054654" target="_blank" rel="noopener">doi:10.1146/annurev-orgpsych-120920-054654</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Anon. (2021). Employee silence across 33 countries, N = 8,222. <em>Journal of Organizational Behavior</em>.</div>
+    <div class="ref-text">Knoll, M., Götz, M., Adriasola, E., et al. (2021). International differences in employee silence motives: Scale validation, prevalence, and relationships with culture characteristics across 33 countries. <em>Journal of Organizational Behavior</em>, 42(5), 1042–1072. <a href="https://doi.org/10.1002/job.2512" target="_blank" rel="noopener">doi:10.1002/job.2512</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
-    <div class="ref-text">Anon. (2018). PDI × defensive and acquiescent silence. <em>Applied Psychology: An International Review</em>.</div>
+    <div class="ref-text">Lam, C. K., & Xu, A. J. (2019). Power imbalance and employee silence: The role of abusive leadership, power distance orientation, and perceived organisational politics. <em>Applied Psychology: An International Review</em>, 68(3), 513–546. <a href="https://doi.org/10.1111/apps.12170" target="_blank" rel="noopener">doi:10.1111/apps.12170</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>
-    <div class="ref-text">Antonioni, D. (1994). The effects of feedback accountability on upward appraisal ratings. <em>Personnel Psychology</em>, 47(2).</div>
+    <div class="ref-text">Antonioni, D. (1994). The effects of feedback accountability on upward appraisal ratings. <em>Personnel Psychology</em>, 47(2), 349–356. <a href="https://doi.org/10.1111/j.1744-6570.1994.tb01728.x" target="_blank" rel="noopener">doi:10.1111/j.1744-6570.1994.tb01728.x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[10]</span>
-    <div class="ref-text">Smither, J. W., London, M. & Reilly, R. R. (2005). Does performance improve following multisource feedback? A theoretical model, meta-analysis, and review of empirical findings. <em>Personnel Psychology</em>, 58(1), 33–66.</div>
+    <div class="ref-text">Smither, J. W., London, M. & Reilly, R. R. (2005). Does performance improve following multisource feedback? A theoretical model, meta-analysis, and review of empirical findings. <em>Personnel Psychology</em>, 58(1), 33–66. <a href="https://doi.org/10.1111/j.1744-6570.2005.514_1.x" target="_blank" rel="noopener">doi:10.1111/j.1744-6570.2005.514_1.x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[11]</span>
-    <div class="ref-text">Boud, D. & Molloy, E. (2018). Rethinking models of feedback for learning: The challenge of design. <em>Assessment & Evaluation in Higher Education</em>, 43(8).</div>
+    <div class="ref-text">Boud, D. & Molloy, E. (2013). Rethinking models of feedback for learning: The challenge of design. <em>Assessment & Evaluation in Higher Education</em>, 38(6), 698–712. <a href="https://doi.org/10.1080/02602938.2012.691462" target="_blank" rel="noopener">doi:10.1080/02602938.2012.691462</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>
-    <div class="ref-text">Anon. (2020). Training feedback reception skills. <em>Journal of Organizational Behavior Management</em>.</div>
+    <div class="ref-text">Ehrlich, R. J., Nosik, M. R., Carr, J. E., & Wine, B. (2020). Teaching employees how to receive feedback: A preliminary investigation. <em>Journal of Organizational Behavior Management</em>, 40(1–2), 19–29. <a href="https://doi.org/10.1080/01608061.2020.1746470" target="_blank" rel="noopener">doi:10.1080/01608061.2020.1746470</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[13]</span>
-    <div class="ref-text">Pulakos, E. D. et al. (2015). Performance management can be fixed: An on-the-job experiential learning approach for complex behavior change. <em>Industrial and Organizational Psychology</em>, 8(1).</div>
+    <div class="ref-text">Pulakos, E. D. et al. (2015). Performance management can be fixed: An on-the-job experiential learning approach for complex behavior change. <em>Industrial and Organizational Psychology</em>, 8(1), 51–76. <a href="https://doi.org/10.1017/iop.2014.2" target="_blank" rel="noopener">doi:10.1017/iop.2014.2</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[14]</span>
-    <div class="ref-text">Anon. (2021). Post-survey action framework: Systematic review. <em>Frontiers in Psychology</em>.</div>
+    <div class="ref-text">Huebner, L.-A., & Zacher, H. (2021). Following up on employee surveys: A conceptual framework and systematic review. <em>Frontiers in Psychology</em>, 12, 801073. <a href="https://doi.org/10.3389/fpsyg.2021.801073" target="_blank" rel="noopener">doi:10.3389/fpsyg.2021.801073</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[15]</span>
-    <div class="ref-text">Cabanas, E. & Illouz, E. (2018). <em>Happycratie</em>. Premier Parallèle.</div>
+    <div class="ref-text">Cabanas, E. & Illouz, E. (2018). <em>Happycratie</em>. Premier Parallèle. <a href="https://doi.org/10.7202/1065914ar" target="_blank" rel="noopener">doi:10.7202/1065914ar</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[16]</span>
-    <div class="ref-text">Anon. (2023). Systematic review of 117 critiques of positive psychology. <em>Journal of Positive Psychology</em>.</div>
+    <div class="ref-text">van Zyl, L. E., Gaffaney, J., van der Vaart, L., Dik, B. J., & Donaldson, S. I. (2023). The critiques and criticisms of positive psychology: A systematic review. <em>Journal of Positive Psychology</em>, 19(2), 206–235. <a href="https://doi.org/10.1080/17439760.2023.2178956" target="_blank" rel="noopener">doi:10.1080/17439760.2023.2178956</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[17]</span>
-    <div class="ref-text">Gill, R. & Orgad, S. (2018). The amazing bounce-backable woman: Resilience and the psychological turn in neoliberalism. <em>Sociological Research Online</em>, 23(2).</div>
+    <div class="ref-text">Gill, R. & Orgad, S. (2018). The amazing bounce-backable woman: Resilience and the psychological turn in neoliberalism. <em>Sociological Research Online</em>, 23(2), 477–495. <a href="https://doi.org/10.1177/1360780418769673" target="_blank" rel="noopener">doi:10.1177/1360780418769673</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[18]</span>
-    <div class="ref-text">Gallup (2025). <em>State of the Global Workplace 2025</em>. gallup.com.</div>
+    <div class="ref-text">Gallup (2025). <em>State of the Global Workplace 2025</em>. <a href="https://www.gallup.com/workplace/349484/state-of-the-global-workplace.aspx" target="_blank" rel="noopener">gallup.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[19]</span>
-    <div class="ref-text">McKinsey & Company (2020). The boss factor: Making the world a better place through workplace relationships. <em>McKinsey Quarterly</em>.</div>
+    <div class="ref-text">McKinsey & Company (2020). The boss factor: Making the world a better place through workplace relationships. <em>McKinsey Quarterly</em>. <a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-boss-factor-making-the-world-a-better-place-through-workplace-relationships" target="_blank" rel="noopener">mckinsey.com</a></div>
   </div>
 </div>

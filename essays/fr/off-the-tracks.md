@@ -63,30 +63,30 @@ La condition plus profonde est une tolérance pour la communication honnête sur
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Huang, X., Xu, E., Chiu, W., Lam, C., & Farh, J.-L. (2015). When authoritarian leaders outperform transformational leaders: Firm performance in a harsh economic environment. <em>Academy of Management Discoveries, 1</em>(2), 180–200. https://doi.org/10.5465/amd.2014.0132</div>
+    <div class="ref-text">Huang, X., Xu, E., Chiu, W., Lam, C., & Farh, J.-L. (2015). When authoritarian leaders outperform transformational leaders: Firm performance in a harsh economic environment. <em>Academy of Management Discoveries, 1</em>(2), 180–200. <a href="https://doi.org/10.5465/amd.2014.0132" target="_blank" rel="noopener">doi:10.5465/amd.2014.0132</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Wang, H., & Guan, B. (2018). The positive effect of authoritarian leadership on employee performance: The moderating role of power distance. <em>Frontiers in Psychology, 9.</em> https://doi.org/10.3389/fpsyg.2018.00357</div>
+    <div class="ref-text">Wang, H., & Guan, B. (2018). The positive effect of authoritarian leadership on employee performance: The moderating role of power distance. <em>Frontiers in Psychology, 9.</em> <a href="https://doi.org/10.3389/fpsyg.2018.00357" target="_blank" rel="noopener">doi:10.3389/fpsyg.2018.00357</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Zhang, Y., Wang, J., Akhtar, M. N., & Wang, Y. (2022). Authoritarian leadership and cyberloafing: A moderated mediation model of emotional exhaustion and power distance orientation. <em>Frontiers in Psychology, 13.</em> https://doi.org/10.3389/fpsyg.2022.1010845</div>
+    <div class="ref-text">Zhang, Y., Wang, J., Akhtar, M. N., & Wang, Y. (2022). Authoritarian leadership and cyberloafing: A moderated mediation model of emotional exhaustion and power distance orientation. <em>Frontiers in Psychology, 13.</em> <a href="https://doi.org/10.3389/fpsyg.2022.1010845" target="_blank" rel="noopener">doi:10.3389/fpsyg.2022.1010845</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Chiwisa, C. (2024). The role of leadership in crisis management: A literature review. <em>Journal of Human Resource and Leadership, 9</em>(3). https://doi.org/10.47604/jhrl.2844</div>
+    <div class="ref-text">Chiwisa, C. (2024). The role of leadership in crisis management: A literature review. <em>Journal of Human Resource and Leadership, 9</em>(3). <a href="https://doi.org/10.47604/jhrl.2844" target="_blank" rel="noopener">doi:10.47604/jhrl.2844</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Jones, M. J., Melis, A., Gaia, S., & Aresu, S. (2020). Impression management and retrospective sense-making in corporate annual reports. <em>International Journal of Business Communication, 57</em>(4), 474–496. https://doi.org/10.1177/2329488417712010</div>
+    <div class="ref-text">Jones, M. J., Melis, A., Gaia, S., & Aresu, S. (2020). Impression management and retrospective sense-making in corporate annual reports. <em>International Journal of Business Communication, 57</em>(4), 474–496. <a href="https://doi.org/10.1177/2329488417712010" target="_blank" rel="noopener">doi:10.1177/2329488417712010</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">White Jr., R. D. (2010). The micromanagement disease: Symptoms, diagnosis, and cure. <em>Public Personnel Management, 39</em>(1), 71–76. https://doi.org/10.1177/009102601003900105</div>
+    <div class="ref-text">White Jr., R. D. (2010). The micromanagement disease: Symptoms, diagnosis, and cure. <em>Public Personnel Management, 39</em>(1), 71–76. <a href="https://doi.org/10.1177/009102601003900105" target="_blank" rel="noopener">doi:10.1177/009102601003900105</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Li, Z., Liang, C., Peng, J., & Yin, M. (2024). The value, benefits, and concerns of generative AI-powered assistance in writing. In <em>Proceedings of CHI '24.</em> ACM. https://doi.org/10.1145/3613904.3642625</div>
+    <div class="ref-text">Li, Z., Liang, C., Peng, J., & Yin, M. (2024). The value, benefits, and concerns of generative AI-powered assistance in writing. In <em>Proceedings of CHI '24.</em> ACM. <a href="https://doi.org/10.1145/3613904.3642625" target="_blank" rel="noopener">doi:10.1145/3613904.3642625</a></div>
   </div>
 </div>
