@@ -59,7 +59,7 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Anon. (2023). Feedback × perceived power. <em>European Journal of Social Psychology</em>.</div>
+    <div class="ref-text">Straub, L. M., Lin, E., Tremonte-Freydefont, L., & Schmid, P. C. (2023). Individuals' power determines how they respond to positive versus negative performance feedback. <em>European Journal of Social Psychology</em>, 53, 1402–1420. <a href="https://doi.org/10.1002/ejsp.2985" target="_blank" rel="noopener">doi:10.1002/ejsp.2985</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
@@ -75,11 +75,11 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Anon. (2021). Employee silence across 33 countries, N = 8,222. <em>Journal of Organizational Behavior</em>.</div>
+    <div class="ref-text">Knoll, M., Götz, M., Adriasola, E., et al. (2021). International differences in employee silence motives: Scale validation, prevalence, and relationships with culture characteristics across 33 countries. <em>Journal of Organizational Behavior</em>, 42(5), 1042–1072. <a href="https://doi.org/10.1002/job.2512" target="_blank" rel="noopener">doi:10.1002/job.2512</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
-    <div class="ref-text">Anon. (2018). PDI × defensive and acquiescent silence. <em>Applied Psychology: An International Review</em>.</div>
+    <div class="ref-text">Lam, C. K., & Xu, A. J. (2019). Power imbalance and employee silence: The role of abusive leadership, power distance orientation, and perceived organisational politics. <em>Applied Psychology: An International Review</em>, 68(3), 513–546. <a href="https://doi.org/10.1111/apps.12170" target="_blank" rel="noopener">doi:10.1111/apps.12170</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>
@@ -95,7 +95,7 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>
-    <div class="ref-text">Anon. (2020). Training feedback reception skills. <em>Journal of Organizational Behavior Management</em>.</div>
+    <div class="ref-text">Ehrlich, R. J., Nosik, M. R., Carr, J. E., & Wine, B. (2020). Teaching employees how to receive feedback: A preliminary investigation. <em>Journal of Organizational Behavior Management</em>, 40(1–2), 19–29. <a href="https://doi.org/10.1080/01608061.2020.1746470" target="_blank" rel="noopener">doi:10.1080/01608061.2020.1746470</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[13]</span>
@@ -103,7 +103,7 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[14]</span>
-    <div class="ref-text">Anon. (2021). Post-survey action framework: Systematic review. <em>Frontiers in Psychology</em>.</div>
+    <div class="ref-text">Huebner, L.-A., & Zacher, H. (2021). Following up on employee surveys: A conceptual framework and systematic review. <em>Frontiers in Psychology</em>, 12, 801073. <a href="https://doi.org/10.3389/fpsyg.2021.801073" target="_blank" rel="noopener">doi:10.3389/fpsyg.2021.801073</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[15]</span>
@@ -111,7 +111,7 @@ Les données Gallup pour la France valent la peine d'être gardées en tête tou
   </div>
   <div class="reference-item">
     <span class="ref-num">[16]</span>
-    <div class="ref-text">Anon. (2023). Systematic review of 117 critiques of positive psychology. <em>Journal of Positive Psychology</em>.</div>
+    <div class="ref-text">van Zyl, L. E., Gaffaney, J., van der Vaart, L., Dik, B. J., & Donaldson, S. I. (2023). The critiques and criticisms of positive psychology: A systematic review. <em>Journal of Positive Psychology</em>, 19(2), 206–235. <a href="https://doi.org/10.1080/17439760.2023.2178956" target="_blank" rel="noopener">doi:10.1080/17439760.2023.2178956</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[17]</span>
