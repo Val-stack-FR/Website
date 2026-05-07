@@ -283,54 +283,125 @@
   }
 
   .about-mobile-nav {
-    display: none;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .about-mobile-nav-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid hsl(var(--about-border));
+    border-radius: 50%;
+    background: hsl(var(--about-bg) / 0.72);
+    color: hsl(var(--about-text) / 0.7);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  .about-mobile-nav-btn:disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .about-mobile-nav-btn:not(:disabled):hover {
+    color: hsl(var(--about-accent));
+    border-color: hsl(var(--about-accent) / 0.5);
+  }
+
+  .about-mobile-nav-btn:not(:disabled):active {
+    color: hsl(var(--about-accent));
+    border-color: hsl(var(--about-accent) / 0.5);
+  }
+
+  .about-mobile-nav-counter {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: hsl(var(--about-text) / 0.4);
+    text-transform: uppercase;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  /* Dot nav sidebar — desktop only */
+  .about-dot-nav {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .about-dot-nav-btn {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: hsl(var(--about-text) / 0.18);
+    cursor: pointer;
+    transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .about-dot-nav-btn.active {
+    background: hsl(var(--about-accent));
+    box-shadow: 0 0 6px hsl(var(--about-accent) / 0.5);
+  }
+
+  .about-dot-nav-btn:hover:not(.active) {
+    background: hsl(var(--about-text) / 0.45);
+    transform: scale(1.5);
+  }
+
+  .about-dot-nav-label {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--about-text) / 0.75);
+    background: hsl(var(--about-bg) / 0.92);
+    padding: 3px 8px;
+    border: 1px solid hsl(var(--about-border));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+  }
+
+  .about-dot-nav-btn:hover .about-dot-nav-label {
+    opacity: 1;
   }
 
   @media (max-width: 700px) {
-    .about-mobile-nav {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      display: flex;
-      align-items: center;
-      gap: 18px;
+    .about-dot-nav {
+      display: none;
     }
+  }
 
+  @media (max-width: 700px) {
+    /* Larger touch targets on mobile */
     .about-mobile-nav-btn {
       width: 44px;
       height: 44px;
-      border: 1px solid hsl(var(--about-border));
-      border-radius: 50%;
-      background: hsl(var(--about-bg) / 0.72);
-      color: hsl(var(--about-text) / 0.7);
       font-size: 22px;
-      line-height: 1;
-      cursor: pointer;
-      transition: color 150ms ease, border-color 150ms ease;
     }
-
-    .about-mobile-nav-btn:disabled {
-      opacity: 0.25;
-      pointer-events: none;
-    }
-
-    .about-mobile-nav-btn:not(:disabled):active {
-      color: hsl(var(--about-accent));
-      border-color: hsl(var(--about-accent) / 0.5);
-    }
-
-    .about-mobile-nav-counter {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: hsl(var(--about-text) / 0.4);
-      text-transform: uppercase;
-      min-width: 40px;
-      text-align: center;
-    }
-
 
     .about-nav {
       padding-top: 16px;

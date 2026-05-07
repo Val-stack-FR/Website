@@ -131,6 +131,12 @@ const About = () => {
     if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
   }, []);
 
+  const handleJumpTo = useCallback((idx: number) => {
+    const { vw, maxScrollX } = dimsRef.current;
+    const pt = pointsRef.current.objPts[idx];
+    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+  }, []);
+
   const pathY = useCallback((x: number) => {
     const { splinePts } = pointsRef.current;
     const { vh } = dimsRef.current;
@@ -1010,6 +1016,18 @@ const About = () => {
         <span className="about-mobile-nav-counter">{activeNodeIdx + 1} / {ENTRIES.length}</span>
         <button className="about-mobile-nav-btn" onClick={handleNext} aria-label="Next entry" disabled={activeNodeIdx === ENTRIES.length - 1}>›</button>
       </div>
+      <nav className="about-dot-nav" aria-label="Jump to timeline entry">
+        {ENTRIES.map((entry, i) => (
+          <button
+            key={i}
+            className={`about-dot-nav-btn${i === activeNodeIdx ? " active" : ""}`}
+            onClick={() => handleJumpTo(i)}
+            aria-label={`${entry.date}: ${entry.doing}`}
+          >
+            <span className="about-dot-nav-label">{entry.date} — {entry.doing}</span>
+          </button>
+        ))}
+      </nav>
     </main>
   );
 };
