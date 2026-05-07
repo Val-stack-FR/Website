@@ -66,6 +66,7 @@ const About = () => {
 
   const dimsRef = useRef({ vw: 0, vh: 0, trackW: 0, maxScrollX: 0, nodeStep: 300 });
   const pointsRef = useRef<{ objPts: Point[]; pathPts: Point[]; splinePts: Point[] }>({ objPts: [], pathPts: [], splinePts: [] });
+  const tryStartTurnRef = useRef<((now: number) => void) | null>(null);
   const motionRef = useRef({
     scrollX: 0,
     targetX: 0,
@@ -92,6 +93,8 @@ const About = () => {
     reverseAccum: 0,
     lastReverseT: 0,
     pendingTargetDelta: 0,
+    pendingTargetX: null as number | null,
+    buttonBurstT: -Infinity,
   });
   const skyRef = useRef<{ stars: Star[]; comets: Comet[]; satellites: Satellite[]; lastComet: number; lastSatellite: number }>({ stars: [], comets: [], satellites: [], lastComet: 0, lastSatellite: 0 });
   const frameRef = useRef<number>();
@@ -117,25 +120,32 @@ const About = () => {
 
   const hsla = useCallback((token: keyof typeof colors, alpha: number) => `hsl(${colors[token]} / ${alpha})`, [colors]);
 
-  const handlePrev = useCallback(() => {
-    const { vw, maxScrollX } = dimsRef.current;
-    const idx = Math.max(0, activeNodeIdxRef.current - 1);
-    const pt = pointsRef.current.objPts[idx];
-    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
-  }, []);
-
-  const handleNext = useCallback(() => {
-    const { vw, maxScrollX } = dimsRef.current;
-    const idx = Math.min(ENTRIES.length - 1, activeNodeIdxRef.current + 1);
-    const pt = pointsRef.current.objPts[idx];
-    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
-  }, []);
-
   const handleJumpTo = useCallback((idx: number) => {
     const { vw, maxScrollX } = dimsRef.current;
     const pt = pointsRef.current.objPts[idx];
-    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+    if (!pt) return;
+    const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+    const m = motionRef.current;
+    const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
+                          (newTarget > m.scrollX && m.heading === -1);
+    if (goingBackward && !m.turning && tryStartTurnRef.current) {
+      m.pendingTargetX = newTarget;
+      m.buttonBurstT = m.animT;
+      m.reverseAccum = REVERSE_THRESHOLD + 1;
+      tryStartTurnRef.current(m.animT);
+    } else if (!m.turning) {
+      m.targetX = newTarget;
+      m.buttonBurstT = m.animT;
+    }
   }, []);
+
+  const handlePrev = useCallback(() => {
+    handleJumpTo(Math.max(0, activeNodeIdxRef.current - 1));
+  }, [handleJumpTo]);
+
+  const handleNext = useCallback(() => {
+    handleJumpTo(Math.min(ENTRIES.length - 1, activeNodeIdxRef.current + 1));
+  }, [handleJumpTo]);
 
   const pathY = useCallback((x: number) => {
     const { splinePts } = pointsRef.current;
@@ -428,7 +438,10 @@ const About = () => {
     const turnDur = TURN_DURATION;
     const turnRaw = motion.turning ? clamp((t - motion.turnStartT) / turnDur, 0, 1) : 0;
     const turnEase = turnRaw < 0.5 ? 4 * turnRaw * turnRaw * turnRaw : 1 - Math.pow(-2 * turnRaw + 2, 3) / 2;
-    const turnIntensity = motion.turning ? Math.sin(turnEase * Math.PI) : 0;
+    const buttonBurst = Math.max(0, 1 - (t - motion.buttonBurstT) / 600);
+    const turnIntensity = motion.turning
+      ? Math.sin(turnEase * Math.PI)
+      : buttonBurst;
 
     let shipX: number;
     let shipY: number;
@@ -540,7 +553,9 @@ const About = () => {
     const tail = Math.ceil(vw * 1.12);
     const trackW = Math.ceil(introW + ENTRIES.length * nodeStep + tail);
     const maxScrollX = Math.max(0, trackW - vw);
-    const cardW = clamp(vw * 0.7, 230, 280);
+    const cardW = vw < 700
+      ? clamp(vw * 0.72, 260, 320)
+      : clamp(vw * 0.26, 300, 400);
 
     dimsRef.current = { vw, vh, trackW, maxScrollX, nodeStep };
     motionRef.current.targetX = clamp(motionRef.current.targetX, 0, maxScrollX);
@@ -561,7 +576,7 @@ const About = () => {
     setCardLayouts(objPts.map((pt) => {
       const above = pt.y > vh * 0.5;
       const estimatedH = vw < 700 ? 230 : 205;
-      const left = vw < 700 ? pt.x + cardW * 0.24 : pt.x;
+      const left = vw < 700 ? pt.x + vw * 0.22 : pt.x;
       return { x: left, y: pt.y, width: cardW, above, top: above ? clamp(pt.y - CARD_PATH_GAP - estimatedH, 82, vh - estimatedH - 54) : clamp(pt.y + CARD_PATH_GAP, 82, vh - estimatedH - 54) };
     }));
     const landingCardSide = stationX > maxScrollX + vw * 0.5 ? -1 : 1;
@@ -700,6 +715,7 @@ const About = () => {
       m.reverseAccum = 0;
       return true;
     };
+    tryStartTurnRef.current = tryStartTurn;
 
     const accumulateInput = (delta: number) => {
       const m = motionRef.current;
@@ -833,6 +849,11 @@ const About = () => {
         motion.reverseAccum = 0;
         // Arc already lands at the target node — hold position, no extra drift.
         motion.targetX = motion.scrollX;
+        // If a button press queued a post-turn destination, apply it now.
+        if (motion.pendingTargetX !== null) {
+          motion.targetX = motion.pendingTargetX;
+          motion.pendingTargetX = null;
+        }
       }
       if (motion.turning) {
         // Pin the ship to SHIP_FRAC within the viewport by driving scrollX from
@@ -849,7 +870,7 @@ const About = () => {
         const shipWorldX = motion.turnStartX + bx;
         motion.scrollX = clamp(shipWorldX - vw * SHIP_FRAC, 0, dimsRef.current.maxScrollX);
       } else if (!motion.introRunning) {
-        motion.scrollX += (motion.targetX - motion.scrollX) * 0.085;
+        motion.scrollX += (motion.targetX - motion.scrollX) * 0.060;
       }
       const { scrollX } = motionRef.current;
       if (trackRef.current) {
@@ -906,6 +927,7 @@ const About = () => {
           + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.18;
         const push = pushSmoothedRef.current[i];
         card.style.transform = `translate3d(0, ${(1 - op) * 10 + push}px, 0)`;
+        card.classList.toggle('about-node-card--focus', i === activeIndex);
       });
       if (leadX >= stationX - Math.max(36, vw * 0.08)) loc = "Temporary Wait Station";
       setLocation(loc);

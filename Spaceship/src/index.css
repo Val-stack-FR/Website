@@ -282,6 +282,18 @@
     opacity: 0;
   }
 
+  /* Active card text emphasis — desktop only */
+  @media (min-width: 701px) {
+    .about-node-card--focus .about-node-doing {
+      font-size: 16px;
+      transition: font-size 250ms ease;
+    }
+    .about-node-card--focus .about-node-insight {
+      font-size: 12px;
+      transition: font-size 250ms ease;
+    }
+  }
+
   .about-mobile-nav {
     position: fixed;
     bottom: 40px;
