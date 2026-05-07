@@ -282,7 +282,56 @@
     opacity: 0;
   }
 
+  .about-mobile-nav {
+    display: none;
+  }
+
   @media (max-width: 700px) {
+    .about-mobile-nav {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .about-mobile-nav-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid hsl(var(--about-border));
+      border-radius: 50%;
+      background: hsl(var(--about-bg) / 0.72);
+      color: hsl(var(--about-text) / 0.7);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+
+    .about-mobile-nav-btn:disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .about-mobile-nav-btn:not(:disabled):active {
+      color: hsl(var(--about-accent));
+      border-color: hsl(var(--about-accent) / 0.5);
+    }
+
+    .about-mobile-nav-counter {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: hsl(var(--about-text) / 0.4);
+      text-transform: uppercase;
+      min-width: 40px;
+      text-align: center;
+    }
+
+
     .about-nav {
       padding-top: 16px;
       padding-bottom: 16px;
@@ -303,6 +352,15 @@
 
     .about-location-readout {
       max-width: 46vw;
+      bottom: 96px;
+    }
+
+    .about-scroll-hint {
+      bottom: 96px;
+    }
+
+    .about-progress {
+      height: 3px;
     }
   }
 }

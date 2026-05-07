@@ -104,6 +104,8 @@ const About = () => {
   const [location, setLocation] = useState("");
   const [hintHidden, setHintHidden] = useState(false);
   const [landingLayout, setLandingLayout] = useState<LandingLayout | null>(null);
+  const [activeNodeIdx, setActiveNodeIdx] = useState(0);
+  const activeNodeIdxRef = useRef(0);
 
   const colors = useMemo(() => ({
     text: "221 54% 91%",
@@ -114,6 +116,20 @@ const About = () => {
   }), []);
 
   const hsla = useCallback((token: keyof typeof colors, alpha: number) => `hsl(${colors[token]} / ${alpha})`, [colors]);
+
+  const handlePrev = useCallback(() => {
+    const { vw, maxScrollX } = dimsRef.current;
+    const idx = Math.max(0, activeNodeIdxRef.current - 1);
+    const pt = pointsRef.current.objPts[idx];
+    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+  }, []);
+
+  const handleNext = useCallback(() => {
+    const { vw, maxScrollX } = dimsRef.current;
+    const idx = Math.min(ENTRIES.length - 1, activeNodeIdxRef.current + 1);
+    const pt = pointsRef.current.objPts[idx];
+    if (pt) motionRef.current.targetX = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+  }, []);
 
   const pathY = useCallback((x: number) => {
     const { splinePts } = pointsRef.current;
@@ -843,6 +859,10 @@ const About = () => {
       pointsRef.current.objPts.forEach((pt, i) => {
         if (pt.x <= leadX + 60) activeIndex = i;
       });
+      if (activeIndex !== activeNodeIdxRef.current) {
+        activeNodeIdxRef.current = activeIndex;
+        setActiveNodeIdx(activeIndex);
+      }
       cardRefs.current.forEach((card, i) => {
         const pt = pointsRef.current.objPts[i];
         if (!card || !pt) return;
@@ -985,6 +1005,11 @@ const About = () => {
       <div className="about-progress" aria-hidden="true"><div className="about-progress-fill" style={{ width: `${progress * 100}%` }} /></div>
       <div className="about-location-readout" aria-live="polite">{location}</div>
       <div className={`about-scroll-hint ${hintHidden ? "hidden" : ""}`}>Scroll or swipe</div>
+      <div className="about-mobile-nav" aria-label="Timeline navigation">
+        <button className="about-mobile-nav-btn" onClick={handlePrev} aria-label="Previous entry" disabled={activeNodeIdx === 0}>‹</button>
+        <span className="about-mobile-nav-counter">{activeNodeIdx + 1} / {ENTRIES.length}</span>
+        <button className="about-mobile-nav-btn" onClick={handleNext} aria-label="Next entry" disabled={activeNodeIdx === ENTRIES.length - 1}>›</button>
+      </div>
     </main>
   );
 };
