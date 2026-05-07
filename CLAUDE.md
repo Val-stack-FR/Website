@@ -139,6 +139,22 @@ js/
 
 Each HTML page loads `styles.css` (shared) + its own `css/<page>.css` and `js/<page>.js`.
 
+## Analytics
+
+Vercel Web Analytics is installed on all pages.
+
+**Static HTML pages** — each `.html` file at repo root must include this line just before `</body>`:
+```html
+<script defer src="/_vercel/insights/script.js"></script>
+```
+No inline init script needed — the insights script self-initialises. Do **not** add `'unsafe-inline'` to the CSP.
+
+**React / About page** — `<Analytics />` from `@vercel/analytics/react` is rendered in `Spaceship/src/main.tsx` alongside `<App />`.
+
+**When adding a new HTML page:** add the `/_vercel/insights/script.js` script tag to it, following the same pattern as existing pages.
+
+**CSP:** `https://vitals.vercel-insights.com` is already in `connect-src` in `vercel.json`. No further CSP changes are needed for analytics.
+
 ## Security rules
 
 The site's CSP (`vercel.json`) has no `unsafe-inline`. **Always follow these rules** when adding or editing code:
