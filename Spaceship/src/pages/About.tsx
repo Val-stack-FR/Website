@@ -608,8 +608,9 @@ const About = () => {
     const first = pointsRef.current.objPts[0];
     const { vw } = dimsRef.current;
     if (!first) return;
-    const introTarget = vw < 700 ? 0 : Math.max(60, first.x - vw * SHIP_FRAC - 20);
-    const duration = 4400;
+    const isMobile = vw < 700;
+    const introTarget = Math.max(0, first.x - vw * SHIP_FRAC - 20);
+    const duration = isMobile ? 2800 : 4400;
     const start = performance.now();
     motionRef.current.introRunning = true;
     const ease = (n: number) => (n < 0.5 ? 4 * n * n * n : 1 - Math.pow(-2 * n + 2, 3) / 2);
