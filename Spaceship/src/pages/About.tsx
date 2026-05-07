@@ -99,6 +99,8 @@ const About = () => {
   const skyRef = useRef<{ stars: Star[]; comets: Comet[]; satellites: Satellite[]; lastComet: number; lastSatellite: number }>({ stars: [], comets: [], satellites: [], lastComet: 0, lastSatellite: 0 });
   const frameRef = useRef<number>();
   const resizeRef = useRef<number>();
+  const prevTRef = useRef(0);
+  const activeFocusRef = useRef(-1);
 
   const cardLayoutsRef = useRef<CardLayout[]>([]);
   const pushSmoothedRef = useRef<number[]>(Array(ENTRIES.length).fill(0));
@@ -121,11 +123,12 @@ const About = () => {
   const hsla = useCallback((token: keyof typeof colors, alpha: number) => `hsl(${colors[token]} / ${alpha})`, [colors]);
 
   const handleJumpTo = useCallback((idx: number) => {
+    const m = motionRef.current;
+    if (m.introRunning) return;
     const { vw, maxScrollX } = dimsRef.current;
     const pt = pointsRef.current.objPts[idx];
     if (!pt) return;
     const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
-    const m = motionRef.current;
     const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
                           (newTarget > m.scrollX && m.heading === -1);
     if (goingBackward && !m.turning && tryStartTurnRef.current) {
@@ -793,6 +796,8 @@ const About = () => {
 
     const animate = (t: number) => {
       motionRef.current.animT = t;
+      const dt = Math.min(t - prevTRef.current, 50) || 16.67; // cap at 50ms to handle tab-switch spikes
+      prevTRef.current = t;
       const { vw, vh, trackW } = dimsRef.current;
       const sky = skyRef.current;
       const ctx = starCanvasRef.current?.getContext("2d");
@@ -870,7 +875,9 @@ const About = () => {
         const shipWorldX = motion.turnStartX + bx;
         motion.scrollX = clamp(shipWorldX - vw * SHIP_FRAC, 0, dimsRef.current.maxScrollX);
       } else if (!motion.introRunning) {
-        motion.scrollX += (motion.targetX - motion.scrollX) * 0.060;
+        const lerpK = 1 - Math.pow(0.92, dt / 16.67);
+        const diff = motion.targetX - motion.scrollX;
+        motion.scrollX = Math.abs(diff) < 0.5 ? motion.targetX : motion.scrollX + diff * lerpK;
       }
       const { scrollX } = motionRef.current;
       if (trackRef.current) {
@@ -889,6 +896,13 @@ const About = () => {
       if (activeIndex !== activeNodeIdxRef.current) {
         activeNodeIdxRef.current = activeIndex;
         setActiveNodeIdx(activeIndex);
+      }
+      // Update focus class only when active card changes (avoids per-frame style recalc)
+      if (activeIndex !== activeFocusRef.current) {
+        const prev = activeFocusRef.current;
+        if (prev >= 0) cardRefs.current[prev]?.classList.remove('about-node-card--focus');
+        cardRefs.current[activeIndex]?.classList.add('about-node-card--focus');
+        activeFocusRef.current = activeIndex;
       }
       cardRefs.current.forEach((card, i) => {
         const pt = pointsRef.current.objPts[i];
@@ -927,7 +941,6 @@ const About = () => {
           + (targetPush - (pushSmoothedRef.current[i] ?? 0)) * 0.18;
         const push = pushSmoothedRef.current[i];
         card.style.transform = `translate3d(0, ${(1 - op) * 10 + push}px, 0)`;
-        card.classList.toggle('about-node-card--focus', i === activeIndex);
       });
       if (leadX >= stationX - Math.max(36, vw * 0.08)) loc = "Temporary Wait Station";
       setLocation(loc);
