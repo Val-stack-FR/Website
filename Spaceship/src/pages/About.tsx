@@ -95,6 +95,8 @@ const About = () => {
     pendingTargetDelta: 0,
     pendingTargetX: null as number | null,
     buttonBurstT: -Infinity,
+    trailAlpha: 0,
+    prevScrollX: 0,
   });
   const skyRef = useRef<{ stars: Star[]; comets: Comet[]; satellites: Satellite[]; lastComet: number; lastSatellite: number }>({ stars: [], comets: [], satellites: [], lastComet: 0, lastSatellite: 0 });
   const frameRef = useRef<number>();
@@ -409,7 +411,7 @@ const About = () => {
 
     const leadX = clamp(scrollX + vw * SHIP_FRAC, 0, trackW - 2);
 
-    // Fade path lines out as ship approaches a node card
+    // Grey base path fades when near a node (clutter reduction)
     const cardMaxDist = vw * CARD_RANGE_FRAC;
     let nearestProx = 0;
     objPts.forEach(pt => {
@@ -418,17 +420,20 @@ const About = () => {
     });
     const lineFade = clamp(1 - nearestProx * 1.5, 0, 1);
 
+    // Trail alpha: bright while moving, fades slowly after ship stops
+    const trailAlpha = motionRef.current.trailAlpha;
+
     const segs = Math.max(320, Math.floor(trackW / 6));
     ctx.beginPath();
     for (let i = 0; i <= segs; i += 1) { const x = (i / segs) * trackW; i === 0 ? ctx.moveTo(x, pathY(x)) : ctx.lineTo(x, pathY(x)); }
     ctx.strokeStyle = hsla("text", 0.06 * lineFade); ctx.lineWidth = 1; ctx.stroke();
 
     const doneSegs = Math.floor((leadX / trackW) * segs);
-    if (doneSegs > 0 && lineFade > 0) {
+    if (doneSegs > 0 && trailAlpha > 0) {
       ctx.beginPath();
       for (let i = 0; i <= doneSegs; i += 1) { const x = (i / segs) * trackW; i === 0 ? ctx.moveTo(x, pathY(x)) : ctx.lineTo(x, pathY(x)); }
-      const g = ctx.createLinearGradient(Math.max(0, leadX - vw * 0.8), 0, leadX, 0);
-      g.addColorStop(0, hsla("accent", 0.08 * lineFade)); g.addColorStop(0.72, hsla("accent", 0.42 * lineFade)); g.addColorStop(1, hsla("accent", 0.95 * lineFade));
+      const g = ctx.createLinearGradient(Math.max(0, leadX - vw * 0.6), 0, leadX, 0);
+      g.addColorStop(0, hsla("accent", 0)); g.addColorStop(0.6, hsla("accent", 0.35 * trailAlpha)); g.addColorStop(1, hsla("accent", 0.95 * trailAlpha));
       ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.stroke();
     }
 
@@ -436,7 +441,7 @@ const About = () => {
       const py = pathY(obj.x);
       const maxDist = vw * CARD_RANGE_FRAC;
       const proximity = Math.max(0, 1 - Math.abs(obj.x - leadX) / maxDist);
-      if (proximity > 0.04 && lineFade > 0) {
+      if (proximity > 0.04) {
         ctx.beginPath(); ctx.moveTo(obj.x, py); ctx.lineTo(obj.x, obj.y); ctx.setLineDash([3, 5]); ctx.strokeStyle = hsla("accent", 0.25 * proximity * lineFade); ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
       }
       const reached = obj.x <= leadX + 20;
@@ -918,6 +923,11 @@ const About = () => {
         const diff = motion.targetX - motion.scrollX;
         motion.scrollX = Math.abs(diff) < 0.5 ? motion.targetX : motion.scrollX + diff * lerpK;
       }
+      const speed = Math.abs(motion.scrollX - motion.prevScrollX);
+      motion.prevScrollX = motion.scrollX;
+      motion.trailAlpha = speed > 0.4
+        ? Math.min(1, motion.trailAlpha + dt / 250)
+        : Math.max(0, motion.trailAlpha - dt / 1600);
       const { scrollX } = motionRef.current;
       if (trackRef.current) {
         trackRef.current.style.width = `${trackW}px`;

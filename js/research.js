@@ -447,7 +447,7 @@ function renderCards() {
   flex.id = 'cards-flex';
 
   const filtered = getFiltered();
-  const cardH = isMobile ? null : Math.max(320, H - 402);
+  const cardH = isMobile ? null : Math.max(280, track.clientHeight - 32 - 196);
 
   filtered.forEach((node, idx) => flex.appendChild(buildCard(node, idx, cardH)));
 
