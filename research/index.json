@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "silence-typology-ai-adoption",
+    "title": "Silence typology × AI adoption",
+    "status": "TO REVIEW",
+    "description": "Does Morrison's distinction between defensive and acquiescent silence predict differential AI adoption behaviors? Are there empirical studies in high power-distance cultures (PDI > 60) on how silence norms interact with peer influence as an adoption mechanism?",
+    "queries": [
+      "\"employee silence\" \"AI adoption\" \"power distance\" consulting",
+      "\"acquiescent silence\" OR \"defensive silence\" \"technology adoption\" high-PDI",
+      "Morrison voice silence 2023 2024 technology resistance",
+      "\"psychological safety\" \"generative AI\" adoption barriers knowledge workers"
+    ]
+  },
+  {
+    "slug": "verification-burden-implicit-cognition",
+    "title": "Verification burden × implicit cognition development",
+    "status": "TO REVIEW",
+    "description": "How does verification workload affect the development of expertise and implicit cognition in human-AI interaction? Does heavy verification demand slow or prevent the development of AI-specific tacit knowledge?",
+    "queries": [
+      "\"cognitive load\" \"AI-generated content\" verification professional workers",
+      "\"tacit knowledge\" \"human-AI interaction\" expertise accumulation",
+      "Hayles \"nonconscious cognition\" AI human-computer interaction",
+      "\"over-reliance\" AI verification effort \"knowledge workers\" experiment"
+    ]
+  },
+  {
+    "slug": "register-premium-agentic-orchestration",
+    "title": "Register premium in agentic orchestration",
+    "status": "TO REVIEW",
+    "description": "Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts?",
+    "queries": [
+      "\"prompt engineering\" \"cultural capital\" Bourdieu language model",
+      "Agirdag \"prompting literacy\" linguistic capital 2026",
+      "\"workflow specification\" \"natural language\" skill gap AI agents",
+      "\"task decomposition\" AI agent user expertise performance gap"
+    ]
+  },
+  {
+    "slug": "centralization-blackbox-double-blindness",
+    "title": "Centralization + blackbox double-blindness",
+    "status": "TO SEARCH",
+    "description": "Is there evidence that crisis-driven centralization degrades the distributed information environment in ways that make AI deployment more likely to fail silently? Who catches AI errors in organizations where upward honesty has been structurally suppressed?",
+    "queries": [
+      "authoritarian leadership \"AI adoption\" information asymmetry organization",
+      "\"crisis management\" \"AI deployment\" organizational sensing failure",
+      "\"blackbox AI\" organizational accountability distributed cognition",
+      "\"management control\" \"generative AI\" employee initiative epistemic"
+    ]
+  },
+  {
+    "slug": "non-renewable-trust-stack",
+    "title": "Non-renewable trust stack",
+    "status": "TO REVIEW",
+    "description": "Does a failed or over-promised AI initiative reduce the probability of success for subsequent initiatives in the same organization? Any work that models organizational trust as a depleting resource rather than a stable background condition?",
+    "queries": [
+      "\"organizational trust\" AI rollout failure sequential effects",
+      "\"trust repair\" \"AI adoption\" enterprise failed initiative",
+      "Deloitte TrustID AI 2025 employee trust erosion",
+      "\"change fatigue\" \"AI transformation\" trust capital depletion"
+    ]
+  },
+  {
+    "slug": "scapegoating-feedback-inequality",
+    "title": "Scapegoating × feedback inequality in AI-mediated work",
+    "status": "TO REVIEW",
+    "description": "In contexts where AI distributes causality, do existing feedback inequalities (junior staff bearing disproportionate blame) compound or attenuate?",
+    "queries": [
+      "Girard scapegoat mechanism organizational accountability AI",
+      "\"moral responsibility\" \"algorithmic decision\" blame attribution worker",
+      "\"automation bias\" accountability junior employee knowledge work",
+      "\"distributed causality\" AI liability organizational scapegoating"
+    ]
+  },
+  {
+    "slug": "de-certeau-tactics-platform-lock-in",
+    "title": "De Certeau tactics × platform lock-in",
+    "status": "TO REVIEW",
+    "description": "How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI?",
+    "queries": [
+      "De Certeau \"tactics\" \"digital platform\" user agency foreclosure",
+      "\"prompt engineering\" deskilling dependency LLM user autonomy",
+      "\"technology domestication\" agentic AI user tactics workaround",
+      "platform capture \"everyday practices\" AI workflow lock-in"
+    ]
+  },
+  {
+    "slug": "organizational-legibility-for-agents",
+    "title": "Organizational legibility for agents",
+    "status": "TO REVIEW",
+    "description": "What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost?",
+    "queries": [
+      "\"tacit knowledge\" Polanyi codification AI agent compatibility",
+      "\"knowledge management\" explicit implicit AI automation professional services",
+      "Nonaka \"knowledge creation\" generative AI organizational readiness",
+      "\"ambient awareness\" agent AI organizational memory infrastructure"
+    ]
+  },
+  {
+    "slug": "deresponsabilisation-ai-surveillance",
+    "title": "Déresponsabilisation × AI in surveillance contexts",
+    "status": "TO REVIEW",
+    "description": "Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it?",
+    "queries": [
+      "\"authorship\" \"AI-generated text\" identity professional accountability",
+      "\"moral disengagement\" automation \"professional identity\" knowledge work",
+      "Li Liang CHI 2024 \"authorial ownership\" AI writing",
+      "\"algorithmic management\" deresponsabilisation surveillance AI output attribution"
+    ]
+  },
+  {
+    "slug": "slow-phase-onboarding-agentic-ai",
+    "title": "Slow-phase onboarding for agentic AI",
+    "status": "TO REVIEW",
+    "description": "Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases?",
+    "queries": [
+      "\"scaffolded learning\" AI agent onboarding implicit skill development",
+      "\"deliberate practice\" human-AI interaction expertise development longitudinal",
+      "\"cognitive apprenticeship\" AI-augmented work agentic systems",
+      "\"technology familiarity\" agentic AI trust calibration gradual exposure"
+    ]
+  }
+]

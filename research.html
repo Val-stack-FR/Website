@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Essays by Valérian — AI adoption, organisational behaviour, and speculative futures." />
-  <title>Essays — Valérian</title>
+  <meta name="description" content="Current research threads — AI adoption, organisational behaviour, and cognition." />
+  <title>Research — Valérian</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="css/essays.css" />
+  <link rel="stylesheet" href="css/research.css" />
 </head>
 <body>
 <div class="page">
@@ -17,29 +17,21 @@
   <nav class="nav" aria-label="primary">
     <a href="index.html" class="nav-logo">VT—</a>
     <div class="nav-links">
-      <a href="essays.html" class="nav-link active">Essays</a>
+      <a href="essays.html" class="nav-link">Essays</a>
       <a href="books.html" class="nav-link">Books</a>
-      <a href="research.html" class="nav-link">Research</a>
+      <a href="research.html" class="nav-link active">Research</a>
       <a href="/about/" class="nav-link">About</a>
     </div>
   </nav>
 
   <main class="main">
 
-    <header class="essays-header">
-      <h1 class="essays-heading">Essays</h1>
-      <div></div>
+    <header class="research-header">
+      <h1 class="research-heading">Research</h1>
+      <div class="tab-bar" id="tab-bar" role="tablist"></div>
     </header>
 
-    <div class="tag-bar" id="tag-bar">
-      <span class="tag-bar-label">Filter ↗</span>
-      <button class="tag active" data-tag="all">All</button>
-    </div>
-
-    <section class="essays-list" aria-label="Essay list">
-      <div id="essay-list"></div>
-      <p class="empty-state" id="empty-state">No essays match this filter.</p>
-    </section>
+    <div id="research-content"></div>
 
   </main>
 
@@ -49,7 +41,7 @@
   </footer>
 
 </div>
-<script src="js/essays.js"></script>
+<script src="js/research.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
