@@ -106,7 +106,11 @@ function initNebula() {
   resize();
   window.addEventListener('resize', resize);
 
+  let lastNebulaMs = 0;
+
   function draw(now) {
+    if (now - lastNebulaMs < 41.7) { requestAnimationFrame(draw); return; }
+    lastNebulaMs = now;
     const t = (now - t0) * 0.001;
     const CW = canvas.width, CH = canvas.height;
     ctx.fillStyle = '#05030e';
@@ -120,20 +124,28 @@ function initNebula() {
       const r  = c.r * Math.min(CW, CH);
       const [br, bg, bb] = c.bright, [cr, cg, cb] = c.rgb;
 
-      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0,    `rgba(${br},${bg},${bb},${c.intensity})`);
-      g.addColorStop(0.11, `rgba(${Math.round(br*.82)},${Math.round(bg*.82)},${Math.round(bb*.82)},${c.intensity*.73})`);
-      g.addColorStop(0.34, `rgba(${cr},${cg},${cb},${c.intensity*.40})`);
-      g.addColorStop(0.65, `rgba(${Math.round(cr*.45)},${Math.round(cg*.45)},${Math.round(cb*.45)},${c.intensity*.12})`);
-      g.addColorStop(1,    'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
+      if (!c.gradient || Math.abs(cx - c.lastCx) > 0.5 || Math.abs(cy - c.lastCy) > 0.5 || r !== c.lastR) {
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        g.addColorStop(0,    `rgba(${br},${bg},${bb},${c.intensity})`);
+        g.addColorStop(0.11, `rgba(${Math.round(br*.82)},${Math.round(bg*.82)},${Math.round(bb*.82)},${c.intensity*.73})`);
+        g.addColorStop(0.34, `rgba(${cr},${cg},${cb},${c.intensity*.40})`);
+        g.addColorStop(0.65, `rgba(${Math.round(cr*.45)},${Math.round(cg*.45)},${Math.round(cb*.45)},${c.intensity*.12})`);
+        g.addColorStop(1,    'rgba(0,0,0,0)');
+        c.gradient = g;
+        if (!c.gold) {
+          const gi = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 0.3);
+          gi.addColorStop(0, `rgba(215,200,240,${c.intensity * 0.18})`);
+          gi.addColorStop(1, 'rgba(0,0,0,0)');
+          c.innerGradient = gi;
+        }
+        c.lastCx = cx; c.lastCy = cy; c.lastR = r;
+      }
+
+      ctx.fillStyle = c.gradient;
       ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
 
       if (!c.gold) {
-        const gi = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 0.3);
-        gi.addColorStop(0, `rgba(215,200,240,${c.intensity * 0.18})`);
-        gi.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = gi;
+        ctx.fillStyle = c.innerGradient;
         ctx.beginPath(); ctx.arc(cx, cy, r * 0.3, 0, Math.PI * 2); ctx.fill();
       }
     }
@@ -376,7 +388,7 @@ function updateSubtitle() {
 function buildCard(node, index, cardH) {
   const article = document.createElement('article');
   article.className = 'research-card fade-in';
-  article.style.animationDelay = `${index * 55}ms`;
+  article.style.animationDelay = `${index * 20}ms`;
   if (cardH && !isMobile) article.style.height = `${cardH}px`;
 
   ['tl', 'tr', 'bl', 'br'].forEach(pos => {
@@ -641,6 +653,15 @@ document.getElementById('page-title-section').classList.add('fade-in');
     targetScrollX = Math.min(maxScroll, Math.max(0, targetScrollX + e.deltaY));
     if (!smoothRafId) smoothRafId = requestAnimationFrame(smoothStep);
   }, { passive: false });
+}());
+
+(function () {
+  const track = document.getElementById('cards-track');
+  if (!track) return;
+  const loadEl = document.createElement('div');
+  loadEl.id = 'cards-loading';
+  loadEl.textContent = 'SCANNING NODES...';
+  track.appendChild(loadEl);
 }());
 
 fetch('research/index.json')

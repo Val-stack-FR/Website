@@ -129,6 +129,26 @@ a { text-decoration: none; color: inherit; }
   min-width: max-content; height: 100%;
 }
 
+/* ── LOADING STATE ───────────────────────────────────────────── */
+#cards-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 32px clamp(16px, 4vw, 40px);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.28);
+}
+#cards-loading::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: pulse 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
 /* ── RESEARCH CARD ───────────────────────────────────────────── */
 .research-card {
   position: relative; flex-shrink: 0; width: 355px;
