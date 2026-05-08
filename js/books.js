@@ -1,114 +1,95 @@
 document.body.classList.add('visible');
 
-function slugifyCategory(cat) {
-  return cat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+let allBooks = [];
+let activeTag = 'all';
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
-function buildCard(book) {
-  const a = document.createElement('a');
-  a.href = `book-review.html?book=${book.slug}`;
-  a.className = 'book-card';
-
-  const cover = document.createElement('div');
-  cover.className = 'book-cover';
-
-  const img = document.createElement('img');
-  img.className = 'book-cover-img';
-  img.alt = '';
-  const initSpan = document.createElement('span');
-  initSpan.className = 'book-cover-init';
-  initSpan.textContent = book.initials;
-  const accent = document.createElement('div');
-  accent.className = 'book-cover-accent';
-
-  img.addEventListener('load', () => {
-    img.style.display = 'block';
-    initSpan.style.display = 'none';
-  });
-  img.addEventListener('error', () => {
-    img.src = `books/covers/${book.slug}.png`;
-    img.onerror = null;
-  });
-  img.src = `books/covers/${book.slug}.jpg`;
-
-  cover.appendChild(img);
-  cover.appendChild(initSpan);
-  cover.appendChild(accent);
-
-  const title = document.createElement('div');
-  title.className = 'book-title';
-  title.textContent = book.title;
-
-  const author = document.createElement('div');
-  author.className = 'book-author';
-  author.textContent = book.author;
-
-  const note = document.createElement('div');
-  note.className = 'book-note';
-
-  const noteText = document.createElement('p');
-  noteText.className = 'book-note-text';
-  noteText.textContent = book.note || book.description;
-
-  const cta = document.createElement('span');
-  cta.className = 'book-note-cta';
-  cta.textContent = 'Read review →';
-
-  note.appendChild(noteText);
-  note.appendChild(cta);
-
-  a.appendChild(cover);
-  a.appendChild(title);
-  a.appendChild(author);
-  a.appendChild(note);
-  return a;
+function renderRow(book, index) {
+  const num = String(index + 1).padStart(2, '0');
+  const tags = book.tags || [];
+  const tagsHtml = tags.map(t =>
+    `<button class="book-tag-inline" data-tag="${esc(t)}">${esc(t)}</button>`
+  ).join('');
+  const rating = book.rating ? `${esc(String(book.rating))} / 5` : '';
+  return `
+    <a href="book-review.html?book=${esc(book.slug)}" class="book-row" data-tags="${esc(JSON.stringify(tags))}">
+      <span class="book-row-num">${num}</span>
+      <div class="book-row-cover" data-slug="${esc(book.slug)}">
+        <img class="book-cover-img" src="books/covers/${esc(book.slug)}.jpg" alt="">
+      </div>
+      <div class="book-row-body">
+        <div class="book-row-title">${esc(book.title)}</div>
+        <div class="book-row-author">${esc(book.author)} · ${esc(String(book.published))}</div>
+        <div class="book-row-desc">${esc(book.description)}</div>
+        <div class="book-row-tags">${tagsHtml}</div>
+      </div>
+      <div class="book-row-meta">
+        <span class="book-row-rating">${rating}</span>
+        <span class="book-row-arrow">→</span>
+      </div>
+    </a>`;
 }
 
-function activateTab(tabId) {
-  document.querySelectorAll('.tab-btn').forEach(t => {
-    const active = t.dataset.tab === tabId;
-    t.classList.toggle('active', active);
-    t.setAttribute('aria-selected', active);
+function buildTagBar(books) {
+  const tagBar = document.getElementById('tag-bar');
+  const allTags = [...new Set(books.flatMap(b => b.tags || []))];
+  allTags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'tag';
+    btn.dataset.tag = tag;
+    btn.textContent = tag;
+    tagBar.appendChild(btn);
   });
-  document.querySelectorAll('.books-section').forEach(s => {
-    s.classList.toggle('active', s.id === 'tab-' + tabId);
+  tagBar.querySelectorAll('.tag[data-tag]').forEach(t => {
+    t.addEventListener('click', () => filter(t.dataset.tag));
   });
 }
+
+function filter(tag) {
+  activeTag = tag;
+  document.querySelectorAll('#tag-bar .tag[data-tag]').forEach(t => {
+    t.classList.toggle('active', t.dataset.tag === tag);
+  });
+  let visible = 0;
+  document.querySelectorAll('.book-row').forEach(row => {
+    const rowTags = JSON.parse(row.dataset.tags);
+    const show = tag === 'all' || rowTags.includes(tag);
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+}
+
+document.getElementById('book-list').addEventListener('click', e => {
+  const btn = e.target.closest('.book-tag-inline');
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  filter(btn.dataset.tag);
+});
 
 fetch('books/index.json')
   .then(r => r.json())
   .then(books => {
-    const categories = [...new Map(books.map(b => [b.category, b.category])).keys()];
-    const tabBar = document.getElementById('tab-bar');
-    const content = document.getElementById('books-content');
-
-    categories.forEach((cat, i) => {
-      const tabId = slugifyCategory(cat);
-      const btn = document.createElement('button');
-      btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
-      btn.role = 'tab';
-      btn.setAttribute('aria-selected', i === 0);
-      btn.dataset.tab = tabId;
-      btn.textContent = cat;
-      btn.addEventListener('click', () => activateTab(tabId));
-      tabBar.appendChild(btn);
-
-      const booksInCat = books.filter(b => b.category === cat);
-      const section = document.createElement('section');
-      section.className = 'books-section' + (i === 0 ? ' active' : '');
-      section.id = 'tab-' + tabId;
-      section.setAttribute('aria-label', cat + ' books');
-
-      const grid = document.createElement('div');
-      grid.className = 'books-grid';
-      booksInCat.forEach(b => grid.appendChild(buildCard(b)));
-      section.appendChild(grid);
-      content.appendChild(section);
+    allBooks = books;
+    document.getElementById('book-list').innerHTML = books.map(renderRow).join('');
+    document.querySelectorAll('.book-cover-img').forEach(img => {
+      img.addEventListener('error', () => {
+        if (!img.src.endsWith('.png')) img.src = img.src.replace(/\.jpg$/, '.png');
+      });
     });
+    buildTagBar(books);
+    const urlTag = new URLSearchParams(window.location.search).get('tag');
+    if (urlTag) filter(urlTag);
   })
   .catch(() => {
-    const p = document.createElement('p');
-    p.className = 'books-error';
-    p.textContent = 'Could not load books. Make sure the site is served over HTTP.';
-    document.getElementById('books-content').appendChild(p);
+    document.getElementById('book-list').innerHTML =
+      '<p class="empty-state">Could not load books. Make sure the site is served over HTTP.</p>';
   });
