@@ -1,7 +1,7 @@
 # Valérian's Website — Claude Reference
 
 ## What this is
-Personal portfolio and content site for Valérian Teissier (AI researcher / strategist, Paris). Hosts essays on AI adoption and organisational change, and book reviews in science fiction and non-fiction.
+Personal portfolio and content site for Valérian Teissier (AI researcher / strategist, Paris). Hosts essays on AI adoption and organisational change, book reviews in science fiction and non-fiction, and a Current Research page tracking ongoing literature review topics.
 
 ## Tech stack
 **Mostly static HTML/CSS/JS — no build tool for the main site.**
@@ -24,15 +24,20 @@ Content is loaded at runtime via `fetch()`. This means:
 ├── essay-detail.html       Essay detail template (dynamic, ?essay=slug param)
 ├── books.html              Book list with tabs (dynamic, loads from books/index.json)
 ├── book-review.html        Book review template (dynamic, ?book=slug param)
+├── research.html           Current Research page (dark standalone, loads from research/index.json)
 ├── styles.css              Shared stylesheet (tokens, layout, components)
+├── favicon.svg             SVG favicon — starry night sky with VT initials
 │
 ├── essays/
 │   ├── index.json          Essay registry — source of truth for the list page
 │   └── *.md                One file per essay (Markdown + raw HTML allowed)
 │
-└── books/
-    ├── index.json          Book registry — source of truth for the list page
-    └── *.md                One file per book review (Markdown + raw HTML allowed)
+├── books/
+│   ├── index.json          Book registry — source of truth for the list page
+│   └── *.md                One file per book review (Markdown + raw HTML allowed)
+│
+└── research/
+    └── index.json          Research registry — the ONLY file to edit for research page updates
 ```
 
 ## Adding a new essay
@@ -80,6 +85,42 @@ The detail page also supports `.html` format: if `essays/slug.md` is not found, 
 **URL:** `book-review.html?book=book-slug`
 
 Categories for tabs: `"Sci-Fi"`, `"Personal Development"` (or any new category — tabs generate automatically).
+
+## Adding a new research node
+
+Edit **only** `research/index.json`. Each entry:
+
+```json
+{
+  "slug": "unique-kebab-case-id",
+  "title": "Research topic × angle",
+  "status": "TO REVIEW",
+  "description": "One sentence framing the research question.",
+  "queries": [
+    "academic search string 1",
+    "academic search string 2"
+  ]
+}
+```
+
+**Status values** (drive the filter tabs — tabs auto-generate, DONE is always pinned):
+- `"TO REVIEW"` — papers identified, need reading
+- `"TO SEARCH"` — question open, queries not yet run
+- `"DONE"` — research complete, linked to published essay or book review
+
+**DONE entries** require two extra fields:
+```json
+{
+  "status": "DONE",
+  "link": "essay-detail.html?essay=slug",
+  "linkLabel": "→ Essay Title"
+}
+```
+Use `"book-review.html?book=slug"` for book reviews.
+
+The card becomes fully clickable and the link appears above the query tags.
+
+**No other files need editing.** The page fetches and renders from JSON at runtime.
 
 ## Essay markdown format
 
@@ -129,15 +170,19 @@ css/
   essay-detail.css   ← essay-detail.html page styles
   books.css          ← books.html page styles
   book-review.css    ← book-review.html page styles
+  research.css       ← research.html page styles (standalone dark, does NOT use styles.css tokens)
 js/
   index.js           ← index.html script
   essays.js          ← essays.html script
   essay-detail.js    ← essay-detail.html script
   books.js           ← books.html script
   book-review.js     ← book-review.html script
+  research.js        ← research.html script (canvas nebula, HUD, parallax, card rendering)
 ```
 
 Each HTML page loads `styles.css` (shared) + its own `css/<page>.css` and `js/<page>.js`.
+
+**Exception:** `research.html` does NOT load `styles.css`. It is a fully standalone dark page with its own design system. Do not add `styles.css` to it — the green token overrides would break the dark palette.
 
 ## Analytics
 
