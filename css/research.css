@@ -87,6 +87,7 @@ a { text-decoration: none; color: inherit; }
 .filter-btn.active {
   border-color: rgba(52,211,153,0.62); background: rgba(52,211,153,0.05); color: #34d399;
 }
+.filter-btn.empty { opacity: 0.4; }
 
 /* ── CARDS TRACK ─────────────────────────────────────────────── */
 #cards-track {

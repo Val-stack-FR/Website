@@ -26,8 +26,10 @@
   {
     "slug": "register-premium-agentic-orchestration",
     "title": "Register premium in agentic orchestration",
-    "status": "TO REVIEW",
+    "status": "DONE",
     "description": "Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts?",
+    "link": "essay-detail.html?essay=linguistic-capital-ai-inequality",
+    "linkLabel": "→ The Articulation Gap",
     "queries": [
       "\"prompt engineering\" \"cultural capital\" Bourdieu language model",
       "Agirdag \"prompting literacy\" linguistic capital 2026",

@@ -473,10 +473,15 @@ function renderFilters() {
   if (!bar) return;
   bar.textContent = '';
 
-  const statuses = ['ALL', ...[...new Set(nodes.map(n => n.status))]];
+  const dynamicStatuses = [...new Set(nodes.map(n => n.status))];
+  const orderedStatuses = ['TO REVIEW', 'TO SEARCH', 'DONE'].filter(s => dynamicStatuses.includes(s));
+  const extra = dynamicStatuses.filter(s => !orderedStatuses.includes(s));
+  const statuses = ['ALL', ...orderedStatuses, ...extra, ...(!dynamicStatuses.includes('DONE') ? ['DONE'] : [])];
   statuses.forEach(s => {
+    const hasDone = nodes.some(n => n.status === s);
+    const isEmpty = s === 'DONE' && !hasDone;
     const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (s === activeFilter ? ' active' : '');
+    btn.className = 'filter-btn' + (s === activeFilter ? ' active' : '') + (isEmpty ? ' empty' : '');
     btn.textContent = s;
     btn.addEventListener('click', () => {
       activeFilter = s;
