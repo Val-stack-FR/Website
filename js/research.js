@@ -39,6 +39,7 @@ let logIntervalId = null;
 let logIdx = 0;
 let cursor = { x: 0.5, y: 0.5 };
 let scrollX = 0;
+let targetScrollX = 0;
 let isMobile = window.innerWidth < 768;
 let W = window.innerWidth;
 let H = window.innerHeight;
@@ -488,7 +489,7 @@ function renderCards() {
   if (!isMobile) {
     try {
       const saved = parseInt(localStorage.getItem('cr-sx') || '0', 10);
-      if (saved > 0) track.scrollLeft = saved;
+      if (saved > 0) { track.scrollLeft = saved; targetScrollX = saved; }
     } catch (_) {}
   }
 
@@ -620,11 +621,25 @@ document.getElementById('page-title-section').classList.add('fade-in');
     try { localStorage.setItem('cr-sx', String(scrollX)); } catch (_) {}
   }, { passive: true });
 
+  let smoothRafId = null;
+  function smoothStep() {
+    const diff = targetScrollX - track.scrollLeft;
+    if (Math.abs(diff) < 0.5) {
+      track.scrollLeft = targetScrollX;
+      smoothRafId = null;
+      return;
+    }
+    track.scrollLeft += diff * 0.12;
+    smoothRafId = requestAnimationFrame(smoothStep);
+  }
+
   track.addEventListener('wheel', e => {
     if (isMobile) return;
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
     e.preventDefault();
-    track.scrollLeft += e.deltaY;
+    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+    targetScrollX = Math.min(maxScroll, Math.max(0, targetScrollX + e.deltaY));
+    if (!smoothRafId) smoothRafId = requestAnimationFrame(smoothStep);
   }, { passive: false });
 }());
 

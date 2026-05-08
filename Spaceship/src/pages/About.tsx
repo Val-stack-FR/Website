@@ -129,9 +129,14 @@ const About = () => {
     const m = motionRef.current;
     if (m.introRunning) return;
     const { vw, maxScrollX } = dimsRef.current;
-    const pt = pointsRef.current.objPts[idx];
-    if (!pt) return;
-    const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+    let newTarget: number;
+    if (idx >= ENTRIES.length) {
+      newTarget = maxScrollX;
+    } else {
+      const pt = pointsRef.current.objPts[idx];
+      if (!pt) return;
+      newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+    }
     const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
                           (newTarget > m.scrollX && m.heading === -1);
     if (goingBackward && !m.turning && tryStartTurnRef.current) {
@@ -150,7 +155,7 @@ const About = () => {
   }, [handleJumpTo]);
 
   const handleNext = useCallback(() => {
-    handleJumpTo(Math.min(ENTRIES.length - 1, activeNodeIdxRef.current + 1));
+    handleJumpTo(Math.min(ENTRIES.length, activeNodeIdxRef.current + 1));
   }, [handleJumpTo]);
 
   const pathY = useCallback((x: number) => {
@@ -761,12 +766,17 @@ const About = () => {
       snapCooldownRef.current = m.animT + 750;
       const currentIdx = activeNodeIdxRef.current;
       const nextIdx = delta > 0
-        ? Math.min(ENTRIES.length - 1, currentIdx + 1)
+        ? Math.min(ENTRIES.length, currentIdx + 1)
         : Math.max(0, currentIdx - 1);
       const { vw, maxScrollX } = dimsRef.current;
-      const pt = pointsRef.current.objPts[nextIdx];
-      if (!pt) return;
-      const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+      let newTarget: number | null;
+      if (nextIdx >= ENTRIES.length) {
+        newTarget = maxScrollX;
+      } else {
+        const pt = pointsRef.current.objPts[nextIdx];
+        newTarget = pt ? clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX) : null;
+      }
+      if (newTarget === null) return;
       const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
                             (newTarget > m.scrollX && m.heading === -1);
       if (goingBackward && !m.turning && tryStartTurnRef.current) {
@@ -802,11 +812,16 @@ const About = () => {
       else return;
       if (m.animT < snapCooldownRef.current) return;
       snapCooldownRef.current = m.animT + 750;
-      const nextIdx = clamp(activeNodeIdxRef.current + dir, 0, ENTRIES.length - 1);
+      const nextIdx = clamp(activeNodeIdxRef.current + dir, 0, ENTRIES.length);
       const { vw, maxScrollX } = dimsRef.current;
-      const pt = pointsRef.current.objPts[nextIdx];
-      if (!pt) return;
-      const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+      let newTarget: number | null;
+      if (nextIdx >= ENTRIES.length) {
+        newTarget = maxScrollX;
+      } else {
+        const pt = pointsRef.current.objPts[nextIdx];
+        newTarget = pt ? clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX) : null;
+      }
+      if (newTarget === null) return;
       const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
                             (newTarget > m.scrollX && m.heading === -1);
       if (goingBackward && !m.turning && tryStartTurnRef.current) {
@@ -942,6 +957,7 @@ const About = () => {
       pointsRef.current.objPts.forEach((pt, i) => {
         if (pt.x <= leadX + 60) activeIndex = i;
       });
+      if (leadX >= stationX - Math.max(36, vw * 0.08)) activeIndex = ENTRIES.length;
       if (activeIndex !== activeNodeIdxRef.current) {
         activeNodeIdxRef.current = activeIndex;
         setActiveNodeIdx(activeIndex);
@@ -1061,7 +1077,7 @@ const About = () => {
           <div className="about-intro-card">
             <div className="about-intro-eyebrow">Flight log</div>
             <h1 className="about-intro-name">How I<br />got here</h1>
-            <p className="about-intro-sub">2015 → 2026<br />16 locations.</p>
+            <p className="about-intro-sub">2015 → 2026<br />17 locations.</p>
           </div>
           {ENTRIES.map((entry, i) => {
             const layout = cardLayouts[i];
@@ -1098,8 +1114,8 @@ const About = () => {
       <div className={`about-scroll-hint ${hintHidden ? "hidden" : ""}`}>Scroll or swipe</div>
       <div className="about-mobile-nav" aria-label="Timeline navigation">
         <button className="about-mobile-nav-btn" onClick={handlePrev} aria-label="Previous entry" disabled={activeNodeIdx === 0}>‹</button>
-        <span className="about-mobile-nav-counter">{activeNodeIdx + 1} / {ENTRIES.length}</span>
-        <button className="about-mobile-nav-btn" onClick={handleNext} aria-label="Next entry" disabled={activeNodeIdx === ENTRIES.length - 1}>›</button>
+        <span className="about-mobile-nav-counter">{activeNodeIdx + 1} / {ENTRIES.length + 1}</span>
+        <button className="about-mobile-nav-btn" onClick={handleNext} aria-label="Next entry" disabled={activeNodeIdx === ENTRIES.length}>›</button>
       </div>
       <nav className="about-dot-nav" aria-label="Jump to timeline entry">
         {ENTRIES.map((entry, i) => (
@@ -1112,6 +1128,13 @@ const About = () => {
             <span className="about-dot-nav-label">{entry.date} — {entry.doing}</span>
           </button>
         ))}
+        <button
+          className={`about-dot-nav-btn${activeNodeIdx === ENTRIES.length ? " active" : ""}`}
+          onClick={() => handleJumpTo(ENTRIES.length)}
+          aria-label="Dock: Temporary Wait Station"
+        >
+          <span className="about-dot-nav-label">Now — Docked, not done.</span>
+        </button>
       </nav>
     </main>
   );
