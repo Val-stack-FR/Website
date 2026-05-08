@@ -237,18 +237,18 @@ a { text-decoration: none; color: inherit; }
 }
 .research-card:hover .hover-coord { opacity: 1; }
 
-/* ── END-OF-TRACK CTA ────────────────────────────────────────── */
-#load-more-cta {
+/* ── PAGE CTA (prev / next) ──────────────────────────────────── */
+#load-more-cta, #load-prev-cta {
   flex-shrink: 0; width: 180px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 16px; opacity: 0.45;
 }
 .load-more-line { width: 1px; height: 60px; }
-#load-more-btn {
+#load-more-btn, #load-prev-btn {
   font-size: 10px; color: rgba(255,255,255,0.5);
   letter-spacing: 0.12em; transition: color 0.2s; text-align: center; line-height: 1.6;
 }
-#load-more-btn:hover { color: #34d399; }
+#load-more-btn:hover, #load-prev-btn:hover { color: #34d399; }
 
 /* ── THINKING LOG ────────────────────────────────────────────── */
 #thinking-log {
@@ -291,5 +291,5 @@ a { text-decoration: none; color: inherit; }
     padding-bottom: 180px;
   }
   .research-card { width: 100%; }
-  #load-more-cta { width: 100%; }
+  #load-more-cta, #load-prev-cta { width: 100%; }
 }

@@ -479,6 +479,31 @@ function renderCards() {
 
   const start = cardPage * PAGE_SIZE;
   const pageNodes = filtered.slice(start, start + PAGE_SIZE);
+
+  if (cardPage > 0) {
+    const prev = document.createElement('div');
+    prev.id = 'load-prev-cta';
+    if (cardH && !isMobile) prev.style.height = `${cardH}px`;
+
+    const line1 = document.createElement('div');
+    line1.className = 'load-more-line';
+    line1.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.2))';
+
+    const prevBtn = document.createElement('button');
+    prevBtn.id = 'load-prev-btn';
+    prevBtn.textContent = `< PREV_${PAGE_SIZE}_NODES`;
+    prevBtn.addEventListener('click', () => { cardPage--; renderCards(); });
+
+    const line2 = document.createElement('div');
+    line2.className = 'load-more-line';
+    line2.style.background = 'linear-gradient(to top, transparent, rgba(255,255,255,0.2))';
+
+    prev.appendChild(line1);
+    prev.appendChild(prevBtn);
+    prev.appendChild(line2);
+    flex.appendChild(prev);
+  }
+
   pageNodes.forEach((node, idx) => flex.appendChild(buildCard(node, idx, cardH)));
 
   const hasMore = start + PAGE_SIZE < filtered.length;
