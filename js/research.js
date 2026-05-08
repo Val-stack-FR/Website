@@ -609,7 +609,7 @@ fetch('research/index.json')
   .then(data => {
     nodes = data.map((item, i) => ({
       ...item,
-      id: `NODE_${String(i + 1).padStart(3, '0')}`,
+      id: `NODE_${String(data.length - i).padStart(3, '0')}`,
     }));
     renderFilters();
     renderCards();
