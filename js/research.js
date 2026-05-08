@@ -30,6 +30,9 @@ function sparklePath(cx, cy, s) {
 
 /* ── STATE ───────────────────────────────────────────────────────────────── */
 
+const PAGE_SIZE = 10;
+let cardPage = 0;
+
 let nodes = [];
 let activeStatus = 'ALL';
 let activeTag = 'ALL';
@@ -474,36 +477,44 @@ function renderCards() {
   const filtered = getFiltered();
   const cardH = isMobile ? null : Math.max(280, track.clientHeight - 32 - 196);
 
-  filtered.forEach((node, idx) => flex.appendChild(buildCard(node, idx, cardH)));
+  const start = cardPage * PAGE_SIZE;
+  const pageNodes = filtered.slice(start, start + PAGE_SIZE);
+  pageNodes.forEach((node, idx) => flex.appendChild(buildCard(node, idx, cardH)));
 
-  const cta = document.createElement('div');
-  cta.id = 'load-more-cta';
-  if (cardH && !isMobile) cta.style.height = `${cardH}px`;
+  const hasMore = start + PAGE_SIZE < filtered.length;
+  if (hasMore) {
+    const cta = document.createElement('div');
+    cta.id = 'load-more-cta';
+    if (cardH && !isMobile) cta.style.height = `${cardH}px`;
 
-  const line1 = document.createElement('div');
-  line1.className = 'load-more-line';
-  line1.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.2))';
+    const line1 = document.createElement('div');
+    line1.className = 'load-more-line';
+    line1.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.2))';
 
-  const loadBtn = document.createElement('button');
-  loadBtn.id = 'load-more-btn';
-  loadBtn.textContent = '> LOAD_MORE_NODES';
+    const loadBtn = document.createElement('button');
+    loadBtn.id = 'load-more-btn';
+    const remaining = filtered.length - (start + PAGE_SIZE);
+    loadBtn.textContent = `> LOAD_NEXT_${Math.min(remaining, PAGE_SIZE)}_NODES`;
+    loadBtn.addEventListener('click', () => {
+      cardPage++;
+      renderCards();
+    });
 
-  const line2 = document.createElement('div');
-  line2.className = 'load-more-line';
-  line2.style.background = 'linear-gradient(to top, transparent, rgba(255,255,255,0.2))';
+    const line2 = document.createElement('div');
+    line2.className = 'load-more-line';
+    line2.style.background = 'linear-gradient(to top, transparent, rgba(255,255,255,0.2))';
 
-  cta.appendChild(line1);
-  cta.appendChild(loadBtn);
-  cta.appendChild(line2);
-  flex.appendChild(cta);
+    cta.appendChild(line1);
+    cta.appendChild(loadBtn);
+    cta.appendChild(line2);
+    flex.appendChild(cta);
+  }
+
   track.appendChild(flex);
 
-  if (!isMobile) {
-    try {
-      const saved = parseInt(localStorage.getItem('cr-sx') || '0', 10);
-      if (saved > 0) { track.scrollLeft = saved; targetScrollX = saved; }
-    } catch (_) {}
-  }
+  // Always start at the left edge — never restore mid-scroll position
+  track.scrollLeft = 0;
+  targetScrollX = 0;
 
   updateSubtitle();
 }
@@ -527,6 +538,7 @@ function renderFilters() {
       btn.addEventListener('click', () => {
         onClick(val);
         row.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.textContent === val));
+        cardPage = 0;
         renderCards();
       });
       row.appendChild(btn);
@@ -630,7 +642,6 @@ document.getElementById('page-title-section').classList.add('fade-in');
     const maxScroll = Math.max(1, track.scrollWidth - track.clientWidth);
     const pBar = document.getElementById('scroll-progress');
     if (pBar) pBar.style.width = `${Math.min(100, (scrollX / maxScroll) * 100)}%`;
-    try { localStorage.setItem('cr-sx', String(scrollX)); } catch (_) {}
   }, { passive: true });
 
   let smoothRafId = null;
