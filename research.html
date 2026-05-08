@@ -4,43 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Current research threads — AI adoption, organisational behaviour, and cognition." />
-  <title>Research — Valérian</title>
+  <title>Current Research — Valérian Teissier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/research.css" />
 </head>
 <body>
-<div class="page">
 
-  <nav class="nav" aria-label="primary">
-    <a href="index.html" class="nav-logo">VT—</a>
-    <div class="nav-links">
-      <a href="essays.html" class="nav-link">Essays</a>
-      <a href="books.html" class="nav-link">Books</a>
-      <a href="research.html" class="nav-link active">Research</a>
-      <a href="/about/" class="nav-link">About</a>
-    </div>
-  </nav>
+<canvas id="nebula-canvas"></canvas>
+<div id="deep-parallax"></div>
+<div id="sci-hud"></div>
 
-  <main class="main">
+<div id="page">
 
-    <header class="research-header">
-      <h1 class="research-heading">Research</h1>
-      <div class="tab-bar" id="tab-bar" role="tablist"></div>
-    </header>
+  <header id="page-header">
+    <a href="index.html" id="nav-back">← VALERIAN_TEISSIER</a>
+    <span id="nav-label">/CURRENT_RESEARCH</span>
+  </header>
 
-    <div id="research-content"></div>
+  <section id="page-title-section">
+    <h1 id="page-title">CURRENT_RESEARCH<span id="cursor-blink" class="blink"></span></h1>
+    <p id="page-subtitle"></p>
+    <div id="filter-bar"></div>
+  </section>
 
-  </main>
-
-  <footer class="footer">
-    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
-    <a href="index.html" class="footer-text">← Home</a>
-  </footer>
+  <div id="cards-track"></div>
 
 </div>
+
+<div id="thinking-log">
+  <div id="log-bar">
+    <span id="log-status">
+      <span class="pulse" id="log-dot"></span>
+      RESEARCH_ENGINE · live
+    </span>
+    <button id="focus-btn">⤢ FOCUS_MODE</button>
+  </div>
+  <div id="log-lines"></div>
+</div>
+
 <script src="js/research.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
