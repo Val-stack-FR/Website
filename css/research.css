@@ -174,13 +174,20 @@ a { text-decoration: none; color: inherit; }
 }
 
 .card-link {
-  display: inline-block; margin-top: 10px;
+  display: inline-block; margin-bottom: 10px;
   font-family: 'Space Mono', monospace; font-size: 10px;
   letter-spacing: 0.12em; color: #93c5fd;
   border-bottom: 1px solid rgba(147,197,253,0.35);
   transition: color 0.2s, border-color 0.2s;
 }
-.card-link:hover { color: #bfdbfe; border-color: rgba(147,197,253,0.7); }
+
+.card-link-wrapper {
+  display: contents;
+  text-decoration: none;
+  color: inherit;
+}
+.card-link-wrapper .research-card { cursor: pointer; }
+.card-link-wrapper:hover .card-link { color: #bfdbfe; border-color: rgba(147,197,253,0.7); }
 
 .hover-coord {
   position: absolute; top: -18px; right: 0;

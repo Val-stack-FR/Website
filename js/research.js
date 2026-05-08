@@ -390,6 +390,14 @@ function buildCard(node, index, cardH) {
 
   const bottom = document.createElement('div');
   bottom.className = 'card-bottom';
+
+  if (node.status === 'DONE' && node.link) {
+    const linkEl = document.createElement('span');
+    linkEl.className = 'card-link';
+    linkEl.textContent = node.linkLabel || '→ READ';
+    bottom.appendChild(linkEl);
+  }
+
   const queryList = document.createElement('div');
   queryList.className = 'card-queries';
   node.queries.slice(0, 4).forEach(q => {
@@ -401,20 +409,20 @@ function buildCard(node, index, cardH) {
   });
   bottom.appendChild(queryList);
 
-  if (node.status === 'DONE' && node.link) {
-    const linkEl = document.createElement('a');
-    linkEl.className = 'card-link';
-    linkEl.href = node.link;
-    linkEl.textContent = node.linkLabel || '→ READ';
-    bottom.appendChild(linkEl);
-  }
-
   article.appendChild(bottom);
 
   const coord = document.createElement('span');
   coord.className = 'hover-coord';
   coord.textContent = `x: 0.${(482 + index * 17) % 999} · y: 0.${(345 + index * 23) % 999}`;
   article.appendChild(coord);
+
+  if (node.link) {
+    const wrapper = document.createElement('a');
+    wrapper.href = node.link;
+    wrapper.className = 'card-link-wrapper';
+    wrapper.appendChild(article);
+    return wrapper;
+  }
 
   return article;
 }
