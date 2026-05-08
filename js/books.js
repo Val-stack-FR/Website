@@ -13,7 +13,9 @@ function renderRow(book, index) {
   return `
     <a href="book-review.html?book=${book.slug}" class="book-row" data-tags='${JSON.stringify(tags)}'>
       <span class="book-row-num">${num}</span>
-      <time class="book-row-date" datetime="${book.readDate}">${book.readDate}</time>
+      <div class="book-row-cover" data-slug="${book.slug}">
+        <img class="book-cover-img" src="books/covers/${book.slug}.jpg" alt="">
+      </div>
       <div class="book-row-body">
         <div class="book-row-title">${book.title}</div>
         <div class="book-row-author">${book.author} · ${book.published}</div>
@@ -70,6 +72,11 @@ fetch('books/index.json')
   .then(books => {
     allBooks = books;
     document.getElementById('book-list').innerHTML = books.map(renderRow).join('');
+    document.querySelectorAll('.book-cover-img').forEach(img => {
+      img.addEventListener('error', () => {
+        if (!img.src.endsWith('.png')) img.src = img.src.replace(/\.jpg$/, '.png');
+      });
+    });
     buildTagBar(books);
     const urlTag = new URLSearchParams(window.location.search).get('tag');
     if (urlTag) filter(urlTag);

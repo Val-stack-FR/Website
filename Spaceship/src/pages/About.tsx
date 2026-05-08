@@ -101,6 +101,7 @@ const About = () => {
   const resizeRef = useRef<number>();
   const prevTRef = useRef(0);
   const activeFocusRef = useRef(-1);
+  const snapCooldownRef = useRef(0);
 
   const cardLayoutsRef = useRef<CardLayout[]>([]);
   const pushSmoothedRef = useRef<number[]>(Array(ENTRIES.length).fill(0));
@@ -407,17 +408,27 @@ const About = () => {
     ctx.clearRect(0, 0, trackW, vh);
 
     const leadX = clamp(scrollX + vw * SHIP_FRAC, 0, trackW - 2);
+
+    // Fade path lines out as ship approaches a node card
+    const cardMaxDist = vw * CARD_RANGE_FRAC;
+    let nearestProx = 0;
+    objPts.forEach(pt => {
+      const p = Math.max(0, 1 - Math.abs(pt.x - leadX) / cardMaxDist);
+      if (p > nearestProx) nearestProx = p;
+    });
+    const lineFade = clamp(1 - nearestProx * 1.5, 0, 1);
+
     const segs = Math.max(320, Math.floor(trackW / 6));
     ctx.beginPath();
     for (let i = 0; i <= segs; i += 1) { const x = (i / segs) * trackW; i === 0 ? ctx.moveTo(x, pathY(x)) : ctx.lineTo(x, pathY(x)); }
-    ctx.strokeStyle = hsla("text", 0.06); ctx.lineWidth = 1; ctx.stroke();
+    ctx.strokeStyle = hsla("text", 0.06 * lineFade); ctx.lineWidth = 1; ctx.stroke();
 
     const doneSegs = Math.floor((leadX / trackW) * segs);
-    if (doneSegs > 0) {
+    if (doneSegs > 0 && lineFade > 0) {
       ctx.beginPath();
       for (let i = 0; i <= doneSegs; i += 1) { const x = (i / segs) * trackW; i === 0 ? ctx.moveTo(x, pathY(x)) : ctx.lineTo(x, pathY(x)); }
       const g = ctx.createLinearGradient(Math.max(0, leadX - vw * 0.8), 0, leadX, 0);
-      g.addColorStop(0, hsla("accent", 0.08)); g.addColorStop(0.72, hsla("accent", 0.42)); g.addColorStop(1, hsla("accent", 0.95));
+      g.addColorStop(0, hsla("accent", 0.08 * lineFade)); g.addColorStop(0.72, hsla("accent", 0.42 * lineFade)); g.addColorStop(1, hsla("accent", 0.95 * lineFade));
       ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.stroke();
     }
 
@@ -425,8 +436,8 @@ const About = () => {
       const py = pathY(obj.x);
       const maxDist = vw * CARD_RANGE_FRAC;
       const proximity = Math.max(0, 1 - Math.abs(obj.x - leadX) / maxDist);
-      if (proximity > 0.04) {
-        ctx.beginPath(); ctx.moveTo(obj.x, py); ctx.lineTo(obj.x, obj.y); ctx.setLineDash([3, 5]); ctx.strokeStyle = hsla("accent", 0.25 * proximity); ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
+      if (proximity > 0.04 && lineFade > 0) {
+        ctx.beginPath(); ctx.moveTo(obj.x, py); ctx.lineTo(obj.x, obj.y); ctx.setLineDash([3, 5]); ctx.strokeStyle = hsla("accent", 0.25 * proximity * lineFade); ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
       }
       const reached = obj.x <= leadX + 20;
       const dim = reached ? Math.max(0.18, proximity * 0.85 + 0.15) : 0.16;
@@ -567,10 +578,8 @@ const About = () => {
     const objPts = ENTRIES.map((_, i) => ({ x: introW + (i + 0.5) * nodeStep, y: clamp(vh * NODE_Y_FRACS[i], vh * 0.13, vh * 0.87) }));
     const pathPts = objPts.map((pt) => ({ x: pt.x, y: pt.y + (pt.y > vh * 0.5 ? -PATH_OFFSET : PATH_OFFSET) }));
     const splinePts: Point[] = [{ x: 0, y: vh * 0.5 }, { x: introW * 0.42, y: vh * 0.5 }];
-    pathPts.forEach((pp, i) => {
-      const prevX = i > 0 ? pathPts[i - 1].x : introW * 0.42;
-      const nextX = i < pathPts.length - 1 ? pathPts[i + 1].x : pp.x + nodeStep * 0.5;
-      splinePts.push({ x: (prevX + pp.x) * 0.5, y: vh * 0.5 }, { x: pp.x, y: pp.y }, { x: (pp.x + nextX) * 0.5, y: vh * 0.5 });
+    pathPts.forEach((pp) => {
+      splinePts.push({ x: pp.x, y: pp.y });
     });
     const stationX = stationDockX(trackW, vw);
     splinePts.push({ x: stationX - nodeStep * 0.22, y: vh * 0.5 }, { x: stationX, y: vh * 0.5 }, { x: trackW, y: vh * 0.5 });
@@ -741,11 +750,29 @@ const About = () => {
       e.preventDefault();
       const m = motionRef.current;
       if (m.introRunning) return;
-      const { maxScrollX } = dimsRef.current;
       const delta = e.deltaY * 1.15 + e.deltaX * 1.15;
-      accumulateInput(delta);
-      if (m.turning) return;
-      m.targetX = clamp(m.targetX + delta, 0, maxScrollX);
+      if (Math.abs(delta) < 2) return;
+      if (m.animT < snapCooldownRef.current) return;
+      snapCooldownRef.current = m.animT + 750;
+      const currentIdx = activeNodeIdxRef.current;
+      const nextIdx = delta > 0
+        ? Math.min(ENTRIES.length - 1, currentIdx + 1)
+        : Math.max(0, currentIdx - 1);
+      const { vw, maxScrollX } = dimsRef.current;
+      const pt = pointsRef.current.objPts[nextIdx];
+      if (!pt) return;
+      const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+      const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
+                            (newTarget > m.scrollX && m.heading === -1);
+      if (goingBackward && !m.turning && tryStartTurnRef.current) {
+        m.pendingTargetX = newTarget;
+        m.buttonBurstT = m.animT;
+        m.reverseAccum = REVERSE_THRESHOLD + 1;
+        tryStartTurnRef.current(m.animT);
+      } else if (!m.turning) {
+        m.targetX = newTarget;
+        m.buttonBurstT = m.animT;
+      }
     };
     let tx0 = 0; let ty0 = 0; let sx0 = 0; let lastTouchDx = 0;
     const onTouchStart = (e: TouchEvent) => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; sx0 = motionRef.current.targetX; lastTouchDx = 0; };
@@ -764,14 +791,25 @@ const About = () => {
     const onKey = (e: KeyboardEvent) => {
       const m = motionRef.current;
       if (m.introRunning) return;
-      const step = dimsRef.current.vw * 0.35;
-      let delta = 0;
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") delta = step;
-      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") delta = -step;
+      let dir = 0;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") dir = 1;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") dir = -1;
       else return;
-      accumulateInput(delta);
-      if (m.turning) return;
-      m.targetX = clamp(m.targetX + delta, 0, dimsRef.current.maxScrollX);
+      if (m.animT < snapCooldownRef.current) return;
+      snapCooldownRef.current = m.animT + 750;
+      const nextIdx = clamp(activeNodeIdxRef.current + dir, 0, ENTRIES.length - 1);
+      const { vw, maxScrollX } = dimsRef.current;
+      const pt = pointsRef.current.objPts[nextIdx];
+      if (!pt) return;
+      const newTarget = clamp(pt.x - vw * SHIP_FRAC, 0, maxScrollX);
+      const goingBackward = (newTarget < m.scrollX && m.heading === 1) ||
+                            (newTarget > m.scrollX && m.heading === -1);
+      if (goingBackward && !m.turning && tryStartTurnRef.current) {
+        m.pendingTargetX = newTarget; m.buttonBurstT = m.animT;
+        m.reverseAccum = REVERSE_THRESHOLD + 1; tryStartTurnRef.current(m.animT);
+      } else if (!m.turning) {
+        m.targetX = newTarget; m.buttonBurstT = m.animT;
+      }
     };
 
     window.addEventListener("resize", onResize);

@@ -34,7 +34,6 @@ let nodes = [];
 let activeStatus = 'ALL';
 let activeTag = 'ALL';
 let logs = [];
-let focusMode = false;
 let logIntervalMs = 900;
 let logIntervalId = null;
 let logIdx = 0;
@@ -523,35 +522,24 @@ function renderFilters() {
 /* ── THINKING LOG ────────────────────────────────────────────────────────── */
 
 function initLog() {
-  const logEl    = document.getElementById('thinking-log');
-  const focusBtn = document.getElementById('focus-btn');
-  const linesEl  = document.getElementById('log-lines');
-
-  focusBtn.addEventListener('click', () => {
-    focusMode = !focusMode;
-    logEl.classList.toggle('focus', focusMode);
-    focusBtn.textContent = focusMode ? '× EXIT_FOCUS' : '⤢ FOCUS_MODE';
-    renderLogLines();
-  });
+  const linesEl = document.getElementById('log-lines');
 
   function renderLogLines() {
     linesEl.textContent = '';
-    logs.forEach((text, i) => {
-      const age = logs.length - 1 - i;
-      const opacity = focusMode ? 1 : Math.max(0.15, 1 - age * 0.065);
+    logs.slice(-3).forEach((text, i) => {
+      const opacity = Math.max(0.3, 0.5 + i * 0.25);
       const div = document.createElement('div');
       div.className = 'log-line';
       div.style.opacity = opacity;
       div.textContent = text;
       linesEl.appendChild(div);
     });
-    linesEl.scrollTop = linesEl.scrollHeight;
   }
 
   function tick() {
     const line = LOG_LINES[logIdx % LOG_LINES.length];
     logIdx++;
-    logs = [...logs, `${nowStamp()}  ${line}`].slice(-60);
+    logs = [...logs, `${nowStamp()}  ${line}`].slice(-3);
     renderLogLines();
   }
 
