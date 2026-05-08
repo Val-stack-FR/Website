@@ -400,6 +400,15 @@ function buildCard(node, index, cardH) {
     queryList.appendChild(tag);
   });
   bottom.appendChild(queryList);
+
+  if (node.status === 'DONE' && node.link) {
+    const linkEl = document.createElement('a');
+    linkEl.className = 'card-link';
+    linkEl.href = node.link;
+    linkEl.textContent = node.linkLabel || '→ READ';
+    bottom.appendChild(linkEl);
+  }
+
   article.appendChild(bottom);
 
   const coord = document.createElement('span');
@@ -450,14 +459,6 @@ function renderCards() {
   track.appendChild(flex);
 
   if (!isMobile) {
-    track.addEventListener('scroll', () => {
-      scrollX = track.scrollLeft;
-      const maxScroll = Math.max(1, track.scrollWidth - track.clientWidth);
-      const pBar = document.getElementById('scroll-progress');
-      if (pBar) pBar.style.width = `${Math.min(100, (scrollX / maxScroll) * 100)}%`;
-      try { localStorage.setItem('cr-sx', String(scrollX)); } catch (_) {}
-    }, { passive: true });
-
     try {
       const saved = parseInt(localStorage.getItem('cr-sx') || '0', 10);
       if (saved > 0) track.scrollLeft = saved;
@@ -560,6 +561,27 @@ initLog();
 requestAnimationFrame(animLoop);
 
 document.getElementById('page-title-section').classList.add('fade-in');
+
+/* Attach scroll + wheel listeners once */
+(function () {
+  const track = document.getElementById('cards-track');
+  if (!track) return;
+
+  track.addEventListener('scroll', () => {
+    scrollX = track.scrollLeft;
+    const maxScroll = Math.max(1, track.scrollWidth - track.clientWidth);
+    const pBar = document.getElementById('scroll-progress');
+    if (pBar) pBar.style.width = `${Math.min(100, (scrollX / maxScroll) * 100)}%`;
+    try { localStorage.setItem('cr-sx', String(scrollX)); } catch (_) {}
+  }, { passive: true });
+
+  track.addEventListener('wheel', e => {
+    if (isMobile) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    track.scrollLeft += e.deltaY;
+  }, { passive: false });
+}());
 
 fetch('research/index.json')
   .then(r => r.json())
