@@ -29,10 +29,18 @@
 
     <header class="books-header">
       <h1 class="books-heading">Books</h1>
-      <div class="tab-bar" id="tab-bar" role="tablist"></div>
+      <div></div>
     </header>
 
-    <div id="books-content"></div>
+    <div class="tag-bar" id="tag-bar">
+      <span class="tag-bar-label">Filter ↗</span>
+      <button class="tag active" data-tag="all">All</button>
+    </div>
+
+    <section class="books-list" aria-label="Book list">
+      <div id="book-list"></div>
+      <p class="empty-state" id="empty-state">No books match this filter.</p>
+    </section>
 
   </main>
 

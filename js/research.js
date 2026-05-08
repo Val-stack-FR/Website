@@ -31,7 +31,8 @@ function sparklePath(cx, cy, s) {
 /* ── STATE ───────────────────────────────────────────────────────────────── */
 
 let nodes = [];
-let activeFilter = 'ALL';
+let activeStatus = 'ALL';
+let activeTag = 'ALL';
 let logs = [];
 let focusMode = false;
 let logIntervalMs = 900;
@@ -339,10 +340,18 @@ function updateHud(cx, cy, sx) {
 
 /* ── SUBTITLE ────────────────────────────────────────────────────────────── */
 
+function getFiltered() {
+  return nodes.filter(n => {
+    const matchStatus = activeStatus === 'ALL' || n.status === activeStatus;
+    const matchTag = activeTag === 'ALL' || (n.tags && n.tags.includes(activeTag));
+    return matchStatus && matchTag;
+  });
+}
+
 function updateSubtitle() {
   const sub = document.getElementById('page-subtitle');
   if (!sub) return;
-  const filtered = activeFilter === 'ALL' ? nodes : nodes.filter(n => n.status === activeFilter);
+  const filtered = getFiltered();
   sub.textContent = `// ${filtered.length} nodes active · last sync ${nowStamp()} · engine status `;
   const ok = document.createElement('span');
   ok.className = 'engine-ok';
@@ -398,16 +407,15 @@ function buildCard(node, index, cardH) {
     bottom.appendChild(linkEl);
   }
 
-  const queryList = document.createElement('div');
-  queryList.className = 'card-queries';
-  node.queries.slice(0, 4).forEach(q => {
-    const tag = document.createElement('span');
-    tag.className = 'card-query-tag';
-    tag.textContent = q.length > 32 ? q.slice(0, 32) + '…' : q;
-    tag.title = q;
-    queryList.appendChild(tag);
+  const tagList = document.createElement('div');
+  tagList.className = 'card-tags';
+  (node.tags || []).forEach(t => {
+    const chip = document.createElement('span');
+    chip.className = 'card-tag';
+    chip.textContent = t;
+    tagList.appendChild(chip);
   });
-  bottom.appendChild(queryList);
+  bottom.appendChild(tagList);
 
   article.appendChild(bottom);
 
@@ -439,7 +447,7 @@ function renderCards() {
   const flex = document.createElement('div');
   flex.id = 'cards-flex';
 
-  const filtered = activeFilter === 'ALL' ? nodes : nodes.filter(n => n.status === activeFilter);
+  const filtered = getFiltered();
   const cardH = isMobile ? null : Math.max(320, H - 402);
 
   filtered.forEach((node, idx) => flex.appendChild(buildCard(node, idx, cardH)));
@@ -481,23 +489,35 @@ function renderFilters() {
   if (!bar) return;
   bar.textContent = '';
 
+  function makeRow(className, label, items, activeValue, onClick) {
+    const row = document.createElement('div');
+    row.className = 'filter-row ' + className;
+    const lbl = document.createElement('span');
+    lbl.className = 'filter-row-label';
+    lbl.textContent = label;
+    row.appendChild(lbl);
+    items.forEach(val => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (val === activeValue ? ' active' : '');
+      btn.textContent = val;
+      btn.addEventListener('click', () => {
+        onClick(val);
+        row.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.textContent === val));
+        renderCards();
+      });
+      row.appendChild(btn);
+    });
+    return row;
+  }
+
   const dynamicStatuses = [...new Set(nodes.map(n => n.status))];
   const orderedStatuses = ['TO REVIEW', 'TO SEARCH', 'DONE'].filter(s => dynamicStatuses.includes(s));
-  const extra = dynamicStatuses.filter(s => !orderedStatuses.includes(s));
-  const statuses = ['ALL', ...orderedStatuses, ...extra, ...(!dynamicStatuses.includes('DONE') ? ['DONE'] : [])];
-  statuses.forEach(s => {
-    const hasDone = nodes.some(n => n.status === s);
-    const isEmpty = s === 'DONE' && !hasDone;
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (s === activeFilter ? ' active' : '') + (isEmpty ? ' empty' : '');
-    btn.textContent = s;
-    btn.addEventListener('click', () => {
-      activeFilter = s;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.textContent === s));
-      renderCards();
-    });
-    bar.appendChild(btn);
-  });
+  const statusValues = ['ALL', ...orderedStatuses];
+
+  const allTags = ['ALL', ...new Set(nodes.flatMap(n => n.tags || []))];
+
+  bar.appendChild(makeRow('status-row', 'STATUS /', statusValues, activeStatus, v => { activeStatus = v; }));
+  bar.appendChild(makeRow('tag-row', 'TOPIC /', allTags, activeTag, v => { activeTag = v; }));
 }
 
 /* ── THINKING LOG ────────────────────────────────────────────────────────── */

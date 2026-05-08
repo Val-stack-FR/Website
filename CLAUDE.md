@@ -76,15 +76,18 @@ The detail page also supports `.html` format: if `essays/slug.md` is not found, 
      "readDate": "2025-03",
      "rating": 4,
      "initials": "BT",
-     "description": "One sentence summary for the list card.",
-     "note": "Hover text shown on the book card.",
+     "tags": ["PHILOSOPHY", "FUTURES"],
+     "description": "One sentence summary for the list row.",
+     "note": "Shown on the book review detail page sidebar.",
      "related": ["other-book-slug"]
    }
    ```
 
 **URL:** `book-review.html?book=book-slug`
 
-Categories for tabs: `"Sci-Fi"`, `"Personal Development"` (or any new category — tabs generate automatically).
+**Tag vocabulary** (shared with essays and research): `"AI"` · `"PHILOSOPHY"` · `"LINGUISTIC"` · `"CHANGE MANAGEMENT"` · `"FUTURES"` · `"STRATEGY"` · `"CRISIS"` · `"LEADERSHIP"` — add new tags sparingly; they auto-generate in the filter bar.
+
+The `category` field is kept for compatibility with `book-review.html` but no longer drives the list page (which uses `tags` instead).
 
 ## Adding a new research node
 
@@ -95,6 +98,7 @@ Edit **only** `research/index.json`. Each entry:
   "slug": "unique-kebab-case-id",
   "title": "Research topic × angle",
   "status": "TO REVIEW",
+  "tags": ["AI", "CHANGE MANAGEMENT"],
   "description": "One sentence framing the research question.",
   "queries": [
     "academic search string 1",
@@ -102,6 +106,8 @@ Edit **only** `research/index.json`. Each entry:
   ]
 }
 ```
+
+`tags` use the shared vocabulary: `"AI"` · `"PHILOSOPHY"` · `"LINGUISTIC"` · `"CHANGE MANAGEMENT"` · `"FUTURES"` · `"STRATEGY"` · `"CRISIS"` · `"LEADERSHIP"`. They appear as chips on the card and drive the TOPIC filter row. The `queries` array is kept for reference but is not displayed on cards.
 
 **Status values** (drive the filter tabs — tabs auto-generate, DONE is always pinned):
 - `"TO REVIEW"` — papers identified, need reading
