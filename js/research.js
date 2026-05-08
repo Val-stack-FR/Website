@@ -80,13 +80,28 @@ function initNebula() {
 
   const stars = Array.from({ length: 230 }, () => ({
     x: rng(), y: rng(), r: 0.3 + rng() * 1.4, o: 0.18 + rng() * 0.72, ph: rng() * Math.PI * 2,
+    gradient: null, px: 0, py: 0,
   }));
   const wisps = Array.from({ length: 95 }, () => ({
     x: rng(), y: rng(), len: 0.04 + rng() * 0.20,
     ang: rng() * Math.PI * 2, wob: (rng() - 0.5) * 0.75, o: 0.010 + rng() * 0.042,
   }));
 
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function buildStarGradients(CW, CH) {
+    for (const s of stars) {
+      s.px = s.x * CW; s.py = s.y * CH;
+      const g = ctx.createRadialGradient(s.px, s.py, 0, s.px, s.py, s.r * 4.2);
+      g.addColorStop(0,    'rgba(255,252,248,1)');
+      g.addColorStop(0.28, 'rgba(220,208,235,0.30)');
+      g.addColorStop(1,    'rgba(0,0,0,0)');
+      s.gradient = g;
+    }
+  }
+
+  function resize() {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    buildStarGradients(canvas.width, canvas.height);
+  }
   resize();
   window.addEventListener('resize', resize);
 
@@ -139,14 +154,11 @@ function initNebula() {
 
     for (const s of stars) {
       const twinkle = 0.60 + 0.40 * Math.sin(t * (0.7 + s.ph * 0.45) + s.ph * 5.1);
-      const sx = s.x * CW, sy = s.y * CH, op = Math.min(1, s.o * twinkle);
-      const sg = ctx.createRadialGradient(sx, sy, 0, sx, sy, s.r * 4.2);
-      sg.addColorStop(0,    `rgba(255,252,248,${op})`);
-      sg.addColorStop(0.28, `rgba(220,208,235,${op * 0.30})`);
-      sg.addColorStop(1,    'rgba(0,0,0,0)');
-      ctx.fillStyle = sg;
-      ctx.beginPath(); ctx.arc(sx, sy, s.r * 4.2, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = Math.min(1, s.o * twinkle);
+      ctx.fillStyle = s.gradient;
+      ctx.beginPath(); ctx.arc(s.px, s.py, s.r * 4.2, 0, Math.PI * 2); ctx.fill();
     }
+    ctx.globalAlpha = 1;
 
     ctx.globalCompositeOperation = 'source-over';
     requestAnimationFrame(draw);
@@ -554,20 +566,32 @@ function initLog() {
 
 /* ── ANIMATION LOOP ──────────────────────────────────────────────────────── */
 
+let prevLoopCx = -1, prevLoopCy = -1, prevLoopSx = -1;
 function animLoop() {
-  updateHud(cursor.x, cursor.y, scrollX);
-  updateDeepParallax(scrollX);
+  const cx = cursor.x, cy = cursor.y, sx = scrollX;
+  if (cx !== prevLoopCx || cy !== prevLoopCy || sx !== prevLoopSx) {
+    updateHud(cx, cy, sx);
+    prevLoopCx = cx; prevLoopCy = cy;
+  }
+  if (sx !== prevLoopSx) {
+    updateDeepParallax(sx);
+    prevLoopSx = sx;
+  }
   requestAnimationFrame(animLoop);
 }
 
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 
+let resizeDebounceId = null;
 window.addEventListener('resize', () => {
   isMobile = window.innerWidth < 768;
   W = window.innerWidth;
   H = window.innerHeight;
-  buildDeepParallax();
-  buildHud();
+  clearTimeout(resizeDebounceId);
+  resizeDebounceId = setTimeout(() => {
+    buildDeepParallax();
+    buildHud();
+  }, 200);
 });
 
 window.addEventListener('mousemove', e => {

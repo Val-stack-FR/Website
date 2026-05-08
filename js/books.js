@@ -3,23 +3,31 @@ document.body.classList.add('visible');
 let allBooks = [];
 let activeTag = 'all';
 
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function renderRow(book, index) {
   const num = String(index + 1).padStart(2, '0');
   const tags = book.tags || [];
   const tagsHtml = tags.map(t =>
-    `<button class="book-tag-inline" data-tag="${t}">${t}</button>`
+    `<button class="book-tag-inline" data-tag="${esc(t)}">${esc(t)}</button>`
   ).join('');
-  const rating = book.rating ? `${book.rating} / 5` : '';
+  const rating = book.rating ? `${esc(String(book.rating))} / 5` : '';
   return `
-    <a href="book-review.html?book=${book.slug}" class="book-row" data-tags='${JSON.stringify(tags)}'>
+    <a href="book-review.html?book=${esc(book.slug)}" class="book-row" data-tags="${esc(JSON.stringify(tags))}">
       <span class="book-row-num">${num}</span>
-      <div class="book-row-cover" data-slug="${book.slug}">
-        <img class="book-cover-img" src="books/covers/${book.slug}.jpg" alt="">
+      <div class="book-row-cover" data-slug="${esc(book.slug)}">
+        <img class="book-cover-img" src="books/covers/${esc(book.slug)}.jpg" alt="">
       </div>
       <div class="book-row-body">
-        <div class="book-row-title">${book.title}</div>
-        <div class="book-row-author">${book.author} · ${book.published}</div>
-        <div class="book-row-desc">${book.description}</div>
+        <div class="book-row-title">${esc(book.title)}</div>
+        <div class="book-row-author">${esc(book.author)} · ${esc(String(book.published))}</div>
+        <div class="book-row-desc">${esc(book.description)}</div>
         <div class="book-row-tags">${tagsHtml}</div>
       </div>
       <div class="book-row-meta">
