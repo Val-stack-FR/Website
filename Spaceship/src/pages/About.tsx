@@ -1050,6 +1050,7 @@ const About = () => {
         <div className="about-nav-links">
           <a href="/essays.html" className="about-nav-link">Essays</a>
           <a href="/books.html" className="about-nav-link">Books</a>
+          <a href="/research.html" className="about-nav-link">Research</a>
           <a href="/about/" className="about-nav-link active" aria-current="page">About</a>
         </div>
       </nav>
