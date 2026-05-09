@@ -1,3 +1,9 @@
+/* ── BOOT OVERLAY ────────────────────────────────────────────────────────── */
+{
+  const overlay = document.getElementById('boot-overlay');
+  if (overlay) overlay.addEventListener('animationend', () => overlay.remove());
+}
+
 /* ── UTILS ───────────────────────────────────────────────────────────────── */
 
 const pad = n => String(n).padStart(2, '0');

@@ -219,6 +219,10 @@ function renderBookPreview(book) {
   const file = 'research.html';
   let html = readFileSync(path.join(ROOT, file), 'utf8');
 
+  html = ensureAnchor(html, file, 'RESEARCH-FILTERS',
+    '    <div id="filter-bar"></div>',
+    '    <div id="filter-bar"><!-- PRERENDER:RESEARCH-FILTERS:START --><!-- PRERENDER:RESEARCH-FILTERS:END --></div>'
+  );
   html = ensureAnchor(html, file, 'RESEARCH-CARDS',
     '  <div id="cards-track"></div>',
     '  <div id="cards-track"><!-- PRERENDER:RESEARCH-CARDS:START --><!-- PRERENDER:RESEARCH-CARDS:END --></div>'
@@ -232,6 +236,26 @@ function renderBookPreview(book) {
   // Wrap in #cards-flex so the horizontal desktop layout is correct before JS hydrates.
   const cardsHtml = `<div id="cards-flex">\n    ${cardsInner}\n  </div>`;
 
+  const allStatuses = ['TO REVIEW', 'TO SEARCH', 'DONE']
+    .filter(s => research.some(n => n.status === s));
+  const statusBtns = ['ALL', ...allStatuses].map((s, i) =>
+    `<button class="filter-btn${i === 0 ? ' active' : ''}">${esc(s)}</button>`
+  ).join('\n      ');
+  const allTopics = [...new Set(research.flatMap(n => n.tags || []))];
+  const topicBtns = ['ALL', ...allTopics].map((t, i) =>
+    `<button class="filter-btn${i === 0 ? ' active' : ''}">${esc(t)}</button>`
+  ).join('\n      ');
+  const filtersHtml =
+    `<div class="filter-row status-row">
+      <span class="filter-row-label">STATUS /</span>
+      ${statusBtns}
+    </div>
+    <div class="filter-row tag-row">
+      <span class="filter-row-label">TOPIC /</span>
+      ${topicBtns}
+    </div>`;
+
+  html = patchSection(html, file, 'RESEARCH-FILTERS', filtersHtml);
   html = patchSection(html, file, 'RESEARCH-CARDS', cardsHtml);
 
   writeFileSync(path.join(ROOT, file), html, 'utf8');

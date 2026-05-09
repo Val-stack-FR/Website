@@ -13,6 +13,9 @@
 </head>
 <body>
 
+<div id="boot-overlay">
+  <span class="boot-label">RESEARCH_ENGINE<span class="blink">_</span></span>
+</div>
 <canvas id="nebula-canvas"></canvas>
 <div id="deep-parallax"></div>
 <div id="sci-hud"></div>
@@ -32,7 +35,27 @@
   <section id="page-title-section">
     <h1 id="page-title">CURRENT_RESEARCH<span id="cursor-blink" class="blink"></span></h1>
     <p id="page-subtitle"></p>
-    <div id="filter-bar"></div>
+    <div id="filter-bar"><!-- PRERENDER:RESEARCH-FILTERS:START -->
+<div class="filter-row status-row">
+      <span class="filter-row-label">STATUS /</span>
+      <button class="filter-btn active">ALL</button>
+      <button class="filter-btn">TO REVIEW</button>
+      <button class="filter-btn">TO SEARCH</button>
+      <button class="filter-btn">DONE</button>
+    </div>
+    <div class="filter-row tag-row">
+      <span class="filter-row-label">TOPIC /</span>
+      <button class="filter-btn active">ALL</button>
+      <button class="filter-btn">AI</button>
+      <button class="filter-btn">CHANGE MANAGEMENT</button>
+      <button class="filter-btn">LINGUISTIC</button>
+      <button class="filter-btn">PHILOSOPHY</button>
+      <button class="filter-btn">FUTURES</button>
+      <button class="filter-btn">CRISIS</button>
+      <button class="filter-btn">STRATEGY</button>
+      <button class="filter-btn">LEADERSHIP</button>
+    </div>
+<!-- PRERENDER:RESEARCH-FILTERS:END --></div>
   </section>
 
   <div id="cards-track"><!-- PRERENDER:RESEARCH-CARDS:START -->
