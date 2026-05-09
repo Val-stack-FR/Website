@@ -92,21 +92,21 @@ a { text-decoration: none; color: inherit; }
 .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .filter-row-label {
   font-family: 'Space Mono', monospace; font-size: 10px;
-  letter-spacing: 0.14em; color: rgba(255,255,255,0.26);
+  letter-spacing: 0.14em; color: rgba(255,255,255,0.50);
   width: 72px; text-align: right; flex-shrink: 0; margin-right: 10px;
 }
 
 .filter-btn {
   padding: 5px 12px;
-  border: 1px solid rgba(255,255,255,0.09); background: transparent;
-  color: rgba(255,255,255,0.46); font-family: 'Space Mono', monospace;
+  border: 1px solid rgba(255,255,255,0.22); background: transparent;
+  color: rgba(255,255,255,0.72); font-family: 'Space Mono', monospace;
   font-size: 10px; letter-spacing: 0.1em; transition: all 0.2s;
 }
 .filter-btn:hover:not(.active) {
-  border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.75);
+  border-color: rgba(255,255,255,0.45); color: rgba(255,255,255,0.95);
 }
 .filter-btn.active {
-  border-color: rgba(52,211,153,0.62); background: rgba(52,211,153,0.05); color: #34d399;
+  border-color: rgba(52,211,153,0.85); background: rgba(52,211,153,0.08); color: #34d399;
 }
 
 /* ── CARDS TRACK ─────────────────────────────────────────────── */

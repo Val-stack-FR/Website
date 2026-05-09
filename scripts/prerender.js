@@ -228,7 +228,9 @@ function renderBookPreview(book) {
     ...item,
     id: `NODE_${String(research.length - i).padStart(3, '0')}`,
   }));
-  const cardsHtml = nodes.map((node, i) => renderResearchCard(node, i)).join('\n    ');
+  const cardsInner = nodes.map((node, i) => renderResearchCard(node, i)).join('\n    ');
+  // Wrap in #cards-flex so the horizontal desktop layout is correct before JS hydrates.
+  const cardsHtml = `<div id="cards-flex">\n    ${cardsInner}\n  </div>`;
 
   html = patchSection(html, file, 'RESEARCH-CARDS', cardsHtml);
 
