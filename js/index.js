@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(essays => {
       essays.sort((a, b) => new Date(b.date) - new Date(a.date));
       const container = document.getElementById('essays-preview');
+      container.textContent = '';
       essays.forEach(e => {
         const a = document.createElement('a');
         a.href = `essay-detail.html?essay=${e.slug}`;
@@ -184,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(books => {
       books.sort((a, b) => new Date(b.readDate) - new Date(a.readDate));
       const container = document.getElementById('books-preview');
+      container.textContent = '';
       books.forEach(b => {
         const a = document.createElement('a');
         a.href = `book-review.html?book=${b.slug}`;
