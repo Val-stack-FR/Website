@@ -135,7 +135,7 @@
     "status": "DONE",
     "tags": ["CRISIS", "CHANGE MANAGEMENT"],
     "description": "How crisis-driven centralization systematically destroys the distributed information environment it was designed to fix, and why emergency authority rarely reverts.",
-    "link": "essay-detail.html?essay=off-the-tracks",
+    "link": "/essays/off-the-tracks/",
     "linkLabel": "→ When the Train Comes Off the Tracks",
     "queries": [
       "crisis management centralization \"information asymmetry\" organization",
@@ -150,7 +150,7 @@
     "status": "DONE",
     "tags": ["CHANGE MANAGEMENT", "PHILOSOPHY"],
     "description": "Why more than a third of feedback interventions degrade performance, and how power-distance culture and defensive silence compound that failure.",
-    "link": "essay-detail.html?essay=when-feedback-fails",
+    "link": "/essays/when-feedback-fails/",
     "linkLabel": "→ When Feedback Fails",
     "queries": [
       "Kluger DeNisi feedback intervention meta-analysis performance degradation",
@@ -165,7 +165,7 @@
     "status": "DONE",
     "tags": ["AI", "CHANGE MANAGEMENT"],
     "description": "Why adoption rate figures vary 5–40 points depending on method, and why peer-to-peer influence outperforms formal training as an adoption mechanism.",
-    "link": "essay-detail.html?essay=genai-adoption-people-in-the-middle",
+    "link": "/essays/genai-adoption-people-in-the-middle/",
     "linkLabel": "→ The People in the Middle",
     "queries": [
       "Burton-Jones Straub \"lean adoption\" \"rich adoption\" technology measurement",
@@ -180,7 +180,7 @@
     "status": "DONE",
     "tags": ["AI", "FUTURES"],
     "description": "Why the constraint in AI-augmented work shifts from processing capacity to human judgment bandwidth, and what memory architecture agents need to stop failing silently.",
-    "link": "essay-detail.html?essay=the-human-bottleneck",
+    "link": "/essays/the-human-bottleneck/",
     "linkLabel": "→ The Human Bottleneck",
     "queries": [
       "\"agentic AI\" human oversight failure silent error \"knowledge work\"",
@@ -195,7 +195,7 @@
     "status": "DONE",
     "tags": ["AI", "PHILOSOPHY"],
     "description": "How working with AI shifts thinking from vertical hierarchical knowledge to rhizomatic horizontal fields, and why opaque reasoning chains make knowledge transfer impossible.",
-    "link": "essay-detail.html?essay=who-is-conducting-whom",
+    "link": "/essays/who-is-conducting-whom/",
     "linkLabel": "→ Who Is Conducting Whom?",
     "queries": [
       "Parisi \"automation of automation\" abductive reasoning machine inference",
@@ -210,7 +210,7 @@
     "status": "DONE",
     "tags": ["AI", "LINGUISTIC", "PHILOSOPHY"],
     "description": "How LLM performance gaps map onto Bourdieu's linguistic capital, making AI the most efficient class-sorting machine ever built.",
-    "link": "essay-detail.html?essay=linguistic-capital-ai-inequality",
+    "link": "/essays/linguistic-capital-ai-inequality/",
     "linkLabel": "→ The Articulation Gap",
     "queries": [
       "Bourdieu linguistic capital \"language model\" register inequality",
@@ -225,7 +225,7 @@
     "status": "DONE",
     "tags": ["PHILOSOPHY", "FUTURES"],
     "description": "Whether consciousness is metabolically expensive, evolutionarily unnecessary, and possibly a costly side-effect rather than the engine of intelligence.",
-    "link": "book-review.html?book=blindsight",
+    "link": "/books/blindsight/",
     "linkLabel": "→ Blindsight — Peter Watts",
     "queries": [
       "epiphenomenalism consciousness neuroscience evolutionary cost",
@@ -240,7 +240,7 @@
     "status": "DONE",
     "tags": ["STRATEGY", "LEADERSHIP"],
     "description": "How Diminishers create cognitive ceilings that cap organizational performance, and the mechanisms by which Multipliers extract twice the available intelligence.",
-    "link": "book-review.html?book=genius-in-the-room",
+    "link": "/books/genius-in-the-room/",
     "linkLabel": "→ Multipliers — Liz Wiseman",
     "queries": [
       "Wiseman Multipliers leadership intelligence extraction team performance",
@@ -255,7 +255,7 @@
     "status": "DONE",
     "tags": ["STRATEGY", "LEADERSHIP", "CHANGE MANAGEMENT"],
     "description": "How the four-year degree became a cheap filtering proxy rather than an ability signal, the compounding cost of that convenience, and IBM's pivot toward aptitude-based recruitment.",
-    "link": "book-review.html?book=stripping-away-the-degree",
+    "link": "/books/stripping-away-the-degree/",
     "linkLabel": "→ Good Power — Ginni Rometty",
     "queries": [
       "degree inflation credential screening theory labor market proxy",
@@ -270,7 +270,7 @@
     "status": "DONE",
     "tags": ["PHILOSOPHY", "CHANGE MANAGEMENT"],
     "description": "Why individual empathy is not the problem — the institution is — and the underdeveloped prescription for building organizations that don't select against it.",
-    "link": "book-review.html?book=war-for-kindness",
+    "link": "/books/war-for-kindness/",
     "linkLabel": "→ The War for Kindness — Jamil Zaki",
     "queries": [
       "Zaki empathy trainable systemic organizational design",

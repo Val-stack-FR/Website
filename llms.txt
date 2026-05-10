@@ -77,8 +77,112 @@ Full text: /essays/off-the-tracks/
 All books: /books.html
 Machine-readable index: /books/index.json
 
-Reviews span Science Fiction and non-fiction (Personal Development, Management, Psychology).
-Each review includes rating, read date, and analytical notes.
+### Blindsight — Peter Watts (2006) · Rating: 5/5
+Category: Sci-Fi / Hard SF · Read: 2025-04
+Tags: PHILOSOPHY, FUTURES
+A first-contact novel that uses alien encounter as a scalpel to dissect consciousness itself.
+Watts's central argument: consciousness is metabolically expensive, evolutionarily unnecessary,
+and possibly the thing that will get us all killed. The aliens are intelligent without awareness.
+They process, respond, adapt — without any "lights on" inside.
+Relevance: Written while working on AI adoption research. We are building systems that are
+intelligent without being aware — and we have no serious theory of what that means for the
+humans working alongside them.
+Full text: /books/blindsight/
+
+### Multipliers — Liz Wiseman · Rating: 4/5
+Category: Strategy / Leadership · Read: 2025-03
+Tags: STRATEGY, LEADERSHIP
+The question is not "how do you become a better leader?" but "what if your intelligence is
+what's holding your team back?" Wiseman draws a clean line between Diminishers (extract at
+best half the available intelligence in a room) and Multipliers (extract nearly twice as much,
+not by working harder, but by operating from different assumptions about what leadership is for).
+The 2X Effect: the mechanism is architectural, not motivational. The Diminisher sets a ceiling.
+The Multiplier sets a floor and removes the ceiling.
+Full text: /books/genius-in-the-room/
+
+### Good Power — Ginni Rometty · Rating: 3.5/5
+Category: Strategy / Personal Development · Read: 2025-01
+Tags: STRATEGY, LEADERSHIP, CHANGE MANAGEMENT
+What do you actually know, and how do you know it's still worth anything? Rometty's structural
+argument: employers used the four-year degree as a universal filter not because jobs demanded it,
+but because filtering is expensive and proxies are cheap. IBM's response — recruiting on
+demonstrated aptitude rather than credentials — revealed the ceiling was always artificial.
+Key framework: the Velvet Hammer — disaggregating performance assessment from person assessment.
+Most feedback conflates them, which triggers shutdown. Separate them, and the person stays in
+the problem-solving space.
+Full text: /books/stripping-away-the-degree/
+
+### The War for Kindness — Jamil Zaki · Rating: 4/5
+Category: Strategy / Psychology · Read: 2025-06
+Tags: PHILOSOPHY, CHANGE MANAGEMENT
+Empathy is not something you are born with or without — it is a capacity that grows or atrophies
+depending on the systems you inhabit. Zaki's diagnosis: we cannot excuse ourselves through
+temperament. We also cannot guilt our way to kindness. The question is why we reliably build
+systems that train us away from empathy.
+The prescription gap: the book documents what kind systems look like when they already exist.
+It does not address how you create those conditions when incentive structures all point the
+opposite direction — which is always a question of power, not design.
+Full text: /books/war-for-kindness/
+
+---
+
+## Current Research
+
+Research page: /research.html
+Machine-readable index: /research/index.json
+
+Active research nodes tracking literature review in progress:
+
+**Silence typology × AI adoption** [TO REVIEW]
+Does Morrison's distinction between defensive and acquiescent silence predict differential AI
+adoption behaviors in high power-distance cultures?
+
+**Verification burden × implicit cognition development** [TO REVIEW]
+How does verification workload affect the development of expertise in human-AI interaction?
+Does heavy verification demand slow the development of AI-specific tacit knowledge?
+
+**Register premium in agentic orchestration** [TO REVIEW]
+Does the class/register advantage in chat-mode prompting persist or amplify when users must
+specify multi-step agent workflows?
+
+**Centralization + blackbox double-blindness** [TO SEARCH]
+Is there evidence that crisis-driven centralization degrades the distributed information
+environment in ways that make AI deployment more likely to fail silently?
+
+**Non-renewable trust stack** [TO REVIEW]
+Does a failed AI initiative reduce the probability of success for subsequent initiatives in
+the same organisation? Modeling organisational trust as a depleting resource.
+
+**Scapegoating × feedback inequality in AI-mediated work** [TO REVIEW]
+In contexts where AI distributes causality, do existing feedback inequalities compound or
+attenuate?
+
+**De Certeau tactics × platform lock-in** [TO REVIEW]
+How do agentic AI systems foreclose user-level tactical adaptation? Does deskilling literature
+apply to LLMs?
+
+**Organizational legibility for agents** [TO REVIEW]
+What does it cost to make a knowledge-intensive workflow legible to an AI agent — and who
+bears that cost?
+
+**Déresponsabilisation × AI in surveillance contexts** [TO REVIEW]
+Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility?
+
+**Slow-phase onboarding for agentic AI** [TO REVIEW]
+Is there evidence for a necessary slow phase of direct model interaction before effective use
+of more autonomous agentic systems?
+
+Completed research nodes (linked to published work):
+- Crisis centralization × organizational information destruction → /essays/off-the-tracks/
+- Feedback intervention paradox × silence typology → /essays/when-feedback-fails/
+- GenAI adoption measurement × peer-influence mechanisms → /essays/genai-adoption-people-in-the-middle/
+- Human-agent cognitive bottleneck × memory infrastructure → /essays/the-human-bottleneck/
+- AI abductive reasoning × distributed cognition plane → /essays/who-is-conducting-whom/
+- Linguistic capital × prompting literacy inequality → /essays/linguistic-capital-ai-inequality/
+- Consciousness as epiphenomenon × intelligence without awareness → /books/blindsight/
+- Multiplier vs Diminisher leadership × organizational intelligence extraction → /books/genius-in-the-room/
+- Credential screening theory × organizational skill development → /books/stripping-away-the-degree/
+- Systemic empathy × institutional design conditions → /books/war-for-kindness/
 
 ---
 
@@ -122,8 +226,9 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 
 - Essay index (JSON): /essays/index.json
 - Book index (JSON): /books/index.json
+- Research index (JSON): /research/index.json
 - Individual essays (Markdown): /essays/{slug}.md
 - Individual book reviews (Markdown): /books/{slug}.md
-
-Note: Most site content is loaded dynamically via JavaScript. The JSON and Markdown files
-above are directly accessible as static resources without JavaScript execution.
+- Individual essays (pre-rendered HTML): /essays/{slug}/
+- Individual book reviews (pre-rendered HTML): /books/{slug}/
+- Sitemap: /sitemap.xml
