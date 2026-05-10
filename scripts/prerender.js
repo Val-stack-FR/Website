@@ -1,5 +1,5 @@
 'use strict';
-const { readFileSync, writeFileSync } = require('fs');
+const { readFileSync, writeFileSync, mkdirSync, existsSync } = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
@@ -290,3 +290,190 @@ function renderBookPreview(book) {
   writeFileSync(path.join(ROOT, file), html, 'utf8');
   console.log(`✓ ${file}`);
 }
+
+// ── MARKDOWN CONVERTER ────────────────────────────────────────────────────────
+
+function inlineMd(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
+function renderMarkdown(md) {
+  return md.split(/\n\n+/).map(block => {
+    block = block.trim();
+    if (!block) return '';
+    if (block.startsWith('<')) return block;
+    if (block.startsWith('## ')) {
+      const text = block.slice(3).trim();
+      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+      return `<h2 id="${id}">${inlineMd(text)}</h2>`;
+    }
+    return `<p>${inlineMd(block.replace(/\n/g, ' '))}</p>`;
+  }).filter(Boolean).join('\n');
+}
+
+// ── SHARED PAGE FRAGMENTS ─────────────────────────────────────────────────────
+
+const NAV_LINKS = (active) => `
+  <nav class="nav" aria-label="primary">
+    <a href="../../index.html" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="../../essays.html" class="nav-link${active === 'essays' ? ' active' : ''}">Essays</a>
+      <a href="../../books.html" class="nav-link${active === 'books' ? ' active' : ''}">Books</a>
+      <a href="../../research.html" class="nav-link">Research</a>
+      <a href="/about/" class="nav-link">About</a>
+    </div>
+  </nav>`;
+
+const HEAD = (title, description, canonical, css2) => `
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${esc(title)} — Valérian Teissier</title>
+  <meta name="description" content="${esc(description)}" />
+  <link rel="canonical" href="${canonical}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="${css2}" />`;
+
+// ── ESSAY PAGE GENERATOR ──────────────────────────────────────────────────────
+
+function essayPage(essay, bodyHtml) {
+  const tagsHtml = essay.tags.map(t =>
+    `<a href="../../essays.html?tag=${encodeURIComponent(t)}" class="essay-tag-inline">${esc(t)}</a>`
+  ).join('');
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>${HEAD(essay.title, essay.description, `/essays/${essay.slug}/`, '../../css/essay-detail.css')}
+</head>
+<body>
+<div class="page">
+${NAV_LINKS('essays')}
+  <main class="main">
+    <div class="essay-layout">
+      <aside class="essay-sidebar">
+        <a href="../../essays.html" class="btn-back">← Essays</a>
+        <div>
+          <div class="essay-sidebar-label">Published</div>
+          <time class="essay-sidebar-value">${esc(essay.date)}</time>
+        </div>
+        <div>
+          <div class="essay-sidebar-label">Reading time</div>
+          <div class="essay-sidebar-value">${esc(essay.readTime)}</div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label">Tags</div>
+          <div class="sidebar-tags-list">${tagsHtml}</div>
+        </div>
+      </aside>
+      <div class="essay-content">
+        <header class="essay-header">
+          <div class="essay-meta-row">
+            <span class="essay-num-label">Essay №${esc(essay.num)}</span>
+          </div>
+          <h1 class="essay-title">${esc(essay.title)}</h1>
+          <p class="essay-desc">${esc(essay.description)}</p>
+        </header>
+        <div class="essay-body" id="essay-body">${bodyHtml}</div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="../../essays.html" class="footer-text">← All essays</a>
+  </footer>
+</div>
+</body>
+</html>`;
+}
+
+// ── BOOK PAGE GENERATOR ───────────────────────────────────────────────────────
+
+function bookPage(book, bodyHtml) {
+  const tagsHtml = (book.tags || []).map(t =>
+    `<a href="../../books.html?tag=${encodeURIComponent(t)}" class="book-tag-inline">${esc(t)}</a>`
+  ).join('');
+  const rating = book.rating ? `${esc(String(book.rating))} / 5` : '';
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>${HEAD(book.title, book.description, `/books/${book.slug}/`, '../../css/book-review.css')}
+</head>
+<body>
+<div class="page">
+${NAV_LINKS('books')}
+  <main class="main">
+    <div class="review-layout">
+      <aside class="review-cover-panel">
+        <a href="../../books.html" class="btn-back btn-back--review">← Books</a>
+        <div class="book-cover-placeholder">
+          <img src="../../books/covers/${esc(book.slug)}.jpg" alt="${esc(book.title)}">
+          <span class="book-cover-initials">${esc(book.initials)}</span>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Author</div>
+          <div class="review-meta-value">${esc(book.author)}</div>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Published</div>
+          <div class="review-meta-value"><time>${esc(String(book.published))}</time></div>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Category</div>
+          <div class="review-meta-value">${esc(book.subcategory || book.category)}</div>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Read</div>
+          <div class="review-meta-value"><time>${esc(book.readDate)}</time></div>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Rating</div>
+          <div class="review-meta-value">${rating}</div>
+        </div>
+        <div class="review-meta-item">
+          <div class="review-meta-label">Tags</div>
+          <div class="sidebar-tags-list">${tagsHtml}</div>
+        </div>
+        ${book.note ? `<div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">${esc(book.note)}</p></div>` : ''}
+      </aside>
+      <div class="review-content">
+        <a class="category-badge" href="../../books.html">Book review</a>
+        <h1 class="review-book-title">${esc(book.title)}</h1>
+        <div class="review-author">${esc(book.author)} · ${esc(String(book.published))}</div>
+        <div class="review-body" id="review-body">${bodyHtml}</div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="../../books.html" class="footer-text">← All books</a>
+  </footer>
+</div>
+</body>
+</html>`;
+}
+
+// ── GENERATE INDIVIDUAL PAGES ─────────────────────────────────────────────────
+
+essays.forEach(essay => {
+  const mdPath = path.join(ROOT, 'essays', `${essay.slug}.md`);
+  if (!existsSync(mdPath)) { console.warn(`  ⚠ missing: essays/${essay.slug}.md`); return; }
+  const bodyHtml = renderMarkdown(readFileSync(mdPath, 'utf8'));
+  const dir = path.join(ROOT, 'essays', essay.slug);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(path.join(dir, 'index.html'), essayPage(essay, bodyHtml), 'utf8');
+  console.log(`  → essays/${essay.slug}/index.html`);
+});
+
+books.forEach(book => {
+  const mdPath = path.join(ROOT, 'books', `${book.slug}.md`);
+  if (!existsSync(mdPath)) { console.warn(`  ⚠ missing: books/${book.slug}.md`); return; }
+  const bodyHtml = renderMarkdown(readFileSync(mdPath, 'utf8'));
+  const dir = path.join(ROOT, 'books', book.slug);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(path.join(dir, 'index.html'), bookPage(book, bodyHtml), 'utf8');
+  console.log(`  → books/${book.slug}/index.html`);
+});
