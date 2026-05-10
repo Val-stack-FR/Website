@@ -35,40 +35,40 @@ Machine-readable index: /essays/index.json
 Tags: AI, philosophy, linguistic, change management
 The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's
 linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
-Full text: /essay-detail.html?essay=linguistic-capital-ai-inequality
+Full text: /essays/linguistic-capital-ai-inequality/
 
 ### Who Is Conducting Whom? (2026-04-27) — 12 min
 Tags: AI, futures, strategy, philosophy
 Working with AI didn't extend my mind — it changed the plane on which I think, and the gap
 between those two things matters enormously for anyone building systems that depend on people
 thinking well.
-Full text: /essay-detail.html?essay=who-is-conducting-whom
+Full text: /essays/who-is-conducting-whom/
 
 ### The Human Bottleneck (2026-04-17) — 8 min
 Tags: AI, strategy, futures
 The constraint in AI-augmented work has already moved — not away from the technology, but
 onto the human who must direct, review, and judge what the machine produces.
-Full text: /essay-detail.html?essay=the-human-bottleneck
+Full text: /essays/the-human-bottleneck/
 
 ### The People in the Middle of GenAI Adoption (2026-02-07) — 11 min
 Tags: AI, change management, strategy
 GenAI adoption stalls not because people fear the technology, but because organisations keep
 solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.
-Full text: /essay-detail.html?essay=genai-adoption-people-in-the-middle
+Full text: /essays/genai-adoption-people-in-the-middle/
 
 ### When Feedback Fails (2025-10-13) — 9 min
 Tags: change management, strategy
 More than a third of feedback interventions degrade performance — not because the intent was
 wrong, but because most organisations treat feedback as a free good and skip the four design
 conditions that determine whether it helps or hurts.
-Full text: /essay-detail.html?essay=when-feedback-fails
+Full text: /essays/when-feedback-fails/
 
 ### When the Train Comes Off the Tracks (2025-07-17) — 8 min
 Tags: change management, crisis
 When performance slips, the instinctive managerial response is tighter control — which
 systematically destroys the information environment needed to fix the problem it was meant
 to address.
-Full text: /essay-detail.html?essay=off-the-tracks
+Full text: /essays/off-the-tracks/
 
 ---
 
