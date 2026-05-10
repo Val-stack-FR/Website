@@ -39,6 +39,7 @@ function renderRow(book, index) {
 
 function buildTagBar(books) {
   const tagBar = document.getElementById('tag-bar');
+  tagBar.querySelectorAll('.tag:not([data-tag="all"])').forEach(b => b.remove());
   const allTags = [...new Set(books.flatMap(b => b.tags || []))];
   allTags.forEach(tag => {
     const btn = document.createElement('button');

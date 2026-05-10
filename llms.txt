@@ -31,6 +31,12 @@ or hurt.
 All essays: /essays.html
 Machine-readable index: /essays/index.json
 
+### The Articulation Gap (2026-05-01) — 10 min
+Tags: AI, philosophy, linguistic, change management
+The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's
+linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
+Full text: /essay-detail.html?essay=linguistic-capital-ai-inequality
+
 ### Who Is Conducting Whom? (2026-04-27) — 12 min
 Tags: AI, futures, strategy, philosophy
 Working with AI didn't extend my mind — it changed the plane on which I think, and the gap
