@@ -33,41 +33,32 @@ Machine-readable index: /essays/index.json
 
 ### The Articulation Gap (2026-05-01) — 10 min
 Tags: AI, philosophy, linguistic, change management
-The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's
-linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
+The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
 Full text: /essays/linguistic-capital-ai-inequality/
 
 ### Who Is Conducting Whom? (2026-04-27) — 12 min
 Tags: AI, futures, strategy, philosophy
-Working with AI didn't extend my mind — it changed the plane on which I think, and the gap
-between those two things matters enormously for anyone building systems that depend on people
-thinking well.
+Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.
 Full text: /essays/who-is-conducting-whom/
 
 ### The Human Bottleneck (2026-04-17) — 8 min
 Tags: AI, strategy, futures
-The constraint in AI-augmented work has already moved — not away from the technology, but
-onto the human who must direct, review, and judge what the machine produces.
+The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.
 Full text: /essays/the-human-bottleneck/
 
-### The People in the Middle of GenAI Adoption (2026-02-07) — 11 min
+### The people in the middle of GenAI adoption (2026-02-07) — 11 min
 Tags: AI, change management, strategy
-GenAI adoption stalls not because people fear the technology, but because organisations keep
-solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.
+GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.
 Full text: /essays/genai-adoption-people-in-the-middle/
 
 ### When Feedback Fails (2025-10-13) — 9 min
 Tags: change management, strategy
-More than a third of feedback interventions degrade performance — not because the intent was
-wrong, but because most organisations treat feedback as a free good and skip the four design
-conditions that determine whether it helps or hurts.
+More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.
 Full text: /essays/when-feedback-fails/
 
 ### When the Train Comes Off the Tracks (2025-07-17) — 8 min
 Tags: change management, crisis
-When performance slips, the instinctive managerial response is tighter control — which
-systematically destroys the information environment needed to fix the problem it was meant
-to address.
+When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address.
 Full text: /essays/off-the-tracks/
 
 ---
@@ -77,8 +68,84 @@ Full text: /essays/off-the-tracks/
 All books: /books.html
 Machine-readable index: /books/index.json
 
-Reviews span Science Fiction and non-fiction (Personal Development, Management, Psychology).
-Each review includes rating, read date, and analytical notes.
+### The War for Kindness — Jamil Zaki (2016) · Rating: 3.5/5
+Category: Personal Development / Psychology · Read: 2025-12
+Tags: PHILOSOPHY, CHANGE MANAGEMENT
+Empathy is not an individual trait but a systemic output — built or diminished by the institutions we inhabit.
+Key insight: Jamil Zaki begins with a provocative claim: empathy is not something you are born with or without. It is something you do—a capacity that grows or atrophies depending on use, and more importantly, depending on the systems you inhabit. This is not a comfortable position. It means we cannot excuse ourselves through temperament or neurology. It also means we cannot guilt our way to kindness. The question that animates the entire book is this: if empathy is trainable and systemic, why are we so reliably building systems that train us away from it?
+Full text: /books/war-for-kindness/
+
+### Blindsight — Peter Watts (2006) · Rating: 5/5
+Category: Sci-Fi / Hard SF · Read: 2025-04
+Tags: PHILOSOPHY, FUTURES
+A first-contact novel that uses aliens as a scalpel on the question of consciousness.
+Key insight: A first-contact novel in which the aliens are less frightening than the question they force us to ask about ourselves. The crew of the Theseus encounters something vast and utterly foreign near the edge of the solar system — and Watts uses that encounter as a scalpel to dissect what consciousness actually is.
+Full text: /books/blindsight/
+
+### Good Power — Ginni Rometty (2023) · Rating: 4/5
+Category: Strategy / Management · Read: 2025-02
+Tags: STRATEGY, LEADERSHIP, CHANGE MANAGEMENT
+The four-year degree was never a proxy for ability — it was a proxy for cheap filtering, and the skills gap it created is the compounding cost of that convenience.
+Key insight: The question Rometty keeps returning to, without ever quite stating it flat, is this: what do you actually know, and how do you know it's still worth anything? Not a question most CEOs ask publicly. The fact that she built her answer — across years of running IBM — around the people most systematically excluded from the knowledge economy is what makes the book more than a memoir.
+Full text: /books/stripping-away-the-degree/
+
+### Multipliers: How the Best Leaders Make Everyone Smarter — Liz Wiseman (2014) · Rating: 4/5
+Category: Strategy / Management · Read: 2024-11
+Tags: STRATEGY, LEADERSHIP
+The smartest person in the room is often its biggest bottleneck — not through malice, but through the accumulated habit of believing their contribution is indispensable.
+Key insight: The question the book is actually asking is not "how do you become a better leader?" It's more uncomfortable than that: what if your intelligence — the very thing that got you here — is what's holding your team back?
+Full text: /books/genius-in-the-room/
+
+---
+
+## Current Research
+
+Research page: /research.html
+Machine-readable index: /research/index.json
+
+Active research nodes tracking literature review in progress:
+
+**Silence typology × AI adoption** [TO REVIEW]
+Does Morrison's distinction between defensive and acquiescent silence predict differential AI adoption behaviors? Are there empirical studies in high power-distance cultures (PDI > 60) on how silence norms interact with peer influence as an adoption mechanism?
+
+**Verification burden × implicit cognition development** [TO REVIEW]
+How does verification workload affect the development of expertise and implicit cognition in human-AI interaction? Does heavy verification demand slow or prevent the development of AI-specific tacit knowledge?
+
+**Register premium in agentic orchestration** [TO REVIEW]
+Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts?
+
+**Centralization + blackbox double-blindness** [TO SEARCH]
+Is there evidence that crisis-driven centralization degrades the distributed information environment in ways that make AI deployment more likely to fail silently? Who catches AI errors in organizations where upward honesty has been structurally suppressed?
+
+**Non-renewable trust stack** [TO REVIEW]
+Does a failed or over-promised AI initiative reduce the probability of success for subsequent initiatives in the same organization? Any work that models organizational trust as a depleting resource rather than a stable background condition?
+
+**Scapegoating × feedback inequality in AI-mediated work** [TO REVIEW]
+In contexts where AI distributes causality, do existing feedback inequalities (junior staff bearing disproportionate blame) compound or attenuate?
+
+**De Certeau tactics × platform lock-in** [TO REVIEW]
+How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI?
+
+**Organizational legibility for agents** [TO REVIEW]
+What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost?
+
+**Déresponsabilisation × AI in surveillance contexts** [TO REVIEW]
+Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it?
+
+**Slow-phase onboarding for agentic AI** [TO REVIEW]
+Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases?
+
+Completed research nodes (linked to published work):
+- How crisis-driven centralization systematically destroys the distributed information environment it was designed to fix, and why emergency authority rarely reverts. → /essays/off-the-tracks/
+- Why more than a third of feedback interventions degrade performance, and how power-distance culture and defensive silence compound that failure. → /essays/when-feedback-fails/
+- Why adoption rate figures vary 5–40 points depending on method, and why peer-to-peer influence outperforms formal training as an adoption mechanism. → /essays/genai-adoption-people-in-the-middle/
+- Why the constraint in AI-augmented work shifts from processing capacity to human judgment bandwidth, and what memory architecture agents need to stop failing silently. → /essays/the-human-bottleneck/
+- How working with AI shifts thinking from vertical hierarchical knowledge to rhizomatic horizontal fields, and why opaque reasoning chains make knowledge transfer impossible. → /essays/who-is-conducting-whom/
+- How LLM performance gaps map onto Bourdieu's linguistic capital, making AI the most efficient class-sorting machine ever built. → /essays/linguistic-capital-ai-inequality/
+- Whether consciousness is metabolically expensive, evolutionarily unnecessary, and possibly a costly side-effect rather than the engine of intelligence. → /books/blindsight/
+- How Diminishers create cognitive ceilings that cap organizational performance, and the mechanisms by which Multipliers extract twice the available intelligence. → /books/genius-in-the-room/
+- How the four-year degree became a cheap filtering proxy rather than an ability signal, the compounding cost of that convenience, and IBM's pivot toward aptitude-based recruitment. → /books/stripping-away-the-degree/
+- Why individual empathy is not the problem — the institution is — and the underdeveloped prescription for building organizations that don't select against it. → /books/war-for-kindness/
 
 ---
 
@@ -122,8 +189,9 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 
 - Essay index (JSON): /essays/index.json
 - Book index (JSON): /books/index.json
+- Research index (JSON): /research/index.json
 - Individual essays (Markdown): /essays/{slug}.md
 - Individual book reviews (Markdown): /books/{slug}.md
-
-Note: Most site content is loaded dynamically via JavaScript. The JSON and Markdown files
-above are directly accessible as static resources without JavaScript execution.
+- Individual essays (pre-rendered HTML): /essays/{slug}/
+- Individual book reviews (pre-rendered HTML): /books/{slug}/
+- Sitemap: /sitemap.xml

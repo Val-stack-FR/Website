@@ -3,5 +3,29 @@ Allow: /
 Disallow: /Spaceship/
 Disallow: /node_modules/
 
-# LLM crawlers — point to llms.txt for structured content
+# AI crawlers — full access to all content
+# See /llms.txt for structured content inventory
 # https://llmstxt.org
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://www.valerianteissier.com/sitemap.xml
