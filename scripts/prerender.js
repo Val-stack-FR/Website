@@ -43,6 +43,17 @@ const essays  = JSON.parse(readFileSync(path.join(ROOT, 'essays/index.json'),   
 const books   = JSON.parse(readFileSync(path.join(ROOT, 'books/index.json'),    'utf8'));
 const research = JSON.parse(readFileSync(path.join(ROOT, 'research/index.json'), 'utf8'));
 
+// ── VALIDATE RESEARCH LINKS ──────────────────────────────────────────────────
+
+research.forEach(node => {
+  if (node.status === 'DONE' && node.link) {
+    if (/^(essay-detail|book-review)\.html\?/.test(node.link)) {
+      console.warn(`  ⚠ research "${node.slug}": link uses legacy URL format → ${node.link}`);
+      console.warn(`    Use /essays/{slug}/ or /books/{slug}/ instead`);
+    }
+  }
+});
+
 // ── RENDER HELPERS ───────────────────────────────────────────────────────────
 
 function renderEssayRow(essay) {
@@ -557,4 +568,156 @@ ${urlEntries}
 
   writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   console.log('✓ sitemap.xml');
+}
+
+// ── GENERATE llms.txt ─────────────────────────────────────────────────────────
+
+{
+  function firstParagraph(mdPath) {
+    if (!existsSync(mdPath)) return '';
+    const raw = readFileSync(mdPath, 'utf8');
+    const para = raw.split(/\n\n+/).find(b => {
+      const t = b.trim();
+      return t && !t.startsWith('<') && !t.startsWith('#');
+    }) || '';
+    return para.trim()
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .replace(/\*([^*\n]+?)\*/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n/g, ' ');
+  }
+
+  const PREAMBLE = `# Valérian Teissier — AI Researcher & Strategist, Paris
+
+> Valérian Teissier is an AI expert and strategist at Ayming Innovation, based in Paris.
+> He studies how artificial intelligence is reshaping organisations and turns those
+> observations into strategy and change management frameworks.
+> Field-first. Observation-grounded. Actionable.
+
+## About
+
+**Name:** Valérian Teissier (also written: Valerian Teissier)
+**Role:** AI Expert — Ayming Innovation, Paris, France
+**Focus:** Organisational AI adoption · AI strategy · Change management · Human-AI collaboration
+
+Valérian has been building, deploying, and researching AI adoption systems inside a large
+organisation since 2023. He ran controlled A/B studies comparing human vs. AI-augmented
+performance, built the first internal AI drafting systems, created a 30-person AI Ambassador
+network, produced 94-row tool-mapping frameworks and 28 training videos, and conducted a
+200-person internal survey before being formally appointed to a 100% AI strategy role in 2026.
+
+His writing focuses on the gap between AI enthusiasm and what actually changes when you
+embed AI into real organisations at scale — the human bottleneck, the information asymmetries,
+the adoption failures, and the design conditions that determine whether AI interventions help
+or hurt.
+
+**LinkedIn:** https://www.linkedin.com/in/val%C3%A9rian-teissier-1600a8177/?locale=en-US`;
+
+  const CAREER = `## Career Timeline (key milestones)
+
+2015 — Technical degree in Computer Science. Systems and industrial networks, including a
+        project for STMicroelectronics.
+
+2019–2021 — Master's in Research, History & Political Societies. Chivalry in post-Hundred
+             Years' War Maine (~1450–1500). Two years in archives turning fragmented 15th-century
+             data into coherent narrative.
+
+Apr 2022 — Writing technical R&D narratives. The craft foundation that gave the AI work
+            epistemic weight.
+
+Mid 2023 — Began optimising his own work with AI. Public documents only. No mandate.
+
+Feb 2024 — A/B test: Human vs. Human augmented with AI — 10 evaluators, ~40 documents.
+            Converted intuition into evidence.
+
+Mar 2024 — First AI strategy session with senior leadership. Comparative study was the entry
+            ticket. Built the first technical/practitioner roadmap.
+
+Mid 2024 — Built the first internal AI drafting system.
+
+Jan 2025 — Launched AI Ambassador network — 30 people, 50% AI mandate.
+
+Aug 2025 — Mapped every mission step to the right AI tool: 94 rows, 28 training videos.
+
+Sep 2025 — Large-scale internal survey, 200 respondents.
+
+Dec 2025 — First high-end multi-agent writing system.
+
+Jan 2026 — Formally appointed to 100% AI strategy role.
+
+Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-technical experts.`;
+
+  const sortedEssays = [...essays].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const essaysSection = [
+    '## Essays',
+    '',
+    'All essays: /essays.html',
+    'Machine-readable index: /essays/index.json',
+    '',
+    ...sortedEssays.flatMap(e => [
+      `### ${e.title} (${e.date}) — ${e.readTime}`,
+      `Tags: ${e.tags.join(', ')}`,
+      e.description,
+      `Full text: /essays/${e.slug}/`,
+      '',
+    ]),
+  ].join('\n');
+
+  const sortedBooks = [...books].sort((a, b) => new Date(b.readDate) - new Date(a.readDate));
+  const booksSection = [
+    '## Books & Reading Notes',
+    '',
+    'All books: /books.html',
+    'Machine-readable index: /books/index.json',
+    '',
+    ...sortedBooks.flatMap(b => {
+      const rating = b.rating ? ` · Rating: ${b.rating}/5` : '';
+      const sub = b.subcategory ? `${b.category} / ${b.subcategory}` : b.category;
+      const insight = firstParagraph(path.join(ROOT, 'books', `${b.slug}.md`));
+      return [
+        `### ${b.title} — ${b.author} (${b.published})${rating}`,
+        `Category: ${sub} · Read: ${b.readDate}`,
+        `Tags: ${(b.tags || []).join(', ')}`,
+        b.description,
+        ...(insight ? [`Key insight: ${insight}`] : []),
+        `Full text: /books/${b.slug}/`,
+        '',
+      ];
+    }),
+  ].join('\n');
+
+  const activeNodes = research.filter(n => n.status !== 'DONE');
+  const doneNodes   = research.filter(n => n.status === 'DONE');
+  const researchSection = [
+    '## Current Research',
+    '',
+    'Research page: /research.html',
+    'Machine-readable index: /research/index.json',
+    '',
+    'Active research nodes tracking literature review in progress:',
+    '',
+    ...activeNodes.flatMap(n => [
+      `**${n.title}** [${n.status}]`,
+      n.description,
+      '',
+    ]),
+    'Completed research nodes (linked to published work):',
+    ...doneNodes.map(n => `- ${n.description} → ${n.link}`),
+  ].join('\n');
+
+  const feedsSection = `## Data Feeds (machine-readable)
+
+- Essay index (JSON): /essays/index.json
+- Book index (JSON): /books/index.json
+- Research index (JSON): /research/index.json
+- Individual essays (Markdown): /essays/{slug}.md
+- Individual book reviews (Markdown): /books/{slug}.md
+- Individual essays (pre-rendered HTML): /essays/{slug}/
+- Individual book reviews (pre-rendered HTML): /books/{slug}/
+- Sitemap: /sitemap.xml`;
+
+  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
+
+  writeFileSync(path.join(ROOT, 'llms.txt'), llmsTxt, 'utf8');
+  console.log('✓ llms.txt');
 }
