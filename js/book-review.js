@@ -125,7 +125,7 @@ function renderRelated(relatedSlugs, allBooks) {
   const block = document.getElementById('related-block');
   block.style.display = 'block';
   document.getElementById('related-grid').innerHTML = relatedBooks.map(b => `
-    <a href="book-review.html?book=${b.slug}" class="related-card">
+    <a href="/books/${b.slug}/" class="related-card">
       <div class="related-title">${b.title}</div>
       <div class="related-author">${b.author}</div>
     </a>`).join('');

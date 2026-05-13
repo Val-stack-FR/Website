@@ -338,7 +338,7 @@ const NAV_LINKS = (active) => `
     </div>
   </nav>`;
 
-const SITE_URL = process.env.SITE_URL || 'https://www.valerianteissier.com';
+const SITE_URL = process.env.SITE_URL || 'https://valerianteissier.com';
 
 const HEAD = (title, description, canonical, css2, ogType = 'article') => `
   <meta charset="UTF-8" />

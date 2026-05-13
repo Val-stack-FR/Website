@@ -189,11 +189,11 @@ async function renderRelated(essay) {
     if (r.type === 'essay') {
       const e = cachedAllEssays.find(x => x.slug === r.slug);
       if (!e) return null;
-      return { title: e.title, description: e.excerpt || e.description, href: 'essay-detail.html?essay=' + e.slug, type: 'essay' };
+      return { title: e.title, description: e.excerpt || e.description, href: '/essays/' + e.slug + '/', type: 'essay' };
     } else {
       const b = allBooks.find(x => x.slug === r.slug);
       if (!b) return null;
-      return { title: b.title, description: b.description, href: 'book-review.html?book=' + b.slug, type: 'book' };
+      return { title: b.title, description: b.description, href: '/books/' + b.slug + '/', type: 'book' };
     }
   }).filter(Boolean);
 
@@ -226,8 +226,8 @@ async function setupArticleRefs() {
     if (!item) return;
 
     const href = type === 'essay'
-      ? 'essay-detail.html?essay=' + slug
-      : 'book-review.html?book=' + slug;
+      ? '/essays/' + slug + '/'
+      : '/books/' + slug + '/';
 
     el.innerHTML = `
       <a href="${href}" class="article-ref-card">

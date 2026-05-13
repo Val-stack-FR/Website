@@ -28,4 +28,4 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Sitemap: https://www.valerianteissier.com/sitemap.xml
+Sitemap: https://valerianteissier.com/sitemap.xml
