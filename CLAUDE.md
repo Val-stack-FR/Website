@@ -57,9 +57,9 @@ Content is loaded at runtime via `fetch()`. This means:
    ```
 That's it. The essay appears in the list and gets its own URL automatically.
 
-**URL:** `essay-detail.html?essay=my-new-essay`
+**Canonical URL:** `/essays/my-new-essay/` (pre-rendered static page, crawler-friendly)
 
-The detail page also supports `.html` format: if `essays/slug.md` is not found, it tries `essays/slug.html`.
+The dynamic template `essay-detail.html?essay=my-new-essay` also works but is not the canonical URL — all internal links point to the clean path.
 
 ## Adding a new book review
 
@@ -83,7 +83,7 @@ The detail page also supports `.html` format: if `essays/slug.md` is not found, 
    }
    ```
 
-**URL:** `book-review.html?book=book-slug`
+**Canonical URL:** `/books/book-slug/` (pre-rendered static page, crawler-friendly)
 
 **Tag vocabulary** (shared with essays and research): `"AI"` · `"PHILOSOPHY"` · `"LINGUISTIC"` · `"CHANGE MANAGEMENT"` · `"FUTURES"` · `"STRATEGY"` · `"CRISIS"` · `"LEADERSHIP"` — add new tags sparingly; they auto-generate in the filter bar.
 
@@ -118,15 +118,36 @@ Edit **only** `research/index.json`. Each entry:
 ```json
 {
   "status": "DONE",
-  "link": "essay-detail.html?essay=slug",
+  "link": "/essays/slug/",
   "linkLabel": "→ Essay Title"
 }
 ```
-Use `"book-review.html?book=slug"` for book reviews.
+Use `"/books/slug/"` for book reviews.
+
+**Important:** always use the clean path format (`/essays/slug/` or `/books/slug/`), never the old query-string format (`essay-detail.html?essay=slug`). The build will warn in Vercel logs if the legacy format is detected.
 
 The card becomes fully clickable and the link appears above the query tags.
 
 **No other files need editing.** The page fetches and renders from JSON at runtime.
+
+## Build pipeline — auto-generated files
+
+`scripts/prerender.js` runs at every Vercel deploy (and should be run locally after any content change). It reads the three JSON registries and generates:
+
+- **`essays.html`, `books.html`, `research.html`, `index.html`** — list/preview sections injected via sentinel comments
+- **`essays/{slug}/index.html`** — full static page per essay (JSON-LD, OG tags, absolute paths)
+- **`books/{slug}/index.html`** — full static page per book review
+- **`sitemap.xml`** — all canonical URLs with priorities and lastmod dates
+- **`llms.txt`** — AI crawler inventory, auto-generated from all three JSON sources
+
+**Do not hand-edit** `sitemap.xml` or `llms.txt` — they are overwritten on every build. Edit the JSON registries and `.md` files instead.
+
+To regenerate locally after a content change:
+```bash
+node scripts/prerender.js
+```
+
+The `llms.txt` About section and Career Timeline are hardcoded in `prerender.js` (they have no JSON source). Update them there when career milestones change.
 
 ## Essay markdown format
 
