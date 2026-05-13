@@ -364,7 +364,7 @@ const HEAD = (title, description, canonical, css2, ogType = 'article') => `
 
 function essayPage(essay, bodyHtml) {
   const tagsHtml = essay.tags.map(t =>
-    `<a href="/essays.html?tag=${encodeURIComponent(t)}" class="essay-tag-inline">${esc(t)}</a>`
+    `<a href="/essays.html?tag=${encodeURIComponent(t)}" class="tag sidebar-tag-link">${esc(t)}</a>`
   ).join('');
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -508,10 +508,6 @@ ${NAV_LINKS('books')}
           <div class="review-meta-value"><time id="meta-published" datetime="${esc(String(book.published))}">${esc(String(book.published))}</time></div>
         </div>
         <div class="review-meta-item">
-          <div class="review-meta-label">Category</div>
-          <div class="review-meta-value" id="meta-category">${esc(book.subcategory ? book.category + ' · ' + book.subcategory : book.category)}</div>
-        </div>
-        <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
           <div class="review-meta-value"><time id="meta-read" datetime="${esc(book.readDate || '')}">${esc(book.readDate || '—')}</time></div>
         </div>
@@ -521,11 +517,6 @@ ${NAV_LINKS('books')}
             <div class="rating-dots" id="rating-dots">${ratingDots}</div>
           </div>
         </div>
-        <div class="review-meta-item">
-          <div class="review-meta-label">Tags</div>
-          <div class="sidebar-tags-list">${tagsHtml}</div>
-        </div>
-        ${book.note ? `<div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">${esc(book.note)}</p></div>` : ''}
         <div class="toc-section-header">
           <div class="review-meta-label review-meta-label--toc">In this review</div>
           <nav aria-label="Review sections" id="toc-nav"></nav>
