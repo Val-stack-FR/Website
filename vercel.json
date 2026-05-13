@@ -1,6 +1,14 @@
 {
   "buildCommand": "cd Spaceship && npm ci && npm run build && cd .. && node scripts/prerender.js",
   "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "valerianteissier.com" }],
+      "destination": "https://www.valerianteissier.com/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
