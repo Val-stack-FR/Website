@@ -1,10 +1,13 @@
 document.body.classList.add('visible');
 
+const staticMode = !new URLSearchParams(window.location.search).has('book');
+function fetchPath(rel) { return staticMode ? '/' + rel : rel; }
+
 const navEl = document.querySelector('.nav');
 if (navEl) document.documentElement.style.setProperty('--nav-h', navEl.offsetHeight + 'px');
 
 const bar = document.getElementById('progress');
-window.addEventListener('scroll', () => {
+if (bar) window.addEventListener('scroll', () => {
   const h = document.documentElement;
   const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
   bar.style.width = pct + '%';
@@ -130,7 +133,7 @@ function renderRelated(relatedSlugs, allBooks) {
 
 async function loadContent() {
   const bodyEl = document.getElementById('review-body');
-  const prefix = currentLang === 'fr' ? 'books/fr/' : 'books/';
+  const prefix = fetchPath(currentLang === 'fr' ? 'books/fr/' : 'books/');
 
   if (typeof marked === 'undefined') {
     throw new Error('marked library failed to load — check network or CDN availability');
@@ -160,6 +163,38 @@ async function loadContent() {
 
 async function loadReview() {
   const params = new URLSearchParams(window.location.search);
+
+  if (staticMode) {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    currentSlug = parts[parts.length - 1];
+    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
+    currentLang = params.get('lang') || savedLang || 'en';
+    setLangButtons(currentLang);
+    const coverImg = document.getElementById('cover-img');
+    if (coverImg) {
+      const exts = ['jpg', 'jpeg', 'png', 'webp'];
+      (function tryExt(i) {
+        if (i >= exts.length) return;
+        coverImg.onerror = () => tryExt(i + 1);
+        coverImg.onload = () => {
+          coverImg.style.display = 'block';
+          document.getElementById('cover-placeholder')?.classList.add('cover-loaded');
+          const ini = document.getElementById('cover-initials');
+          const lbl = document.getElementById('cover-label');
+          if (ini) ini.style.display = 'none';
+          if (lbl) lbl.style.display = 'none';
+        };
+        coverImg.src = `/books/covers/${currentSlug}.${exts[i]}`;
+      })(0);
+    }
+    if (currentLang !== 'en') {
+      await loadContent();
+    } else {
+      setupTOC();
+    }
+    return;
+  }
+
   const allBooks = await fetch('books/index.json').then(r => r.json());
 
   let slug = params.get('book');

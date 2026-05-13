@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/book-review.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Review","itemReviewed":{"@type":"Book","name":"Blindsight","author":{"@type":"Person","name":"Peter Watts"},"datePublished":"2006","genre":"Sci-Fi"},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5},"author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/books/blindsight/","description":"A first-contact novel that uses aliens as a scalpel on the question of consciousness.","keywords":"PHILOSOPHY, FUTURES","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,40 +41,52 @@
     <div class="review-layout">
       <aside class="review-cover-panel">
         <a href="/books.html" class="btn-back btn-back--review">← Books</a>
-        <div class="book-cover-placeholder">
-          <img src="/books/covers/blindsight.jpg" alt="Blindsight">
-          <span class="book-cover-initials">BL</span>
+        <div class="lang-toggle lang-toggle--review">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
+        <div class="book-cover-placeholder" id="cover-placeholder">
+          <img id="cover-img" alt="Blindsight">
+          <span class="book-cover-initials" id="cover-initials">BL</span>
+          <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Author</div>
-          <div class="review-meta-value">Peter Watts</div>
+          <div class="review-meta-value" id="meta-author">Peter Watts</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time>2006</time></div>
+          <div class="review-meta-value"><time id="meta-published" datetime="2006">2006</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Category</div>
-          <div class="review-meta-value">Hard SF</div>
+          <div class="review-meta-value" id="meta-category">Sci-Fi · Hard SF</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time>2025-04</time></div>
+          <div class="review-meta-value"><time id="meta-read" datetime="2025-04">2025-04</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
-          <div class="review-meta-value">5 / 5</div>
+          <div class="review-rating review-rating--meta">
+            <div class="rating-dots" id="rating-dots"><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div></div>
+          </div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Tags</div>
           <div class="sidebar-tags-list"><a href="/books.html?tag=PHILOSOPHY" class="book-tag-inline">PHILOSOPHY</a><a href="/books.html?tag=FUTURES" class="book-tag-inline">FUTURES</a></div>
         </div>
         <div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">The most unsettling argument against consciousness ever written. Watts asks whether awareness is an evolutionary dead end.</p></div>
+        <div class="toc-section-header">
+          <div class="review-meta-label review-meta-label--toc">In this review</div>
+          <nav aria-label="Review sections" id="toc-nav"></nav>
+        </div>
       </aside>
       <div class="review-content">
-        <a class="category-badge" href="/books.html">Book review</a>
-        <h1 class="review-book-title">Blindsight</h1>
-        <div class="review-author">Peter Watts · 2006</div>
+        <a class="category-badge" id="badge" href="/books.html">Book review · Sci-Fi</a>
+        <h1 class="review-book-title" id="book-title">Blindsight</h1>
+        <div class="review-author" id="book-author-year">Peter Watts · 2006</div>
         <div class="review-body" id="review-body"><p>A first-contact novel in which the aliens are less frightening than the question they force us to ask about ourselves. The crew of the <em>Theseus</em> encounters something vast and utterly foreign near the edge of the solar system — and Watts uses that encounter as a scalpel to dissect what consciousness actually <em>is</em>.</p>
 <p>The book is a genuine work of speculative neuroscience. Every claim Watts makes about cognition, perception, and the self is grounded — he cites his sources, openly, in the text. <span class="highlight">It reads like an academic paper that learned to be terrifying.</span></p>
 <div class="pull-quote">
@@ -98,6 +114,10 @@
     <div class="ref-text">Chalmers, D. (1995). "Facing Up to the Problem of Consciousness." <em>Journal of Consciousness Studies</em>, 2(3), 200–219. The original articulation of the hard problem that Watts is implicitly arguing against.</div>
   </div>
 </div></div>
+        <div id="related-block" class="related-block">
+          <div class="related-label">If you read this, read next</div>
+          <div class="related-grid" id="related-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -106,6 +126,7 @@
     <a href="/books.html" class="footer-text">← All books</a>
   </footer>
 </div>
+<script defer src="/js/book-review.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

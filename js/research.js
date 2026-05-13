@@ -320,7 +320,7 @@
   }
 
   const LMSGS = ['INITIALIZING NODES', 'LOADING EMBEDDINGS', 'CALIBRATING VECTORS', 'SCANNING TOPOLOGY', 'ESTABLISHING LINKS', '● ENGINE READY'];
-  const LLOAD_DUR = 6500;
+  const LLOAD_DUR = 4500;
   let lLastMIdx = -1, lUiStarted = false;
   const $lt   = document.getElementById('loading-title');
   const $ls   = document.getElementById('loading-status');

@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/book-review.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Review","itemReviewed":{"@type":"Book","name":"The War for Kindness","author":{"@type":"Person","name":"Jamil Zaki"},"datePublished":"2016","genre":"Personal Development"},"reviewRating":{"@type":"Rating","ratingValue":3.5,"bestRating":5},"author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/books/war-for-kindness/","description":"Empathy is not an individual trait but a systemic output — built or diminished by the institutions we inhabit.","keywords":"PHILOSOPHY, CHANGE MANAGEMENT","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,40 +41,52 @@
     <div class="review-layout">
       <aside class="review-cover-panel">
         <a href="/books.html" class="btn-back btn-back--review">← Books</a>
-        <div class="book-cover-placeholder">
-          <img src="/books/covers/war-for-kindness.jpg" alt="The War for Kindness">
-          <span class="book-cover-initials">WF</span>
+        <div class="lang-toggle lang-toggle--review">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
+        <div class="book-cover-placeholder" id="cover-placeholder">
+          <img id="cover-img" alt="The War for Kindness">
+          <span class="book-cover-initials" id="cover-initials">WF</span>
+          <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Author</div>
-          <div class="review-meta-value">Jamil Zaki</div>
+          <div class="review-meta-value" id="meta-author">Jamil Zaki</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time>2016</time></div>
+          <div class="review-meta-value"><time id="meta-published" datetime="2016">2016</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Category</div>
-          <div class="review-meta-value">Psychology</div>
+          <div class="review-meta-value" id="meta-category">Personal Development · Psychology</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time>2025-12</time></div>
+          <div class="review-meta-value"><time id="meta-read" datetime="2025-12">2025-12</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
-          <div class="review-meta-value">3.5 / 5</div>
+          <div class="review-rating review-rating--meta">
+            <div class="rating-dots" id="rating-dots"><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot"></div></div>
+          </div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Tags</div>
           <div class="sidebar-tags-list"><a href="/books.html?tag=PHILOSOPHY" class="book-tag-inline">PHILOSOPHY</a><a href="/books.html?tag=CHANGE%20MANAGEMENT" class="book-tag-inline">CHANGE MANAGEMENT</a></div>
         </div>
         <div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">Strong diagnosis of why systems select against empathy. The prescription (rebuild kind systems) is less fully developed than the problem statement — which is where the book&#39;s limitations become visible.</p></div>
+        <div class="toc-section-header">
+          <div class="review-meta-label review-meta-label--toc">In this review</div>
+          <nav aria-label="Review sections" id="toc-nav"></nav>
+        </div>
       </aside>
       <div class="review-content">
-        <a class="category-badge" href="/books.html">Book review</a>
-        <h1 class="review-book-title">The War for Kindness</h1>
-        <div class="review-author">Jamil Zaki · 2016</div>
+        <a class="category-badge" id="badge" href="/books.html">Book review · Personal Development</a>
+        <h1 class="review-book-title" id="book-title">The War for Kindness</h1>
+        <div class="review-author" id="book-author-year">Jamil Zaki · 2016</div>
         <div class="review-body" id="review-body"><p>Jamil Zaki begins with a provocative claim: empathy is not something you are born with or without. It is something you <em>do</em>—a capacity that grows or atrophies depending on use, and more importantly, depending on the systems you inhabit. This is not a comfortable position. It means we cannot excuse ourselves through temperament or neurology. It also means we cannot guilt our way to kindness. The question that animates the entire book is this: if empathy is trainable and systemic, why are we so reliably building systems that train us <em>away</em> from it?</p>
 <p>The book's case unfolds across six chapters moving from individual neurobiology toward institutional design. Chronic stress shrinks brain regions associated with emotional recognition. Narrative and literature develop the cognitive structures empathy requires—the ability to hold multiple perspectives without abandoning your own. Hatred, surprisingly, is not a problem of incorrect belief but of <em>disconnection</em>; contact itself is the primary solvent. And compassion, when unsupported by structure, becomes a burden that breaks people rather than sustains them. By the final chapter, Zaki argues that the problem is not deficient humans but insufficient systems. We have built organisations, markets, and cultures that actively reward the <em>suppression</em> of empathy—that treat it as a cost rather than a capability.</p>
 <h2 id="the-diagnosis">The Diagnosis</h2>
@@ -85,6 +101,10 @@
 <p>Yet the book's core insight survives these complications: we are building the wrong systems, and systems matter more than we have been willing to admit. The practical implication is straightforward and slightly depressing. You cannot individual-will your way to greater empathy if you work in a structure that rewards its suppression. You cannot meditate your way to caring if every incentive around you points toward detachment. This does not mean individual effort is pointless. It means individual effort without structural support burns out. Zaki's evidence on this is strong and repeated. Nurses, therapists, and social workers in unsupported systems do not become more empathic over time; they become numb. The system takes their capacity and grinds it away.</p>
 <p>What the book asks you to change is something deeper than behaviour. It asks you to stop thinking of empathy as a personal virtue—something you either have or lack, something you can cultivate through right intention. Instead, it asks you to see empathy as an <em>output</em> of the systems you inhabit. This is simultaneously more hopeful and more humbling. More hopeful because it means that if you change the systems, empathy follows. You do not need to change hearts first; you can change structures and the hearts will follow. More humbling because it means that however empathic you personally are, if you remain embedded in an unkind system, you are participating in its reproduction. There is no escape through individual virtue.</p>
 <p>The book does not resolve all the tensions this creates. It leaves you with the observation that most institutions are currently optimised for efficiency rather than kindness, and that changing that would require reimagining what we measure and reward. But it does not give you a clear path toward that change. What it does is make it impossible, once you have read it, to retreat into the comfortable position that empathy is simply a matter of trying harder. That alone is worth the price of engagement, even if the final word on how to build kind systems remains unwritten.</p></div>
+        <div id="related-block" class="related-block">
+          <div class="related-label">If you read this, read next</div>
+          <div class="related-grid" id="related-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -93,6 +113,7 @@
     <a href="/books.html" class="footer-text">← All books</a>
   </footer>
 </div>
+<script defer src="/js/book-review.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
