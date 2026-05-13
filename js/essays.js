@@ -3,21 +3,29 @@ document.body.classList.add('visible');
 let allEssays = [];
 let activeTag = 'all';
 
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function renderRow(essay) {
   const tagsHtml = essay.tags.map(t =>
-    `<button class="essay-tag-inline" data-tag="${t}">${t}</button>`
+    `<button class="essay-tag-inline" data-tag="${esc(t)}">${esc(t)}</button>`
   ).join('');
   return `
-    <a href="essay-detail.html?essay=${essay.slug}" class="essay-row" data-tags='${JSON.stringify(essay.tags)}'>
-      <span class="essay-row-num">${essay.num}</span>
-      <time class="essay-row-date" datetime="${essay.date}">${essay.date}</time>
+    <a href="/essays/${esc(essay.slug)}/" class="essay-row" data-tags="${esc(JSON.stringify(essay.tags))}">
+      <span class="essay-row-num">${esc(essay.num)}</span>
+      <time class="essay-row-date" datetime="${esc(essay.date)}">${esc(essay.date)}</time>
       <div class="essay-row-body">
-        <div class="essay-row-title">${essay.title}</div>
-        <div class="essay-row-desc">${essay.description}</div>
+        <div class="essay-row-title">${esc(essay.title)}</div>
+        <div class="essay-row-desc">${esc(essay.description)}</div>
         <div class="essay-row-tags">${tagsHtml}</div>
       </div>
       <div class="essay-row-meta">
-        <span class="essay-row-time">${essay.readTime}</span>
+        <span class="essay-row-time">${esc(essay.readTime)}</span>
         <span class="essay-row-arrow">→</span>
       </div>
     </a>`;

@@ -19,19 +19,49 @@ a { text-decoration: none; color: inherit; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.10); }
 
-/* ── BOOT OVERLAY ───────────────────────────────────────────── */
-#boot-overlay {
-  position: fixed; inset: 0; z-index: 300;
-  background: #05030e;
-  display: flex; align-items: center; justify-content: center;
-  animation: bootFade 0.4s ease-out 0.65s forwards;
+/* ── LOADING SCREEN ─────────────────────────────────────────── */
+#loading-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #020810;
+  transition: opacity 1s ease;
 }
-@keyframes bootFade { to { opacity: 0; visibility: hidden; } }
-.boot-label {
-  font-family: 'Space Mono', monospace; font-size: 11px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(52,211,153,0.8);
+#loading-screen.done { opacity: 0; pointer-events: none; }
+#loading-canvas { position: fixed; inset: 0; display: block; width: 100%; height: 100%; }
+#loading-ui {
+  position: fixed; inset: 0; pointer-events: none;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace;
 }
+#loading-title {
+  color: #39e8a0; font-size: 12px; letter-spacing: 0.32em;
+  opacity: 0; transition: opacity 1s ease;
+  text-shadow: 0 0 24px rgba(2,8,16,1), 0 0 8px rgba(2,8,16,1);
+}
+.loading-cur {
+  display: inline-block; width: 8px; height: 13px;
+  background: #39e8a0; margin-left: 2px; vertical-align: middle;
+  animation: loading-blink 1s step-end infinite;
+}
+@keyframes loading-blink { 50% { opacity: 0; } }
+#loading-status {
+  margin-top: 20px; color: rgba(57,232,160,0.42);
+  font-size: 9px; letter-spacing: 0.28em;
+  opacity: 0; transition: opacity 0.35s ease; min-height: 14px;
+  text-shadow: 0 0 16px rgba(2,8,16,1);
+}
+#loading-pgwrap {
+  margin-top: 12px; width: 155px; height: 1px;
+  background: rgba(57,232,160,0.10);
+  opacity: 0; transition: opacity 0.8s ease; overflow: hidden;
+}
+#loading-pgbar { height: 100%; width: 0%; background: rgba(57,232,160,0.75); transition: width 0.14s linear; }
+#loading-cta {
+  display: none; position: fixed; bottom: 32px; right: 44px;
+  color: rgba(57,232,160,0.28); font-size: 9px; letter-spacing: 0.22em;
+  opacity: 0; transition: color 0.3s, opacity 0.7s;
+}
+#loading-cta:hover { color: rgba(57,232,160,0.65); }
 
 /* ── FIXED BACKGROUND LAYERS ────────────────────────────────── */
 #nebula-canvas {

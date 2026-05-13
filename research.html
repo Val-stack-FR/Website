@@ -13,8 +13,14 @@
 </head>
 <body>
 
-<div id="boot-overlay">
-  <span class="boot-label">RESEARCH_ENGINE<span class="blink">_</span></span>
+<div id="loading-screen">
+  <canvas id="loading-canvas"></canvas>
+  <div id="loading-ui">
+    <div id="loading-title">RESEARCH_ENGINE<span class="loading-cur" id="loading-cur"></span></div>
+    <div id="loading-status"></div>
+    <div id="loading-pgwrap"><div id="loading-pgbar"></div></div>
+  </div>
+  <button id="loading-cta">[ REPLAY ]</button>
 </div>
 <canvas id="nebula-canvas"></canvas>
 <div id="deep-parallax"></div>

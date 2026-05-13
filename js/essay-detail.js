@@ -1,10 +1,13 @@
 document.body.classList.add('visible');
 
+const staticMode = !new URLSearchParams(window.location.search).has('essay');
+function fetchPath(rel) { return staticMode ? '/' + rel : rel; }
+
 const navEl = document.querySelector('.nav');
 if (navEl) document.documentElement.style.setProperty('--nav-h', navEl.offsetHeight + 'px');
 
 const bar = document.getElementById('progress');
-window.addEventListener('scroll', () => {
+if (bar) window.addEventListener('scroll', () => {
   const h = document.documentElement;
   const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
   bar.style.width = pct + '%';
@@ -180,7 +183,7 @@ async function renderRelated(essay) {
   if (!essay.related || essay.related.length === 0) return;
 
   const needsBooks = essay.related.some(r => r.type === 'book');
-  const allBooks = needsBooks ? await fetch('books/index.json').then(r => r.json()) : [];
+  const allBooks = needsBooks ? await fetch(fetchPath('books/index.json')).then(r => r.json()) : [];
 
   const items = essay.related.map(r => {
     if (r.type === 'essay') {
@@ -212,7 +215,7 @@ async function setupArticleRefs() {
   if (refs.length === 0) return;
 
   const needsBooks = Array.from(refs).some(el => el.dataset.type === 'book');
-  const allBooks = needsBooks ? await fetch('books/index.json').then(r => r.json()) : [];
+  const allBooks = needsBooks ? await fetch(fetchPath('books/index.json')).then(r => r.json()) : [];
 
   refs.forEach(el => {
     const slug = el.dataset.slug;
@@ -239,7 +242,7 @@ async function setupArticleRefs() {
 
 async function loadContent() {
   const bodyEl = document.getElementById('essay-body');
-  const prefix = currentLang === 'fr' ? 'essays/fr/' : 'essays/';
+  const prefix = fetchPath(currentLang === 'fr' ? 'essays/fr/' : 'essays/');
 
   if (typeof marked === 'undefined') {
     throw new Error('marked library failed to load — check network or CDN availability');
@@ -271,6 +274,23 @@ async function loadContent() {
 
 async function loadEssay() {
   const params = new URLSearchParams(window.location.search);
+
+  if (staticMode) {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    currentSlug = parts[parts.length - 1];
+    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
+    currentLang = params.get('lang') || savedLang || 'en';
+    setLangButtons(currentLang);
+    if (currentLang !== 'en') {
+      await loadContent();
+    } else {
+      setupTOC();
+      setupFootnotes();
+      setupArticleRefs();
+    }
+    return;
+  }
+
   const allEssays = await fetch('essays/index.json').then(r => r.json());
   cachedAllEssays = allEssays;
 

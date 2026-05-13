@@ -364,7 +364,7 @@ const HEAD = (title, description, canonical, css2, ogType = 'article') => `
 
 function essayPage(essay, bodyHtml) {
   const tagsHtml = essay.tags.map(t =>
-    `<a href="/essays.html?tag=${encodeURIComponent(t)}" class="essay-tag-inline">${esc(t)}</a>`
+    `<a href="/essays.html?tag=${encodeURIComponent(t)}" class="tag sidebar-tag-link">${esc(t)}</a>`
   ).join('');
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -383,36 +383,55 @@ function essayPage(essay, bodyHtml) {
 <html lang="en">
 <head>${HEAD(essay.title, essay.description, `/essays/${essay.slug}/`, '/css/essay-detail.css', 'article')}
   <script type="application/ld+json">${jsonLd}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 ${NAV_LINKS('essays')}
   <main class="main">
     <div class="essay-layout">
       <aside class="essay-sidebar">
         <a href="/essays.html" class="btn-back">← Essays</a>
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
         <div>
           <div class="essay-sidebar-label">Published</div>
-          <time class="essay-sidebar-value">${esc(essay.date)}</time>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="${esc(essay.date)}">${esc(essay.date)}</time>
         </div>
         <div>
           <div class="essay-sidebar-label">Reading time</div>
-          <div class="essay-sidebar-value">${esc(essay.readTime)}</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">${esc(essay.readTime)}</div>
         </div>
         <div>
           <div class="essay-sidebar-label">Tags</div>
-          <div class="sidebar-tags-list">${tagsHtml}</div>
+          <div id="sidebar-tags" class="sidebar-tags-list">${tagsHtml}</div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="essay-content">
         <header class="essay-header">
           <div class="essay-meta-row">
-            <span class="essay-num-label">Essay №${esc(essay.num)}</span>
+            <span id="essay-num" class="essay-num-label">Essay №${esc(essay.num)}</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">${esc(essay.tags.join(' · '))}</span>
           </div>
-          <h1 class="essay-title">${esc(essay.title)}</h1>
-          <p class="essay-desc">${esc(essay.description)}</p>
+          <h1 class="essay-title" id="essay-title">${esc(essay.title)}</h1>
+          <p class="essay-desc" id="essay-desc">${esc(essay.description)}</p>
         </header>
         <div class="essay-body" id="essay-body">${bodyHtml}</div>
+        <div id="related-essays-block">
+          <div class="related-essays-label">Read next</div>
+          <div id="related-essays-grid" class="related-essays-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -421,6 +440,8 @@ ${NAV_LINKS('essays')}
     <a href="/essays.html" class="footer-text">← All essays</a>
   </footer>
 </div>
+<script defer src="/js/essay-detail.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>`;
 }
@@ -449,53 +470,67 @@ function bookPage(book, bodyHtml) {
     'keywords': (book.tags || []).join(', '),
     'inLanguage': 'en',
   });
+  const ratingDots = Array.from({ length: 5 }, (_, i) =>
+    `<div class="rating-dot${i < (book.rating || 0) ? ' filled' : ''}"></div>`
+  ).join('');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>${HEAD(book.title, book.description, `/books/${book.slug}/`, '/css/book-review.css', 'article')}
   <script type="application/ld+json">${jsonLd}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 ${NAV_LINKS('books')}
   <main class="main">
     <div class="review-layout">
       <aside class="review-cover-panel">
         <a href="/books.html" class="btn-back btn-back--review">← Books</a>
-        <div class="book-cover-placeholder">
-          <img src="/books/covers/${esc(book.slug)}.jpg" alt="${esc(book.title)}">
-          <span class="book-cover-initials">${esc(book.initials)}</span>
+        <div class="lang-toggle lang-toggle--review">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
+        <div class="book-cover-placeholder" id="cover-placeholder">
+          <img id="cover-img" alt="${esc(book.title)}">
+          <span class="book-cover-initials" id="cover-initials">${esc(book.initials)}</span>
+          <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Author</div>
-          <div class="review-meta-value">${esc(book.author)}</div>
+          <div class="review-meta-value" id="meta-author">${esc(book.author)}</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time>${esc(String(book.published))}</time></div>
-        </div>
-        <div class="review-meta-item">
-          <div class="review-meta-label">Category</div>
-          <div class="review-meta-value">${esc(book.subcategory || book.category)}</div>
+          <div class="review-meta-value"><time id="meta-published" datetime="${esc(String(book.published))}">${esc(String(book.published))}</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time>${esc(book.readDate)}</time></div>
+          <div class="review-meta-value"><time id="meta-read" datetime="${esc(book.readDate || '')}">${esc(book.readDate || '—')}</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
-          <div class="review-meta-value">${rating}</div>
+          <div class="review-rating review-rating--meta">
+            <div class="rating-dots" id="rating-dots">${ratingDots}</div>
+          </div>
         </div>
-        <div class="review-meta-item">
-          <div class="review-meta-label">Tags</div>
-          <div class="sidebar-tags-list">${tagsHtml}</div>
+        <div class="toc-section-header">
+          <div class="review-meta-label review-meta-label--toc">In this review</div>
+          <nav aria-label="Review sections" id="toc-nav"></nav>
         </div>
-        ${book.note ? `<div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">${esc(book.note)}</p></div>` : ''}
       </aside>
       <div class="review-content">
-        <a class="category-badge" href="/books.html">Book review</a>
-        <h1 class="review-book-title">${esc(book.title)}</h1>
-        <div class="review-author">${esc(book.author)} · ${esc(String(book.published))}</div>
+        <a class="category-badge" id="badge" href="/books.html">Book review · ${esc(book.category)}</a>
+        <h1 class="review-book-title" id="book-title">${esc(book.title)}</h1>
+        <div class="review-author" id="book-author-year">${esc(book.author)} · ${esc(String(book.published))}</div>
         <div class="review-body" id="review-body">${bodyHtml}</div>
+        <div id="related-block" class="related-block">
+          <div class="related-label">If you read this, read next</div>
+          <div class="related-grid" id="related-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -504,6 +539,8 @@ ${NAV_LINKS('books')}
     <a href="/books.html" class="footer-text">← All books</a>
   </footer>
 </div>
+<script defer src="/js/book-review.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>`;
 }

@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/book-review.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Review","itemReviewed":{"@type":"Book","name":"Good Power","author":{"@type":"Person","name":"Ginni Rometty"},"datePublished":"2023","genre":"Strategy"},"reviewRating":{"@type":"Rating","ratingValue":4,"bestRating":5},"author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/books/stripping-away-the-degree/","description":"The four-year degree was never a proxy for ability — it was a proxy for cheap filtering, and the skills gap it created is the compounding cost of that convenience.","keywords":"STRATEGY, LEADERSHIP, CHANGE MANAGEMENT","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,40 +41,43 @@
     <div class="review-layout">
       <aside class="review-cover-panel">
         <a href="/books.html" class="btn-back btn-back--review">← Books</a>
-        <div class="book-cover-placeholder">
-          <img src="/books/covers/stripping-away-the-degree.jpg" alt="Good Power">
-          <span class="book-cover-initials">GO</span>
+        <div class="lang-toggle lang-toggle--review">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
+        <div class="book-cover-placeholder" id="cover-placeholder">
+          <img id="cover-img" alt="Good Power">
+          <span class="book-cover-initials" id="cover-initials">GO</span>
+          <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Author</div>
-          <div class="review-meta-value">Ginni Rometty</div>
+          <div class="review-meta-value" id="meta-author">Ginni Rometty</div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time>2023</time></div>
-        </div>
-        <div class="review-meta-item">
-          <div class="review-meta-label">Category</div>
-          <div class="review-meta-value">Management</div>
+          <div class="review-meta-value"><time id="meta-published" datetime="2023">2023</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time>2025-02</time></div>
+          <div class="review-meta-value"><time id="meta-read" datetime="2025-02">2025-02</time></div>
         </div>
         <div class="review-meta-item">
           <div class="review-meta-label">Rating</div>
-          <div class="review-meta-value">4 / 5</div>
+          <div class="review-rating review-rating--meta">
+            <div class="rating-dots" id="rating-dots"><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot filled"></div><div class="rating-dot"></div></div>
+          </div>
         </div>
-        <div class="review-meta-item">
-          <div class="review-meta-label">Tags</div>
-          <div class="sidebar-tags-list"><a href="/books.html?tag=STRATEGY" class="book-tag-inline">STRATEGY</a><a href="/books.html?tag=LEADERSHIP" class="book-tag-inline">LEADERSHIP</a><a href="/books.html?tag=CHANGE%20MANAGEMENT" class="book-tag-inline">CHANGE MANAGEMENT</a></div>
+        <div class="toc-section-header">
+          <div class="review-meta-label review-meta-label--toc">In this review</div>
+          <nav aria-label="Review sections" id="toc-nav"></nav>
         </div>
-        <div class="review-meta-item"><div class="review-meta-label">Note</div><p class="review-note-text">The Boundary Paradox section is worth the whole book. The claim that setting limits increases your perceived value rather than reducing it took me a while to fully believe, then I watched it work.</p></div>
       </aside>
       <div class="review-content">
-        <a class="category-badge" href="/books.html">Book review</a>
-        <h1 class="review-book-title">Good Power</h1>
-        <div class="review-author">Ginni Rometty · 2023</div>
+        <a class="category-badge" id="badge" href="/books.html">Book review · Strategy</a>
+        <h1 class="review-book-title" id="book-title">Good Power</h1>
+        <div class="review-author" id="book-author-year">Ginni Rometty · 2023</div>
         <div class="review-body" id="review-body"><p>The question Rometty keeps returning to, without ever quite stating it flat, is this: what do you actually know, and how do you know it's still worth anything? Not a question most CEOs ask publicly. The fact that she built her answer — across years of running IBM — around the people most systematically excluded from the knowledge economy is what makes the book more than a memoir.</p>
 <p>The structural argument is about "degree inflation," and it's blunter than the usual HR conversation. Employers began using the four-year degree as a universal filter not because jobs demanded it, but because filtering is expensive and proxies are cheap. The side effect — Rometty borrows the framing from Case and Deaton — was a false barrier that locked millions of capable people out of the middle class, while simultaneously producing a skills gap in the roles that mattered most: cybersecurity, data science, technical operations. IBM hit this wall in 2012. The traditional candidate pool was empty. The response was to recruit on demonstrated aptitude and the willingness to learn under pressure, rather than institutional credential. What she found, and is careful not to over-claim, is that the ceiling was always artificial.</p>
 <p>The companion story — "returnships" for women who left the workforce for caregiving — makes the same point through a different entry point. The fear among these returnees wasn't a lack of ability. It was the conviction that the world had moved without them, that the gap was unbridgeable. What they lacked wasn't intelligence; they lacked a bridge. The bridge, in both cases, is the same: treating learning capacity as the durable asset, and everything else — the credential, the tenure, the uninterrupted CV — as a proxy that should be questioned.</p>
@@ -87,6 +94,10 @@
 <p>The question she leaves open is the one worth testing against your own CV: if you stripped away the credential today — the degree, the title, the institutional affiliation — which of your current capabilities would still make you indispensable? The ones that remain are the ones worth building. The ones that don't are the ones to stop defending.</p>
 <p>---</p>
 <p><em>Read February 2025</em></p></div>
+        <div id="related-block" class="related-block">
+          <div class="related-label">If you read this, read next</div>
+          <div class="related-grid" id="related-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -95,5 +106,7 @@
     <a href="/books.html" class="footer-text">← All books</a>
   </footer>
 </div>
+<script defer src="/js/book-review.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/essay-detail.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Who Is Conducting Whom?","description":"Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.","datePublished":"2026-04-27","author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"publisher":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/essays/who-is-conducting-whom/","keywords":"AI, futures, strategy, philosophy","timeRequired":"PT12M","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,26 +41,37 @@
     <div class="essay-layout">
       <aside class="essay-sidebar">
         <a href="/essays.html" class="btn-back">← Essays</a>
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
         <div>
           <div class="essay-sidebar-label">Published</div>
-          <time class="essay-sidebar-value">2026-04-27</time>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="2026-04-27">2026-04-27</time>
         </div>
         <div>
           <div class="essay-sidebar-label">Reading time</div>
-          <div class="essay-sidebar-value">12 min</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">12 min</div>
         </div>
         <div>
           <div class="essay-sidebar-label">Tags</div>
-          <div class="sidebar-tags-list"><a href="/essays.html?tag=AI" class="essay-tag-inline">AI</a><a href="/essays.html?tag=futures" class="essay-tag-inline">futures</a><a href="/essays.html?tag=strategy" class="essay-tag-inline">strategy</a><a href="/essays.html?tag=philosophy" class="essay-tag-inline">philosophy</a></div>
+          <div id="sidebar-tags" class="sidebar-tags-list"><a href="/essays.html?tag=AI" class="tag sidebar-tag-link">AI</a><a href="/essays.html?tag=futures" class="tag sidebar-tag-link">futures</a><a href="/essays.html?tag=strategy" class="tag sidebar-tag-link">strategy</a><a href="/essays.html?tag=philosophy" class="tag sidebar-tag-link">philosophy</a></div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="essay-content">
         <header class="essay-header">
           <div class="essay-meta-row">
-            <span class="essay-num-label">Essay №05</span>
+            <span id="essay-num" class="essay-num-label">Essay №05</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">AI · futures · strategy · philosophy</span>
           </div>
-          <h1 class="essay-title">Who Is Conducting Whom?</h1>
-          <p class="essay-desc">Working with AI didn&#39;t extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.</p>
+          <h1 class="essay-title" id="essay-title">Who Is Conducting Whom?</h1>
+          <p class="essay-desc" id="essay-desc">Working with AI didn&#39;t extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.</p>
         </header>
         <div class="essay-body" id="essay-body"><p>I was reading <em>A Thousand Plateaux</em> — specifically Deleuze and Guattari's account of the rhizome, a structure with no root, no hierarchy, multiple entry points, no privileged direction — when I noticed something uncomfortable. The description fit what I had been doing at work.</p>
 <p>Working with large language models and agentic systems had been, for some months, doing something strange to how I moved through ideas. I was being <em>propelled</em> — through deep searches, through cascades of prompts, through emergent answers — into fields and sub-fields I had no existing path through. In the classic sense, I didn't <em>know</em> these territories. But I was functioning in them. The model wasn't just retrieving information; it was generating enough structure for me to place my intuitions and let them move. I didn't need the full path. I just needed the language to express my curiosity evenly, and the paths opened.</p>
@@ -138,6 +153,10 @@
     <div class="ref-text">Deleuze, G., & Guattari, F. (1980). <em>Mille plateaux</em>. Éditions de Minuit.</div>
   </div>
 </div></div>
+        <div id="related-essays-block">
+          <div class="related-essays-label">Read next</div>
+          <div id="related-essays-grid" class="related-essays-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -146,5 +165,7 @@
     <a href="/essays.html" class="footer-text">← All essays</a>
   </footer>
 </div>
+<script defer src="/js/essay-detail.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

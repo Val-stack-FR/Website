@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/essay-detail.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Human Bottleneck","description":"The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.","datePublished":"2026-04-17","author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"publisher":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/essays/the-human-bottleneck/","keywords":"AI, strategy, futures","timeRequired":"PT8M","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,26 +41,37 @@
     <div class="essay-layout">
       <aside class="essay-sidebar">
         <a href="/essays.html" class="btn-back">← Essays</a>
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
         <div>
           <div class="essay-sidebar-label">Published</div>
-          <time class="essay-sidebar-value">2026-04-17</time>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="2026-04-17">2026-04-17</time>
         </div>
         <div>
           <div class="essay-sidebar-label">Reading time</div>
-          <div class="essay-sidebar-value">8 min</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">8 min</div>
         </div>
         <div>
           <div class="essay-sidebar-label">Tags</div>
-          <div class="sidebar-tags-list"><a href="/essays.html?tag=AI" class="essay-tag-inline">AI</a><a href="/essays.html?tag=strategy" class="essay-tag-inline">strategy</a><a href="/essays.html?tag=futures" class="essay-tag-inline">futures</a></div>
+          <div id="sidebar-tags" class="sidebar-tags-list"><a href="/essays.html?tag=AI" class="tag sidebar-tag-link">AI</a><a href="/essays.html?tag=strategy" class="tag sidebar-tag-link">strategy</a><a href="/essays.html?tag=futures" class="tag sidebar-tag-link">futures</a></div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="essay-content">
         <header class="essay-header">
           <div class="essay-meta-row">
-            <span class="essay-num-label">Essay №04</span>
+            <span id="essay-num" class="essay-num-label">Essay №04</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">AI · strategy · futures</span>
           </div>
-          <h1 class="essay-title">The Human Bottleneck</h1>
-          <p class="essay-desc">The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.</p>
+          <h1 class="essay-title" id="essay-title">The Human Bottleneck</h1>
+          <p class="essay-desc" id="essay-desc">The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.</p>
         </header>
         <div class="essay-body" id="essay-body"><p>We spent the first decade of enterprise AI asking whether the technology could do the work. The answer — provisionally, in narrow domains — is yes. The question that defines the next decade is different: can we <em>keep up</em> with it?</p>
 <p>This is not a rhetorical reframe. It is a structural shift in where the constraint lives. When a single analyst can deploy a fleet of agents to research, synthesise, draft, and cross-check in parallel, the limiting factor is no longer processing capacity — it is the human's ability to direct, review, and judge the output. The bottleneck has moved. We have not noticed.</p>
@@ -106,6 +121,10 @@
     <div class="ref-text">Huang, W. C., Zhang, W., Liang, Y., Bei, Y., Chen, Y., Feng, T., Pan, X., Tan, Z., Wang, Y., Wei, T., Wu, S., Xu, R., Yang, L., Yang, R., Yang, W., Yeh, C. Y., Zhang, H., Zhang, H., Zhu, S., Zou, H. P., ... & Shu, K. (2026). <em>Rethinking memory mechanisms of foundation agents in the second half: A survey</em>. arXiv. <a href="https://arxiv.org/abs/2602.06052v3" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
 </div></div>
+        <div id="related-essays-block">
+          <div class="related-essays-label">Read next</div>
+          <div id="related-essays-grid" class="related-essays-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -114,5 +133,7 @@
     <a href="/essays.html" class="footer-text">← All essays</a>
   </footer>
 </div>
+<script defer src="/js/essay-detail.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

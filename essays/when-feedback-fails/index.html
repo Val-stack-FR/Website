@@ -20,8 +20,12 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/essay-detail.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"When Feedback Fails","description":"More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.","datePublished":"2025-10-13","author":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"publisher":{"@type":"Person","name":"Valérian Teissier","url":"https://www.valerianteissier.com"},"url":"https://www.valerianteissier.com/essays/when-feedback-fails/","keywords":"change management, strategy","timeRequired":"PT9M","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
 </head>
 <body>
+<div class="progress-bar" id="progress"></div>
 <div class="page">
 
   <nav class="nav" aria-label="primary">
@@ -37,26 +41,37 @@
     <div class="essay-layout">
       <aside class="essay-sidebar">
         <a href="/essays.html" class="btn-back">← Essays</a>
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
         <div>
           <div class="essay-sidebar-label">Published</div>
-          <time class="essay-sidebar-value">2025-10-13</time>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="2025-10-13">2025-10-13</time>
         </div>
         <div>
           <div class="essay-sidebar-label">Reading time</div>
-          <div class="essay-sidebar-value">9 min</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">9 min</div>
         </div>
         <div>
           <div class="essay-sidebar-label">Tags</div>
-          <div class="sidebar-tags-list"><a href="/essays.html?tag=change%20management" class="essay-tag-inline">change management</a><a href="/essays.html?tag=strategy" class="essay-tag-inline">strategy</a></div>
+          <div id="sidebar-tags" class="sidebar-tags-list"><a href="/essays.html?tag=change%20management" class="tag sidebar-tag-link">change management</a><a href="/essays.html?tag=strategy" class="tag sidebar-tag-link">strategy</a></div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="essay-content">
         <header class="essay-header">
           <div class="essay-meta-row">
-            <span class="essay-num-label">Essay №02</span>
+            <span id="essay-num" class="essay-num-label">Essay №02</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">change management · strategy</span>
           </div>
-          <h1 class="essay-title">When Feedback Fails</h1>
-          <p class="essay-desc">More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.</p>
+          <h1 class="essay-title" id="essay-title">When Feedback Fails</h1>
+          <p class="essay-desc" id="essay-desc">More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.</p>
         </header>
         <div class="essay-body" id="essay-body"><p>The most cited finding in feedback research is rarely quoted in management training: more than a third of feedback interventions <em>degrade</em> performance. Not mildly — measurably, consistently, across 607 effect sizes and 23,663 observations.<span class="fn">[1]</span> That result has survived every attempt to explain it away. It doesn't mean feedback is useless. It means the design of a feedback system is the thing that determines whether it helps or hurts — not the intention behind it.</p>
 <p>I've been working through this literature alongside an internal effort to build a feedback culture in a mid-size French consulting division. The document we produced is a working tool, not a position paper. But the research it surfaced kept pulling me toward a harder question: why do most organisations treat feedback as if it were a free good — as if more of it, in any form, at any time, is obviously better?</p>
@@ -161,6 +176,10 @@
     <div class="ref-text">McKinsey & Company (2020). The boss factor: Making the world a better place through workplace relationships. <em>McKinsey Quarterly</em>. <a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-boss-factor-making-the-world-a-better-place-through-workplace-relationships" target="_blank" rel="noopener">mckinsey.com</a></div>
   </div>
 </div></div>
+        <div id="related-essays-block">
+          <div class="related-essays-label">Read next</div>
+          <div id="related-essays-grid" class="related-essays-grid"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -169,5 +188,7 @@
     <a href="/essays.html" class="footer-text">← All essays</a>
   </footer>
 </div>
+<script defer src="/js/essay-detail.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
