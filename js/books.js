@@ -19,7 +19,7 @@ function renderRow(book, index) {
   ).join('');
   const rating = book.rating ? `${esc(String(book.rating))} / 5` : '';
   return `
-    <a href="book-review.html?book=${esc(book.slug)}" class="book-row" data-tags="${esc(JSON.stringify(tags))}">
+    <a href="/books/${esc(book.slug)}/" class="book-row" data-tags="${esc(JSON.stringify(tags))}">
       <span class="book-row-num">${num}</span>
       <div class="book-row-cover" data-slug="${esc(book.slug)}">
         <img class="book-cover-img" src="books/covers/${esc(book.slug)}.jpg" alt="">

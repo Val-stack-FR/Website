@@ -421,6 +421,7 @@ ${NAV_LINKS('essays')}
     <a href="/essays.html" class="footer-text">← All essays</a>
   </footer>
 </div>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>`;
 }
@@ -504,6 +505,7 @@ ${NAV_LINKS('books')}
     <a href="/books.html" class="footer-text">← All books</a>
   </footer>
 </div>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>`;
 }

@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.textContent = '';
       essays.forEach(e => {
         const a = document.createElement('a');
-        a.href = `essay-detail.html?essay=${e.slug}`;
+        a.href = `/essays/${e.slug}/`;
         a.className = 'essay-preview';
 
         const meta = document.createElement('div');
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.textContent = '';
       books.forEach(b => {
         const a = document.createElement('a');
-        a.href = `book-review.html?book=${b.slug}`;
+        a.href = `/books/${b.slug}/`;
         a.className = 'book-preview';
 
         const cover = document.createElement('div');

@@ -1,7 +1,410 @@
-/* ── BOOT OVERLAY ────────────────────────────────────────────────────────── */
+/* ── LOADING SCREEN ──────────────────────────────────────────────────────── */
 {
-  const overlay = document.getElementById('boot-overlay');
-  if (overlay) overlay.addEventListener('animationend', () => overlay.remove());
+  const lCanvas = document.getElementById('loading-canvas');
+  const lCtx    = lCanvas.getContext('2d');
+  let lW, lH, lCX, lCY, lSCL;
+
+  function lResize() {
+    lW = lCanvas.width  = window.innerWidth;
+    lH = lCanvas.height = window.innerHeight;
+    lCX = lW / 2; lCY = lH / 2; lSCL = Math.min(lW, lH) / 900;
+  }
+  lResize();
+  window.addEventListener('resize', () => { lResize(); lBuildScene(); });
+
+  let _ls = 0x4A3B2C;
+  const lRng = () => { _ls ^= _ls << 13; _ls ^= _ls >> 17; _ls ^= _ls << 5; return (_ls >>> 0) / 0x100000000; };
+  const lRngReset = () => { _ls = 0x4A3B2C; };
+  const lClamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lEO2 = t => 1 - (1 - t) ** 2;
+  const lEO3 = t => 1 - (1 - t) ** 3;
+
+  let lClusters = [], lParticles = [], lTendrils = [], lScanNodes = [], lVennCircles = [], lPlanets = [];
+
+  function lBuildScene() {
+    lRngReset();
+    const base = Math.min(lW, lH);
+
+    lClusters = [
+      [-0.36, -0.30, 0.115, 'blue',  0.0],
+      [-0.12, -0.40, 0.086, 'blue',  1.6],
+      [ 0.30, -0.32, 0.105, 'blue',  0.8],
+      [ 0.44,  0.06, 0.066, 'gold',  2.2],
+      [ 0.30,  0.32, 0.094, 'cyan',  0.4],
+      [-0.04,  0.44, 0.110, 'blue',  1.9],
+      [-0.36,  0.26, 0.080, 'blue',  2.7],
+      [ 0.02,  0.44, 0.058, 'white', 1.2],
+    ].map(([ax, ay, rf, type, phase]) => {
+      const c = {
+        x: lCX + ax * lW + (lRng() - .5) * .05 * lW,
+        y: lCY + ay * lH + (lRng() - .5) * .05 * lH,
+        r: rf * base * (.85 + lRng() * .3),
+        type, phase, spots: [], arms: [], hairs: [],
+      };
+      for (let i = 0, n = 8 + ~~(lRng() * 9); i < n; i++) {
+        const a = lRng() * Math.PI * 2, d = lRng() * c.r * .78;
+        c.spots.push({ dx: Math.cos(a) * d, dy: Math.sin(a) * d, r: (.18 + lRng() * .35) * c.r, b: .4 + lRng() * .6, p: lRng() * Math.PI * 2 });
+      }
+      for (let i = 0, n = 4 + ~~(lRng() * 7); i < n; i++)
+        c.arms.push({ a: lRng() * Math.PI * 2, l: c.r * (.6 + lRng() * .9), w: c.r * (.06 + lRng() * .12), b: .3 + lRng() * .6, p: lRng() * Math.PI * 2 });
+      for (let i = 0, n = 18 + ~~(lRng() * 16); i < n; i++) {
+        const sa = lRng() * Math.PI * 2, sd = lRng() * c.r * .5;
+        const ea = lRng() * Math.PI * 2, ed = c.r * (1.2 + lRng() * 2.0);
+        c.hairs.push({
+          sx: c.x + Math.cos(sa) * sd, sy: c.y + Math.sin(sa) * sd,
+          ex: c.x + Math.cos(ea) * ed, ey: c.y + Math.sin(ea) * ed,
+          cpx: c.x + (lRng() - .5) * c.r * 1.7, cpy: c.y + (lRng() - .5) * c.r * 1.7,
+          op: .025 + lRng() * .06,
+        });
+      }
+      return c;
+    });
+
+    lParticles = Array.from({ length: 380 }, () => {
+      let px, py;
+      if (lRng() < .72) {
+        const c = lClusters[~~(lRng() * lClusters.length)];
+        const a = lRng() * Math.PI * 2, d = lRng() * c.r * 2.9;
+        px = c.x + Math.cos(a) * d; py = c.y + Math.sin(a) * d;
+      } else { px = lRng() * lW; py = lRng() * lH; }
+      return { x: lClamp(px, 0, lW), y: lClamp(py, 0, lH), sz: .4 + lRng() * 2.2, b: .2 + lRng() * .8, tp: lRng() * Math.PI * 2, ts: .4 + lRng() * 2.5 };
+    });
+
+    lTendrils = [];
+    for (let i = 0; i < lClusters.length; i++)
+      for (let j = i + 1; j < lClusters.length; j++) {
+        const [a, b] = [lClusters[i], lClusters[j]];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < base * .44 && lRng() < .65)
+          lTendrils.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, cx: (a.x + b.x) / 2 + (lRng() - .5) * d * .4, cy: (a.y + b.y) / 2 + (lRng() - .5) * d * .4, op: .05 + lRng() * .10 });
+      }
+
+    const SR = Math.min(lW, lH) * .27;
+    lScanNodes = [[-1.95, .78], [-1.20, .55], [-.30, .88], [.55, .62], [1.45, .84], [2.65, .70]].map(([ang, rf]) => {
+      const r = SR * rf, nx = lCX + Math.cos(ang) * r, ny = lCY + Math.sin(ang) * r;
+      const la = ang + (lRng() < .5 ? 1 : -1) * (.45 + lRng() * .55), ll = 52 + lRng() * 48;
+      return { ang, rf, x: nx, y: ny, r: 12 + lRng() * 10, lx: nx + Math.cos(la) * ll, ly: ny + Math.sin(la) * ll, v1: (0.25 + lRng() * .62).toFixed(3), v2: (0.20 + lRng() * .55).toFixed(3), lineExt: 1.45 + lRng() * .35 };
+    });
+
+    lPlanets = [
+      { xf: -0.28, yf: 0.38,  rf: 0.105, base: [12, 30, 140], light: [75, 138, 255], atmos: [40, 88, 255],  rings: false, phase: 0   },
+      { xf:  0.40, yf: -0.34, rf: 0.060, base: [32, 14, 108], light: [92, 68,  212], atmos: [68, 48, 188],  rings: true,  phase: 1.4 },
+    ].map(p => ({ ...p, x: lCX + p.xf * lW, y: lCY + p.yf * lH, r: p.rf * Math.min(lW, lH) }));
+
+    lVennCircles = [
+      { ax: -0.28, ay:  0.12, rf: 0.82, ph: 0.0 },
+      { ax:  0.30, ay:  0.08, rf: 0.55, ph: 1.5 },
+      { ax:  0.00, ay: -0.42, rf: 0.70, ph: 2.8 },
+    ].map(o => ({ x: lCX + o.ax * SR, y: lCY + o.ay * SR, r: SR * o.rf, ph: o.ph }));
+  }
+
+  const LCOLS = {
+    blue:  [[15, 50, 185], [40, 100, 255], [90, 165, 255], [165, 218, 255]],
+    gold:  [[150, 95, 18], [200, 142, 36], [242, 182, 74]],
+    cyan:  [[20, 115, 175], [48, 168, 215], [102, 224, 255]],
+    white: [[90, 130, 225], [152, 196, 255], [228, 246, 255]],
+  };
+
+  function lRg(x, y, r, [R, G, B], a) {
+    const g = lCtx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0,   `rgba(${R},${G},${B},${a})`);
+    g.addColorStop(.45, `rgba(${R},${G},${B},${(a * .22).toFixed(3)})`);
+    g.addColorStop(1,   `rgba(${R},${G},${B},0)`);
+    return g;
+  }
+
+  function lDrawNebula(t, op) {
+    if (op <= 0) return;
+    lCtx.save(); lCtx.globalCompositeOperation = 'screen';
+    lTendrils.forEach(td => {
+      lCtx.beginPath(); lCtx.moveTo(td.x1, td.y1);
+      lCtx.quadraticCurveTo(td.cx, td.cy, td.x2, td.y2);
+      lCtx.strokeStyle = `rgba(60,115,255,${td.op * op})`; lCtx.lineWidth = .55; lCtx.stroke();
+    });
+    lClusters.forEach(c => {
+      const cols = LCOLS[c.type] || LCOLS.blue;
+      const pulse = .88 + .12 * Math.sin(t * .5 + c.phase);
+      c.hairs.forEach(h => {
+        lCtx.beginPath(); lCtx.moveTo(h.sx, h.sy);
+        lCtx.quadraticCurveTo(h.cpx, h.cpy, h.ex, h.ey);
+        lCtx.strokeStyle = `rgba(120,175,255,${h.op * op})`; lCtx.lineWidth = .35; lCtx.stroke();
+      });
+      [[3.5 * pulse, cols[Math.min(3, cols.length - 1)], .18],
+       [2.3 * pulse, cols[Math.min(2, cols.length - 1)], .38],
+       [1.4 * pulse, cols[Math.min(1, cols.length - 1)], .60],
+       [.82 * pulse, cols[0], .82],
+      ].forEach(([rf, col, a]) => {
+        lCtx.fillStyle = lRg(c.x, c.y, c.r * rf, col, a * op);
+        lCtx.beginPath(); lCtx.arc(c.x, c.y, c.r * rf, 0, Math.PI * 2); lCtx.fill();
+      });
+      c.arms.forEach(arm => {
+        const ap = .8 + .2 * Math.sin(t * .4 + arm.p);
+        lCtx.save(); lCtx.translate(c.x, c.y); lCtx.rotate(arm.a + t * .006);
+        const len = arm.l * ap, col = cols[1];
+        const g = lCtx.createLinearGradient(0, 0, len, 0);
+        g.addColorStop(0,   `rgba(${col[0]},${col[1]},${col[2]},${(arm.b * .50 * op).toFixed(3)})`);
+        g.addColorStop(.45, `rgba(${col[0]},${col[1]},${col[2]},${(arm.b * .18 * op).toFixed(3)})`);
+        g.addColorStop(1,   `rgba(${col[0]},${col[1]},${col[2]},0)`);
+        lCtx.fillStyle = g;
+        lCtx.beginPath(); lCtx.ellipse(len / 2, 0, len / 2, arm.w * ap, 0, 0, Math.PI * 2); lCtx.fill();
+        lCtx.restore();
+      });
+      c.spots.forEach(sp => {
+        const spp = .76 + .24 * Math.sin(t * .7 + sp.p);
+        const sx = c.x + sp.dx, sy = c.y + sp.dy;
+        lCtx.fillStyle = lRg(sx, sy, sp.r * spp * pulse * 1.8, [198, 228, 255], sp.b * .55 * op);
+        lCtx.beginPath(); lCtx.arc(sx, sy, sp.r * spp * pulse * 1.8, 0, Math.PI * 2); lCtx.fill();
+        lCtx.fillStyle = lRg(sx, sy, sp.r * .36 * pulse, [245, 252, 255], sp.b * .92 * op);
+        lCtx.beginPath(); lCtx.arc(sx, sy, sp.r * .36 * pulse, 0, Math.PI * 2); lCtx.fill();
+      });
+    });
+    lCtx.restore();
+  }
+
+  function lDrawParticles(t, op) {
+    if (op <= 0) return;
+    lCtx.save(); lCtx.globalCompositeOperation = 'screen';
+    lParticles.forEach(p => {
+      const tw = .5 + .5 * Math.sin(t * p.ts + p.tp);
+      const a = p.b * tw * op;
+      if (p.sz > 0.8) {
+        lCtx.fillStyle = lRg(p.x, p.y, p.sz * 4.5, [78, 128, 255], a * .75);
+        lCtx.beginPath(); lCtx.arc(p.x, p.y, p.sz * 4.5, 0, Math.PI * 2); lCtx.fill();
+      }
+      lCtx.fillStyle = `rgba(218,242,255,${Math.min(1, a * 2.2)})`;
+      lCtx.beginPath(); lCtx.arc(p.x, p.y, p.sz, 0, Math.PI * 2); lCtx.fill();
+    });
+    lCtx.restore();
+  }
+
+  function lDrawPlanets(t, op) {
+    if (op <= 0) return;
+    lPlanets.forEach(p => {
+      const pulse = 1 + .005 * Math.sin(t * .22 + p.phase);
+      const pr = p.r * pulse;
+      const [px, py] = [p.x, p.y];
+      const L = p.light.join(','), A = p.atmos.join(','), B = p.base.join(',');
+      lCtx.save(); lCtx.globalCompositeOperation = 'screen';
+      const haze = lCtx.createRadialGradient(px, py, 0, px, py, pr * 3.2);
+      haze.addColorStop(0,   `rgba(${A},${.14 * op})`);
+      haze.addColorStop(.40, `rgba(${A},${.05 * op})`);
+      haze.addColorStop(1,   'rgba(0,0,0,0)');
+      lCtx.fillStyle = haze; lCtx.beginPath(); lCtx.arc(px, py, pr * 3.2, 0, Math.PI * 2); lCtx.fill();
+      const lx = px - pr * .22, ly = py - pr * .18;
+      const body = lCtx.createRadialGradient(lx, ly, 0, px, py, pr * 1.15);
+      body.addColorStop(0,   `rgba(${L},${.48 * op})`);
+      body.addColorStop(.50, `rgba(${B},${.28 * op})`);
+      body.addColorStop(1,   'rgba(0,0,0,0)');
+      lCtx.fillStyle = body; lCtx.beginPath(); lCtx.arc(px, py, pr * 1.15, 0, Math.PI * 2); lCtx.fill();
+      const spec = lCtx.createRadialGradient(lx, ly, 0, lx, ly, pr * .38);
+      spec.addColorStop(0, `rgba(255,255,255,${.16 * op})`);
+      spec.addColorStop(1, 'rgba(0,0,0,0)');
+      lCtx.fillStyle = spec; lCtx.beginPath(); lCtx.arc(px, py, pr * 1.15, 0, Math.PI * 2); lCtx.fill();
+      if (p.rings) {
+        lCtx.strokeStyle = `rgba(${L},${.18 * op})`;
+        lCtx.lineWidth = pr * .14;
+        lCtx.beginPath(); lCtx.ellipse(px, py, pr * 1.75, pr * .30, -.22, 0, Math.PI * 2); lCtx.stroke();
+      }
+      lCtx.restore();
+    });
+  }
+
+  function lDrawSparkle(x, y, r, op) {
+    if (op <= 0) return;
+    lCtx.save(); lCtx.globalCompositeOperation = 'screen';
+    const halo = lCtx.createRadialGradient(x, y, 0, x, y, r * 10);
+    halo.addColorStop(0,   `rgba(200,230,255,${op * .50})`);
+    halo.addColorStop(.18, `rgba(140,195,255,${op * .11})`);
+    halo.addColorStop(1,   'rgba(0,0,0,0)');
+    lCtx.fillStyle = halo; lCtx.beginPath(); lCtx.arc(x, y, r * 10, 0, Math.PI * 2); lCtx.fill();
+    const core = lCtx.createRadialGradient(x, y, 0, x, y, r * 2.2);
+    core.addColorStop(0,   `rgba(255,255,255,${op})`);
+    core.addColorStop(.45, `rgba(190,220,255,${op * .38})`);
+    core.addColorStop(1,   'rgba(0,0,0,0)');
+    lCtx.fillStyle = core; lCtx.beginPath(); lCtx.arc(x, y, r * 2.2, 0, Math.PI * 2); lCtx.fill();
+    lCtx.restore();
+  }
+
+  function lDrawScan(t, op) {
+    if (op <= 0) return;
+    lCtx.save();
+    const R = Math.min(lW, lH) * .27, fz = Math.max(8, 9 * lSCL);
+    lCtx.strokeStyle = `rgba(255,255,255,${.22 * op})`; lCtx.lineWidth = .8;
+    lCtx.setLineDash([3, 9]); lCtx.lineDashOffset = -t * 18;
+    lCtx.beginPath(); lCtx.arc(lCX, lCY, R, 0, Math.PI * 2); lCtx.stroke();
+    lCtx.setLineDash([]);
+    lVennCircles.forEach((v, vi) => {
+      const breathe = 1 + .018 * Math.sin(t * .55 + v.ph);
+      const rad = v.r * breathe;
+      lCtx.save();
+      lCtx.beginPath(); lCtx.arc(v.x, v.y, rad, 0, Math.PI * 2); lCtx.clip();
+      lCtx.globalCompositeOperation = 'screen';
+      const a1 = t * .10 + v.ph + vi * 1.1;
+      const g1 = lCtx.createLinearGradient(v.x + Math.cos(a1) * rad, v.y + Math.sin(a1) * rad, v.x - Math.cos(a1) * rad, v.y - Math.sin(a1) * rad);
+      g1.addColorStop(0,  `rgba(0,220,255,${.10 * op})`);
+      g1.addColorStop(.4, `rgba(80,30,255,${.05 * op})`);
+      g1.addColorStop(1,  `rgba(0,160,220,${.10 * op})`);
+      lCtx.fillStyle = g1; lCtx.fillRect(v.x - rad, v.y - rad, rad * 2, rad * 2);
+      const a2 = -t * .06 + v.ph * 1.3 + vi * 2.1;
+      const g2 = lCtx.createLinearGradient(v.x + Math.cos(a2) * rad, v.y + Math.sin(a2) * rad, v.x - Math.cos(a2) * rad, v.y - Math.sin(a2) * rad);
+      g2.addColorStop(0,  `rgba(140,0,255,${.06 * op})`);
+      g2.addColorStop(.5, `rgba(0,230,200,${.04 * op})`);
+      g2.addColorStop(1,  `rgba(80,0,200,${.06 * op})`);
+      lCtx.fillStyle = g2; lCtx.fillRect(v.x - rad, v.y - rad, rad * 2, rad * 2);
+      lCtx.restore();
+      lCtx.beginPath(); lCtx.arc(v.x, v.y, rad, 0, Math.PI * 2);
+      lCtx.strokeStyle = `rgba(255,255,255,${.28 * op})`; lCtx.lineWidth = 1.0; lCtx.stroke();
+    });
+    lScanNodes.forEach(nd => {
+      const endR = R * nd.rf * nd.lineExt;
+      const ex = lCX + Math.cos(nd.ang) * endR, ey = lCY + Math.sin(nd.ang) * endR;
+      const lg = lCtx.createLinearGradient(lCX, lCY, ex, ey);
+      lg.addColorStop(0,   `rgba(255,255,255,${.05 * op})`);
+      lg.addColorStop(.35, `rgba(255,255,255,${.22 * op})`);
+      lg.addColorStop(.75, `rgba(255,255,255,${.18 * op})`);
+      lg.addColorStop(1,   `rgba(255,255,255,${.04 * op})`);
+      lCtx.strokeStyle = lg; lCtx.lineWidth = .55;
+      lCtx.beginPath(); lCtx.moveTo(lCX + Math.cos(nd.ang) * 8, lCY + Math.sin(nd.ang) * 8); lCtx.lineTo(ex, ey); lCtx.stroke();
+      for (let i = 1; i <= 6; i++) {
+        const tf = i / 7;
+        const tx = lCX + Math.cos(nd.ang) * endR * tf, ty = lCY + Math.sin(nd.ang) * endR * tf;
+        lCtx.fillStyle = `rgba(255,255,255,${(.18 + .14 * Math.sin(t * 1.2 + i * .7 + nd.ang * 3)) * op})`;
+        lCtx.beginPath(); lCtx.arc(tx, ty, 1.2, 0, Math.PI * 2); lCtx.fill();
+      }
+      lCtx.fillStyle = `rgba(255,255,255,${.35 * op})`;
+      lCtx.beginPath(); lCtx.arc(ex, ey, 1.6, 0, Math.PI * 2); lCtx.fill();
+    });
+    const sa = t * .72;
+    lCtx.save();
+    lCtx.strokeStyle = `rgba(57,232,160,${.65 * op})`; lCtx.lineWidth = 1.5;
+    lCtx.shadowBlur = 12; lCtx.shadowColor = 'rgba(57,232,160,0.6)';
+    lCtx.beginPath(); lCtx.arc(lCX, lCY, R * .97, sa, sa + .46); lCtx.stroke();
+    lCtx.shadowBlur = 18; lCtx.fillStyle = `rgba(57,232,160,${.92 * op})`;
+    lCtx.beginPath(); lCtx.arc(lCX + Math.cos(sa + .46) * R * .97, lCY + Math.sin(sa + .46) * R * .97, 3, 0, Math.PI * 2); lCtx.fill();
+    lCtx.restore();
+    const ch = 22;
+    lCtx.strokeStyle = `rgba(255,255,255,${.32 * op})`; lCtx.lineWidth = .7;
+    lCtx.beginPath();
+    lCtx.moveTo(lCX - ch, lCY); lCtx.lineTo(lCX - 4, lCY);
+    lCtx.moveTo(lCX + 4,  lCY); lCtx.lineTo(lCX + ch, lCY);
+    lCtx.moveTo(lCX, lCY - ch); lCtx.lineTo(lCX, lCY - 4);
+    lCtx.moveTo(lCX, lCY + 4);  lCtx.lineTo(lCX, lCY + ch);
+    lCtx.stroke();
+    lCtx.strokeStyle = `rgba(255,255,255,${.28 * op})`;
+    lCtx.beginPath(); lCtx.arc(lCX, lCY, 3.5, 0, Math.PI * 2); lCtx.stroke();
+    const nop = Math.max(0, (op - .35) / .65);
+    if (nop > 0) {
+      lCtx.font = `${fz}px 'Space Mono',monospace`;
+      lScanNodes.forEach(nd => {
+        lCtx.strokeStyle = `rgba(255,255,255,${.22 * nop})`; lCtx.lineWidth = .7;
+        lCtx.setLineDash([2, 4]); lCtx.lineDashOffset = -t * 5;
+        lCtx.beginPath(); lCtx.arc(nd.x, nd.y, nd.r, 0, Math.PI * 2); lCtx.stroke();
+        lCtx.setLineDash([]);
+        lCtx.fillStyle = `rgba(255,255,255,${.55 * nop})`;
+        lCtx.beginPath(); lCtx.arc(nd.x, nd.y, 2, 0, Math.PI * 2); lCtx.fill();
+        lCtx.strokeStyle = `rgba(255,255,255,${.12 * nop})`; lCtx.lineWidth = .5;
+        lCtx.beginPath(); lCtx.moveTo(nd.x, nd.y); lCtx.lineTo(nd.lx, nd.ly); lCtx.stroke();
+        lCtx.fillStyle = `rgba(255,255,255,${.44 * nop})`;
+        lCtx.textAlign = nd.lx > lCX ? 'left' : 'right';
+        const tx = nd.lx + (nd.lx > lCX ? 6 : -6);
+        lCtx.fillText(nd.v1, tx, nd.ly - 1); lCtx.fillText(nd.v2, tx, nd.ly + 13);
+      });
+      lCtx.textAlign = 'left';
+    }
+    lCtx.fillStyle = `rgba(255,255,255,${.36 * op})`;
+    lCtx.font = `${fz}px 'Space Mono',monospace`;
+    const hx = Math.min(lW - 90, lCX + R * .60), hy = Math.max(18, lCY - R * .84);
+    lCtx.fillText(`x: ${(.52 + .14 * Math.sin(t * .31)).toFixed(3)}`, hx, hy);
+    lCtx.fillText(`y: ${(.47 + .11 * Math.sin(t * .26)).toFixed(3)}`, hx, hy + 14);
+    lCtx.restore();
+  }
+
+  const LMSGS = ['INITIALIZING NODES', 'LOADING EMBEDDINGS', 'CALIBRATING VECTORS', 'SCANNING TOPOLOGY', 'ESTABLISHING LINKS', '● ENGINE READY'];
+  const LLOAD_DUR = 8500;
+  let lLastMIdx = -1, lUiStarted = false;
+  const $lt   = document.getElementById('loading-title');
+  const $ls   = document.getElementById('loading-status');
+  const $lpw  = document.getElementById('loading-pgwrap');
+  const $lp   = document.getElementById('loading-pgbar');
+  const $lcta = document.getElementById('loading-cta');
+  const $lcur = document.getElementById('loading-cur');
+
+  function lUpdateUI(el) {
+    const uiA = lClamp((el - 1500) / 1000, 0, 1);
+    $lt.style.opacity = uiA; $lpw.style.opacity = uiA;
+    if (uiA > 0 && !lUiStarted) { lUiStarted = true; $ls.style.opacity = .8; }
+    const prog = lClamp((el - 1500) / LLOAD_DUR, 0, 1);
+    $lp.style.width = (prog * 100) + '%';
+    const mIdx = Math.min(~~(prog * (LMSGS.length - .01)), LMSGS.length - 1);
+    if (mIdx !== lLastMIdx) {
+      lLastMIdx = mIdx; $ls.style.opacity = 0;
+      setTimeout(() => {
+        $ls.textContent = LMSGS[mIdx]; $ls.style.opacity = .8;
+        if (mIdx === LMSGS.length - 1) {
+          $ls.style.color = '#39e8a0'; $lcur.style.display = 'none';
+          setTimeout(() => { $lcta.style.display = 'block'; setTimeout(() => $lcta.style.opacity = 1, 40); }, 1400);
+          window.dispatchEvent(new CustomEvent('loading-complete'));
+        }
+      }, 130);
+    }
+  }
+
+  let lT0 = null, lRafId = null;
+  function lFrame(ts) {
+    if (!lT0) lT0 = ts;
+    const el = ts - lT0, t = el / 1000;
+    lCtx.fillStyle = '#020810'; lCtx.fillRect(0, 0, lW, lH);
+    const bg = lCtx.createRadialGradient(lCX, lCY * .9, 0, lCX, lCY, Math.min(lW, lH) * .55);
+    bg.addColorStop(0, 'rgba(7,14,52,.65)'); bg.addColorStop(1, 'rgba(0,0,0,0)');
+    lCtx.fillStyle = bg; lCtx.fillRect(0, 0, lW, lH);
+    const nOp = lEO3(lClamp(el / 2000, 0, 1));
+    lDrawNebula(t, nOp); lDrawParticles(t, nOp); lDrawPlanets(t, nOp);
+    const vg = lCtx.createRadialGradient(lCX, lCY, Math.min(lW, lH) * .24, lCX, lCY, Math.min(lW, lH) * .82);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(2,8,16,.80)');
+    lCtx.fillStyle = vg; lCtx.fillRect(0, 0, lW, lH);
+    const tg = lCtx.createRadialGradient(lCX, lCY, 0, lCX, lCY, Math.min(lW, lH) * .16);
+    tg.addColorStop(0, 'rgba(2,8,16,.52)'); tg.addColorStop(1, 'rgba(2,8,16,0)');
+    lCtx.fillStyle = tg; lCtx.fillRect(0, 0, lW, lH);
+    const sOp = lEO2(lClamp((el - 2500) / 2500, 0, 1));
+    lDrawScan(t, sOp);
+    if (sOp > .3) {
+      const sp = (sOp - .3) / .7;
+      lClusters.slice(0, 5).filter(c => c.type !== 'gold').forEach(c => {
+        const pw = .5 + .5 * Math.sin(t * 1.1 + c.phase);
+        lDrawSparkle(c.x, c.y, 3 + pw * 1.5, sp * .38 * pw);
+        if (c.spots[0]) lDrawSparkle(c.x + c.spots[0].dx, c.y + c.spots[0].dy, 2, sp * .22 * pw);
+      });
+      lVennCircles.forEach((v, i) => {
+        const pw = .5 + .5 * Math.sin(t * 1.4 + v.ph + i);
+        lDrawSparkle(v.x, v.y, 2.5 + pw * 1.5, sp * .28 * pw);
+      });
+      const cpw = .5 + .5 * Math.sin(t * 1.6);
+      lDrawSparkle(lCX, lCY, 3.5 + cpw * 2, sp * .42 * cpw);
+    }
+    lUpdateUI(el);
+    lRafId = requestAnimationFrame(lFrame);
+  }
+
+  function lStart() {
+    lT0 = null; lLastMIdx = -1; lUiStarted = false;
+    $lt.style.opacity = 0; $lpw.style.opacity = 0;
+    $ls.style.opacity = 0; $ls.style.color = ''; $ls.textContent = '';
+    $lp.style.width = '0%'; $lcta.style.display = 'none'; $lcta.style.opacity = 0;
+    $lcur.style.display = 'inline-block';
+    lBuildScene(); requestAnimationFrame(lFrame);
+  }
+
+  $lcta.addEventListener('click', lStart);
+
+  window.addEventListener('loading-complete', () => {
+    const screen = document.getElementById('loading-screen');
+    if (!screen) return;
+    if (lRafId !== null) { cancelAnimationFrame(lRafId); lRafId = null; }
+    screen.classList.add('done');
+    screen.addEventListener('transitionend', () => screen.remove(), { once: true });
+  }, { once: true });
+
+  document.fonts.ready.then(lStart);
 }
 
 /* ── UTILS ───────────────────────────────────────────────────────────────── */
