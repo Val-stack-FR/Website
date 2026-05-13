@@ -320,7 +320,7 @@
   }
 
   const LMSGS = ['INITIALIZING NODES', 'LOADING EMBEDDINGS', 'CALIBRATING VECTORS', 'SCANNING TOPOLOGY', 'ESTABLISHING LINKS', '● ENGINE READY'];
-  const LLOAD_DUR = 8500;
+  const LLOAD_DUR = 6500;
   let lLastMIdx = -1, lUiStarted = false;
   const $lt   = document.getElementById('loading-title');
   const $ls   = document.getElementById('loading-status');
@@ -399,9 +399,11 @@
   window.addEventListener('loading-complete', () => {
     const screen = document.getElementById('loading-screen');
     if (!screen) return;
-    if (lRafId !== null) { cancelAnimationFrame(lRafId); lRafId = null; }
     screen.classList.add('done');
-    screen.addEventListener('transitionend', () => screen.remove(), { once: true });
+    screen.addEventListener('transitionend', () => {
+      if (lRafId !== null) { cancelAnimationFrame(lRafId); lRafId = null; }
+      screen.remove();
+    }, { once: true });
   }, { once: true });
 
   document.fonts.ready.then(lStart);
