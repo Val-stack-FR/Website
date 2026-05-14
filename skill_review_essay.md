@@ -26,11 +26,16 @@ The skill works mechanically. It does not produce the voice. And several of its 
 The single largest gap. The skill specifies fields, HTML wrappers, and a commit message. It says nothing about **how to write**, in either language. That is why output reads as competent but generic. Section 3 below supplies the EN and FR voice profiles drawn from the actual edited essays — these should be embedded in the revised skill as a non-skippable step.
 
 ### 2.2 Tag vocabulary is wrong
-CLAUDE.md gives the authoritative shared vocabulary:
+The canonical shared vocabulary (essays, books, research) is **UPPERCASE**:
 
 `"AI" · "PHILOSOPHY" · "LINGUISTIC" · "CHANGE MANAGEMENT" · "FUTURES" · "STRATEGY" · "CRISIS" · "LEADERSHIP"`
 
-The skill lists `AI, R&D, CIR, change management, futures, strategy, technology`. Three of those (`R&D`, `CIR`, `technology`) are not in the vocabulary; four legitimate tags (`PHILOSOPHY`, `LINGUISTIC`, `CRISIS`, `LEADERSHIP`) are missing. Casing is also inconsistent across the repo: essays use lowercase (`"AI"`, `"change management"`), books use uppercase (`"PHILOSOPHY"`). The skill should restrict suggestions to the canonical vocabulary and **preserve the casing already present in `essays/index.json`** until a one-shot normalisation is run across both registries.
+The skill currently lists `AI, R&D, CIR, change management, futures, strategy, technology`. Three of those (`R&D`, `CIR`, `technology`) are not in the vocabulary; four legitimate tags (`PHILOSOPHY`, `LINGUISTIC`, `CRISIS`, `LEADERSHIP`) are missing.
+
+Casing drift in the registry: `essays/index.json` currently contains mostly lowercase tags (`"change management"`, `"strategy"`, `"futures"`, `"philosophy"`, `"linguistic"`, `"crisis"`) with `"AI"` as the only uppercase entry. **The canonical form is UPPERCASE — the existing lowercase entries are the deviation, not the rule.** Two actions for the revised skill:
+
+1. Always emit new entries with UPPERCASE tags from the canonical set.
+2. Flag (don't silently rewrite) the legacy lowercase entries when the skill reads `essays/index.json` — a one-shot normalisation pass across both registries is the right fix, but it sits outside the per-essay skill flow.
 
 ### 2.3 Bilingual handling is one line
 Only the `article-ref` section mentions French. The skill should:
@@ -90,11 +95,16 @@ Both profiles below are drawn from the actual edited essays, not aspirational gu
 
 **Em-dash density.** High and purposeful — roughly one em-dash every 150–200 words across the corpus. Functions: narrow a general claim, add the specific clause that earns it, pivot mid-thought, insert a nested theoretical aside without breaking syntax. Use em-dashes (`—`), not double-hyphens.
 
-**"Not X but Y" structures.** A foundational move, appearing every 400–600 words on average. Use it whenever you reject a surface-level framing in favour of a structural one. Examples from the corpus:
-- "Not which people — the empirical research on AI productivity gains is fairly clear about that — but *why*."
-- "The role this demands is not analyst-as-executor but strategist-as-editor."
-- "An agent without memory is not an agent — it is an expensive search function."
-- "What the next era of AI adoption demands is not more delegation — it is better judgment."
+**Reframing surface to structure.** The core argumentative move: whenever you encounter an intuitive framing of a problem, displace it with a structural one. The corpus performs this move every 400–600 words, but it does so through several techniques — do not lean on a single template. Pick the form that fits the sentence:
+
+- **Relabelling.** Rename what is being described. "What Mollick calls a humanities advantage is, more precisely, a Standard American English plus academic register premium."
+- **Question pivot.** Replace the question being asked. "The question isn't whether the technology can do the work. The question is who can read what it produces."
+- **Locus shift.** Move the causal centre. "The bottleneck has moved. We have not noticed."
+- **Two-sentence inversion.** Negate, then redefine — across two short sentences. "It is not a bottleneck to remove. It is the job." / "An agent without memory is not an agent. It is an expensive search function."
+- **Diagnostic statement.** State the structural reality flatly, without explicit contrast. "Nobody feels it until the client does." / "The friction is the judgment."
+- **Stake reframing.** Name what the original framing actually costs. "Calling this productivity is calling existing educational inequality productivity, in better lighting."
+
+The point is the displacement, not the construction. Vary the form. When the rhythm calls for a longer analytical clause to land the reframing, write it that way; when it calls for two clipped sentences, do that. Avoid serialising the same construction across consecutive paragraphs.
 
 **Italics.** Use sparingly and functionally. Permitted uses: titles (*A Thousand Plateaux*), conceptual terms being introduced (*literacy*, *iteracy*, *abduction*, *satisficing*), single words that carry the weight of a sentence (*why*, *propelled*, *with*), foreign phrases (*rattraper les wagons*). Never for emotional emphasis.
 
@@ -145,11 +155,16 @@ Never close with "in conclusion", "ultimately", "to summarise", or a bulleted re
 
 **Tiret cadratin.** Utilisez `—` comme outil de précision : pour resserrer une affirmation, ajouter la clause spécifique qui la justifie, pivoter en milieu de pensée, insérer une digression théorique sans rompre la syntaxe. Densité élevée, fonctionnelle, jamais ornementale. Tirets longs `—` uniquement ; jamais de double tiret court `--`.
 
-**« Non pas X mais Y ».** Structure fondamentale, présente quinze fois minimum dans le corpus court. Utilisez-la pour renverser une intuition de surface au profit d'une lecture structurelle :
-- « Non pas l'observation technique — à savoir que de meilleurs prompts produisent de meilleurs résultats — mais son enjeu sociologique. »
-- « Non pas parce que les agents ne peuvent pas gérer le travail, mais parce que l'humain ne peut pas gérer l'interface. »
-- « C'est la dynamique du *slop* : non pas le mensonge mais la médiocrité. »
-- « Non pas des outils mais des collaborateurs. »
+**Reformuler la surface en structure.** Le mouvement argumentatif central : chaque fois que vous rencontrez un cadrage intuitif d'un problème, déplacez-le vers un cadrage structurel. Le corpus opère ce déplacement tous les 400–600 mots — mais à travers plusieurs techniques. Ne réduisez pas le mouvement à un seul gabarit ; choisissez la forme qui sert la phrase :
+
+- **Relabelliser.** Renommer ce qui est décrit. « Ce que Mollick appelle un avantage des humanités est, plus précisément, une prime de registre académique anglo-saxon standard. »
+- **Pivot de la question.** Substituer la question posée. « La question n'est pas de savoir si la technologie peut accomplir le travail. La question est de savoir qui peut lire ce qu'elle produit. »
+- **Déplacement du foyer.** Déplacer le centre de causalité. « Le goulot d'étranglement s'est déplacé. Nous ne l'avons pas remarqué. »
+- **Inversion en deux phrases.** Nier, puis redéfinir — sur deux phrases brèves. « Ce n'est pas un goulot à supprimer. C'est le travail. »
+- **Énoncé diagnostique.** Affirmer la réalité structurelle sans contraste explicite. « Personne ne le ressent avant que le client ne le ressente. » / « La friction est le jugement. »
+- **Recadrage par les enjeux.** Nommer ce que coûte le cadrage initial. « Appeler cela productivité, c'est appeler l'inégalité éducative existante productivité, sous un meilleur éclairage. »
+
+L'enjeu est le déplacement, pas la construction. Variez la forme. Quand le rythme appelle une clause analytique longue pour faire atterrir le recadrage, écrivez-la ainsi ; quand il appelle deux phrases sèches, faites cela. Évitez de répéter la même construction sur des paragraphes consécutifs.
 
 **Italiques.** Strictement fonctionnelles. Trois catégories légitimes :
 1. Anglicismes techniques à distinguer du français (*directness*, *framework*, *prompt engineering*, *knowledge work*, *sycophancy*, *slop*, *shibboleths*).
@@ -206,7 +221,7 @@ Concis, spécifique, jamais confessionnel.
 
 1. **Get the content.** Use `$ARGUMENTS` if it contains essay text; otherwise ask the user to paste it.
 2. **Detect language.** EN or FR. Apply §3.1 or §3.2 as a hard constraint on the rest of the skill. This runs before any drafting.
-3. **Extract / infer metadata.** Title, slug (kebab-case), date (default: today's date), tags (canonical vocabulary only, preserve registry casing), `readTime` (~200 wpm, rounded), description (one sentence on the argument, not the topic). Confirm with the user anything inferred.
+3. **Extract / infer metadata.** Title, slug (kebab-case), date (default: today's date), tags (canonical vocabulary only — `"AI"`, `"PHILOSOPHY"`, `"LINGUISTIC"`, `"CHANGE MANAGEMENT"`, `"FUTURES"`, `"STRATEGY"`, `"CRISIS"`, `"LEADERSHIP"` — UPPERCASE), `readTime` (~200 wpm, rounded), description (one sentence on the argument, not the topic). Confirm with the user anything inferred.
 4. **Read `essays/index.json` in full.** Compute next `num` as `max(parseInt(num, 10)) + 1`, zero-padded. Capture every existing slug, title, tags, description — used in steps 5 and 6.
 5. **Convert the body to Markdown.**
    - `## Section title` for sections (auto §-prefixed in UI).

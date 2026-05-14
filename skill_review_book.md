@@ -75,7 +75,7 @@ Both profiles below are drawn from the actual edited reviews and from the broade
 
 ### 3.1 EN voice — book reviews
 
-All of the general EN voice applies (declarative openings, em-dash density, "not X but Y", sparse functional italics, observation → tension → resolution, long-then-short rhythm, British spelling, no marketing register). The book-review-specific moves on top:
+All of the general EN voice applies (declarative openings, em-dash density, reframing surface to structure via varied techniques — relabelling, question pivot, locus shift, two-sentence inversion, diagnostic statement, stake reframing — sparse functional italics, observation → tension → resolution, long-then-short rhythm, British spelling, no marketing register). The book-review-specific moves on top:
 
 **Treat the book as a thinking partner, not a product.** The review's job is to surface the question the book is actually wrestling with, then test what happens when you carry that question into the reader's life. The book *acts on* the reader — it perturbs, names, scalpels, mirrors. It does not "deliver value".
 
@@ -108,7 +108,7 @@ Never close with a star-rating sentence or a "would recommend" line. The rating 
 
 ### 3.2 FR voice — book reviews / recensions
 
-Tout le profil FR général s'applique (ouvertures déclaratives, tiret cadratin, « non pas X mais Y », italiques fonctionnelles, observation → tension → résolution, typographie française stricte, lexique évité). Surcouche spécifique aux recensions :
+Tout le profil FR général s'applique (ouvertures déclaratives, tiret cadratin, reformuler la surface en structure via plusieurs techniques — relabelliser, pivot de question, déplacement du foyer, inversion en deux phrases, énoncé diagnostique, recadrage par les enjeux — italiques fonctionnelles, observation → tension → résolution, typographie française stricte, lexique évité). Surcouche spécifique aux recensions :
 
 **Le livre comme partenaire de pensée.** Traitez le livre comme un partenaire de pensée, non comme un produit. La recension doit faire émerger la question que le livre travaille réellement, puis tester ce qui se passe quand on transporte cette question dans la vie du lecteur. Le livre *agit sur* le lecteur — il perturbe, nomme, scalpe, renvoie en miroir.
 
