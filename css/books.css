@@ -215,6 +215,8 @@
   }
   .book-row-num { display: none; }
   .book-row-cover { display: none; }
-  .book-row-body { padding: 24px 0; grid-area: body; }
-  .book-row-meta { padding: 24px 0 24px 16px; grid-area: meta; border-left: none; }
+  .book-row-body { padding: 20px 12px 20px 0; grid-area: body; min-width: 0; }
+  .book-row-meta { padding: 20px 0 20px 12px; grid-area: meta; border-left: none; }
+  .book-row-desc { -webkit-line-clamp: 4; }
+  .book-row-rating { font-size: 10px; }
 }
