@@ -512,17 +512,24 @@ html {
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 32px 20px;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 24px;
+    padding: 24px 20px;
+    display: block;
+  }
+  .review-cover-panel::after {
+    content: '';
+    display: block;
+    clear: both;
   }
 
   .book-cover-placeholder {
-    width: 120px;
-    flex-shrink: 0;
-    margin-bottom: 0;
+    float: left;
+    width: 110px;
+    aspect-ratio: 2/3;
+    margin: 4px 20px 8px 0;
   }
+
+  .review-meta-item { margin-bottom: 14px; }
+  .toc-section-header { display: none; }
 
   .review-content {
     padding: 40px 20px 60px;
@@ -533,6 +540,5 @@ html {
 
 @media (max-width: 480px) {
   .essay-sidebar { flex-direction: column; }
-  .review-cover-panel { flex-direction: column; }
-  .book-cover-placeholder { width: 100%; }
+  .book-cover-placeholder { width: 96px; margin-right: 16px; }
 }
