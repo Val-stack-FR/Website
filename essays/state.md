@@ -18,18 +18,16 @@ each future-tense mention into a clickable cross-reference using:
 ## To rewire once the target is published
 
 ### `briefing-is-not-chatting.md` (EN) and `fr/briefing-is-not-chatting.md` (FR)
-- **Conclusion paragraph**, currently: *"This fault line is orthogonal to
-  another, which I will examine in a forthcoming essay: where organisational
-  trust depletes collectively across failed deployments…"* (FR: *"…que
-  j'examinerai dans un prochain essai…"*).
-  - **Target**: the planned essay on collective trust depletion across failed
-    deployments (draft working title *"L'ardoise n'est jamais vierge" /
-    the slate is never blank*). NB: the published essay **The people in the
-    middle of GenAI adoption** (`genai-adoption-people-in-the-middle`) already
-    covers "each failed rollout consumes trust that won't replenish itself" — if
-    that is the intended target, point the link there instead of waiting.
-  - **Action**: replace the future-tense clause with an `article-ref` once the
-    target slug is confirmed.
+- **Conclusion paragraph** — now does BOTH: links back to the published essay
+  **The people in the middle of GenAI adoption**
+  (`genai-adoption-people-in-the-middle`) via an `article-ref` anchored to its
+  "Trust Window" idea, AND keeps a forward signal ("…and will return to in a
+  dedicated essay" / "…sur laquelle je reviendrai dans un essai dédié").
+  - **Pending**: when the dedicated essay on collective trust depletion (draft
+    working title *"L'ardoise n'est jamais vierge" / the slate is never blank*)
+    is published, re-point (or add a second) `article-ref` to that more focused
+    target, since the current backlink is to a broader adoption essay where
+    trust-depletion is only one section.
 
 ### `the-ghost-competence.md` (EN) and `fr/the-ghost-competence.md` (FR)
 - Discusses Beane's *shadow learning* and explicitly contrasts the "active,
