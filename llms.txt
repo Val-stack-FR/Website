@@ -126,9 +126,6 @@ Does Morrison's distinction between defensive and acquiescent silence predict di
 **Verification burden × implicit cognition development** [TO REVIEW]
 How does verification workload affect the development of expertise and implicit cognition in human-AI interaction? Does heavy verification demand slow or prevent the development of AI-specific tacit knowledge?
 
-**Register premium in agentic orchestration** [TO REVIEW]
-Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts?
-
 **Centralization + blackbox double-blindness** [TO SEARCH]
 Is there evidence that crisis-driven centralization degrades the distributed information environment in ways that make AI deployment more likely to fail silently? Who catches AI errors in organizations where upward honesty has been structurally suppressed?
 
@@ -141,16 +138,13 @@ In contexts where AI distributes causality, do existing feedback inequalities (j
 **De Certeau tactics × platform lock-in** [TO REVIEW]
 How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI?
 
-**Organizational legibility for agents** [TO REVIEW]
-What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost?
-
 **Déresponsabilisation × AI in surveillance contexts** [TO REVIEW]
 Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it?
 
-**Slow-phase onboarding for agentic AI** [TO REVIEW]
-Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases?
-
 Completed research nodes (linked to published work):
+- Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts? → /essays/briefing-is-not-chatting/
+- What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost? → /essays/all-the-unwritten-processes/
+- Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases? → /essays/the-ghost-competence/
 - How crisis-driven centralization systematically destroys the distributed information environment it was designed to fix, and why emergency authority rarely reverts. → /essays/off-the-tracks/
 - Why more than a third of feedback interventions degrade performance, and how power-distance culture and defensive silence compound that failure. → /essays/when-feedback-fails/
 - Why adoption rate figures vary 5–40 points depending on method, and why peer-to-peer influence outperforms formal training as an adoption mechanism. → /essays/genai-adoption-people-in-the-middle/
