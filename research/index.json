@@ -28,9 +28,11 @@
   {
     "slug": "register-premium-agentic-orchestration",
     "title": "Register premium in agentic orchestration",
-    "status": "TO REVIEW",
+    "status": "DONE",
     "tags": ["AI", "LINGUISTIC", "FUTURES"],
     "description": "Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts?",
+    "link": "/essays/briefing-is-not-chatting/",
+    "linkLabel": "→ Briefing Is Not Chatting",
     "queries": [
       "\"prompt engineering\" \"cultural capital\" Bourdieu language model",
       "Agirdag \"prompting literacy\" linguistic capital 2026",
@@ -93,9 +95,11 @@
   {
     "slug": "organizational-legibility-for-agents",
     "title": "Organizational legibility for agents",
-    "status": "TO REVIEW",
+    "status": "DONE",
     "tags": ["AI", "FUTURES", "STRATEGY"],
     "description": "What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost?",
+    "link": "/essays/all-the-unwritten-processes/",
+    "linkLabel": "→ All the Unwritten Processes",
     "queries": [
       "\"tacit knowledge\" Polanyi codification AI agent compatibility",
       "\"knowledge management\" explicit implicit AI automation professional services",
@@ -119,9 +123,11 @@
   {
     "slug": "slow-phase-onboarding-agentic-ai",
     "title": "Slow-phase onboarding for agentic AI",
-    "status": "TO REVIEW",
+    "status": "DONE",
     "tags": ["AI", "CHANGE MANAGEMENT", "FUTURES"],
     "description": "Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases?",
+    "link": "/essays/the-ghost-competence/",
+    "linkLabel": "→ The Ghost Competence",
     "queries": [
       "\"scaffolded learning\" AI agent onboarding implicit skill development",
       "\"deliberate practice\" human-AI interaction expertise development longitudinal",

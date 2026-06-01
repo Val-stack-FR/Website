@@ -1,5 +1,47 @@
 [
-    {
+  {
+    "slug": "all-the-unwritten-processes",
+    "num": "09",
+    "title": "All the Unwritten Processes",
+    "date": "2026-06-01",
+    "tags": ["AI", "change management", "philosophy"],
+    "readTime": "14 min",
+    "description": "Before an agent can do anything, someone must make the workflow legible to it — a massive, skilled, unpaid investment in articulation that roadmaps never name and the most peripheral workers absorb.",
+    "related": [
+      { "type": "essay", "slug": "the-ghost-competence" },
+      { "type": "essay", "slug": "briefing-is-not-chatting" },
+      { "type": "essay", "slug": "the-human-bottleneck" }
+    ]
+  },
+  {
+    "slug": "the-ghost-competence",
+    "num": "08",
+    "title": "The Ghost Competence",
+    "date": "2026-05-20",
+    "tags": ["AI", "change management", "strategy"],
+    "readTime": "18 min",
+    "description": "Deploying agents from day one doesn't remove the foundational learning phase — it makes it invisible, producing workers who look productive but never built the judgment to supervise what they delegate.",
+    "related": [
+      { "type": "essay", "slug": "briefing-is-not-chatting" },
+      { "type": "essay", "slug": "all-the-unwritten-processes" },
+      { "type": "essay", "slug": "the-human-bottleneck" }
+    ]
+  },
+  {
+    "slug": "briefing-is-not-chatting",
+    "num": "07",
+    "title": "Briefing Is Not Chatting",
+    "date": "2026-05-09",
+    "tags": ["AI", "linguistic", "strategy"],
+    "readTime": "14 min",
+    "description": "Chat-style AI compressed the skill gap; agents reverse it — briefing rewards decomposition, specification and evaluation, the same managerial competences that educational capital has always distributed unequally.",
+    "related": [
+      { "type": "essay", "slug": "linguistic-capital-ai-inequality" },
+      { "type": "essay", "slug": "the-ghost-competence" },
+      { "type": "essay", "slug": "all-the-unwritten-processes" }
+    ]
+  },
+  {
     "slug": "linguistic-capital-ai-inequality",
     "num": "06",
     "title": "The Articulation Gap",
