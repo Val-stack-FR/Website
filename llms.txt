@@ -31,6 +31,21 @@ or hurt.
 All essays: /essays.html
 Machine-readable index: /essays/index.json
 
+### All the Unwritten Processes (2026-05-22) — 14 min
+Tags: AI, change management, philosophy
+Before an agent can do anything, someone must make the workflow legible to it — a massive, skilled, unpaid investment in articulation that roadmaps never name and the most peripheral workers absorb.
+Full text: /essays/all-the-unwritten-processes/
+
+### The Ghost Competence (2026-05-19) — 18 min
+Tags: AI, change management, strategy
+Deploying agents from day one doesn't remove the foundational learning phase — it makes it invisible, producing workers who look productive but never built the judgment to supervise what they delegate.
+Full text: /essays/the-ghost-competence/
+
+### Briefing Is Not Chatting (2026-05-16) — 14 min
+Tags: AI, linguistic, strategy
+Chat-style AI compressed the skill gap; agents reverse it — briefing rewards decomposition, specification and evaluation, the same managerial competences that educational capital has always distributed unequally.
+Full text: /essays/briefing-is-not-chatting/
+
 ### The Articulation Gap (2026-05-01) — 10 min
 Tags: AI, philosophy, linguistic, change management
 The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
