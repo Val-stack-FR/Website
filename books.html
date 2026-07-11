@@ -27,10 +27,20 @@
 
   <main class="main">
 
-    <header class="books-header">
-      <h1 class="books-heading">Books</h1>
-      <div></div>
+    <header class="page-header">
+      <h1 class="page-heading">Book Review</h1>
+      <div class="page-header-right">
+        <span class="page-count" id="page-count"><!-- PRERENDER:PAGE-COUNT:START -->
+4 reviews
+<!-- PRERENDER:PAGE-COUNT:END --></span>
+        <p class="page-subhead">Curated long-form reviews</p>
+      </div>
     </header>
+
+    <nav class="sub-tab-bar" aria-label="books sections">
+      <a href="books.html" class="sub-tab active" aria-current="page">Reviews</a>
+      <a href="library.html" class="sub-tab">Library</a>
+    </nav>
 
     <div class="tag-bar" id="tag-bar">
       <span class="tag-bar-label">Filter ↗</span>

@@ -1,0 +1,48 @@
+name: Resolve library covers
+
+# On-demand: resolve Open Library cover ids for books in library/index.json that
+# don't have one yet, and commit the result. Does NOT need the Google Sheet — run it
+# any time (Actions tab → Run workflow) to populate covers before publishing the sheet.
+# Subsequent runs only look up books still missing a cover.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-library   # same group as sync-library.yml: never push to main concurrently
+  cancel-in-progress: false
+
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install script deps (SheetJS)
+        working-directory: scripts
+        run: npm ci
+
+      - name: Resolve covers (no sheet needed)
+        env:
+          COVERS_ONLY: '1'
+        run: node scripts/sync-library.mjs
+
+      - name: Commit if changed
+        run: |
+          if [[ -n "$(git status --porcelain library/index.json)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add library/index.json
+            git commit -m "chore(library): resolve Open Library covers"
+            git pull --rebase
+            git push
+          else
+            echo "No cover changes."
+          fi

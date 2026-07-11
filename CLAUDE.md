@@ -185,6 +185,54 @@ Section headings (`## Section title`) automatically get a § prefix and appear i
 - `768px` — mobile layout (stacked columns, reduced padding)
 - `480px` — smallest mobile adjustments
 
+## Library page (full reading log)
+
+`library.html` is a **subsection of Books** (not a top-level nav item). Both
+`books.html` and `library.html` carry a `.sub-tab-bar` ("Reviews · Library") to
+switch between the curated long-form reviews and the full reading log; the **Books**
+nav item stays active on both. Adapted from the "Library v3" mock to a single
+**Stripes** view (animated bokeh canvas, category tabs with Sci-Fi default, a flat
+sortable log table with a coloured per-category left edge, audio dots, grade dots,
+expandable synopsis rows). Default order: graded first (desc) then title.
+
+- **Data source of truth:** `library/index.json` — one object per book
+  (`slug, title, author, year, category, format, volume, collection, grade, synopsis,
+  comment, dateRead, status, audio, coverId, url`). `category` ∈ `Sci-Fi · Fantasy ·
+  Fiction · Non-fiction · Untranslated` (drives tabs + the stripe colour; add a `.cat-*`
+  token in `css/library.css` + an entry in `CAT_CLS`/`LIB_CAT_CLS` to introduce a new one).
+  `grade` is out of 5 or `null` (**no grade ⇒ TBR / to-read pile**). `status` ∈
+  `read · reading · tbr · dnf`. `collection` = source anthology for short stories (parsed
+  from the Tome column, shown under the title so nouvelles are findable). `coverId` = Open
+  Library cover id (`number` found / `null` searched-missing / absent not-yet-looked-up).
+- **It is generated, do not hand-edit for bulk changes.** `scripts/sync-library.mjs`
+  rebuilds it from the **"Livres" Google Sheet** (5 tabs → categories), mapping the French
+  columns (`Titre, Auteur, Tome, Pitch, Lu / écouté, Note, Commentaire`). Seed/refresh
+  locally with `LIVRES_XLSX=/path/to.xlsx node scripts/sync-library.mjs`, or let it fetch
+  the live sheet (`node scripts/sync-library.mjs`). Note: Google Sheets mangles many
+  `N/5` grades into dates (`5/5` → "May 5"), so the parser recovers grades from Excel
+  date serials (month = denominator, day = grade) — see `excelSerialGrade()`.
+- **Covers:** the sync also resolves an Open Library cover id per book (best-effort,
+  rate-limited, cached — only new books are looked up each run; failures retry next run).
+  It walks the work's editions and prefers the cover by edition language/country —
+  **French → UK English → US English → other** (`editionRank()`, UK/US inferred from the
+  MARC `publish_country` code), falling back to the work's default cover.
+  Covers load at runtime from `covers.openlibrary.org` (allowed in the `vercel.json`
+  `img-src`) and fall back to the coloured initials. Run with `SKIP_COVERS=1` to skip the
+  network lookups (e.g. for a fast local seed).
+- **Weekly auto-sync:** `.github/workflows/sync-library.yml` (Mon 06:00 UTC + manual
+  `workflow_dispatch`) runs the script against the **published** sheet and commits any
+  change → Vercel redeploys → prerender re-inlines the rows.
+  **One-time prerequisite:** in the sheet, *File → Share → Publish to web* (the job has no
+  Google credentials; it reads the public xlsx export). Optionally set the repo variable
+  `LIVRES_SHEET_ID` to point at a different sheet.
+- **Crawlability:** `scripts/prerender.js` inlines the default Sci-Fi rows + category
+  tabs into `library.html` between `<!-- PRERENDER:LIBRARY-* -->` sentinels, adds
+  `/library.html` to `sitemap.xml`, and adds a Library section + JSON feed to `llms.txt`.
+  `js/library.js` re-renders identically from the JSON on load (prerendered rows are the
+  no-JS / crawler fallback).
+- **Deps:** SheetJS (`xlsx`) is declared in `scripts/package.json` (isolated; `prerender.js`
+  itself stays dependency-free). `scripts/node_modules/` is gitignored.
+
 ## Slash commands (Claude Code skills)
 
 Use these to publish new content directly from any text format:
@@ -201,6 +249,7 @@ css/
   essay-detail.css   ← essay-detail.html page styles
   books.css          ← books.html page styles
   book-review.css    ← book-review.html page styles
+  library.css        ← library.html page styles (reading-log table + bokeh canvas)
   research.css       ← research.html page styles (standalone dark, does NOT use styles.css tokens)
 js/
   index.js           ← index.html script
@@ -208,6 +257,7 @@ js/
   essay-detail.js    ← essay-detail.html script
   books.js           ← books.html script
   book-review.js     ← book-review.html script
+  library.js         ← library.html script (bokeh canvas, type/view tabs, sort, expand)
   research.js        ← research.html script (canvas nebula, HUD, parallax, card rendering)
 ```
 

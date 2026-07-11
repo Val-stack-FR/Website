@@ -75,6 +75,8 @@ fetch('essays/index.json')
   .then(r => r.json())
   .then(essays => {
     allEssays = essays;
+    const countEl = document.getElementById('page-count');
+    if (countEl) countEl.textContent = `${essays.length} essay${essays.length !== 1 ? 's' : ''}`;
     document.getElementById('essay-list').innerHTML = essays.map(renderRow).join('');
     buildTagBar(essays);
     const urlTag = new URLSearchParams(window.location.search).get('tag');

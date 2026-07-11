@@ -80,6 +80,8 @@ fetch('books/index.json')
   .then(r => r.json())
   .then(books => {
     allBooks = books;
+    const countEl = document.getElementById('page-count');
+    if (countEl) countEl.textContent = `${books.length} review${books.length !== 1 ? 's' : ''}`;
     document.getElementById('book-list').innerHTML = books.map(renderRow).join('');
     document.querySelectorAll('.book-cover-img').forEach(img => {
       img.addEventListener('error', () => {

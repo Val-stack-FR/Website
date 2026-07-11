@@ -1,0 +1,58 @@
+name: Sync library from Google Sheet
+
+# Refreshes library/index.json from the published "Livres" Google Sheet once a week.
+# Prerequisite (one-time): in the sheet, File → Share → Publish to web.
+# A commit here triggers Vercel, which re-runs scripts/prerender.js and re-inlines
+# the rows into library.html.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # every Monday 06:00 UTC
+  workflow_dispatch: {}    # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-library
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # NOTE: xlsx 0.18.5 (the last npm release) has two HIGH advisories —
+      # prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS (GHSA-5pgg-2g8v-p4x9).
+      # Accepted risk: this job is the ONLY consumer; the input is the owner's own
+      # published sheet (not attacker-controlled), it runs in CI (never in the
+      # browser/site runtime), and the output is plain JSON that is HTML-escaped on
+      # render — so neither advisory has a path to the live site. To remove the
+      # advisory entirely, install the patched build from SheetJS's CDN:
+      #   npm i https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz   (then commit the lockfile)
+      - name: Install script deps (SheetJS)
+        working-directory: scripts
+        run: npm ci
+
+      - name: Regenerate library/index.json
+        env:
+          LIVRES_SHEET_ID: ${{ vars.LIVRES_SHEET_ID || '19ql2wuZ2fwOG_c6R6fyq0BoYKT9ENgYlHlsuaf-YR74' }}
+        run: node scripts/sync-library.mjs
+
+      - name: Commit if changed
+        run: |
+          if [[ -n "$(git status --porcelain library/index.json)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add library/index.json
+            git commit -m "chore(library): weekly sync from Livres sheet"
+            git pull --rebase
+            git push
+          else
+            echo "No changes — library is up to date."
+          fi
