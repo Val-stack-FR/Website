@@ -501,7 +501,7 @@ function essayPage(essay, bodyHtml) {
 <html lang="en">
 <head>${HEAD(essay.title, essay.description, `/essays/${essay.slug}/`, '/css/essay-detail.css', 'article')}
   <script type="application/ld+json">${jsonLd}</script>
-  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"
           integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
           crossorigin="anonymous" defer></script>
 </head>
@@ -595,7 +595,7 @@ function bookPage(book, bodyHtml) {
 <html lang="en">
 <head>${HEAD(book.title, book.description, `/books/${book.slug}/`, '/css/book-review.css', 'article')}
   <script type="application/ld+json">${jsonLd}</script>
-  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"
           integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
           crossorigin="anonymous" defer></script>
 </head>
