@@ -113,6 +113,30 @@ Full text: /books/genius-in-the-room/
 
 ---
 
+## Library (full reading log)
+
+Library page: /library.html
+Machine-readable index: /library/index.json
+
+429 books logged across: Fantasy (124), Fiction (51), Non-fiction (16), Sci-Fi (238).
+Each entry has a short synopsis, format, read status, and a personal grade out of 5 (ungraded = to-read pile).
+
+Top-rated reads:
+- Les petits dieux — Terry Prachett · Fantasy · 5/5
+- Le tombeau Scellé — Tamsyn Muir · Fantasy · 5/5
+- Le tombeau Scellé — Tamsyn Muir · Fantasy · 5/5
+- La Dynastie des Dents-de-Lion - The Dandelion Dynasty — Ken Liu · Fantasy · 5/5
+- La Dynastie des Dents-de-Lion - The Dandelion Dynasty — Ken Liu · Fantasy · 5/5
+- Gagner la guerre — Jean-Philippe Jaworski · Fantasy · 5/5
+- Tress de la mer Emeraude — Brandon Sanderson · Fantasy · 5/5
+- L'âme de l'empereur — Brandon Sanderson · Fantasy · 5/5
+- Yumi et le peintre de cauchemar — Brandon Sanderson · Fantasy · 5/5
+- Mistborn, l'histoire secrète — Brandon Sanderson · Fantasy · 5/5
+- Du thé pour les fantômes — Chris Vuklisevic · Fantasy · 5/5
+- Instantané — Brandon Sanderson · Fantasy · 5/5
+
+---
+
 ## Current Research
 
 Research page: /research.html
@@ -199,6 +223,7 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 - Essay index (JSON): /essays/index.json
 - Book index (JSON): /books/index.json
 - Research index (JSON): /research/index.json
+- Library index (JSON): /library/index.json
 - Individual essays (Markdown): /essays/{slug}.md
 - Individual book reviews (Markdown): /books/{slug}.md
 - Individual essays (pre-rendered HTML): /essays/{slug}/

@@ -14,23 +14,7 @@
   --border-solid: rgba(0,0,0,0.18);
 }
 
-.essays-header {
-  padding: 64px 48px 48px;
-  border-bottom: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 32px;
-}
-
-.essays-heading {
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: clamp(48px, 8vw, 100px);
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
-  line-height: 0.9;
-}
+/* Page header is shared in styles.css (.page-header / .page-heading). */
 
 .tag-bar {
   padding: 20px 48px;
@@ -182,7 +166,6 @@
 #empty-state { display: none; }
 
 @media (max-width: 768px) {
-  .essays-header { padding: 40px 20px 32px; grid-template-columns: 1fr; }
   .tag-bar { padding: 16px 20px; }
   .essays-list { padding: 0 20px; }
   .essay-row {

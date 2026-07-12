@@ -42,6 +42,9 @@ function patchSection(html, file, key, content) {
 const essays  = JSON.parse(readFileSync(path.join(ROOT, 'essays/index.json'),   'utf8'));
 const books   = JSON.parse(readFileSync(path.join(ROOT, 'books/index.json'),    'utf8'));
 const research = JSON.parse(readFileSync(path.join(ROOT, 'research/index.json'), 'utf8'));
+const library  = existsSync(path.join(ROOT, 'library/index.json'))
+  ? JSON.parse(readFileSync(path.join(ROOT, 'library/index.json'), 'utf8'))
+  : [];
 
 // ── VALIDATE RESEARCH LINKS ──────────────────────────────────────────────────
 
@@ -174,11 +177,22 @@ function renderBookPreview(book) {
     </a>`;
 }
 
+// Bake the live item count into a page's header (no-JS / crawler fallback for the
+// "N essays / N reviews / N books" figure that the page JS recomputes on load).
+function patchPageCount(html, file, text) {
+  html = ensureAnchor(html, file, 'PAGE-COUNT',
+    '<span class="page-count" id="page-count">—</span>',
+    '<span class="page-count" id="page-count"><!-- PRERENDER:PAGE-COUNT:START -->—<!-- PRERENDER:PAGE-COUNT:END --></span>'
+  );
+  return patchSection(html, file, 'PAGE-COUNT', esc(text));
+}
+
 // ── PATCH essays.html ─────────────────────────────────────────────────────────
 
 {
   const file = 'essays.html';
   let html = readFileSync(path.join(ROOT, file), 'utf8');
+  html = patchPageCount(html, file, `${essays.length} essay${essays.length !== 1 ? 's' : ''}`);
 
   html = ensureAnchor(html, file, 'ESSAY-LIST',
     '<div id="essay-list"></div>',
@@ -204,6 +218,7 @@ function renderBookPreview(book) {
 {
   const file = 'books.html';
   let html = readFileSync(path.join(ROOT, file), 'utf8');
+  html = patchPageCount(html, file, `${books.length} review${books.length !== 1 ? 's' : ''}`);
 
   html = ensureAnchor(html, file, 'BOOK-LIST',
     '<div id="book-list"></div>',
@@ -222,6 +237,109 @@ function renderBookPreview(book) {
 
   writeFileSync(path.join(ROOT, file), html, 'utf8');
   console.log(`✓ ${file}`);
+}
+
+// ── PATCH library.html ────────────────────────────────────────────────────────
+// Mirrors the markup that js/library.js renders (Sections view) so crawlers and
+// no-JS clients see the full reading log. JS re-renders identically on load.
+
+const LIB_CAT_CLS = {
+  'Sci-Fi': 'cat-scifi', 'Fantasy': 'cat-fantasy', 'Fiction': 'cat-fiction',
+  'Non-fiction': 'cat-nonfiction', 'Untranslated': 'cat-untranslated',
+};
+const LIB_CAT_ORDER = ['Sci-Fi', 'Fantasy', 'Fiction', 'Non-fiction', 'Untranslated'];
+const libCatCls = (c) => LIB_CAT_CLS[c] || 'cat-nonfiction';
+const libInitials = (t) => {
+  const s = String(t || '');
+  const ini = s.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  return ini || s.replace(/[^\p{L}\p{N}]/gu, '').slice(0, 2).toUpperCase();
+};
+const libFmtGrade = (g) => { const n = Number(g); return n % 1 === 0 ? String(n) : n.toFixed(1); };
+const libDots = (g) => { const n = Number(g); return Array.from({ length: 5 }, (_, i) => `<span class="gdot${Math.round(n) > i ? ' on' : ''}"></span>`).join(''); };
+const libStatusLabel = (s) => ({ read: 'Read', reading: 'Reading', tbr: 'TBR', dnf: 'DNF' }[s] || s);
+const libSafeUrl = (u) => (typeof u === 'string' && /^\/(?!\/)/.test(u) ? u : '');
+const libSafeExtUrl = (u) => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : '');
+const libCoverSrc = (id) => `https://covers.openlibrary.org/b/id/${id}-M.jpg`;   // keep in sync with coverSrc() in js/library.js
+
+// Mirror of authorKey()/defaultSort() in js/library.js: group works by author surname.
+const LIB_PARTICLES = new Set(['le', 'la', 'de', 'du', 'des', 'von', 'van', 'der', 'den', 'ten', 'del', 'dos', "d'"]);
+function libAuthorKey(name) {
+  const parts = String(name || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return '~';
+  let surname = parts[parts.length - 1];
+  if (parts.length >= 2 && LIB_PARTICLES.has(parts[parts.length - 2])) surname = parts[parts.length - 2] + ' ' + surname;
+  return surname + ' ' + parts.join(' ');
+}
+function libDefaultSort(a, b) {
+  const ak = libAuthorKey(a.author), bk = libAuthorKey(b.author);
+  if (ak !== bk) return ak < bk ? -1 : 1;
+  const at = String(a.title).toLowerCase(), bt = String(b.title).toLowerCase();
+  if (at !== bt) return at < bt ? -1 : 1;
+  return a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0;
+}
+
+// Keep byte-for-byte in sync with rowHtml() in js/library.js.
+function renderLibraryRow(book, i) {
+  const cc = libCatCls(book.category);
+  const volSuffix = book.volume ? ` <span class="vol-suffix">Vol.${esc(book.volume)}</span>` : '';
+  const audioBadge = book.audio ? '<span class="audio-dot" title="Audiobook"></span>' : '';
+  const gradeCell = (book.grade != null)
+    ? `<div class="grade-score">${libFmtGrade(book.grade)}<span class="grade-denom">&thinsp;/5</span></div><div class="grade-dots">${libDots(book.grade)}</div>`
+    : '<span class="grade-none" title="To read">—</span>';
+  const dateBlock = book.dateRead ? `<span class="expand-date">${esc(book.dateRead)}</span>` : '';
+  const synopsis = book.synopsis ? esc(book.synopsis) : '<span class="expand-empty">No synopsis yet.</span>';
+  const exId = `ex-${esc(book.slug)}`;
+  const url = libSafeUrl(book.url);
+  const srcUrl = libSafeExtUrl(book.sourceUrl);
+  const sourceLink = srcUrl
+    ? `<a class="expand-link source-link" href="${esc(srcUrl)}" target="_blank" rel="noopener noreferrer">Read free online${book.source ? ` · ${esc(book.source)}` : ''} ↗</a>` : '';
+  const coverImg = Number.isInteger(book.coverId)
+    ? `<img class="cover-img" src="${libCoverSrc(book.coverId)}" alt="" loading="lazy">` : '';
+  const collection = book.collection
+    ? `<div class="book-collection" title="Found in this collection">↳ ${esc(book.collection)}</div>` : '';
+
+  return `<tr class="log-row ${cc}" data-slug="${esc(book.slug)}" tabindex="0" role="button" aria-expanded="false" aria-controls="${exId}" aria-label="${esc(book.title)}, ${esc(book.author)} — show synopsis">
+      <td class="td-num">${String(i + 1).padStart(2, '0')}</td>
+      <td class="td-cover"><div class="cover-block"><span class="cover-init">${esc(libInitials(book.title))}</span>${coverImg}</div></td>
+      <td class="td-book"><div class="book-title">${esc(book.title)}${volSuffix}</div><div class="book-author">${esc(book.author)}${audioBadge}</div>${collection}</td>
+      <td class="td-type col-format"><span class="type-badge">${esc(book.format || '—')}</span></td>
+      <td class="td-year">${book.year != null ? esc(String(book.year)) : '—'}</td>
+      <td class="td-tags"><div class="tags-wrap">${(book.tags || []).map(t => `<span class="row-tag">${esc(t)}</span>`).join('')}</div></td>
+      <td class="td-grade">${gradeCell}</td>
+      <td class="td-status"><span class="status-pill ${esc(book.status)}">${book.audio && book.status === 'read' ? 'AUDIO' : esc(libStatusLabel(book.status).toUpperCase())}</span></td>
+      <td class="td-link">${url ? `<a class="row-link" href="${esc(url)}" title="Full review of ${esc(book.title)}">↗</a>` : '<span class="row-link-empty">—</span>'}</td>
+    </tr>
+    <tr class="expand-row" id="${exId}"><td colspan="9"><div class="expand-inner">${synopsis}<div class="expand-foot">${sourceLink}${url ? `<a class="expand-link" href="${esc(url)}">Read full review →</a>` : ''}${dateBlock}</div></div></td></tr>`;
+}
+
+function libCatsPresent() {
+  const present = new Set(library.map(b => b.category));
+  return LIB_CAT_ORDER.filter(c => present.has(c))
+    .concat([...present].filter(c => !LIB_CAT_ORDER.includes(c)).sort());
+}
+
+if (library.length) {
+  const file = 'library.html';
+  let html = readFileSync(path.join(ROOT, file), 'utf8');
+
+  // Default render = active category (Sci-Fi), Stripes style, alphabetical by author —
+  // matches the initial render in js/library.js (default order).
+  const activeType = libCatsPresent()[0] || 'all';
+  const data = library.filter(b => b.category === activeType).sort(libDefaultSort);
+
+  const libBody = data.map((b, i) => renderLibraryRow(b, i)).join('\n      ');
+
+  const typeTabs = libCatsPresent().map(cat =>
+    `<button class="type-tab ${libCatCls(cat)}${cat === activeType ? ' active' : ''}" data-type="${esc(cat)}" aria-pressed="${cat === activeType}"><span class="type-dot"></span>${esc(cat)}</button>`
+  ).join('\n  ');
+
+  html = patchPageCount(html, file, `${data.length} book${data.length !== 1 ? 's' : ''}`);
+  html = patchSection(html, file, 'LIBRARY-ROWS', libBody);
+  html = patchSection(html, file, 'LIBRARY-TYPE-TABS', typeTabs);
+
+  writeFileSync(path.join(ROOT, file), html, 'utf8');
+  console.log(`✓ ${file} (${library.length} books, ${data.length} shown by default)`);
 }
 
 // ── PATCH research.html ───────────────────────────────────────────────────────
@@ -575,6 +693,7 @@ books.forEach(book => {
     { url: '/', priority: '1.0', changefreq: 'weekly' },
     { url: '/essays.html', priority: '0.9', changefreq: 'weekly' },
     { url: '/books.html', priority: '0.9', changefreq: 'monthly' },
+    { url: '/library.html', priority: '0.7', changefreq: 'weekly' },
     { url: '/research.html', priority: '0.8', changefreq: 'weekly' },
     { url: '/about/', priority: '0.7', changefreq: 'monthly' },
   ];
@@ -723,6 +842,22 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
     }),
   ].join('\n');
 
+  const libCounts = library.reduce((m, b) => { m[b.category] = (m[b.category] || 0) + 1; return m; }, {});
+  const libGraded = library.filter(b => b.grade != null);
+  const librarySection = [
+    '## Library (full reading log)',
+    '',
+    'Library page: /library.html',
+    'Machine-readable index: /library/index.json',
+    '',
+    `${library.length} books logged across: ${Object.entries(libCounts).map(([c, n]) => `${c} (${n})`).join(', ')}.`,
+    'Each entry has a short synopsis, format, read status, and a personal grade out of 5 (ungraded = to-read pile).',
+    '',
+    'Top-rated reads:',
+    ...[...libGraded].sort((a, b) => b.grade - a.grade).slice(0, 12).map(b =>
+      `- ${b.title} — ${b.author} · ${b.category} · ${libFmtGrade(b.grade)}/5`),
+  ].join('\n');
+
   const activeNodes = research.filter(n => n.status !== 'DONE');
   const doneNodes   = research.filter(n => n.status === 'DONE');
   const researchSection = [
@@ -747,13 +882,14 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 - Essay index (JSON): /essays/index.json
 - Book index (JSON): /books/index.json
 - Research index (JSON): /research/index.json
+- Library index (JSON): /library/index.json
 - Individual essays (Markdown): /essays/{slug}.md
 - Individual book reviews (Markdown): /books/{slug}.md
 - Individual essays (pre-rendered HTML): /essays/{slug}/
 - Individual book reviews (pre-rendered HTML): /books/{slug}/
 - Sitemap: /sitemap.xml`;
 
-  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
+  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', librarySection, '', '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
 
   writeFileSync(path.join(ROOT, 'llms.txt'), llmsTxt, 'utf8');
   console.log('✓ llms.txt');

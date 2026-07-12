@@ -1,0 +1,10 @@
+{
+  "name": "website-scripts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build-time and sync scripts for the website (isolated deps; prerender.js itself has none).",
+  "type": "commonjs",
+  "dependencies": {
+    "xlsx": "0.18.5"
+  }
+}
