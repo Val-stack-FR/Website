@@ -1,5 +1,19 @@
 [
   {
+    "slug": "the-hand-that-sorts-the-cards",
+    "num": "12",
+    "title": "The Hand That Sorts the Cards",
+    "date": "2026-07-12",
+    "tags": ["AI", "philosophy", "strategy"],
+    "readTime": "18 min",
+    "description": "The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren't accumulating in a resistant repertoire; they're training data the platform sorts, generalizing what serves it and quietly closing off what doesn't.",
+    "related": [
+      { "type": "essay", "slug": "the-ghost-competence" },
+      { "type": "essay", "slug": "no-clean-slate" },
+      { "type": "essay", "slug": "briefing-is-not-chatting" }
+    ]
+  },
+  {
     "slug": "who-pays-when-ai-is-wrong",
     "num": "11",
     "title": "Who Pays When AI Is Wrong?",

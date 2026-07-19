@@ -86,9 +86,11 @@
   {
     "slug": "de-certeau-tactics-platform-lock-in",
     "title": "De Certeau tactics × platform lock-in",
-    "status": "TO REVIEW",
+    "status": "DONE",
     "tags": ["AI", "PHILOSOPHY", "FUTURES"],
     "description": "How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI?",
+    "link": "/essays/the-hand-that-sorts-the-cards/",
+    "linkLabel": "→ The Hand That Sorts the Cards",
     "queries": [
       "De Certeau \"tactics\" \"digital platform\" user agency foreclosure",
       "\"prompt engineering\" deskilling dependency LLM user autonomy",

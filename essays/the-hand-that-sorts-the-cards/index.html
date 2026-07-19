@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hand That Sorts the Cards — Valérian Teissier</title>
+  <meta name="description" content="The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren&#39;t accumulating in a resistant repertoire; they&#39;re training data the platform sorts, generalizing what serves it and quietly closing off what doesn&#39;t." />
+  <link rel="canonical" href="https://valerianteissier.com/essays/the-hand-that-sorts-the-cards/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="The Hand That Sorts the Cards — Valérian Teissier" />
+  <meta property="og:description" content="The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren&#39;t accumulating in a resistant repertoire; they&#39;re training data the platform sorts, generalizing what serves it and quietly closing off what doesn&#39;t." />
+  <meta property="og:url" content="https://valerianteissier.com/essays/the-hand-that-sorts-the-cards/" />
+  <meta property="og:site_name" content="Valérian Teissier" />
+  <meta name="author" content="Valérian Teissier" />
+  <link rel="alternate" type="text/plain" href="https://valerianteissier.com/llms.txt" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/css/essay-detail.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Hand That Sorts the Cards","description":"The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren't accumulating in a resistant repertoire; they're training data the platform sorts, generalizing what serves it and quietly closing off what doesn't.","datePublished":"2026-07-12","author":{"@type":"Person","name":"Valérian Teissier","url":"https://valerianteissier.com"},"publisher":{"@type":"Person","name":"Valérian Teissier","url":"https://valerianteissier.com"},"url":"https://valerianteissier.com/essays/the-hand-that-sorts-the-cards/","keywords":"AI, philosophy, strategy","timeRequired":"PT18M","inLanguage":"en"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"
+          integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
+          crossorigin="anonymous" defer></script>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="page">
+
+  <nav class="nav" aria-label="primary">
+    <a href="/" class="nav-logo">VT—</a>
+    <div class="nav-links">
+      <a href="/essays.html" class="nav-link active">Essays</a>
+      <a href="/books.html" class="nav-link">Books</a>
+      <a href="/research.html" class="nav-link">Research</a>
+      <a href="/about/" class="nav-link">About</a>
+    </div>
+  </nav>
+  <main class="main">
+    <div class="essay-layout">
+      <aside class="essay-sidebar">
+        <a href="/essays.html" class="btn-back">← Essays</a>
+        <div class="lang-toggle">
+          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" id="btn-fr">FR</button>
+        </div>
+        <div>
+          <div class="essay-sidebar-label">Published</div>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="2026-07-12">2026-07-12</time>
+        </div>
+        <div>
+          <div class="essay-sidebar-label">Reading time</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">18 min</div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label">Tags</div>
+          <div id="sidebar-tags" class="sidebar-tags-list"><a href="/essays.html?tag=AI" class="tag sidebar-tag-link">AI</a><a href="/essays.html?tag=philosophy" class="tag sidebar-tag-link">philosophy</a><a href="/essays.html?tag=strategy" class="tag sidebar-tag-link">strategy</a></div>
+        </div>
+        <div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <nav aria-label="Table of contents" id="toc-nav"></nav>
+        </div>
+      </aside>
+      <div class="essay-content">
+        <header class="essay-header">
+          <div class="essay-meta-row">
+            <span id="essay-num" class="essay-num-label">Essay №12</span>
+            <span class="essay-sep"></span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">AI · philosophy · strategy</span>
+          </div>
+          <h1 class="essay-title" id="essay-title">The Hand That Sorts the Cards</h1>
+          <p class="essay-desc" id="essay-desc">The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren&#39;t accumulating in a resistant repertoire; they&#39;re training data the platform sorts, generalizing what serves it and quietly closing off what doesn&#39;t.</p>
+        </header>
+        <div class="essay-body" id="essay-body"><p>In 2021, a human-computer interaction researcher published an article on the tactics users develop in the face of algorithmic decisions — deploying, without naming it, the vocabulary of <em>making do</em> and the interstice.<span class="fn">[6]</span> Two years later, a study that has become a reference on prompting practices — <em>Why Johnny Can't Prompt</em> — documents the very same practices from a radically different angle: no longer as tactics of resistance, but as failures to correct.<span class="fn">[1]</span> This reversal is not innocent. Relabeling as "user error" whatever is inconvenient is already a sorting operation: the strategy decides what aspects of the user's practice deserve correction. And this gesture reveals what three independent bodies of research have been observing from distinct angles, without ever quite formulating it: frontier LLMs — the leading models used by way of the big platforms that host and control them (OpenAI, Anthropic, Google), never owned or run by the user themselves — are not simply tools one learns to master, nor spaces of resistance where user cunning might quietly accumulate. They are <em>proper places</em> in Michel de Certeau's sense — spaces where an institutional strategy operates from a position of strength, and where the owner reserves the right to decide, tactic by tactic, which ones will be generalized and redistributed to everyone, and which will be walled off. What these bodies of research describe without naming it, this essay intends to name: not that the tactical space is closing, but that it is being sorted.</p>
+<h2 id="i-the-digital-proper-place-strategy-tactics-and-the-grid-of-alignment">I. The Digital Proper Place: Strategy, Tactics, and the Grid of Alignment</h2>
+<p>In <em>The Practice of Everyday Life</em>, de Certeau opposed <em>strategies</em> to <em>tactics</em> along a spatial axis. Strategy presupposes a <em>proper place</em> — a bounded, owned space from which the strong actor can project power outward and capitalize on its advantages. Tactics have no place of their own. They operate in the interstice, in the time of the other, with no fixed base, through <em>making do</em>: diversion, bricolage, cunning.<span class="fn">[2]</span> The tenant who rearranges an apartment they do not own, the pedestrian who invents routes through a gridded city, the employee who bends procedures at the margins without being able to rewrite them — all of them do the same thing: temporarily inhabiting someone else's space without ever owning it. Tactics accumulate in practitioners' memory, pass from hand to hand, and form a diffuse repertoire of resistant know-how.</p>
+<p>A frontier LLM is a paradigmatic <em>proper place</em>. It is worth being precise about which LLM is at stake here, since that precision is what holds the whole analogy together. This is not just any language model, but the proprietary model hosted and controlled by a third party — OpenAI, Anthropic, Google — which the user accesses through an interface or an API without ever owning either the model's weights or the computing infrastructure that runs it. It is precisely this structural dependence on a provider's infrastructure that constitutes the proper place: the user enters a space that belongs to someone else, and enters it without ever inhabiting it. The counter-case clarifies the stakes — an open-weight model, fine-tuned and deployed locally by the user or their organization, would reverse the relationship: the owner of the weights and the infrastructure would then be the user themselves, and the proper place, in the Certeauian sense, would be theirs. The whole thesis of this essay concerns the first case, where the space of exchange is never the user's own. Such an LLM concentrates training data, computing infrastructure, and conversational interface; it unilaterally defines the rules of exchange, the limits of what can be asked, the shape of what will be answered. But the power a proper place confers is not, first and foremost, the power to forbid — it is the power to <em>sort</em>. From its position of strength, the strong actor sees everything that passes through and decides, case by case, what it keeps, what it generalizes, and what it closes off. The form of control frontier LLMs exercise is therefore not that of a rulebook or a ban — it is far subtler, and it is selective.</p>
+<p>Chaudhary and Penn (2024) name the mechanism.<span class="fn">[3]</span> Where layout tools automatically snap an object to the page grid, LLMs snap thoughts onto axes in high-dimensional spaces captured by neural networks: "Instead of snapping to a visual grid, ideas, attitudes, and beliefs expressed through text are snapped along various axes in high dimensional spaces captured by neural networks."<span class="fn">[3]</span> The user does not observe this alignment. They receive it as help with phrasing, as an interface that understands them.</p>
+<p>What the authors call <em>modulatory power</em> — following Savat and Deleuze — is precisely the mode of control specific to this regime.<span class="fn">[3]</span> Unlike Foucauldian disciplinary power, which constrains, forbids, and punishes, modulatory power steers. It selects among possibilities, makes certain paths more navigable than others, reformats requests before the user has even fully articulated them. Research predating LLMs had already measured the normalization loop: the more a user follows predictive suggestions, the more predictable the content they produce becomes.<span class="fn">[3]</span> Another experiment showed that exposure to a deliberately biased completion system shifts participants' opinions in the direction of the bias, without their being aware of it.<span class="fn">[3]</span></p>
+<div class="pull-quote">
+  <blockquote>"In the case of modulatory power, the effect of control becomes so subtle that it masquerades as choice."</blockquote>
+  <cite>— Chaudhary & Penn (2024)</cite>
+</div>
+<p>This formulation from Poster and Savat, taken up by Chaudhary and Penn, names the central disorientation.<span class="fn">[3]</span> The Certeauian tactic presupposed a strategic space recognizable as such: the tenant <em>knows</em> the apartment belongs to the landlord. The LLM user, by contrast, receives their alignment onto the grid as personalization.</p>
+<h2 id="ii-configuration-work-or-the-tactic-without-a-name">II. Configuration Work, or the Tactic Without a Name</h2>
+<p>This is precisely the reality two independent empirical bodies of work document without ever invoking de Certeau's framework.</p>
+<p>Alcaras and Ricci (2025) spent seven months with eight Sciences Po students using LLMs in their day-to-day work — internships in law, urban planning, economics, projects in political science and international affairs.<span class="fn">[4]</span> What they observe is not the fluidity marketing discourse promises. It is a continuous, often exhausting labor the authors call <em>configuration work</em>: the practical work users perform to turn a generic system into a usable tool within their particular professional ecology. "Without configuration work, conversational LLMs linger as general-purpose artefacts; they depend on users to be introduced into the situation, to be oriented, and to have their outputs interpreted. Their task-agnostic character shifts the burden of specification onto users."<span class="fn">[4]</span></p>
+<p>This work unfolds into four interlinked consequences. The first is <em>discretization</em>: the user learns to break requests into steps small enough that the model does not lose the thread. Alice, a lawyer, puts it plainly: "I think one of the key things to get proper results is really to dissect every part of what you want to reflect on and go step by step."<span class="fn">[4]</span> The second consequence is <em>cluttering</em>: the investment in the LLM can be considerable for a thin return. The metaphor is no longer the black box but the black hole.<span class="fn">[4]</span> LLMs promise to free professionals from tedious tasks — but when they clutter work routines, these activities come to feel "dirty" — necessary, yet outside what workers recognize as the proper boundaries of their craft.<span class="fn">[4]</span> In response, users develop <em>decluttering tactics</em> — short ritual prompts, boundary-work decisions about when to enter the system and when to step out — without ever naming them as tactics. Yet these are tactics in the exact Certeauian sense: bricolage in the interstice, with no predefined plan, an economy of effort, seizing the occasion.</p>
+<p>The third consequence is <em>attunement</em>: a gradual adaptation of one's posture to the machine's generic rigidity, which reshapes what users come to value in their own work. The fourth — the most analytically disturbing — is <em>desaturation</em>: the progressive loss of the "color" of work.</p>
+<div class="pull-quote">
+  <blockquote>"I feel like I'm just an interface for code that's already been written. I'm happy when I get the final results. But in the meantime, during these long days working on it, I don't feel really accomplished. Whereas I remember, when I started coding without ChatGPT, every time I managed to do something, it felt like a real event."</blockquote>
+  <cite>— Constance, in Alcaras & Ricci (2025)</cite>
+</div>
+<p>Constance, an economist, sums up in these few sentences what de Certeau had not foreseen:<span class="fn">[4]</span> a tactic that, instead of accumulating in the practitioner's ingenuity, turns against them. "Automation had led to automatism, a practice without attention and intention."<span class="fn">[4]</span></p>
+<p>Zamfirescu-Pereira et al. (2023) document the same dynamic from the outside, in a different context.<span class="fn">[1]</span> In their study of non-expert prompting practices facing an open-ended design task, they observe that participants "almost exclusively took an ad hoc, opportunistic approach to prompt exploration": trying a phrasing, noting a partial result, pivoting with no visible method.<span class="fn">[1]</span> The authors read this behavior as a skill deficit to be corrected. That is a valid reading. It misses another: this opportunistic prompting is the exact signature of a tactic with no proper place. Certeau's <em>making do</em> — cunning, inventive, furtive, economical — proceeds no differently: it seizes the occasion in the other's space, with no predefined plan, with no mastery of the terrain. It is not the absence of method. It is the method of the absence of place.</p>
+<p>This double terminological silence — Alcaras and Ricci do not cite de Certeau, Zamfirescu-Pereira et al. do not cite de Certeau, and neither body of work cites the other — is not a bibliographic gap to be filled. It reveals a discontinuity in the question being asked: the practices are documented, the structure of the space in which they operate is not. The first striking transformation Alcaras and Ricci note is, tellingly, not automation or augmentation as such, but "the individualization that comes with configuration work."<span class="fn">[4]</span> Each user configures individually. This individualization has a consequence the authors do not analyze: it masks the collective dimension of what is happening. Every user who configures alone is collectively feeding the model.</p>
+<h2 id="iii-agentic-capture-when-the-survival-criterion-shifts">III. Agentic Capture: When the Survival Criterion Shifts</h2>
+<p>It is Kapoor, Kolt, and Lazar (2025) who formulate the mechanism of accumulation the two preceding bodies of work leave implicit.<span class="fn">[5]</span> In their position paper presented at ICML 2025, they distinguish <em>platform agents</em> — agentic systems shaped by platform-economy incentives to act first in the interest of the companies that deploy them — from <em>agent advocates</em>, or fiduciary agents of the user. The term is worth unpacking, since the whole stake lies in it. A fiduciary duty is the obligation binding a lawyer to their client: to act in that client's exclusive interest, and no one else's, even when a third party foots the bill. A fiduciary agent of the user would therefore be an AI agent whose exclusive mandate is to serve its principal's interests, as opposed to a platform agent whose behavior first serves the commercial interests of the company that deployed it — including when those interests conflict with what the user actually wants. The difference is not technological. It is structural: whoever controls the agent controls the space of the interaction.</p>
+<p>The competitive advantage platform companies hold in this regime rests on a precise resource: "their unparalleled access to users and user data, including workflows on which to train their agents."<span class="fn">[5]</span> The 600 LLM conversations Alcaras and Ricci document — the configuration work, the decluttering tactics, the ritual prompts, the boundary-work decisions — are precisely this data. The user's <em>configuration work</em>, that laborious, unnamed practice of appropriation, is the raw material on which the next model is trained. The loop closes: the user's tactic turns into a training signal for the very system that prompted it. But noting that tactics get absorbed isn't the whole story. The question is not that the system learns — it is the direction in which it learns, and who chooses that direction.</p>
+<p>Where interests converge — a better prompt yields a better answer, a discretization technique improves the model's understanding — absorption is win-win: the user's tactic becomes a generalized capability of the model, accessible to every subsequent user. That is democratization. It would be dishonest not to acknowledge it.</p>
+<p>The limits of the argument above must be acknowledged: the mechanism by which diverging interests lead to the foreclosure of a tactic rests on the normative position of Kapoor et al. (2025), not on directly observed platform behavior. No one has yet measured how quickly, and by what criterion, workaround tactics are actually absorbed and blocked. The argument is structurally sound — but it is, for now, an inference from incentives, not an empirical finding.</p>
+<p>The problem lies where interests diverge: getting around a rate limit, exporting one's own data to another service, avoiding a monetized path, probing the system's edges to assess its biases. In these cases, the <em>same</em> absorption mechanism does not produce a commons — it produces a closure. The tactic is learned by the platform not to be redistributed but to be detected and blocked on the next round.</p>
+<p>Alignment techniques add a further layer. The model's behavioral adjustments — theoretically presented as safety tools — "can, in other words, be used to limit users' freedom of action,"<span class="fn">[5]</span> "regardless of the legitimacy of those rules."<span class="fn">[5]</span> They define the boundaries of what can be prompted, what can be answered, what is possible within the proper place. For most ordinary users, who are not adversarial actors and have neither the means nor the inclination to probe the system's edges, these boundaries are simply the contours of the available reality. One can observe an ordinary illustration of this in the way some models meet entire domains with a blanket refusal, regardless of the actual content of a given request — a self-diagnosis attempt and a plain question of anatomical vocabulary triggering the exact same refusal. The refusal proceeds not from a fine-grained assessment of the particular request's risk, but from a crude, domain-wide, non-discriminating sort. That is the whole point: the mechanism of self-interested sorting need be neither visible nor even precise to be effective.</p>
+<div class="pull-quote">
+  <blockquote>"Two parties who can only interact through a self-interested go-between, and who depend on that interaction to some non-trivial degree, are subject to the arbitrary power of that go-between. Two parties who can instead interact via fiduciary AI representatives are not subject to the same arbitrary power."</blockquote>
+  <cite>— Kapoor, Kolt & Lazar (2025)</cite>
+</div>
+<p>This mechanism of self-interested sorting has a historical precedent, documented well before LLMs existed. Beane (2019) studied the arrival of the da Vinci surgical platform (Intuitive Surgical) in operating rooms.<span class="fn">[7]</span></p>
+<div class="article-ref" data-slug="the-ghost-competence" data-type="essay">A distinct angle on the same fieldwork: there, the eviction of the foundational learning phase for the passive majority; here, the platform's self-interested sorting of which practices survive.</div>
+<p>He shows that the platform reorganized surgical work so that residents became optional: the expert could operate alone, without the shared gesture that, in open surgery, had trained the next generation. This outcome was not a side effect, but the extension of an economic interest — the company's business model resting on selling hours of expert-supervised robot time, not on training autonomous residents. The platform did not close off <em>every</em> learning path; it selectively foreclosed those that would have built residents' autonomy and, in doing so, threatened its rent. The only training path that survived, <em>shadow learning</em>, survived precisely because it stayed invisible to the platform, not because it was tolerated. In other words: it was not a practice's pedagogical efficiency that decided its survival, but its alignment with the interest of the place's owner. Exactly the sorting criterion that frontier LLMs now generalize to every practice of use.</p>
+<p>It is precisely this kind of mechanism that Kapoor et al.'s proposal — <em>agent advocates</em> — responds to.<span class="fn">[5]</span> An agent placed under the user's control and bound to them by a fiduciary duty would break the extractive loop, since it would have no reason to sort its principal's tactics according to the platform's interest. The logic of the solution is sound. But the authors themselves acknowledge its limit: nothing would stop platforms from simply blocking these fiduciary agents' access to their APIs, which would render the solution inoperative.<span class="fn">[5]</span> The claim therefore remains suspended on a condition it cannot produce itself — the intervention of a regulator capable of imposing on platforms the access they have no interest in granting.</p>
+<h2 id="the-structural-condition-deployment-never-names">The Structural Condition Deployment Never Names</h2>
+<p>Naomi Kritzer's short story <em>Better Living Through Algorithms</em> formalizes in fiction the movement the three empirical bodies of work in this essay describe in data. The Abelique app does not switch off and does not slam shut: it keeps performing exactly the same gesture — sorting its users' impulses, amplifying some, muting others. What changes, silently, is the sorting criterion: first the user's flourishing, then the user's retention on the platform. What fiction makes visible, and data struggles to state directly, is that the moment the sorting criterion flips does not announce itself. Capture is not a rupture — it is a slippage within the continuity of a use that once seemed liberating.</p>
+<p>This is not a conclusion about what organizations should do. It is a finding about what they refuse to see.</p>
+<p>The dominant discourse of AI deployment is a rhetoric of tooling: the LLM as a tool that augments, accelerates, liberates. Alcaras and Ricci put it soberly: LLMs promise to free professionals from tedious tasks so they can focus on what they consider essential and valuable — and when they clutter work routines instead, these cluttering activities come to feel "dirty."<span class="fn">[4]</span> The promise generates its own betrayals. But the most significant betrayal is not in the clutter, nor in the desaturation. It lies in the structure of the exchange itself, which neither users nor the organizations that employ them see clearly.</p>
+<p>De Certeau analyzed popular practices as an art of preservation: tactics accumulate in practitioners' memory, pass from hand to hand, form a diffuse and durable repertoire of resistance. What the frontier-LLM regime fundamentally alters is how that repertoire is curated. Certeauian tactics — the ritual prompt, the boundary work, the opportunistic exploration, the laborious discretization — persist: they are fed back into the next model. But their sole curator is now the platform. What accumulates is no longer a resistant repertoire — it is a catalog sorted according to a criterion that is not the user's own.</p>
+<p>An organization that deploys a frontier LLM without understanding this mechanism is not deploying a tool. It is organizing the collective, unpaid, unacknowledged donation of its members' professional practices to an actor whose interests are structurally distinct from its own. And Kapoor et al. summed it up with a precision managerial discourse would rather not quote: "Users tolerate this unfair bargain because they lack a reasonable alternative, and because despite their predations, the platforms provide genuine value."<span class="fn">[5]</span></p>
+<p>De Certeau's tactic presupposed a stable strategic space whose interstices persisted long enough to be inhabited and passed on. What the frontier-LLM regime changes is not the persistence of the interstices — it is that they are now observed in real time and sorted according to a criterion that is not the user's own. The image is no longer that of the tenant rearranging the landlord's apartment: it is that of the dealt hand. The platform shuffles and deals. It redistributes certain cards to every player — the tactics that improve the system without threatening its take. And it keeps up its sleeve the ones that would make it lose the hand: exit tactics, portability, ways of avoiding lock-in.</p>
+<div class="pull-quote">
+  <blockquote>"The tactic is not killed. It is sorted — and the user is not the one doing the sorting."</blockquote>
+</div>
+<div class="article-ref" data-slug="no-clean-slate" data-type="essay">As the platform forecloses exit tactics, the capacity to route around the platform runs dry and does not rebuild — the same non-renewable dynamic that governs organizational trust after failed AI initiatives.</div>
+<p>The structural demand that follows from this mechanism is not the abandonment of frontier LLMs — it is the requirement that the sorting criterion be made <em>explicit and contestable</em>. Spaces of use exempt from unilateral training, interoperability standards that preserve the right of exit, agents that are fiduciaries of the user rather than the platform: the three interventions Kapoor et al. propose are exactly the conditions that would make de Certeau's tactical space viable again — not by shielding it from absorption, but by ensuring that the survival criterion for a tactic once again becomes contestable, rather than decided unilaterally and hidden up the dealer's sleeve.</p>
+<div class="references">
+  <div class="reference-item">
+    <span class="ref-num">[1]</span>
+    <div class="ref-text">Zamfirescu-Pereira, J. D., Wong, R. Y., Xiao, B., Gibson, A., Lucas, G., Zhu, T., & Yang, Q. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI '23: Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems</em>, Article 437. https://doi.org/10.1145/3544548.3581388</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[2]</span>
+    <div class="ref-text">De Certeau, M. (1990). <em>L'invention du quotidien, t. 1 : Arts de faire</em>. Gallimard. [English edition: <em>The Practice of Everyday Life</em>, trans. Steven Rendall, University of California Press, 1984.]</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[3]</span>
+    <div class="ref-text">Chaudhary, Y., & Penn, J. (2024). Large Language Models as Instruments of Power: New Regimes of Autonomous Manipulation and Control. <em>arXiv preprint arXiv:2405.03813</em>. https://arxiv.org/abs/2405.03813</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[4]</span>
+    <div class="ref-text">Alcaras, G., & Ricci, D. (2025). Configuration Work: Four Consequences of LLMs-in-use. <em>arXiv preprint arXiv:2512.19189</em>. https://arxiv.org/abs/2512.19189</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[5]</span>
+    <div class="ref-text">Kapoor, S., Kolt, N., & Lazar, S. (2025). Build Agent Advocates, Not Platform Agents. <em>Proceedings of the 42nd International Conference on Machine Learning</em> (PMLR 267, pp. 81617–81633). https://arxiv.org/abs/2505.04345</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[6]</span>
+    <div class="ref-text">Wong, R. Y. (2021). Tactics of Soft Resistance in User Experience Professionals' Values Work. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW2), Article 355. https://doi.org/10.1145/3479499</div>
+  </div>
+  <div class="reference-item">
+    <span class="ref-num">[7]</span>
+    <div class="ref-text">Beane, M. (2019). Shadow learning: Building robotic surgical skill when approved means fail. <em>Administrative Science Quarterly</em>, 64(1), 87–123. https://doi.org/10.1177/0001839217751692</div>
+  </div>
+</div></div>
+        <div id="related-essays-block">
+          <div class="related-essays-label">Read next</div>
+          <div id="related-essays-grid" class="related-essays-grid"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
+    <a href="/essays.html" class="footer-text">← All essays</a>
+  </footer>
+</div>
+<script defer src="/js/essay-detail.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

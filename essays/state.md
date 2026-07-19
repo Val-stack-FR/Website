@@ -26,17 +26,17 @@ each future-tense mention into a clickable cross-reference using:
   — companion essays published together. `no-clean-slate` cross-refs the
   moral-crumple-zone mechanism in `who-pays-when-ai-is-wrong`; the latter
   cross-refs `all-the-unwritten-processes` and `when-feedback-fails`. Live.
+- `the-ghost-competence.md` (EN) and `fr/the-ghost-competence.md` (FR) →
+  **The Hand That Sorts the Cards** (`the-hand-that-sorts-the-cards`) — the
+  companion draft on Certeau-style tactics under agentic capture is now
+  published. Added an `article-ref` near the Beane / shadow-learning passage
+  marking the distinct angle (eviction of the foundational learning phase vs.
+  the platform's self-interested sorting of which practices survive).
+  `the-hand-that-sorts-the-cards` also cross-refs `no-clean-slate`. Live.
 
 ## To rewire once the target is published
 
 ### `the-ghost-competence.md` (EN) and `fr/the-ghost-competence.md` (FR)
-- Discusses Beane's *shadow learning* and explicitly contrasts the "active,
-  intentional minority" against the "passive majority." The companion draft
-  **Tactics in the age of agentic capture** (unpublished) treats shadow learning
-  as a Certeau-style tactic.
-  - **Action**: when *Tactics* is published, add an `article-ref` near the
-    Beane / shadow-learning passage to mark the distinct angle, and verify the
-    wording stays distinct from the *Tactics* framing.
 - Conceptually adjacent (no bibliographic overlap, no link required):
   `the-human-bottleneck` — the bottleneck migrates to human judgment; this essay
   explains why that judgment can't form under an agent-first regime.
