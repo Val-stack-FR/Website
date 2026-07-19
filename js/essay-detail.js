@@ -182,6 +182,13 @@ function populateMeta(essay, allEssays) {
 async function renderRelated(essay) {
   if (!essay.related || essay.related.length === 0) return;
 
+  // Prerendered pages already contain the cards; don't rebuild them.
+  const grid = document.getElementById('related-essays-grid');
+  if (grid && grid.querySelector('.related-card')) {
+    document.getElementById('related-essays-block').style.display = 'block';
+    return;
+  }
+
   const needsBooks = essay.related.some(r => r.type === 'book');
   const allBooks = needsBooks ? await fetch(fetchPath('books/index.json')).then(r => r.json()) : [];
 
@@ -211,7 +218,8 @@ async function renderRelated(essay) {
 
 async function setupArticleRefs() {
   const bodyEl = document.getElementById('essay-body');
-  const refs = bodyEl.querySelectorAll('.article-ref[data-slug]');
+  // Skip refs already resolved at build time (prerendered pages).
+  const refs = bodyEl.querySelectorAll('.article-ref[data-slug]:not(.article-ref--loaded)');
   if (refs.length === 0) return;
 
   const needsBooks = Array.from(refs).some(el => el.dataset.type === 'book');
@@ -229,11 +237,15 @@ async function setupArticleRefs() {
       ? '/essays/' + slug + '/'
       : '/books/' + slug + '/';
 
+    // Prefer the author's (localised) bridge sentence; fall back to the
+    // target's description.
+    const desc = el.textContent.trim() || item.description || '';
+
     el.innerHTML = `
       <a href="${href}" class="article-ref-card">
         <div class="article-ref-eyebrow">${type}</div>
         <div class="article-ref-title">${item.title}</div>
-        <div class="article-ref-desc">${item.description || ''}</div>
+        <div class="article-ref-desc">${desc}</div>
         <div class="article-ref-cta">Read →</div>
       </a>`;
     el.classList.add('article-ref--loaded');
@@ -281,6 +293,11 @@ async function loadEssay() {
     const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
     currentLang = params.get('lang') || savedLang || 'en';
     setLangButtons(currentLang);
+
+    const allEssays = await fetch(fetchPath('essays/index.json')).then(r => r.json());
+    cachedAllEssays = allEssays;
+    const essay = allEssays.find(e => e.slug === currentSlug);
+
     if (currentLang !== 'en') {
       await loadContent();
     } else {
@@ -288,6 +305,7 @@ async function loadEssay() {
       setupFootnotes();
       setupArticleRefs();
     }
+    if (essay) await renderRelated(essay);
     return;
   }
 

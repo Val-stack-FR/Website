@@ -31,6 +31,21 @@ or hurt.
 All essays: /essays.html
 Machine-readable index: /essays/index.json
 
+### The Hand That Sorts the Cards (2026-07-12) — 18 min
+Tags: AI, philosophy, strategy
+The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren't accumulating in a resistant repertoire; they're training data the platform sorts, generalizing what serves it and quietly closing off what doesn't.
+Full text: /essays/the-hand-that-sorts-the-cards/
+
+### Who Pays When AI Is Wrong? (2026-06-27) — 23 min
+Tags: AI, change management, philosophy
+Generative AI raises the bar for earning credit while leaving the bar for blame untouched — concentrating a structural crumple zone and a psychological loss of felt ownership onto the same exposed signature.
+Full text: /essays/who-pays-when-ai-is-wrong/
+
+### No Clean Slate (2026-06-20) — 15 min
+Tags: AI, change management, strategy
+Trust in AI doesn't reset between rollouts — it depletes like a non-renewable resource with asymmetric withdrawal rates, and no repair strategy restores it once employees have reframed errors as integrity violations.
+Full text: /essays/no-clean-slate/
+
 ### All the Unwritten Processes (2026-06-01) — 14 min
 Tags: AI, change management, philosophy
 Before an agent can do anything, someone must make the workflow legible to it — a massive, skilled, unpaid investment in articulation that roadmaps never name and the most peripheral workers absorb.
@@ -153,21 +168,13 @@ How does verification workload affect the development of expertise and implicit 
 **Centralization + blackbox double-blindness** [TO SEARCH]
 Is there evidence that crisis-driven centralization degrades the distributed information environment in ways that make AI deployment more likely to fail silently? Who catches AI errors in organizations where upward honesty has been structurally suppressed?
 
-**Non-renewable trust stack** [TO REVIEW]
-Does a failed or over-promised AI initiative reduce the probability of success for subsequent initiatives in the same organization? Any work that models organizational trust as a depleting resource rather than a stable background condition?
-
-**Scapegoating × feedback inequality in AI-mediated work** [TO REVIEW]
-In contexts where AI distributes causality, do existing feedback inequalities (junior staff bearing disproportionate blame) compound or attenuate?
-
-**De Certeau tactics × platform lock-in** [TO REVIEW]
-How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI?
-
-**Déresponsabilisation × AI in surveillance contexts** [TO REVIEW]
-Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it?
-
 Completed research nodes (linked to published work):
 - Does the class/register advantage documented in chat-mode prompting persist or amplify when users must specify multi-step agent workflows rather than compose individual prompts? → /essays/briefing-is-not-chatting/
+- Does a failed or over-promised AI initiative reduce the probability of success for subsequent initiatives in the same organization? Any work that models organizational trust as a depleting resource rather than a stable background condition? → /essays/no-clean-slate/
+- In contexts where AI distributes causality, do existing feedback inequalities (junior staff bearing disproportionate blame) compound or attenuate? → /essays/who-pays-when-ai-is-wrong/
+- How do agentic or automated AI systems foreclose user-level tactical adaptation? Does platform dependency and deskilling literature apply to LLMs or generative AI? → /essays/the-hand-that-sorts-the-cards/
 - What does it cost (in knowledge codification, documentation, explicit constraint-setting) to make a knowledge-intensive professional workflow legible to an AI agent — and who bears that cost? → /essays/all-the-unwritten-processes/
+- Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it? → /essays/who-pays-when-ai-is-wrong/
 - Is there evidence for a necessary 'slow phase' of direct model interaction before effective use of more autonomous agentic systems? What happens when users skip foundational interaction phases? → /essays/the-ghost-competence/
 - How crisis-driven centralization systematically destroys the distributed information environment it was designed to fix, and why emergency authority rarely reverts. → /essays/off-the-tracks/
 - Why more than a third of feedback interventions degrade performance, and how power-distance culture and defensive silence compound that failure. → /essays/when-feedback-fails/
