@@ -233,6 +233,11 @@ body { opacity: 1; }
   padding-top: 40px;
   border-top: 1px solid var(--border);
 }
+/* Prerendered cross-links: show the block when it already contains cards
+   (no-JS / crawler path). JS also toggles display for the dynamic route. */
+#related-essays-block:has(.related-card) {
+  display: block;
+}
 .related-essays-label {
   font-family: var(--font-mono);
   font-size: 10px;

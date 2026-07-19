@@ -90,7 +90,7 @@ The structural demand that follows from this mechanism is not the abandonment of
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Zamfirescu-Pereira, J. D., Wong, R. Y., Xiao, B., Gibson, A., Lucas, G., Zhu, T., & Yang, Q. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI '23: Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems</em>, Article 437. https://doi.org/10.1145/3544548.3581388</div>
+    <div class="ref-text">Zamfirescu-Pereira, J. D., Wong, R. Y., Xiao, B., Gibson, A., Lucas, G., Zhu, T., & Yang, Q. (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. <em>CHI '23: Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems</em>, Article 437. <a href="https://doi.org/10.1145/3544548.3581388" target="_blank" rel="noopener">doi:10.1145/3544548.3581388</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
@@ -98,22 +98,22 @@ The structural demand that follows from this mechanism is not the abandonment of
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Chaudhary, Y., & Penn, J. (2024). Large Language Models as Instruments of Power: New Regimes of Autonomous Manipulation and Control. <em>arXiv preprint arXiv:2405.03813</em>. https://arxiv.org/abs/2405.03813</div>
+    <div class="ref-text">Chaudhary, Y., & Penn, J. (2024). Large Language Models as Instruments of Power: New Regimes of Autonomous Manipulation and Control. <em>arXiv preprint arXiv:2405.03813</em>. <a href="https://arxiv.org/abs/2405.03813" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Alcaras, G., & Ricci, D. (2025). Configuration Work: Four Consequences of LLMs-in-use. <em>arXiv preprint arXiv:2512.19189</em>. https://arxiv.org/abs/2512.19189</div>
+    <div class="ref-text">Alcaras, G., & Ricci, D. (2025). Configuration Work: Four Consequences of LLMs-in-use. <em>arXiv preprint arXiv:2512.19189</em>. <a href="https://arxiv.org/abs/2512.19189" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Kapoor, S., Kolt, N., & Lazar, S. (2025). Build Agent Advocates, Not Platform Agents. <em>Proceedings of the 42nd International Conference on Machine Learning</em> (PMLR 267, pp. 81617–81633). https://arxiv.org/abs/2505.04345</div>
+    <div class="ref-text">Kapoor, S., Kolt, N., & Lazar, S. (2025). Build Agent Advocates, Not Platform Agents. <em>Proceedings of the 42nd International Conference on Machine Learning</em> (PMLR 267, pp. 81617–81633). <a href="https://arxiv.org/abs/2505.04345" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Wong, R. Y. (2021). Tactics of Soft Resistance in User Experience Professionals' Values Work. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW2), Article 355. https://doi.org/10.1145/3479499</div>
+    <div class="ref-text">Wong, R. Y. (2021). Tactics of Soft Resistance in User Experience Professionals' Values Work. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW2), Article 355. <a href="https://doi.org/10.1145/3479499" target="_blank" rel="noopener">doi:10.1145/3479499</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Beane, M. (2019). Shadow learning: Building robotic surgical skill when approved means fail. <em>Administrative Science Quarterly</em>, 64(1), 87–123. https://doi.org/10.1177/0001839217751692</div>
+    <div class="ref-text">Beane, M. (2019). Shadow learning: Building robotic surgical skill when approved means fail. <em>Administrative Science Quarterly</em>, 64(1), 87–123. <a href="https://doi.org/10.1177/0001839217751692" target="_blank" rel="noopener">doi:10.1177/0001839217751692</a></div>
   </div>
 </div>

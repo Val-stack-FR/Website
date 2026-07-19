@@ -443,6 +443,58 @@ function renderMarkdown(md) {
   }).filter(Boolean).join('\n');
 }
 
+// ── CROSS-REFERENCE RESOLUTION (build-time) ───────────────────────────────────
+// Mirror the runtime resolvers in js/essay-detail.js so crawlers and no-JS
+// readers see resolved cross-links in the static HTML. The runtime skips any
+// `.article-ref--loaded` div and any already-populated related grid, so these
+// prerendered results are authoritative and never double-rendered.
+
+// Resolve inline <div class="article-ref" data-slug data-type>SENTENCE</div>
+// into the card markup, preserving the author's (localised) bridge sentence.
+function resolveArticleRefs(html) {
+  return html.replace(
+    /<div class="article-ref"\s+data-slug="([^"]+)"\s+data-type="([^"]+)"\s*>([\s\S]*?)<\/div>/g,
+    (whole, slug, type, inner) => {
+      const item = (type === 'book' ? books : essays).find(x => x.slug === slug);
+      if (!item) return whole; // leave raw if target unknown
+      const href = type === 'book' ? `/books/${slug}/` : `/essays/${slug}/`;
+      const desc = inner.trim() || item.description || '';
+      return `<div class="article-ref article-ref--loaded" data-slug="${esc(slug)}" data-type="${esc(type)}">`
+        + `<a href="${href}" class="article-ref-card">`
+        + `<div class="article-ref-eyebrow">${esc(type)}</div>`
+        + `<div class="article-ref-title">${esc(item.title)}</div>`
+        + `<div class="article-ref-desc">${desc}</div>`
+        + `<div class="article-ref-cta">Read →</div>`
+        + `</a></div>`;
+    }
+  );
+}
+
+// "Read next" cards for an essay's `related` array (mirrors renderRelated).
+function relatedEssaysHtml(essay) {
+  if (!essay.related || essay.related.length === 0) return '';
+  return essay.related.map(r => {
+    if (r.type === 'book') {
+      const b = books.find(x => x.slug === r.slug);
+      if (!b) return '';
+      return `<a href="/books/${esc(b.slug)}/" class="related-card related-card--essay"><div class="related-card-type">book</div><div class="related-title">${esc(b.title)}</div><div class="related-desc">${esc(b.description || '')}</div></a>`;
+    }
+    const e = essays.find(x => x.slug === r.slug);
+    if (!e) return '';
+    return `<a href="/essays/${esc(e.slug)}/" class="related-card related-card--essay"><div class="related-card-type">essay</div><div class="related-title">${esc(e.title)}</div><div class="related-desc">${esc(e.description || '')}</div></a>`;
+  }).filter(Boolean).join('');
+}
+
+// "Read next" cards for a book's `related` array (slugs → book cards).
+function relatedBooksHtml(book) {
+  if (!book.related || book.related.length === 0) return '';
+  return book.related.map(slug => {
+    const b = books.find(x => x.slug === slug);
+    if (!b) return '';
+    return `<a href="/books/${esc(b.slug)}/" class="related-card"><div class="related-title">${esc(b.title)}</div><div class="related-author">${esc(b.author)}</div></a>`;
+  }).filter(Boolean).join('');
+}
+
 // ── SHARED PAGE FRAGMENTS ─────────────────────────────────────────────────────
 
 const NAV_LINKS = (active) => `
@@ -548,7 +600,7 @@ ${NAV_LINKS('essays')}
         <div class="essay-body" id="essay-body">${bodyHtml}</div>
         <div id="related-essays-block">
           <div class="related-essays-label">Read next</div>
-          <div id="related-essays-grid" class="related-essays-grid"></div>
+          <div id="related-essays-grid" class="related-essays-grid">${relatedEssaysHtml(essay)}</div>
         </div>
       </div>
     </div>
@@ -647,7 +699,7 @@ ${NAV_LINKS('books')}
         <div class="review-body" id="review-body">${bodyHtml}</div>
         <div id="related-block" class="related-block">
           <div class="related-label">If you read this, read next</div>
-          <div class="related-grid" id="related-grid"></div>
+          <div class="related-grid" id="related-grid">${relatedBooksHtml(book)}</div>
         </div>
       </div>
     </div>
@@ -668,7 +720,7 @@ ${NAV_LINKS('books')}
 essays.forEach(essay => {
   const mdPath = path.join(ROOT, 'essays', `${essay.slug}.md`);
   if (!existsSync(mdPath)) { console.warn(`  ⚠ missing: essays/${essay.slug}.md`); return; }
-  const bodyHtml = renderMarkdown(readFileSync(mdPath, 'utf8'));
+  const bodyHtml = resolveArticleRefs(renderMarkdown(readFileSync(mdPath, 'utf8')));
   const dir = path.join(ROOT, 'essays', essay.slug);
   mkdirSync(dir, { recursive: true });
   writeFileSync(path.join(dir, 'index.html'), essayPage(essay, bodyHtml), 'utf8');
@@ -678,7 +730,7 @@ essays.forEach(essay => {
 books.forEach(book => {
   const mdPath = path.join(ROOT, 'books', `${book.slug}.md`);
   if (!existsSync(mdPath)) { console.warn(`  ⚠ missing: books/${book.slug}.md`); return; }
-  const bodyHtml = renderMarkdown(readFileSync(mdPath, 'utf8'));
+  const bodyHtml = resolveArticleRefs(renderMarkdown(readFileSync(mdPath, 'utf8')));
   const dir = path.join(ROOT, 'books', book.slug);
   mkdirSync(dir, { recursive: true });
   writeFileSync(path.join(dir, 'index.html'), bookPage(book, bodyHtml), 'utf8');

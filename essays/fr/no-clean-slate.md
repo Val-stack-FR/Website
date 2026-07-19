@@ -67,38 +67,38 @@ Y répondre est une opération concrète, non une posture. Mesurer ce stock avan
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Chung, G. H., Choi, J. N., & Du, J. (2017). Tired of innovations? Learned helplessness and fatigue in the context of continuous streams of innovation implementation. <em>Journal of Organizational Behavior</em>, 38(7), 1130–1148. https://doi.org/10.1002/job.2191</div>
+    <div class="ref-text">Chung, G. H., Choi, J. N., & Du, J. (2017). Tired of innovations? Learned helplessness and fatigue in the context of continuous streams of innovation implementation. <em>Journal of Organizational Behavior</em>, 38(7), 1130–1148. <a href="https://doi.org/10.1002/job.2191" target="_blank" rel="noopener">doi:10.1002/job.2191</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Slovic, P. (1993). Perceived risk, trust, and democracy. <em>Risk Analysis</em>, 13(6), 675–682. https://doi.org/10.1111/j.1539-6924.1993.tb01084.x</div>
+    <div class="ref-text">Slovic, P. (1993). Perceived risk, trust, and democracy. <em>Risk Analysis</em>, 13(6), 675–682. <a href="https://doi.org/10.1111/j.1539-6924.1993.tb01084.x" target="_blank" rel="noopener">doi:10.1111/j.1539-6924.1993.tb01084.x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Dietvorst, B. J., Simmons, J. P., & Massey, C. (2015). Algorithm aversion: People erroneously avoid algorithms after seeing them err. <em>Journal of Experimental Psychology: General</em>, 144(1), 114–126. https://doi.org/10.1037/xge0000033</div>
+    <div class="ref-text">Dietvorst, B. J., Simmons, J. P., & Massey, C. (2015). Algorithm aversion: People erroneously avoid algorithms after seeing them err. <em>Journal of Experimental Psychology: General</em>, 144(1), 114–126. <a href="https://doi.org/10.1037/xge0000033" target="_blank" rel="noopener">doi:10.1037/xge0000033</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Kim, P. H., Ferrin, D. L., Cooper, C. D., & Dirks, K. T. (2004). Removing the shadow of suspicion: The effects of apology versus denial for repairing competence- versus integrity-based trust violations. <em>Journal of Applied Psychology</em>, 89(1), 104–118. https://doi.org/10.1037/0021-9010.89.1.104</div>
+    <div class="ref-text">Kim, P. H., Ferrin, D. L., Cooper, C. D., & Dirks, K. T. (2004). Removing the shadow of suspicion: The effects of apology versus denial for repairing competence- versus integrity-based trust violations. <em>Journal of Applied Psychology</em>, 89(1), 104–118. <a href="https://doi.org/10.1037/0021-9010.89.1.104" target="_blank" rel="noopener">doi:10.1037/0021-9010.89.1.104</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Schweitzer, M. E., Hershey, J. C., & Bradlow, E. T. (2006). Promises and lies: Restoring violated trust. <em>Organizational Behavior and Human Decision Processes</em>, 101(1), 1–19. https://doi.org/10.1016/j.obhdp.2006.05.005</div>
+    <div class="ref-text">Schweitzer, M. E., Hershey, J. C., & Bradlow, E. T. (2006). Promises and lies: Restoring violated trust. <em>Organizational Behavior and Human Decision Processes</em>, 101(1), 1–19. <a href="https://doi.org/10.1016/j.obhdp.2006.05.005" target="_blank" rel="noopener">doi:10.1016/j.obhdp.2006.05.005</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Bordia, P., Restubog, S. L. D., Jimmieson, N. L., & Irmer, B. E. (2011). Haunted by the past: Effects of poor change management history on employee attitudes and turnover. <em>Group & Organization Management</em>, 36(2), 191–222. https://doi.org/10.1177/1059601110389842</div>
+    <div class="ref-text">Bordia, P., Restubog, S. L. D., Jimmieson, N. L., & Irmer, B. E. (2011). Haunted by the past: Effects of poor change management history on employee attitudes and turnover. <em>Group & Organization Management</em>, 36(2), 191–222. <a href="https://doi.org/10.1177/1059601110389842" target="_blank" rel="noopener">doi:10.1177/1059601110389842</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Vuori, N., Burkhard, B., & Pitkäranta, L. (2025). It's amazing – but terrifying!: Unveiling the combined effect of emotional and cognitive trust on organizational members' behaviours, AI performance, and adoption. <em>Journal of Management Studies</em>, 63(2), 473–514. https://doi.org/10.1111/joms.13177</div>
+    <div class="ref-text">Vuori, N., Burkhard, B., & Pitkäranta, L. (2025). It's amazing – but terrifying!: Unveiling the combined effect of emotional and cognitive trust on organizational members' behaviours, AI performance, and adoption. <em>Journal of Management Studies</em>, 63(2), 473–514. <a href="https://doi.org/10.1111/joms.13177" target="_blank" rel="noopener">doi:10.1111/joms.13177</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
-    <div class="ref-text">Esterwood, C., & Robert, L. P. (2023). Three strikes and you are out!: The impacts of multiple human–robot trust violations and repairs on robot trustworthiness. <em>Computers in Human Behavior</em>, 140, Article 107563. https://doi.org/10.1016/j.chb.2022.107563</div>
+    <div class="ref-text">Esterwood, C., & Robert, L. P. (2023). Three strikes and you are out!: The impacts of multiple human–robot trust violations and repairs on robot trustworthiness. <em>Computers in Human Behavior</em>, 140, Article 107563. <a href="https://doi.org/10.1016/j.chb.2022.107563" target="_blank" rel="noopener">doi:10.1016/j.chb.2022.107563</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>
-    <div class="ref-text">Karunakaran, A., Vendraminelli, L., & Narayanan, S. (2024). <em>Why corporate AI projects succeed or fail</em>. Stanford HAI Working Paper. https://hai.stanford.edu/news/why-corporate-ai-projects-succeed-or-fail</div>
+    <div class="ref-text">Karunakaran, A., Vendraminelli, L., & Narayanan, S. (2024). <em>Why corporate AI projects succeed or fail</em>. Stanford HAI Working Paper. <a href="https://hai.stanford.edu/news/why-corporate-ai-projects-succeed-or-fail" target="_blank" rel="noopener">hai.stanford.edu</a></div>
   </div>
 </div>

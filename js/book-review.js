@@ -119,10 +119,18 @@ function populateMeta(book) {
 
 function renderRelated(relatedSlugs, allBooks) {
   if (!relatedSlugs || relatedSlugs.length === 0) return;
+
+  const block = document.getElementById('related-block');
+  // Prerendered pages already contain the cards; don't rebuild them.
+  const grid = document.getElementById('related-grid');
+  if (grid && grid.querySelector('.related-card')) {
+    block.style.display = 'block';
+    return;
+  }
+
   const relatedBooks = relatedSlugs.map(s => allBooks.find(b => b.slug === s)).filter(Boolean);
   if (relatedBooks.length === 0) return;
 
-  const block = document.getElementById('related-block');
   block.style.display = 'block';
   document.getElementById('related-grid').innerHTML = relatedBooks.map(b => `
     <a href="/books/${b.slug}/" class="related-card">
@@ -187,11 +195,15 @@ async function loadReview() {
         coverImg.src = `/books/covers/${currentSlug}.${exts[i]}`;
       })(0);
     }
+    const allBooksStatic = await fetch(fetchPath('books/index.json')).then(r => r.json());
+    const bookStatic = allBooksStatic.find(b => b.slug === currentSlug);
+
     if (currentLang !== 'en') {
       await loadContent();
     } else {
       setupTOC();
     }
+    if (bookStatic) renderRelated(bookStatic.related, allBooksStatic);
     return;
   }
 

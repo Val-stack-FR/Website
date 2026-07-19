@@ -89,47 +89,47 @@ This mechanism is best examined before deployment, not after. Map the accountabi
 <div class="references">
   <div class="reference-item">
     <span class="ref-num">[1]</span>
-    <div class="ref-text">Elish, M. C. (2019). Moral crumple zones: Cautionary tales in human-robot interaction. <em>Engaging Science, Technology, and Society</em>, 5, 40–60. https://doi.org/10.17351/ests2019.260</div>
+    <div class="ref-text">Elish, M. C. (2019). Moral crumple zones: Cautionary tales in human-robot interaction. <em>Engaging Science, Technology, and Society</em>, 5, 40–60. <a href="https://doi.org/10.17351/ests2019.260" target="_blank" rel="noopener">doi:10.17351/ests2019.260</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[2]</span>
-    <div class="ref-text">Feier, T., Gogoll, J., & Uhl, M. (2022). Hiding behind machines: Artificial agents may help to evade punishment. <em>Science and Engineering Ethics</em>, 28, 19. https://doi.org/10.1007/s11948-022-00372-7</div>
+    <div class="ref-text">Feier, T., Gogoll, J., & Uhl, M. (2022). Hiding behind machines: Artificial agents may help to evade punishment. <em>Science and Engineering Ethics</em>, 28, 19. <a href="https://doi.org/10.1007/s11948-022-00372-7" target="_blank" rel="noopener">doi:10.1007/s11948-022-00372-7</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[3]</span>
-    <div class="ref-text">Kellogg, K. C., Lifshitz, H., Randazzo, S., Mollick, E., Dell'Acqua, F., McFowland III, E., Candelon, F., & Lakhani, K. (2024). Don't expect juniors to teach senior professionals to use generative AI: Emerging technology risks and novice AI risk mitigation tactics. HBS Working Paper No. 24-074. https://ssrn.com/abstract=4857373</div>
+    <div class="ref-text">Kellogg, K. C., Lifshitz, H., Randazzo, S., Mollick, E., Dell'Acqua, F., McFowland III, E., Candelon, F., & Lakhani, K. (2024). Don't expect juniors to teach senior professionals to use generative AI: Emerging technology risks and novice AI risk mitigation tactics. HBS Working Paper No. 24-074. <a href="https://ssrn.com/abstract=4857373" target="_blank" rel="noopener">ssrn.com</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[4]</span>
-    <div class="ref-text">Earp, B. D., Porsdam Mann, S., Liu, P., Hannikainen, I., Ali Khan, M., Chu, Y., & Savulescu, J. (2024). Credit and blame for AI–generated content: Effects of personalization in four countries. <em>Annals of the New York Academy of Sciences</em>, 1542, 51–57. https://doi.org/10.1111/nyas.15258 — Porsdam Mann, S., Earp, B. D., Nyholm, S., et al. (2023). Generative AI entails a credit–blame asymmetry. <em>Nature Machine Intelligence</em>, 5(5), 472–475.</div>
+    <div class="ref-text">Earp, B. D., Porsdam Mann, S., Liu, P., Hannikainen, I., Ali Khan, M., Chu, Y., & Savulescu, J. (2024). Credit and blame for AI–generated content: Effects of personalization in four countries. <em>Annals of the New York Academy of Sciences</em>, 1542, 51–57. <a href="https://doi.org/10.1111/nyas.15258" target="_blank" rel="noopener">doi:10.1111/nyas.15258</a> — Porsdam Mann, S., Earp, B. D., Nyholm, S., et al. (2023). Generative AI entails a credit–blame asymmetry. <em>Nature Machine Intelligence</em>, 5(5), 472–475.</div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[5]</span>
-    <div class="ref-text">Dell'Acqua, F., McFowland III, E., Mollick, E., Lifshitz, H., Kellogg, K. C., Rajendran, S., Krayer, L., Candelon, F., & Lakhani, K. R. (2026). Navigating the jagged technological frontier: Field experimental evidence of the effects of artificial intelligence on knowledge worker productivity and quality. <em>Organization Science</em>, 37(2), 403–423. https://doi.org/10.1287/orsc.2025.21838</div>
+    <div class="ref-text">Dell'Acqua, F., McFowland III, E., Mollick, E., Lifshitz, H., Kellogg, K. C., Rajendran, S., Krayer, L., Candelon, F., & Lakhani, K. R. (2026). Navigating the jagged technological frontier: Field experimental evidence of the effects of artificial intelligence on knowledge worker productivity and quality. <em>Organization Science</em>, 37(2), 403–423. <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">doi:10.1287/orsc.2025.21838</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[6]</span>
-    <div class="ref-text">Li, Z., Liang, C., Peng, J., & Yin, M. (2024). The value, benefits, and concerns of generative AI-powered assistance in writing. In <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems</em> (Article 990). ACM. https://doi.org/10.1145/3613904.3642625</div>
+    <div class="ref-text">Li, Z., Liang, C., Peng, J., & Yin, M. (2024). The value, benefits, and concerns of generative AI-powered assistance in writing. In <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems</em> (Article 990). ACM. <a href="https://doi.org/10.1145/3613904.3642625" target="_blank" rel="noopener">doi:10.1145/3613904.3642625</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[7]</span>
-    <div class="ref-text">Draxler, F., Werner, A., Lehmann, F., Hoppe, M., Schmidt, A., Buschek, D., & Welsch, R. (2024). The AI Ghostwriter Effect: When users do not perceive ownership of AI-generated text but self-declare as authors. <em>ACM Transactions on Computer-Human Interaction</em>, 31(2), Article 25. https://doi.org/10.1145/3637875</div>
+    <div class="ref-text">Draxler, F., Werner, A., Lehmann, F., Hoppe, M., Schmidt, A., Buschek, D., & Welsch, R. (2024). The AI Ghostwriter Effect: When users do not perceive ownership of AI-generated text but self-declare as authors. <em>ACM Transactions on Computer-Human Interaction</em>, 31(2), Article 25. <a href="https://doi.org/10.1145/3637875" target="_blank" rel="noopener">doi:10.1145/3637875</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[8]</span>
-    <div class="ref-text">Saxena, D., & Guha, S. (2024). Algorithmic harms in child welfare: Uncertainties in practice, organization, and street-level decision-making. <em>ACM Journal on Responsible Computing</em>, 1(1), Article 2. https://doi.org/10.1145/3616473</div>
+    <div class="ref-text">Saxena, D., & Guha, S. (2024). Algorithmic harms in child welfare: Uncertainties in practice, organization, and street-level decision-making. <em>ACM Journal on Responsible Computing</em>, 1(1), Article 2. <a href="https://doi.org/10.1145/3616473" target="_blank" rel="noopener">doi:10.1145/3616473</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[9]</span>
-    <div class="ref-text">Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To trust or to think: Cognitive forcing functions can reduce overreliance on AI in AI-assisted decision-making. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW1), Article 188. https://doi.org/10.1145/3449287</div>
+    <div class="ref-text">Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To trust or to think: Cognitive forcing functions can reduce overreliance on AI in AI-assisted decision-making. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW1), Article 188. <a href="https://doi.org/10.1145/3449287" target="_blank" rel="noopener">doi:10.1145/3449287</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[10]</span>
-    <div class="ref-text">Köbis, N., Supriyatno, B., Bersch, C., Ajaj, T., Rahwan, Z., Bonnefon, J.-F., Rilla, R., & Rahwan, I. (2025). Delegation to artificial intelligence can increase dishonest behaviour. <em>Nature</em>, 646(8083), 126–134. https://doi.org/10.1038/s41586-025-09505-x</div>
+    <div class="ref-text">Köbis, N., Supriyatno, B., Bersch, C., Ajaj, T., Rahwan, Z., Bonnefon, J.-F., Rilla, R., & Rahwan, I. (2025). Delegation to artificial intelligence can increase dishonest behaviour. <em>Nature</em>, 646(8083), 126–134. <a href="https://doi.org/10.1038/s41586-025-09505-x" target="_blank" rel="noopener">doi:10.1038/s41586-025-09505-x</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[11]</span>
-    <div class="ref-text">Faas, N., Uth, C., Sterz, S., Langer, M., & Feit, A. M. (2026). Don't blame me: Understanding how human responsibility fades when working with AI. <em>Joint Proceedings of the ACM IUI Workshops 2026</em>. https://arxiv.org/abs/2602.10701</div>
+    <div class="ref-text">Faas, N., Uth, C., Sterz, S., Langer, M., & Feit, A. M. (2026). Don't blame me: Understanding how human responsibility fades when working with AI. <em>Joint Proceedings of the ACM IUI Workshops 2026</em>. <a href="https://arxiv.org/abs/2602.10701" target="_blank" rel="noopener">arxiv.org</a></div>
   </div>
   <div class="reference-item">
     <span class="ref-num">[12]</span>
