@@ -1,5 +1,33 @@
 [
   {
+    "slug": "who-pays-when-ai-is-wrong",
+    "num": "11",
+    "title": "Who Pays When AI Is Wrong?",
+    "date": "2026-06-27",
+    "tags": ["AI", "change management", "philosophy"],
+    "readTime": "23 min",
+    "description": "Generative AI raises the bar for earning credit while leaving the bar for blame untouched — concentrating a structural crumple zone and a psychological loss of felt ownership onto the same exposed signature.",
+    "related": [
+      { "type": "essay", "slug": "all-the-unwritten-processes" },
+      { "type": "essay", "slug": "when-feedback-fails" },
+      { "type": "essay", "slug": "no-clean-slate" }
+    ]
+  },
+  {
+    "slug": "no-clean-slate",
+    "num": "10",
+    "title": "No Clean Slate",
+    "date": "2026-06-20",
+    "tags": ["AI", "change management", "strategy"],
+    "readTime": "15 min",
+    "description": "Trust in AI doesn't reset between rollouts — it depletes like a non-renewable resource with asymmetric withdrawal rates, and no repair strategy restores it once employees have reframed errors as integrity violations.",
+    "related": [
+      { "type": "essay", "slug": "genai-adoption-people-in-the-middle" },
+      { "type": "essay", "slug": "briefing-is-not-chatting" },
+      { "type": "essay", "slug": "who-pays-when-ai-is-wrong" }
+    ]
+  },
+  {
     "slug": "all-the-unwritten-processes",
     "num": "09",
     "title": "All the Unwritten Processes",

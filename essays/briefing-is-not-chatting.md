@@ -60,9 +60,11 @@ Agents do not distribute codified knowledge. They multiply the capacity of those
 
 The condition organisations refuse to name is this: deploying agents while assuming an equal capacity to brief them is deploying a productivity mechanism that amplifies pre-existing inequalities of human capital — and makes them harder to see, because everyone uses the same tool, in the same interface, at the same address.
 
-This fault line is orthogonal to another I have begun to map elsewhere, and will return to in a dedicated essay: where organisational trust depletes collectively across failed deployments, independently of individual skill, the amplification described here widens the gap between people, independently of collective history. The two dynamics do not compete — they compound.
+This fault line is orthogonal to another I have mapped elsewhere: where organisational trust depletes collectively across failed deployments, independently of individual skill, the amplification described here widens the gap between people, independently of collective history. The two dynamics do not compete — they compound.
 
-<div class="article-ref" data-slug="genai-adoption-people-in-the-middle" data-type="essay">The collective half of the picture: each failed or over-promised rollout consumes a non-renewable stock of organisational trust — a depletion that operates on the whole workforce at once, regardless of any individual's skill.</div>
+<div class="article-ref" data-slug="genai-adoption-people-in-the-middle" data-type="essay">The collective half of the picture, in brief: each failed or over-promised rollout consumes a non-renewable stock of organisational trust — a depletion that operates on the whole workforce at once, regardless of any individual's skill.</div>
+
+<div class="article-ref" data-slug="no-clean-slate" data-type="essay">The full mechanics of that depletion: why trust in AI behaves like a partially non-renewable resource with asymmetric withdrawal rates, and why standard repair strategies do almost nothing to restore it once employees have reframed errors as integrity violations.</div>
 
 "Brief literacy" is not an optional skill to pick up on the job — it is a real condition of access to agentic value, as structuring as the mastery of professional reading. What this mechanism implies for organisations: invest explicitly in framing training (not "how to use the tool" but "how to structure a delegation"), design interfaces that scaffold the structure of the brief rather than inviting conversational chat, and recognise that unequal access to AI value is not technical — it is rhetorical and cognitive. Adoption programmes that skip this step are not deploying agentic AI: they are deploying chat with a more complex interface.
 

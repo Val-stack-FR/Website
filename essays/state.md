@@ -14,20 +14,20 @@ each future-tense mention into a clickable cross-reference using:
 - `briefing-is-not-chatting` → **The Articulation Gap**
   (`linguistic-capital-ai-inequality`) — clickable `article-ref` in the intro.
   Live. No action needed.
+- `briefing-is-not-chatting.md` (EN) and `fr/briefing-is-not-chatting.md` (FR)
+  → **No Clean Slate** (`no-clean-slate`) — the dedicated essay on collective
+  trust depletion is now published. Conclusion paragraph rewired: dropped the
+  forward-tense signal, kept the `article-ref` to
+  `genai-adoption-people-in-the-middle` (the broader adoption essay), and added
+  a second `article-ref` pointing to `no-clean-slate` (the focused mechanism).
+  Live. No action needed.
+- `no-clean-slate.md` (EN) and `fr/no-clean-slate.md` (FR) ↔
+  `who-pays-when-ai-is-wrong.md` (EN) and `fr/who-pays-when-ai-is-wrong.md` (FR)
+  — companion essays published together. `no-clean-slate` cross-refs the
+  moral-crumple-zone mechanism in `who-pays-when-ai-is-wrong`; the latter
+  cross-refs `all-the-unwritten-processes` and `when-feedback-fails`. Live.
 
 ## To rewire once the target is published
-
-### `briefing-is-not-chatting.md` (EN) and `fr/briefing-is-not-chatting.md` (FR)
-- **Conclusion paragraph** — now does BOTH: links back to the published essay
-  **The people in the middle of GenAI adoption**
-  (`genai-adoption-people-in-the-middle`) via an `article-ref` anchored to its
-  "Trust Window" idea, AND keeps a forward signal ("…and will return to in a
-  dedicated essay" / "…sur laquelle je reviendrai dans un essai dédié").
-  - **Pending**: when the dedicated essay on collective trust depletion (draft
-    working title *"L'ardoise n'est jamais vierge" / the slate is never blank*)
-    is published, re-point (or add a second) `article-ref` to that more focused
-    target, since the current backlink is to a broader adoption essay where
-    trust-depletion is only one section.
 
 ### `the-ghost-competence.md` (EN) and `fr/the-ghost-competence.md` (FR)
 - Discusses Beane's *shadow learning* and explicitly contrasts the "active,
