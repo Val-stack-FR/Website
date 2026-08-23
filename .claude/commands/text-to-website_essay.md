@@ -75,6 +75,7 @@ Stage both files, commit with message `Add essay: <title>`, and push to the curr
 
 ### 8. Report
 Tell the user:
-- The essay is live at: `essay-detail.html?essay=<slug>`
+- The essay is live at: `/essays/<slug>/` (the legacy query-string template is not canonical)
 - The slug and tags used
 - If anything was inferred (date, tags, reading time), mention it so they can correct if needed
+
