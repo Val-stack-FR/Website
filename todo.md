@@ -4,7 +4,7 @@
 
 ## En cours
 
-- [ ] Attendre le redéploiement Vercel du dernier commit et conserver la PR #41 en brouillon pour revue utilisateur.
+- [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
 
 ## À faire
 
