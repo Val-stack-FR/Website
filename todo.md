@@ -22,7 +22,7 @@
 - [ ] Vérifier UX : clavier, focus, mouvements réduits, langues et défilement Research.
 - [x] Exécuter le build et contrôler le contenu de `dist/` — 2026-08-23.
 - [ ] Faire une passe adverse Sol, corriger les constats substantiels, puis refaire les contrôles concernés.
-- [ ] Créer les commits logiques, pousser et ouvrir une PR unique sans la fusionner.
+- [x] Publier la branche et ouvrir la PR brouillon #41 sans fusion — 2026-08-23.
 - [ ] Vérifier le preview Vercel desktop/mobile et consigner les résultats.
 
 ## Fait
@@ -32,6 +32,7 @@
 ## Blocages et décisions en attente
 
 - [x] Scripts natifs de build `esbuild` et `@swc/core` approuvés — 2026-08-23.
+- PR distante : https://github.com/Val-stack-FR/Website/pull/41
 
 ## Règles de tenue
 
