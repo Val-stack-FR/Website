@@ -59,6 +59,7 @@ Stage both files, commit with message `Add book review: <title>`, and push to th
 
 ### 7. Report
 Tell the user:
-- The review is live at: `book-review.html?book=<slug>`
+- The review is live at: `/books/<slug>/` (the legacy query-string template is not canonical)
 - The category tab it appears under in `books.html`
 - Any metadata that was inferred (so they can correct if needed)
+
