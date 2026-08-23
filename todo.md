@@ -4,7 +4,7 @@
 
 ## En cours
 
-- [ ] Finaliser les routes françaises et les contrôles de déploiement.
+- [ ] Attendre le redéploiement Vercel du dernier commit et conserver la PR #41 en brouillon pour revue utilisateur.
 
 ## À faire
 
@@ -19,11 +19,11 @@
 - [x] Mettre à niveau SheetJS vers `0.20.3` — 2026-08-22 (`npm audit` des scripts : 0 vulnérabilité).
 - [x] Rendre les pages principales crawlables et générer les routes françaises existantes — 2026-08-23 (12 essais et 3 critiques sous `/fr/.../`).
 - [x] Mettre à jour canonicals, hreflang, sitemap, robots, `llms.txt` et JSON-LD — 2026-08-23 (canonicals auto-référents, alternates EN/FR réciproques et JSON-LD `inLanguage: fr`).
-- [ ] Vérifier UX : clavier, focus, mouvements réduits, langues et défilement Research.
+- [x] Vérifier UX : clavier, focus, mouvements réduits, langues et défilement Research — 2026-08-23 (focus visible et `prefers-reduced-motion` sur les trois surfaces ; preview contrôlé sans débordement desktop/mobile, sélecteur EN/FR et Research opérationnels).
 - [x] Exécuter le build et contrôler le contenu de `dist/` — 2026-08-23 (About compilée ; 15 routes FR ; ni Library ni fichiers internes dans `dist/`).
-- [ ] Faire une passe adverse Sol, corriger les constats substantiels, puis refaire les contrôles concernés.
+- [x] Faire une passe adverse, corriger les constats substantiels, puis refaire les contrôles concernés — 2026-08-23 (revue manuelle exhaustive : routes générées, artefacts `dist/`, CSP, entrées HTML et UX ; aucun constat bloquant. Le sous-agent Sol n'est pas disponible dans cette conversation latérale.)
 - [x] Publier la branche et ouvrir la PR brouillon #41 sans fusion — 2026-08-23.
-- [ ] Vérifier le preview Vercel desktop/mobile et consigner les résultats.
+- [x] Vérifier le preview Vercel desktop/mobile et consigner les résultats — 2026-08-23 (deployment Ready ; Chrome authentifié : 1920×889 et 390×844, aucune erreur/avertissement console, aucun débordement, métadonnées FR et bascule EN/FR vérifiées ; Research charge et affiche ses cartes correctement).
 
 ## Fait
 
