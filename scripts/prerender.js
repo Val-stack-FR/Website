@@ -44,9 +44,86 @@ function patchSection(html, file, key, content) {
 const essays  = JSON.parse(readFileSync(path.join(ROOT, 'essays/index.json'),   'utf8'));
 const books   = JSON.parse(readFileSync(path.join(ROOT, 'books/index.json'),    'utf8'));
 const research = JSON.parse(readFileSync(path.join(ROOT, 'research/index.json'), 'utf8'));
-const library  = existsSync(path.join(ROOT, 'library/index.json'))
-  ? JSON.parse(readFileSync(path.join(ROOT, 'library/index.json'), 'utf8'))
-  : [];
+
+// Only routes with an existing translated source are emitted. The titles and
+// descriptions below are editorial translations of the English registry
+// metadata; the article bodies remain the authored French source files.
+const FRENCH_ESSAY_META = {
+  'all-the-unwritten-processes': {
+    title: 'Tous les processus non écrits',
+    description: 'Avant qu’un agent puisse agir, quelqu’un doit rendre le travail lisible : un investissement massif, qualifié et rarement reconnu que les feuilles de route ignorent.'
+  },
+  'briefing-is-not-chatting': {
+    title: 'Briefer n’est pas discuter',
+    description: 'Le chat a comprimé l’écart de compétences ; les agents l’inversent, en récompensant la décomposition, la spécification et l’évaluation critique.'
+  },
+  'genai-adoption-people-in-the-middle': {
+    title: 'Les personnes au cœur de l’adoption de la GenAI',
+    description: 'L’adoption de la GenAI cale moins par peur de la technologie que parce que les organisations traitent le mauvais problème et épuisent la confiance à chaque déploiement raté.'
+  },
+  'linguistic-capital-ai-inequality': {
+    title: 'Le fossé de l’articulation',
+    description: 'L’avantage des super-utilisateurs d’IA n’est pas seulement technique : il prolonge le capital linguistique et transforme les LLM en puissants mécanismes de tri social.'
+  },
+  'no-clean-slate': {
+    title: 'Pas de table rase',
+    description: 'La confiance envers l’IA ne repart pas de zéro : elle s’épuise de manière asymétrique et les déploiements ratés laissent des filtres durables.'
+  },
+  'off-the-tracks': {
+    title: 'Quand le train déraille',
+    description: 'Quand la performance baisse, le réflexe du contrôle renforcé détruit l’environnement informationnel nécessaire pour comprendre et corriger le problème.'
+  },
+  'the-ghost-competence': {
+    title: 'La compétence fantôme',
+    description: 'Déployer des agents dès le premier jour ne supprime pas l’apprentissage : il le rend invisible et fragilise le jugement requis pour superviser ce qui est délégué.'
+  },
+  'the-hand-that-sorts-the-cards': {
+    title: 'La main qui trie les cartes',
+    description: 'Les tactiques qui rendent les LLM utiles deviennent des données que la plateforme trie, généralise ou referme — plutôt qu’un répertoire de résistance qui s’accumule.'
+  },
+  'the-human-bottleneck': {
+    title: 'Le goulot d’étranglement humain',
+    description: 'Dans le travail augmenté par l’IA, la contrainte s’est déplacée vers la personne qui doit orienter, vérifier et juger ce que produit la machine.'
+  },
+  'when-feedback-fails': {
+    title: 'Quand le feedback échoue',
+    description: 'Plus d’un tiers des interventions de feedback dégradent la performance lorsque les organisations ignorent les conditions de conception qui déterminent leur effet.'
+  },
+  'who-is-conducting-whom': {
+    title: 'Qui dirige qui ?',
+    description: 'Travailler avec l’IA ne prolonge pas seulement la pensée : cela change le plan sur lequel elle opère, avec des conséquences pour les systèmes qui dépendent du jugement humain.'
+  },
+  'who-pays-when-ai-is-wrong': {
+    title: 'Qui paie quand l’IA se trompe ?',
+    description: 'L’IA générative augmente le seuil pour recevoir le crédit sans modifier celui du blâme, concentrant le risque sur la personne qui signe l’output.'
+  },
+};
+
+const FRENCH_BOOK_META = {
+  'blindsight': {
+    title: 'Vision aveugle',
+    description: 'Un roman de premier contact qui utilise les extraterrestres comme un scalpel pour interroger la conscience.'
+  },
+  'genius-in-the-room': {
+    title: 'Multipliers : comment les meilleurs dirigeants rendent chacun plus intelligent',
+    description: 'La personne la plus intelligente de la pièce peut devenir son principal goulot d’étranglement, souvent par la conviction que sa contribution est indispensable.'
+  },
+  'stripping-away-the-degree': {
+    title: 'Good Power',
+    description: 'Le diplôme de quatre ans n’a jamais été un proxy fiable de la capacité : il est surtout devenu un filtre pratique dont le coût se cumule dans l’économie des compétences.'
+  },
+};
+
+const routeFor = (type, slug, lang = 'en') =>
+  lang === 'fr' ? `/fr/${type}/${slug}/` : `/${type}/${slug}/`;
+const hasFrenchTranslation = (type, slug) =>
+  existsSync(path.join(ROOT, type, 'fr', `${slug}.md`));
+const localised = (item, type, lang) => {
+  if (lang !== 'fr') return item;
+  const translation = (type === 'essays' ? FRENCH_ESSAY_META : FRENCH_BOOK_META)[item.slug];
+  if (!translation) throw new Error(`[prerender] missing French metadata for ${type}/${item.slug}`);
+  return { ...item, ...translation };
+};
 
 // ── VALIDATE RESEARCH LINKS ──────────────────────────────────────────────────
 
@@ -241,109 +318,6 @@ function patchPageCount(html, file, text) {
   console.log(`✓ ${file}`);
 }
 
-// ── PATCH library.html ────────────────────────────────────────────────────────
-// Mirrors the markup that js/library.js renders (Sections view) so crawlers and
-// no-JS clients see the full reading log. JS re-renders identically on load.
-
-const LIB_CAT_CLS = {
-  'Sci-Fi': 'cat-scifi', 'Fantasy': 'cat-fantasy', 'Fiction': 'cat-fiction',
-  'Non-fiction': 'cat-nonfiction', 'Untranslated': 'cat-untranslated',
-};
-const LIB_CAT_ORDER = ['Sci-Fi', 'Fantasy', 'Fiction', 'Non-fiction', 'Untranslated'];
-const libCatCls = (c) => LIB_CAT_CLS[c] || 'cat-nonfiction';
-const libInitials = (t) => {
-  const s = String(t || '');
-  const ini = s.split(' ').filter(w => w.length > 2).slice(0, 2).map(w => w[0].toUpperCase()).join('');
-  return ini || s.replace(/[^\p{L}\p{N}]/gu, '').slice(0, 2).toUpperCase();
-};
-const libFmtGrade = (g) => { const n = Number(g); return n % 1 === 0 ? String(n) : n.toFixed(1); };
-const libDots = (g) => { const n = Number(g); return Array.from({ length: 5 }, (_, i) => `<span class="gdot${Math.round(n) > i ? ' on' : ''}"></span>`).join(''); };
-const libStatusLabel = (s) => ({ read: 'Read', reading: 'Reading', tbr: 'TBR', dnf: 'DNF' }[s] || s);
-const libSafeUrl = (u) => (typeof u === 'string' && /^\/(?!\/)/.test(u) ? u : '');
-const libSafeExtUrl = (u) => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : '');
-const libCoverSrc = (id) => `https://covers.openlibrary.org/b/id/${id}-M.jpg`;   // keep in sync with coverSrc() in js/library.js
-
-// Mirror of authorKey()/defaultSort() in js/library.js: group works by author surname.
-const LIB_PARTICLES = new Set(['le', 'la', 'de', 'du', 'des', 'von', 'van', 'der', 'den', 'ten', 'del', 'dos', "d'"]);
-function libAuthorKey(name) {
-  const parts = String(name || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .toLowerCase().trim().split(/\s+/).filter(Boolean);
-  if (!parts.length) return '~';
-  let surname = parts[parts.length - 1];
-  if (parts.length >= 2 && LIB_PARTICLES.has(parts[parts.length - 2])) surname = parts[parts.length - 2] + ' ' + surname;
-  return surname + ' ' + parts.join(' ');
-}
-function libDefaultSort(a, b) {
-  const ak = libAuthorKey(a.author), bk = libAuthorKey(b.author);
-  if (ak !== bk) return ak < bk ? -1 : 1;
-  const at = String(a.title).toLowerCase(), bt = String(b.title).toLowerCase();
-  if (at !== bt) return at < bt ? -1 : 1;
-  return a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0;
-}
-
-// Keep byte-for-byte in sync with rowHtml() in js/library.js.
-function renderLibraryRow(book, i) {
-  const cc = libCatCls(book.category);
-  const volSuffix = book.volume ? ` <span class="vol-suffix">Vol.${esc(book.volume)}</span>` : '';
-  const audioBadge = book.audio ? '<span class="audio-dot" title="Audiobook"></span>' : '';
-  const gradeCell = (book.grade != null)
-    ? `<div class="grade-score">${libFmtGrade(book.grade)}<span class="grade-denom">&thinsp;/5</span></div><div class="grade-dots">${libDots(book.grade)}</div>`
-    : '<span class="grade-none" title="To read">—</span>';
-  const dateBlock = book.dateRead ? `<span class="expand-date">${esc(book.dateRead)}</span>` : '';
-  const synopsis = book.synopsis ? esc(book.synopsis) : '<span class="expand-empty">No synopsis yet.</span>';
-  const exId = `ex-${esc(book.slug)}`;
-  const url = libSafeUrl(book.url);
-  const srcUrl = libSafeExtUrl(book.sourceUrl);
-  const sourceLink = srcUrl
-    ? `<a class="expand-link source-link" href="${esc(srcUrl)}" target="_blank" rel="noopener noreferrer">Read free online${book.source ? ` · ${esc(book.source)}` : ''} ↗</a>` : '';
-  const coverImg = Number.isInteger(book.coverId)
-    ? `<img class="cover-img" src="${libCoverSrc(book.coverId)}" alt="" loading="lazy">` : '';
-  const collection = book.collection
-    ? `<div class="book-collection" title="Found in this collection">↳ ${esc(book.collection)}</div>` : '';
-
-  return `<tr class="log-row ${cc}" data-slug="${esc(book.slug)}" tabindex="0" role="button" aria-expanded="false" aria-controls="${exId}" aria-label="${esc(book.title)}, ${esc(book.author)} — show synopsis">
-      <td class="td-num">${String(i + 1).padStart(2, '0')}</td>
-      <td class="td-cover"><div class="cover-block"><span class="cover-init">${esc(libInitials(book.title))}</span>${coverImg}</div></td>
-      <td class="td-book"><div class="book-title">${esc(book.title)}${volSuffix}</div><div class="book-author">${esc(book.author)}${audioBadge}</div>${collection}</td>
-      <td class="td-type col-format"><span class="type-badge">${esc(book.format || '—')}</span></td>
-      <td class="td-year">${book.year != null ? esc(String(book.year)) : '—'}</td>
-      <td class="td-tags"><div class="tags-wrap">${(book.tags || []).map(t => `<span class="row-tag">${esc(t)}</span>`).join('')}</div></td>
-      <td class="td-grade">${gradeCell}</td>
-      <td class="td-status"><span class="status-pill ${esc(book.status)}">${book.audio && book.status === 'read' ? 'AUDIO' : esc(libStatusLabel(book.status).toUpperCase())}</span></td>
-      <td class="td-link">${url ? `<a class="row-link" href="${esc(url)}" title="Full review of ${esc(book.title)}">↗</a>` : '<span class="row-link-empty">—</span>'}</td>
-    </tr>
-    <tr class="expand-row" id="${exId}"><td colspan="9"><div class="expand-inner">${synopsis}<div class="expand-foot">${sourceLink}${url ? `<a class="expand-link" href="${esc(url)}">Read full review →</a>` : ''}${dateBlock}</div></div></td></tr>`;
-}
-
-function libCatsPresent() {
-  const present = new Set(library.map(b => b.category));
-  return LIB_CAT_ORDER.filter(c => present.has(c))
-    .concat([...present].filter(c => !LIB_CAT_ORDER.includes(c)).sort());
-}
-
-if (library.length) {
-  const file = 'library.html';
-  let html = readFileSync(path.join(ROOT, file), 'utf8');
-
-  // Default render = active category (Sci-Fi), Stripes style, alphabetical by author —
-  // matches the initial render in js/library.js (default order).
-  const activeType = libCatsPresent()[0] || 'all';
-  const data = library.filter(b => b.category === activeType).sort(libDefaultSort);
-
-  const libBody = data.map((b, i) => renderLibraryRow(b, i)).join('\n      ');
-
-  const typeTabs = libCatsPresent().map(cat =>
-    `<button class="type-tab ${libCatCls(cat)}${cat === activeType ? ' active' : ''}" data-type="${esc(cat)}" aria-pressed="${cat === activeType}"><span class="type-dot"></span>${esc(cat)}</button>`
-  ).join('\n  ');
-
-  html = patchPageCount(html, file, `${data.length} book${data.length !== 1 ? 's' : ''}`);
-  html = patchSection(html, file, 'LIBRARY-ROWS', libBody);
-  html = patchSection(html, file, 'LIBRARY-TYPE-TABS', typeTabs);
-
-  writeFileSync(path.join(ROOT, file), html, 'utf8');
-  console.log(`✓ ${file} (${library.length} books, ${data.length} shown by default)`);
-}
-
 // ── PATCH research.html ───────────────────────────────────────────────────────
 
 {
@@ -453,18 +427,21 @@ function renderMarkdown(md) {
 
 // Resolve inline <div class="article-ref" data-slug data-type>SENTENCE</div>
 // into the card markup, preserving the author's (localised) bridge sentence.
-function resolveArticleRefs(html) {
+function resolveArticleRefs(html, lang = 'en') {
   return html.replace(
     /<div class="article-ref"\s+data-slug="([^"]+)"\s+data-type="([^"]+)"\s*>([\s\S]*?)<\/div>/g,
     (whole, slug, type, inner) => {
+      const contentType = type === 'book' ? 'books' : 'essays';
       const item = (type === 'book' ? books : essays).find(x => x.slug === slug);
       if (!item) return whole; // leave raw if target unknown
-      const href = type === 'book' ? `/books/${slug}/` : `/essays/${slug}/`;
+      const targetLang = lang === 'fr' && hasFrenchTranslation(contentType, slug) ? 'fr' : 'en';
+      const href = routeFor(contentType, slug, targetLang);
+      const itemMeta = localised(item, contentType, targetLang);
       const desc = inner.trim() || item.description || '';
       return `<div class="article-ref article-ref--loaded" data-slug="${esc(slug)}" data-type="${esc(type)}">`
         + `<a href="${href}" class="article-ref-card">`
         + `<div class="article-ref-eyebrow">${esc(type)}</div>`
-        + `<div class="article-ref-title">${esc(item.title)}</div>`
+        + `<div class="article-ref-title">${esc(itemMeta.title)}</div>`
         + `<div class="article-ref-desc">${desc}</div>`
         + `<div class="article-ref-cta">Read →</div>`
         + `</a></div>`;
@@ -473,51 +450,63 @@ function resolveArticleRefs(html) {
 }
 
 // "Read next" cards for an essay's `related` array (mirrors renderRelated).
-function relatedEssaysHtml(essay) {
+function relatedEssaysHtml(essay, lang = 'en') {
   if (!essay.related || essay.related.length === 0) return '';
   return essay.related.map(r => {
     if (r.type === 'book') {
       const b = books.find(x => x.slug === r.slug);
       if (!b) return '';
-      return `<a href="/books/${esc(b.slug)}/" class="related-card related-card--essay"><div class="related-card-type">book</div><div class="related-title">${esc(b.title)}</div><div class="related-desc">${esc(b.description || '')}</div></a>`;
+      const targetLang = lang === 'fr' && hasFrenchTranslation('books', b.slug) ? 'fr' : 'en';
+      const meta = localised(b, 'books', targetLang);
+      return `<a href="${routeFor('books', esc(b.slug), targetLang)}" class="related-card related-card--essay"><div class="related-card-type">${lang === 'fr' ? 'livre' : 'book'}</div><div class="related-title">${esc(meta.title)}</div><div class="related-desc">${esc(meta.description || '')}</div></a>`;
     }
     const e = essays.find(x => x.slug === r.slug);
     if (!e) return '';
-    return `<a href="/essays/${esc(e.slug)}/" class="related-card related-card--essay"><div class="related-card-type">essay</div><div class="related-title">${esc(e.title)}</div><div class="related-desc">${esc(e.description || '')}</div></a>`;
+    const targetLang = lang === 'fr' && hasFrenchTranslation('essays', e.slug) ? 'fr' : 'en';
+    const meta = localised(e, 'essays', targetLang);
+    return `<a href="${routeFor('essays', esc(e.slug), targetLang)}" class="related-card related-card--essay"><div class="related-card-type">${lang === 'fr' ? 'essai' : 'essay'}</div><div class="related-title">${esc(meta.title)}</div><div class="related-desc">${esc(meta.description || '')}</div></a>`;
   }).filter(Boolean).join('');
 }
 
 // "Read next" cards for a book's `related` array (slugs → book cards).
-function relatedBooksHtml(book) {
+function relatedBooksHtml(book, lang = 'en') {
   if (!book.related || book.related.length === 0) return '';
   return book.related.map(slug => {
     const b = books.find(x => x.slug === slug);
     if (!b) return '';
-    return `<a href="/books/${esc(b.slug)}/" class="related-card"><div class="related-title">${esc(b.title)}</div><div class="related-author">${esc(b.author)}</div></a>`;
+    const targetLang = lang === 'fr' && hasFrenchTranslation('books', b.slug) ? 'fr' : 'en';
+    const meta = localised(b, 'books', targetLang);
+    return `<a href="${routeFor('books', esc(b.slug), targetLang)}" class="related-card"><div class="related-title">${esc(meta.title)}</div><div class="related-author">${esc(b.author)}</div></a>`;
   }).filter(Boolean).join('');
 }
 
 // ── SHARED PAGE FRAGMENTS ─────────────────────────────────────────────────────
 
-const NAV_LINKS = (active) => `
+const NAV_LINKS = (active, lang = 'en') => {
+  const labels = lang === 'fr'
+    ? { essays: 'Essais', books: 'Livres', research: 'Recherche', about: 'À propos' }
+    : { essays: 'Essays', books: 'Books', research: 'Research', about: 'About' };
+  return `
   <nav class="nav" aria-label="primary">
     <a href="/" class="nav-logo">VT—</a>
     <div class="nav-links">
-      <a href="/essays.html" class="nav-link${active === 'essays' ? ' active' : ''}">Essays</a>
-      <a href="/books.html" class="nav-link${active === 'books' ? ' active' : ''}">Books</a>
-      <a href="/research.html" class="nav-link">Research</a>
-      <a href="/about/" class="nav-link">About</a>
+      <a href="/essays.html" class="nav-link${active === 'essays' ? ' active' : ''}">${labels.essays}</a>
+      <a href="/books.html" class="nav-link${active === 'books' ? ' active' : ''}">${labels.books}</a>
+      <a href="/research.html" class="nav-link">${labels.research}</a>
+      <a href="/about/" class="nav-link">${labels.about}</a>
     </div>
   </nav>`;
+};
 
 const SITE_URL = process.env.SITE_URL || 'https://valerianteissier.com';
 
-const HEAD = (title, description, canonical, css2, ogType = 'article') => `
+const HEAD = (title, description, canonical, css2, ogType = 'article', alternates = []) => `
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${esc(title)} — Valérian Teissier</title>
   <meta name="description" content="${esc(description)}" />
   <link rel="canonical" href="${SITE_URL}${canonical}" />
+${alternates.map(({ lang, href }) => `  <link rel="alternate" hreflang="${lang}" href="${SITE_URL}${href}" />`).join('\n')}
   <meta property="og:type" content="${ogType}" />
   <meta property="og:title" content="${esc(title)} — Valérian Teissier" />
   <meta property="og:description" content="${esc(description)}" />
@@ -534,26 +523,35 @@ const HEAD = (title, description, canonical, css2, ogType = 'article') => `
 
 // ── ESSAY PAGE GENERATOR ──────────────────────────────────────────────────────
 
-function essayPage(essay, bodyHtml) {
-  const tagsHtml = essay.tags.map(t =>
+function essayPage(essay, bodyHtml, lang = 'en') {
+  const page = localised(essay, 'essays', lang);
+  const canonical = routeFor('essays', essay.slug, lang);
+  const frenchAvailable = hasFrenchTranslation('essays', essay.slug);
+  const alternates = frenchAvailable
+    ? [{ lang: 'en', href: routeFor('essays', essay.slug) }, { lang: 'fr', href: routeFor('essays', essay.slug, 'fr') }, { lang: 'x-default', href: routeFor('essays', essay.slug) }]
+    : [];
+  const labels = lang === 'fr'
+    ? { essays: 'Essais', published: 'Publié', readingTime: 'Temps de lecture', tags: 'Tags', contents: 'Sommaire', readNext: 'À lire ensuite', footer: '← Tous les essais' }
+    : { essays: 'Essays', published: 'Published', readingTime: 'Reading time', tags: 'Tags', contents: 'Contents', readNext: 'Read next', footer: '← All essays' };
+  const tagsHtml = page.tags.map(t =>
     `<a href="/essays.html?tag=${encodeURIComponent(t)}" class="tag sidebar-tag-link">${esc(t)}</a>`
   ).join('');
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Article',
-    'headline': essay.title,
-    'description': essay.description,
-    'datePublished': essay.date,
+    'headline': page.title,
+    'description': page.description,
+    'datePublished': page.date,
     'author': { '@type': 'Person', 'name': 'Valérian Teissier', 'url': SITE_URL },
     'publisher': { '@type': 'Person', 'name': 'Valérian Teissier', 'url': SITE_URL },
-    'url': `${SITE_URL}/essays/${essay.slug}/`,
-    'keywords': essay.tags.join(', '),
-    'timeRequired': `PT${essay.readTime.replace(' min', 'M')}`,
-    'inLanguage': 'en',
+    'url': `${SITE_URL}${canonical}`,
+    'keywords': page.tags.join(', '),
+    'timeRequired': `PT${page.readTime.replace(' min', 'M')}`,
+    'inLanguage': lang,
   });
   return `<!DOCTYPE html>
-<html lang="en">
-<head>${HEAD(essay.title, essay.description, `/essays/${essay.slug}/`, '/css/essay-detail.css', 'article')}
+<html lang="${lang}">
+<head>${HEAD(page.title, page.description, canonical, '/css/essay-detail.css', 'article', alternates)}
   <script type="application/ld+json">${jsonLd}</script>
   <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"
           integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
@@ -562,54 +560,54 @@ function essayPage(essay, bodyHtml) {
 <body>
 <div class="progress-bar" id="progress"></div>
 <div class="page">
-${NAV_LINKS('essays')}
+${NAV_LINKS('essays', lang)}
   <main class="main">
     <div class="essay-layout">
       <aside class="essay-sidebar">
-        <a href="/essays.html" class="btn-back">← Essays</a>
+        <a href="/essays.html" class="btn-back">← ${labels.essays}</a>
         <div class="lang-toggle">
-          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <button class="lang-btn${lang === 'en' ? ' lang-active' : ''}" id="btn-en"${lang === 'en' ? '' : ''}>EN</button>
           <span class="lang-sep">/</span>
-          <button class="lang-btn" id="btn-fr">FR</button>
+          <button class="lang-btn${lang === 'fr' ? ' lang-active' : ''}" id="btn-fr"${frenchAvailable ? '' : ' disabled aria-disabled="true"'}>FR</button>
         </div>
         <div>
-          <div class="essay-sidebar-label">Published</div>
-          <time class="essay-sidebar-value" id="sidebar-date" datetime="${esc(essay.date)}">${esc(essay.date)}</time>
+          <div class="essay-sidebar-label">${labels.published}</div>
+          <time class="essay-sidebar-value" id="sidebar-date" datetime="${esc(page.date)}">${esc(page.date)}</time>
         </div>
         <div>
-          <div class="essay-sidebar-label">Reading time</div>
-          <div class="essay-sidebar-value" id="sidebar-readtime">${esc(essay.readTime)}</div>
+          <div class="essay-sidebar-label">${labels.readingTime}</div>
+          <div class="essay-sidebar-value" id="sidebar-readtime">${esc(page.readTime)}</div>
         </div>
         <div>
-          <div class="essay-sidebar-label">Tags</div>
+          <div class="essay-sidebar-label">${labels.tags}</div>
           <div id="sidebar-tags" class="sidebar-tags-list">${tagsHtml}</div>
         </div>
         <div>
-          <div class="essay-sidebar-label essay-sidebar-label--toc">Contents</div>
+          <div class="essay-sidebar-label essay-sidebar-label--toc">${labels.contents}</div>
           <nav aria-label="Table of contents" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="essay-content">
         <header class="essay-header">
           <div class="essay-meta-row">
-            <span id="essay-num" class="essay-num-label">Essay №${esc(essay.num)}</span>
+            <span id="essay-num" class="essay-num-label">${lang === 'fr' ? 'Essai' : 'Essay'} №${esc(page.num)}</span>
             <span class="essay-sep"></span>
-            <span id="essay-tags-inline" class="essay-tags-inline-label">${esc(essay.tags.join(' · '))}</span>
+            <span id="essay-tags-inline" class="essay-tags-inline-label">${esc(page.tags.join(' · '))}</span>
           </div>
-          <h1 class="essay-title" id="essay-title">${esc(essay.title)}</h1>
-          <p class="essay-desc" id="essay-desc">${esc(essay.description)}</p>
+          <h1 class="essay-title" id="essay-title">${esc(page.title)}</h1>
+          <p class="essay-desc" id="essay-desc">${esc(page.description)}</p>
         </header>
         <div class="essay-body" id="essay-body">${bodyHtml}</div>
         <div id="related-essays-block">
-          <div class="related-essays-label">Read next</div>
-          <div id="related-essays-grid" class="related-essays-grid">${relatedEssaysHtml(essay)}</div>
+          <div class="related-essays-label">${labels.readNext}</div>
+          <div id="related-essays-grid" class="related-essays-grid">${relatedEssaysHtml(essay, lang)}</div>
         </div>
       </div>
     </div>
   </main>
   <footer class="footer">
     <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
-    <a href="/essays.html" class="footer-text">← All essays</a>
+    <a href="/essays.html" class="footer-text">${labels.footer}</a>
   </footer>
 </div>
 <script defer src="/js/essay-detail.js"></script>
@@ -620,11 +618,19 @@ ${NAV_LINKS('essays')}
 
 // ── BOOK PAGE GENERATOR ───────────────────────────────────────────────────────
 
-function bookPage(book, bodyHtml) {
-  const tagsHtml = (book.tags || []).map(t =>
+function bookPage(book, bodyHtml, lang = 'en') {
+  const page = localised(book, 'books', lang);
+  const canonical = routeFor('books', book.slug, lang);
+  const frenchAvailable = hasFrenchTranslation('books', book.slug);
+  const alternates = frenchAvailable
+    ? [{ lang: 'en', href: routeFor('books', book.slug) }, { lang: 'fr', href: routeFor('books', book.slug, 'fr') }, { lang: 'x-default', href: routeFor('books', book.slug) }]
+    : [];
+  const labels = lang === 'fr'
+    ? { books: 'Livres', author: 'Auteur', published: 'Publié', read: 'Lu', rating: 'Note', contents: 'Dans cette critique', review: 'Critique de livre', related: 'À lire ensuite', footer: '← Tous les livres' }
+    : { books: 'Books', author: 'Author', published: 'Published', read: 'Read', rating: 'Rating', contents: 'In this review', review: 'Book review', related: 'If you read this, read next', footer: '← All books' };
+  const tagsHtml = (page.tags || []).map(t =>
     `<a href="/books.html?tag=${encodeURIComponent(t)}" class="book-tag-inline">${esc(t)}</a>`
   ).join('');
-  const rating = book.rating ? `${esc(String(book.rating))} / 5` : '';
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Review',
@@ -637,17 +643,17 @@ function bookPage(book, bodyHtml) {
     },
     'reviewRating': book.rating ? { '@type': 'Rating', 'ratingValue': book.rating, 'bestRating': 5 } : undefined,
     'author': { '@type': 'Person', 'name': 'Valérian Teissier', 'url': SITE_URL },
-    'url': `${SITE_URL}/books/${book.slug}/`,
-    'description': book.description,
-    'keywords': (book.tags || []).join(', '),
-    'inLanguage': 'en',
+    'url': `${SITE_URL}${canonical}`,
+    'description': page.description,
+    'keywords': (page.tags || []).join(', '),
+    'inLanguage': lang,
   });
   const ratingDots = Array.from({ length: 5 }, (_, i) =>
-    `<div class="rating-dot${i < (book.rating || 0) ? ' filled' : ''}"></div>`
+    `<div class="rating-dot${i < (page.rating || 0) ? ' filled' : ''}"></div>`
   ).join('');
   return `<!DOCTYPE html>
-<html lang="en">
-<head>${HEAD(book.title, book.description, `/books/${book.slug}/`, '/css/book-review.css', 'article')}
+<html lang="${lang}">
+<head>${HEAD(page.title, page.description, canonical, '/css/book-review.css', 'article', alternates)}
   <script type="application/ld+json">${jsonLd}</script>
   <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"
           integrity="sha384-odPBjvtXVM/5hOYIr3A1dB+flh0c3wAT3bSesIOqEGmyUA4JoKf/YTWy0XKOYAY7"
@@ -656,59 +662,59 @@ function bookPage(book, bodyHtml) {
 <body>
 <div class="progress-bar" id="progress"></div>
 <div class="page">
-${NAV_LINKS('books')}
+${NAV_LINKS('books', lang)}
   <main class="main">
     <div class="review-layout">
       <aside class="review-cover-panel">
-        <a href="/books.html" class="btn-back btn-back--review">← Books</a>
+        <a href="/books.html" class="btn-back btn-back--review">← ${labels.books}</a>
         <div class="lang-toggle lang-toggle--review">
-          <button class="lang-btn lang-active" id="btn-en">EN</button>
+          <button class="lang-btn${lang === 'en' ? ' lang-active' : ''}" id="btn-en">EN</button>
           <span class="lang-sep">/</span>
-          <button class="lang-btn" id="btn-fr">FR</button>
+          <button class="lang-btn${lang === 'fr' ? ' lang-active' : ''}" id="btn-fr"${frenchAvailable ? '' : ' disabled aria-disabled="true"'}>FR</button>
         </div>
         <div class="book-cover-placeholder" id="cover-placeholder">
-          <img id="cover-img" alt="${esc(book.title)}">
-          <span class="book-cover-initials" id="cover-initials">${esc(book.initials)}</span>
+          <img id="cover-img" alt="${esc(page.title)}">
+          <span class="book-cover-initials" id="cover-initials">${esc(page.initials)}</span>
           <div class="book-cover-label" id="cover-label">cover placeholder</div>
         </div>
         <div class="review-meta-item">
-          <div class="review-meta-label">Author</div>
-          <div class="review-meta-value" id="meta-author">${esc(book.author)}</div>
+          <div class="review-meta-label">${labels.author}</div>
+          <div class="review-meta-value" id="meta-author">${esc(page.author)}</div>
         </div>
         <div class="review-meta-item">
-          <div class="review-meta-label">Published</div>
-          <div class="review-meta-value"><time id="meta-published" datetime="${esc(String(book.published))}">${esc(String(book.published))}</time></div>
+          <div class="review-meta-label">${labels.published}</div>
+          <div class="review-meta-value"><time id="meta-published" datetime="${esc(String(page.published))}">${esc(String(page.published))}</time></div>
         </div>
         <div class="review-meta-item">
-          <div class="review-meta-label">Read</div>
-          <div class="review-meta-value"><time id="meta-read" datetime="${esc(book.readDate || '')}">${esc(book.readDate || '—')}</time></div>
+          <div class="review-meta-label">${labels.read}</div>
+          <div class="review-meta-value"><time id="meta-read" datetime="${esc(page.readDate || '')}">${esc(page.readDate || '—')}</time></div>
         </div>
         <div class="review-meta-item">
-          <div class="review-meta-label">Rating</div>
+          <div class="review-meta-label">${labels.rating}</div>
           <div class="review-rating review-rating--meta">
             <div class="rating-dots" id="rating-dots">${ratingDots}</div>
           </div>
         </div>
         <div class="toc-section-header">
-          <div class="review-meta-label review-meta-label--toc">In this review</div>
+          <div class="review-meta-label review-meta-label--toc">${labels.contents}</div>
           <nav aria-label="Review sections" id="toc-nav"></nav>
         </div>
       </aside>
       <div class="review-content">
-        <a class="category-badge" id="badge" href="/books.html">Book review · ${esc(book.category)}</a>
-        <h1 class="review-book-title" id="book-title">${esc(book.title)}</h1>
-        <div class="review-author" id="book-author-year">${esc(book.author)} · ${esc(String(book.published))}</div>
+        <a class="category-badge" id="badge" href="/books.html">${labels.review} · ${esc(page.category)}</a>
+        <h1 class="review-book-title" id="book-title">${esc(page.title)}</h1>
+        <div class="review-author" id="book-author-year">${esc(page.author)} · ${esc(String(page.published))}</div>
         <div class="review-body" id="review-body">${bodyHtml}</div>
         <div id="related-block" class="related-block">
-          <div class="related-label">If you read this, read next</div>
-          <div class="related-grid" id="related-grid">${relatedBooksHtml(book)}</div>
+          <div class="related-label">${labels.related}</div>
+          <div class="related-grid" id="related-grid">${relatedBooksHtml(book, lang)}</div>
         </div>
       </div>
     </div>
   </main>
   <footer class="footer">
     <span class="footer-text">Valérian · <span class="footer-accent">Paris</span> · 2026</span>
-    <a href="/books.html" class="footer-text">← All books</a>
+    <a href="/books.html" class="footer-text">${labels.footer}</a>
   </footer>
 </div>
 <script defer src="/js/book-review.js"></script>
@@ -727,6 +733,15 @@ essays.forEach(essay => {
   mkdirSync(dir, { recursive: true });
   writeFileSync(path.join(dir, 'index.html'), essayPage(essay, bodyHtml), 'utf8');
   console.log(`  → essays/${essay.slug}/index.html`);
+
+  const frenchMdPath = path.join(ROOT, 'essays', 'fr', `${essay.slug}.md`);
+  if (existsSync(frenchMdPath)) {
+    const frenchBody = resolveArticleRefs(renderMarkdown(readFileSync(frenchMdPath, 'utf8')), 'fr');
+    const frenchDir = path.join(ROOT, 'fr', 'essays', essay.slug);
+    mkdirSync(frenchDir, { recursive: true });
+    writeFileSync(path.join(frenchDir, 'index.html'), essayPage(essay, frenchBody, 'fr'), 'utf8');
+    console.log(`  → fr/essays/${essay.slug}/index.html`);
+  }
 });
 
 books.forEach(book => {
@@ -737,6 +752,15 @@ books.forEach(book => {
   mkdirSync(dir, { recursive: true });
   writeFileSync(path.join(dir, 'index.html'), bookPage(book, bodyHtml), 'utf8');
   console.log(`  → books/${book.slug}/index.html`);
+
+  const frenchMdPath = path.join(ROOT, 'books', 'fr', `${book.slug}.md`);
+  if (existsSync(frenchMdPath)) {
+    const frenchBody = resolveArticleRefs(renderMarkdown(readFileSync(frenchMdPath, 'utf8')), 'fr');
+    const frenchDir = path.join(ROOT, 'fr', 'books', book.slug);
+    mkdirSync(frenchDir, { recursive: true });
+    writeFileSync(path.join(frenchDir, 'index.html'), bookPage(book, frenchBody, 'fr'), 'utf8');
+    console.log(`  → fr/books/${book.slug}/index.html`);
+  }
 });
 
 // ── GENERATE sitemap.xml ──────────────────────────────────────────────────────
@@ -752,26 +776,55 @@ books.forEach(book => {
   ];
   const essayUrls = essays.map(e => ({
     url: `/essays/${e.slug}/`,
+    alternate: hasFrenchTranslation('essays', e.slug) ? routeFor('essays', e.slug, 'fr') : null,
+    lang: 'en',
     lastmod: e.date,
     priority: '0.8',
     changefreq: 'monthly',
   }));
   const bookUrls = books.map(b => ({
     url: `/books/${b.slug}/`,
+    alternate: hasFrenchTranslation('books', b.slug) ? routeFor('books', b.slug, 'fr') : null,
+    lang: 'en',
     lastmod: b.readDate ? `${b.readDate}-01` : today,
     priority: '0.7',
     changefreq: 'monthly',
   }));
 
-  const allUrls = [...staticPages, ...essayUrls, ...bookUrls];
-  const urlEntries = allUrls.map(({ url, lastmod, priority, changefreq }) => `  <url>
+  const frenchEssayUrls = essays
+    .filter(e => hasFrenchTranslation('essays', e.slug))
+    .map(e => ({
+      url: routeFor('essays', e.slug, 'fr'),
+      alternate: routeFor('essays', e.slug),
+      lang: 'fr',
+      lastmod: e.date,
+      priority: '0.8',
+      changefreq: 'monthly',
+    }));
+  const frenchBookUrls = books
+    .filter(b => hasFrenchTranslation('books', b.slug))
+    .map(b => ({
+      url: routeFor('books', b.slug, 'fr'),
+      alternate: routeFor('books', b.slug),
+      lang: 'fr',
+      lastmod: b.readDate ? `${b.readDate}-01` : today,
+      priority: '0.7',
+      changefreq: 'monthly',
+    }));
+  const allUrls = [...staticPages, ...essayUrls, ...bookUrls, ...frenchEssayUrls, ...frenchBookUrls];
+  const urlEntries = allUrls.map(({ url, alternate, lang, lastmod, priority, changefreq }) => {
+    const englishUrl = lang === 'fr' ? alternate : url;
+    const frenchUrl = lang === 'fr' ? url : alternate;
+    return `  <url>
     <loc>${SITE_URL}${url}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}
+${alternate ? `    <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${englishUrl}" />\n    <xhtml:link rel="alternate" hreflang="fr" href="${SITE_URL}${frenchUrl}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${englishUrl}" />\n` : ''}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-  </url>`).join('\n');
+  </url>`;
+  }).join('\n');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urlEntries}
 </urlset>`;
 
@@ -895,20 +948,19 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
     }),
   ].join('\n');
 
-  const libCounts = library.reduce((m, b) => { m[b.category] = (m[b.category] || 0) + 1; return m; }, {});
-  const libGraded = library.filter(b => b.grade != null);
-  const librarySection = [
-    '## Library (full reading log)',
+  const frenchTranslationsSection = [
+    '## French translations',
     '',
-    'Library page: /library.html',
-    'Machine-readable index: /library/index.json',
+    'The following authored French translations have dedicated, crawlable routes:',
     '',
-    `${library.length} books logged across: ${Object.entries(libCounts).map(([c, n]) => `${c} (${n})`).join(', ')}.`,
-    'Each entry has a short synopsis, format, read status, and a personal grade out of 5 (ungraded = to-read pile).',
-    '',
-    'Top-rated reads:',
-    ...[...libGraded].sort((a, b) => b.grade - a.grade).slice(0, 12).map(b =>
-      `- ${b.title} — ${b.author} · ${b.category} · ${libFmtGrade(b.grade)}/5`),
+    ...essays.filter(e => hasFrenchTranslation('essays', e.slug)).flatMap(e => {
+      const fr = localised(e, 'essays', 'fr');
+      return [`- ${fr.title}: ${routeFor('essays', e.slug, 'fr')}`, ''];
+    }),
+    ...books.filter(b => hasFrenchTranslation('books', b.slug)).flatMap(b => {
+      const fr = localised(b, 'books', 'fr');
+      return [`- ${fr.title}: ${routeFor('books', b.slug, 'fr')}`, ''];
+    }),
   ].join('\n');
 
   const activeNodes = research.filter(n => n.status !== 'DONE');
@@ -941,7 +993,7 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 - Individual book reviews (pre-rendered HTML): /books/{slug}/
 - Sitemap: /sitemap.xml`;
 
-  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
+  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', frenchTranslationsSection, '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
 
   writeFileSync(path.join(ROOT, 'llms.txt'), llmsTxt, 'utf8');
   console.log('✓ llms.txt');

@@ -10,17 +10,17 @@
 
 - [x] Lire les instructions, vérifier `main`, les PR, les branches et l'état local — 2026-08-22.
 - [x] Créer la branche locale `codex/security-geo-cleanup` depuis `main` — 2026-08-22.
-- [ ] Archiver les deux branches personnelles avec tags vérifiés.
+- [x] Archiver les deux branches personnelles avec tags vérifiés — 2026-08-23 (`archive/pr-39-library` → `428c7e3`, `archive/pr-40-drafts-to-articles` → `577b021`; branches source conservées).
 - [x] Mettre en place les instructions partagées, puis les adaptateurs `CLAUDE.md` et `AGENTS.md` — 2026-08-22.
 - [x] Mettre à jour les commandes Claude obsolètes et les exemples d'URL — 2026-08-22.
 - [x] Dépublier la bibliothèque : sortie `dist/`, navigation, sitemap, `llms.txt` et synchronisations supprimés — 2026-08-23.
-- [ ] Corriger CI et finaliser les en-têtes de sécurité.
+- [x] Corriger CI et finaliser les en-têtes de sécurité — 2026-08-23 (aucun workflow GitHub Actions restant à pinner ; CSP sans `unsafe-*`, `frame-ancestors 'none'`, X-Frame-Options `DENY`).
 - [x] Isoler et valider le déploiement dans `dist/` — 2026-08-23 (About compilée ; `library.html` et `library/index.json` absents).
 - [x] Mettre à niveau SheetJS vers `0.20.3` — 2026-08-22 (`npm audit` des scripts : 0 vulnérabilité).
-- [ ] Rendre les pages principales crawlables et générer les routes françaises existantes.
-- [ ] Mettre à jour canonicals, hreflang, sitemap, robots, `llms.txt` et JSON-LD.
+- [x] Rendre les pages principales crawlables et générer les routes françaises existantes — 2026-08-23 (12 essais et 3 critiques sous `/fr/.../`).
+- [x] Mettre à jour canonicals, hreflang, sitemap, robots, `llms.txt` et JSON-LD — 2026-08-23 (canonicals auto-référents, alternates EN/FR réciproques et JSON-LD `inLanguage: fr`).
 - [ ] Vérifier UX : clavier, focus, mouvements réduits, langues et défilement Research.
-- [x] Exécuter le build et contrôler le contenu de `dist/` — 2026-08-23.
+- [x] Exécuter le build et contrôler le contenu de `dist/` — 2026-08-23 (About compilée ; 15 routes FR ; ni Library ni fichiers internes dans `dist/`).
 - [ ] Faire une passe adverse Sol, corriger les constats substantiels, puis refaire les contrôles concernés.
 - [x] Publier la branche et ouvrir la PR brouillon #41 sans fusion — 2026-08-23.
 - [ ] Vérifier le preview Vercel desktop/mobile et consigner les résultats.

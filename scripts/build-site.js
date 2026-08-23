@@ -22,7 +22,13 @@ if (existsSync(dist)) rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 
 for (const name of ['css', 'js', 'essays', 'books', 'research']) {
-  cpSync(path.join(root, name), path.join(dist, name), { recursive: true });
+  cpSync(path.join(root, name), path.join(dist, name), {
+    recursive: true,
+    filter: source => {
+      const relative = path.relative(root, source).split(path.sep).join('/');
+      return relative !== 'css/library.css' && relative !== 'js/library.js';
+    },
+  });
 }
 for (const name of [
   'index.html', 'essays.html', 'essay-detail.html', 'books.html',

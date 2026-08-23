@@ -26,6 +26,12 @@ function setLangButtons(lang) {
 
 function switchLang(lang) {
   if (lang === currentLang) return;
+  if (staticMode) {
+    if (lang === 'fr' && document.getElementById('btn-fr').disabled) return;
+    const prefix = lang === 'fr' ? '/fr' : '';
+    window.location.assign(`${prefix}/essays/${currentSlug}/`);
+    return;
+  }
   currentLang = lang;
   try { localStorage.setItem('site-lang', lang); } catch(e) {}
   const params = new URLSearchParams(window.location.search);
@@ -257,7 +263,7 @@ async function loadContent() {
   const prefix = fetchPath(currentLang === 'fr' ? 'essays/fr/' : 'essays/');
 
   if (typeof marked === 'undefined') {
-    throw new Error('marked library failed to load — check network or CDN availability');
+    throw new Error('Markdown parser failed to load — check network or CDN availability');
   }
 
   let res = await fetch(prefix + currentSlug + '.md');
@@ -290,21 +296,16 @@ async function loadEssay() {
   if (staticMode) {
     const parts = window.location.pathname.split('/').filter(Boolean);
     currentSlug = parts[parts.length - 1];
-    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
-    currentLang = params.get('lang') || savedLang || 'en';
+    currentLang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
     setLangButtons(currentLang);
 
     const allEssays = await fetch(fetchPath('essays/index.json')).then(r => r.json());
     cachedAllEssays = allEssays;
     const essay = allEssays.find(e => e.slug === currentSlug);
 
-    if (currentLang !== 'en') {
-      await loadContent();
-    } else {
-      setupTOC();
-      setupFootnotes();
-      setupArticleRefs();
-    }
+    setupTOC();
+    setupFootnotes();
+    setupArticleRefs();
     if (essay) await renderRelated(essay);
     return;
   }

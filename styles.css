@@ -95,7 +95,7 @@ html {
 .nav-link:last-child { border-right: 1px solid var(--border); }
 .nav-link:hover, .nav-link.active { color: var(--bg); background: var(--accent); }
 
-/* ─── SUB-TAB BAR (Books ⇄ Library) ──────────────────────────────────────── */
+/* ─── SUB-TAB BAR (Books) ─────────────────────────────────────────────────── */
 .sub-tab-bar {
   display: flex;
   align-items: stretch;
@@ -120,7 +120,7 @@ html {
   .sub-tab-bar { padding: 0 20px; }
 }
 
-/* ─── PAGE HEADER (shared: Essay · Book Review · Library) ─────────────────── */
+/* ─── PAGE HEADER (shared public pages) ───────────────────────────────────── */
 .page-header {
   padding: 40px 48px 24px;
   display: flex;

@@ -26,6 +26,12 @@ function setLangButtons(lang) {
 
 function switchLang(lang) {
   if (lang === currentLang) return;
+  if (staticMode) {
+    if (lang === 'fr' && document.getElementById('btn-fr').disabled) return;
+    const prefix = lang === 'fr' ? '/fr' : '';
+    window.location.assign(`${prefix}/books/${currentSlug}/`);
+    return;
+  }
   currentLang = lang;
   try { localStorage.setItem('site-lang', lang); } catch(e) {}
   const params = new URLSearchParams(window.location.search);
@@ -144,7 +150,7 @@ async function loadContent() {
   const prefix = fetchPath(currentLang === 'fr' ? 'books/fr/' : 'books/');
 
   if (typeof marked === 'undefined') {
-    throw new Error('marked library failed to load — check network or CDN availability');
+    throw new Error('Markdown parser failed to load — check network or CDN availability');
   }
 
   let res = await fetch(prefix + currentSlug + '.md');
@@ -175,8 +181,7 @@ async function loadReview() {
   if (staticMode) {
     const parts = window.location.pathname.split('/').filter(Boolean);
     currentSlug = parts[parts.length - 1];
-    const savedLang = (() => { try { return localStorage.getItem('site-lang'); } catch(e) { return null; } })();
-    currentLang = params.get('lang') || savedLang || 'en';
+    currentLang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
     setLangButtons(currentLang);
     const coverImg = document.getElementById('cover-img');
     if (coverImg) {
@@ -198,11 +203,7 @@ async function loadReview() {
     const allBooksStatic = await fetch(fetchPath('books/index.json')).then(r => r.json());
     const bookStatic = allBooksStatic.find(b => b.slug === currentSlug);
 
-    if (currentLang !== 'en') {
-      await loadContent();
-    } else {
-      setupTOC();
-    }
+    setupTOC();
     if (bookStatic) renderRelated(bookStatic.related, allBooksStatic);
     return;
   }
