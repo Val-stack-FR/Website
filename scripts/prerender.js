@@ -2,7 +2,9 @@
 const { readFileSync, writeFileSync, mkdirSync, existsSync } = require('fs');
 const path = require('path');
 
-const ROOT = path.join(__dirname, '..');
+// SITE_ROOT lets the deployment build render an isolated output tree instead of
+// mutating the source checkout.
+const ROOT = process.env.SITE_ROOT ? path.resolve(process.env.SITE_ROOT) : path.join(__dirname, '..');
 
 function esc(s) {
   return String(s)
@@ -745,7 +747,6 @@ books.forEach(book => {
     { url: '/', priority: '1.0', changefreq: 'weekly' },
     { url: '/essays.html', priority: '0.9', changefreq: 'weekly' },
     { url: '/books.html', priority: '0.9', changefreq: 'monthly' },
-    { url: '/library.html', priority: '0.7', changefreq: 'weekly' },
     { url: '/research.html', priority: '0.8', changefreq: 'weekly' },
     { url: '/about/', priority: '0.7', changefreq: 'monthly' },
   ];
@@ -934,15 +935,15 @@ Mar 2026 — Focused on Claude Skills as the future of agentic creation for non-
 - Essay index (JSON): /essays/index.json
 - Book index (JSON): /books/index.json
 - Research index (JSON): /research/index.json
-- Library index (JSON): /library/index.json
 - Individual essays (Markdown): /essays/{slug}.md
 - Individual book reviews (Markdown): /books/{slug}.md
 - Individual essays (pre-rendered HTML): /essays/{slug}/
 - Individual book reviews (pre-rendered HTML): /books/{slug}/
 - Sitemap: /sitemap.xml`;
 
-  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', librarySection, '', '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
+  const llmsTxt = [PREAMBLE, '', '---', '', essaysSection, '---', '', booksSection, '---', '', researchSection, '', '---', '', CAREER, '', '---', '', feedsSection, ''].join('\n');
 
   writeFileSync(path.join(ROOT, 'llms.txt'), llmsTxt, 'utf8');
   console.log('✓ llms.txt');
 }
+
