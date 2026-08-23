@@ -79,7 +79,7 @@ const FRENCH_ESSAY_META = {
   },
   'the-hand-that-sorts-the-cards': {
     title: 'La main qui trie les cartes',
-    description: 'Les tactiques qui rendent les LLM utiles deviennent des données que la plateforme trie, généralise ou referme — plutôt qu’un répertoire de résistance qui s’accumule.'
+    description: 'Les tactiques de Michel de Certeau éclairent les LLM frontier : chaque ruse inventée dans ce « lieu propre » de la plateforme peut être captée, généralisée ou refermée.'
   },
   'the-human-bottleneck': {
     title: 'Le goulot d’étranglement humain',

@@ -33,7 +33,7 @@ Machine-readable index: /essays/index.json
 
 ### The Hand That Sorts the Cards (2026-07-12) — 18 min
 Tags: AI, philosophy, strategy
-The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren't accumulating in a resistant repertoire; they're training data the platform sorts, generalizing what serves it and quietly closing off what doesn't.
+Michel de Certeau’s tactics reveal why frontier LLMs are never neutral tools: every workaround users invent inside a platform’s ‘proper place’ can be captured, generalized, or closed off.
 Full text: /essays/the-hand-that-sorts-the-cards/
 
 ### Who Pays When AI Is Wrong? (2026-06-27) — 23 min

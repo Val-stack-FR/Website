@@ -6,7 +6,7 @@
     "date": "2026-07-12",
     "tags": ["AI", "philosophy", "strategy"],
     "readTime": "18 min",
-    "description": "The user tactics that make frontier LLMs usable — ritual prompts, workarounds, laborious decomposition — aren't accumulating in a resistant repertoire; they're training data the platform sorts, generalizing what serves it and quietly closing off what doesn't.",
+    "description": "Michel de Certeau’s tactics reveal why frontier LLMs are never neutral tools: every workaround users invent inside a platform’s ‘proper place’ can be captured, generalized, or closed off.",
     "related": [
       { "type": "essay", "slug": "the-ghost-competence" },
       { "type": "essay", "slug": "no-clean-slate" },
