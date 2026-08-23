@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd Spaceship && npm ci && npm run build && cd .. && node scripts/prerender.js",
-  "outputDirectory": ".",
+  "buildCommand": "node scripts/build-site.js",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",
@@ -16,3 +16,4 @@
     }
   ]
 }
+
