@@ -51,31 +51,31 @@ const research = JSON.parse(readFileSync(path.join(ROOT, 'research/index.json'),
 const FRENCH_ESSAY_META = {
   'all-the-unwritten-processes': {
     title: 'Tous les processus non écrits',
-    description: 'Avant qu’un agent puisse agir, quelqu’un doit rendre le travail lisible : un investissement massif, qualifié et rarement reconnu que les feuilles de route ignorent.'
+    description: 'Toute feuille de route agentique commence par un travail qu’elle ne voit pas : rendre les pratiques tacites lisibles, puis absorber les exceptions, réparations et coordinations qui maintiennent l’automatisation.'
   },
   'briefing-is-not-chatting': {
     title: 'Briefer n’est pas discuter',
-    description: 'Le chat a comprimé l’écart de compétences ; les agents l’inversent, en récompensant la décomposition, la spécification et l’évaluation critique.'
+    description: 'Le chat a réduit l’écart de compétences en fournissant des réponses. Les agents le creusent à nouveau : ils récompensent celles et ceux qui transforment un travail ambigu en brief, contraintes et séquences évaluables.'
   },
   'genai-adoption-people-in-the-middle': {
     title: 'Les personnes au cœur de l’adoption de la GenAI',
-    description: 'L’adoption de la GenAI cale moins par peur de la technologie que parce que les organisations traitent le mauvais problème et épuisent la confiance à chaque déploiement raté.'
+    description: 'L’adoption de la GenAI n’est pas un problème technique que résoudrait la formation. C’est un problème social, porté par les personnes entre direction et terrain, dont la confiance et l’identité professionnelle déterminent si l’usage s’ancre.'
   },
   'linguistic-capital-ai-inequality': {
     title: 'Le fossé de l’articulation',
-    description: 'L’avantage des super-utilisateurs d’IA n’est pas seulement technique : il prolonge le capital linguistique et transforme les LLM en puissants mécanismes de tri social.'
+    description: 'Le super-utilisateur d’IA est moins un profil technique que le bénéficiaire visible du capital linguistique de Bourdieu : les LLM récompensent l’art de formuler, cadrer et juger — puis transforment cet avantage de classe en performance.'
   },
   'no-clean-slate': {
     title: 'Pas de table rase',
-    description: 'La confiance envers l’IA ne repart pas de zéro : elle s’épuise de manière asymétrique et les déploiements ratés laissent des filtres durables.'
+    description: 'Les déploiements ratés ne créent pas seulement du scepticisme : ils apprennent aux salariés que leur action est vaine et transforment l’initiative suivante, même solide, en épreuve de confiance déjà épuisée.'
   },
   'off-the-tracks': {
     title: 'Quand le train déraille',
-    description: 'Quand la performance baisse, le réflexe du contrôle renforcé détruit l’environnement informationnel nécessaire pour comprendre et corriger le problème.'
+    description: 'La sous-performance déclenche le contrôle ; le contrôle rend l’information honnête coûteuse ; l’organisation perd alors les signaux mêmes qui lui permettraient de comprendre le déclin.'
   },
   'the-ghost-competence': {
     title: 'La compétence fantôme',
-    description: 'Déployer des agents dès le premier jour ne supprime pas l’apprentissage : il le rend invisible et fragilise le jugement requis pour superviser ce qui est délégué.'
+    description: 'L’automatisation peut donner l’apparence d’une main-d’œuvre plus compétente tout en empêchant la compétence de se former : les personnes héritent des outputs sans le jugement, la confiance calibrée ni la capacité de reprendre la main.'
   },
   'the-hand-that-sorts-the-cards': {
     title: 'La main qui trie les cartes',
@@ -83,19 +83,19 @@ const FRENCH_ESSAY_META = {
   },
   'the-human-bottleneck': {
     title: 'Le goulot d’étranglement humain',
-    description: 'Dans le travail augmenté par l’IA, la contrainte s’est déplacée vers la personne qui doit orienter, vérifier et juger ce que produit la machine.'
+    description: 'L’IA agentique retire le goulot de la machine pour en révéler un autre : la capacité humaine, nécessairement finie, à donner une direction, garder le contexte, vérifier les outputs et décider de ce qui mérite confiance.'
   },
   'when-feedback-fails': {
     title: 'Quand le feedback échoue',
-    description: 'Plus d’un tiers des interventions de feedback dégradent la performance lorsque les organisations ignorent les conditions de conception qui déterminent leur effet.'
+    description: 'Le feedback n’est pas un bien gratuit : plus d’un tiers des interventions dégradent la performance, ce qui fait de la conception du système — et non des bonnes intentions — le vrai problème managérial.'
   },
   'who-is-conducting-whom': {
     title: 'Qui dirige qui ?',
-    description: 'Travailler avec l’IA ne prolonge pas seulement la pensée : cela change le plan sur lequel elle opère, avec des conséquences pour les systèmes qui dépendent du jugement humain.'
+    description: 'L’IA ne prolonge pas seulement la pensée : elle change le plan sur lequel elle circule, ouvrant une exploration rhizomatique et rapide tout en fragilisant le socle intuitif qui permet de savoir où l’on se trouve.'
   },
   'who-pays-when-ai-is-wrong': {
     title: 'Qui paie quand l’IA se trompe ?',
-    description: 'L’IA générative augmente le seuil pour recevoir le crédit sans modifier celui du blâme, concentrant le risque sur la personne qui signe l’output.'
+    description: 'L’IA peut dissocier l’auteur de la responsabilité : la personne qui signe perd le crédit de la production tout en devenant la zone de froissement moral du système lorsqu’il échoue.'
   },
 };
 

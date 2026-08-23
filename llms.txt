@@ -38,57 +38,57 @@ Full text: /essays/the-hand-that-sorts-the-cards/
 
 ### Who Pays When AI Is Wrong? (2026-06-27) — 23 min
 Tags: AI, change management, philosophy
-Generative AI raises the bar for earning credit while leaving the bar for blame untouched — concentrating a structural crumple zone and a psychological loss of felt ownership onto the same exposed signature.
+AI can loosen authorship without loosening accountability: the person who signs an output may lose credit for producing it yet become the system’s moral crumple zone when it fails.
 Full text: /essays/who-pays-when-ai-is-wrong/
 
 ### No Clean Slate (2026-06-20) — 15 min
 Tags: AI, change management, strategy
-Trust in AI doesn't reset between rollouts — it depletes like a non-renewable resource with asymmetric withdrawal rates, and no repair strategy restores it once employees have reframed errors as integrity violations.
+Failed rollouts do more than create scepticism: they teach employees that action is futile, turning the next AI initiative — however sound — into a test of trust already depleted.
 Full text: /essays/no-clean-slate/
 
 ### All the Unwritten Processes (2026-06-01) — 14 min
 Tags: AI, change management, philosophy
-Before an agent can do anything, someone must make the workflow legible to it — a massive, skilled, unpaid investment in articulation that roadmaps never name and the most peripheral workers absorb.
+Every agent roadmap begins with work it cannot see: people translate tacit practice into legible inputs, then absorb the exceptions, repairs, and coordination that keep automation running.
 Full text: /essays/all-the-unwritten-processes/
 
 ### The Ghost Competence (2026-05-20) — 18 min
 Tags: AI, change management, strategy
-Deploying agents from day one doesn't remove the foundational learning phase — it makes it invisible, producing workers who look productive but never built the judgment to supervise what they delegate.
+Automation can make a workforce look more capable while preventing competence from forming: people inherit outputs without the judgment, calibrated trust, or ability to take back control.
 Full text: /essays/the-ghost-competence/
 
 ### Briefing Is Not Chatting (2026-05-09) — 14 min
 Tags: AI, linguistic, strategy
-Chat-style AI compressed the skill gap; agents reverse it — briefing rewards decomposition, specification and evaluation, the same managerial competences that educational capital has always distributed unequally.
+Chat narrowed the skills gap by supplying answers. Agents widen it again: they reward those who can turn ambiguous work into briefs, constraints, and evaluable sequences.
 Full text: /essays/briefing-is-not-chatting/
 
 ### The Articulation Gap (2026-05-01) — 10 min
 Tags: AI, philosophy, linguistic, change management
-The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.
+The AI super-user is less a technical type than the visible beneficiary of Bourdieu’s linguistic capital: LLMs reward the ability to formulate, frame, and judge — then turn class advantage into performance.
 Full text: /essays/linguistic-capital-ai-inequality/
 
 ### Who Is Conducting Whom? (2026-04-27) — 12 min
 Tags: AI, futures, strategy, philosophy
-Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.
+AI does not simply extend thought; it changes the plane on which thought moves, opening fast, rhizomatic exploration while weakening the intuitive ground that lets us know where we are.
 Full text: /essays/who-is-conducting-whom/
 
 ### The Human Bottleneck (2026-04-17) — 8 min
 Tags: AI, strategy, futures
-The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.
+Agentic AI removes the machine bottleneck only to expose another: the finite human capacity to set direction, retain context, verify outputs, and decide what deserves trust.
 Full text: /essays/the-human-bottleneck/
 
 ### The people in the middle of GenAI adoption (2026-02-07) — 11 min
 Tags: AI, change management, strategy
-GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.
+GenAI adoption is not a technology problem with a training solution. It is a social adoption problem, carried by the people between leadership and frontline peers whose trust and professional identity determine whether use sticks.
 Full text: /essays/genai-adoption-people-in-the-middle/
 
 ### When Feedback Fails (2025-10-13) — 9 min
 Tags: change management, strategy
-More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.
+Feedback is not a free good: more than a third of interventions lower performance, making the design of the system — not good intentions — the real management problem.
 Full text: /essays/when-feedback-fails/
 
 ### When the Train Comes Off the Tracks (2025-07-17) — 8 min
 Tags: change management, crisis
-When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address.
+Underperformance triggers control; control makes honest information costly; the organisation then loses the very signals it needs to understand the decline.
 Full text: /essays/off-the-tracks/
 
 ---

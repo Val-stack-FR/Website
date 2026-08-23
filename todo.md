@@ -18,7 +18,7 @@
 - [x] Isoler et valider le déploiement dans `dist/` — 2026-08-23 (About compilée ; `library.html` et `library/index.json` absents).
 - [x] Mettre à niveau SheetJS vers `0.20.3` — 2026-08-22 (`npm audit` des scripts : 0 vulnérabilité).
 - [x] Rendre les pages principales crawlables et générer les routes françaises existantes — 2026-08-23 (12 essais et 3 critiques sous `/fr/.../`).
-- [x] Reprendre l'accroche de « The Hand That Sorts the Cards » en anglais et en français — 2026-08-23 (pont explicite avec les tactiques et le « lieu propre » de Michel de Certeau).
+- [x] Reprendre les accroches des 12 essais en anglais et en français — 2026-08-23 (chaque promesse annonce désormais le mécanisme central ; « The Hand That Sorts the Cards » explicite le pont avec les tactiques et le « lieu propre » de Michel de Certeau).
 - [x] Mettre à jour canonicals, hreflang, sitemap, robots, `llms.txt` et JSON-LD — 2026-08-23 (canonicals auto-référents, alternates EN/FR réciproques et JSON-LD `inLanguage: fr`).
 - [x] Vérifier UX : clavier, focus, mouvements réduits, langues et défilement Research — 2026-08-23 (focus visible et `prefers-reduced-motion` sur les trois surfaces ; preview contrôlé sans débordement desktop/mobile, sélecteur EN/FR et Research opérationnels).
 - [x] Exécuter le build et contrôler le contenu de `dist/` — 2026-08-23 (About compilée ; 15 routes FR ; ni Library ni fichiers internes dans `dist/`).

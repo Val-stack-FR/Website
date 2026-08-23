@@ -20,7 +20,7 @@
     "date": "2026-06-27",
     "tags": ["AI", "change management", "philosophy"],
     "readTime": "23 min",
-    "description": "Generative AI raises the bar for earning credit while leaving the bar for blame untouched — concentrating a structural crumple zone and a psychological loss of felt ownership onto the same exposed signature.",
+    "description": "AI can loosen authorship without loosening accountability: the person who signs an output may lose credit for producing it yet become the system’s moral crumple zone when it fails.",
     "related": [
       { "type": "essay", "slug": "all-the-unwritten-processes" },
       { "type": "essay", "slug": "when-feedback-fails" },
@@ -34,7 +34,7 @@
     "date": "2026-06-20",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "15 min",
-    "description": "Trust in AI doesn't reset between rollouts — it depletes like a non-renewable resource with asymmetric withdrawal rates, and no repair strategy restores it once employees have reframed errors as integrity violations.",
+    "description": "Failed rollouts do more than create scepticism: they teach employees that action is futile, turning the next AI initiative — however sound — into a test of trust already depleted.",
     "related": [
       { "type": "essay", "slug": "genai-adoption-people-in-the-middle" },
       { "type": "essay", "slug": "briefing-is-not-chatting" },
@@ -48,7 +48,7 @@
     "date": "2026-06-01",
     "tags": ["AI", "change management", "philosophy"],
     "readTime": "14 min",
-    "description": "Before an agent can do anything, someone must make the workflow legible to it — a massive, skilled, unpaid investment in articulation that roadmaps never name and the most peripheral workers absorb.",
+    "description": "Every agent roadmap begins with work it cannot see: people translate tacit practice into legible inputs, then absorb the exceptions, repairs, and coordination that keep automation running.",
     "related": [
       { "type": "essay", "slug": "the-ghost-competence" },
       { "type": "essay", "slug": "briefing-is-not-chatting" },
@@ -62,7 +62,7 @@
     "date": "2026-05-20",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "18 min",
-    "description": "Deploying agents from day one doesn't remove the foundational learning phase — it makes it invisible, producing workers who look productive but never built the judgment to supervise what they delegate.",
+    "description": "Automation can make a workforce look more capable while preventing competence from forming: people inherit outputs without the judgment, calibrated trust, or ability to take back control.",
     "related": [
       { "type": "essay", "slug": "briefing-is-not-chatting" },
       { "type": "essay", "slug": "all-the-unwritten-processes" },
@@ -76,7 +76,7 @@
     "date": "2026-05-09",
     "tags": ["AI", "linguistic", "strategy"],
     "readTime": "14 min",
-    "description": "Chat-style AI compressed the skill gap; agents reverse it — briefing rewards decomposition, specification and evaluation, the same managerial competences that educational capital has always distributed unequally.",
+    "description": "Chat narrowed the skills gap by supplying answers. Agents widen it again: they reward those who can turn ambiguous work into briefs, constraints, and evaluable sequences.",
     "related": [
       { "type": "essay", "slug": "linguistic-capital-ai-inequality" },
       { "type": "essay", "slug": "the-ghost-competence" },
@@ -90,7 +90,7 @@
     "date": "2026-05-01",
     "tags": ["AI", "philosophy", "linguistic","change management"],
     "readTime": "10 min",
-    "description": "The AI super-user advantage is not a tech phenomenon — it's a laundered version of Bourdieu's linguistic capital, and LLMs are the most efficient class-sorting machine we've ever built.",
+    "description": "The AI super-user is less a technical type than the visible beneficiary of Bourdieu’s linguistic capital: LLMs reward the ability to formulate, frame, and judge — then turn class advantage into performance.",
     "related": [
       { "type": "essay", "slug": "genai-adoption-people-in-the-middle" },
       { "type": "essay", "slug": "the-human-bottleneck" }
@@ -103,7 +103,7 @@
   "date": "2026-04-27",
   "tags": ["AI", "futures", "strategy", "philosophy"],
   "readTime": "12 min",
-  "description": "Working with AI didn't extend my mind — it changed the plane on which I think, and the gap between those two things matters enormously for anyone building systems that depend on people thinking well.",
+    "description": "AI does not simply extend thought; it changes the plane on which thought moves, opening fast, rhizomatic exploration while weakening the intuitive ground that lets us know where we are.",
   "related": [
     { "type": "essay", "slug": "the-human-bottleneck" },
     { "type": "essay", "slug": "linguistic-capital-ai-inequality" }
@@ -116,7 +116,7 @@
   "date": "2026-04-17",
   "tags": ["AI", "strategy", "futures"],
   "readTime": "8 min",
-  "description": "The constraint in AI-augmented work has already moved — not away from the technology, but onto the human who must direct, review, and judge what the machine produces.",
+    "description": "Agentic AI removes the machine bottleneck only to expose another: the finite human capacity to set direction, retain context, verify outputs, and decide what deserves trust.",
   "related": [
     { "type": "essay", "slug": "who-is-conducting-whom" },
     { "type": "essay", "slug": "genai-adoption-people-in-the-middle" }
@@ -129,7 +129,7 @@
     "date": "2026-02-07",
     "tags": ["AI", "change management", "strategy"],
     "readTime": "11 min",
-    "description": "GenAI adoption stalls not because people fear the technology, but because organisations keep solving the wrong problem — and each failed rollout consumes trust that won't replenish itself.",
+    "description": "GenAI adoption is not a technology problem with a training solution. It is a social adoption problem, carried by the people between leadership and frontline peers whose trust and professional identity determine whether use sticks.",
     "related": [
       { "type": "essay", "slug": "when-feedback-fails" },
       { "type": "essay", "slug": "linguistic-capital-ai-inequality" }
@@ -142,7 +142,7 @@
   "date": "2025-10-13",
   "tags": ["change management","strategy"],
   "readTime": "9 min",
-  "description": "More than a third of feedback interventions degrade performance — not because the intent was wrong, but because most organisations treat feedback as a free good and skip the four design conditions that determine whether it helps or hurts.",
+    "description": "Feedback is not a free good: more than a third of interventions lower performance, making the design of the system — not good intentions — the real management problem.",
   "related": [
     { "type": "essay", "slug": "off-the-tracks" },
     { "type": "essay", "slug": "genai-adoption-people-in-the-middle" }
@@ -155,7 +155,7 @@
   "date": "2025-07-17",
   "tags": ["change management", "crisis"],
   "readTime": "8 min",
-  "description": "When performance slips, the instinctive managerial response is tighter control — which systematically destroys the information environment needed to fix the problem it was meant to address.",
+    "description": "Underperformance triggers control; control makes honest information costly; the organisation then loses the very signals it needs to understand the decline.",
   "related": [
     { "type": "essay", "slug": "when-feedback-fails" }
   ]
