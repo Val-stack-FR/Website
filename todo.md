@@ -34,6 +34,8 @@
 
 ## Blocages et décisions en attente
 
+- Corrections factuelles des deux essais FR/EN : [PR brouillon #42](https://github.com/Val-stack-FR/Website/pull/42), à relire et fusionner ; contrôles ciblés réussis, aucune fusion automatique.
+
 - [x] Scripts natifs de build `esbuild` et `@swc/core` approuvés — 2026-08-23.
 - PR distante : https://github.com/Val-stack-FR/Website/pull/41
 
