@@ -4,6 +4,8 @@
 
 ## En cours
 
+- [x] Corrections factuelles FR/EN de *All the Unwritten Processes* et *Who Pays When AI Is Wrong?* — 2026-09-27 : outils radiologiques distincts ; corrélation Buçinca non établie retirée ; résultats expérimentaux et hypothèse d'ownership bornés. Branche `codex/fix-published-essay-evidence` ; sources : audits directs C-apprentissage-02 et C-apprentissage-06 dans BLOG_RECHERCHE. Rendu statique contrôlé sur les quatre routes, numéros de citations inchangés, quatre miroirs identiques octet par octet ; diff sans erreur d'espacement. Relecture manuelle ciblée FR/EN : mêmes dénominateurs et réserves, aucun problème restant identifié dans les passages modifiés. PR de revue à ouvrir, sans fusion automatique.
+
 - [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
 
 ## À faire
