@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "0.1-demo",
+  "fixture": true,
+  "fixtureNotice": "Données de démonstration technique. Aucun contenu historique n’est publié dans cette fixture.",
+  "acts": [
+    {
+      "id": "demo-act-001",
+      "slug": "demo-acte-a",
+      "title": "Démonstration — acte A",
+      "fonds": "Fixture locale — aucun fonds réel",
+      "cotes": [{ "id": "demo-cote-a", "label": "DEMO-A" }],
+      "dateClaims": [],
+      "people": [],
+      "identificationStatus": "demo_only",
+      "readingStatus": "translation_draft",
+      "publicationStatus": "public_draft",
+      "statusLabel": "Brouillon de démonstration",
+      "revisionId": "demo-revision-001",
+      "transcription": {
+        "id": "demo-text-001-source",
+        "lang": "frm",
+        "status": "transcription_draft",
+        "sourceLabel": "Texte factice de contrôle d’interface",
+        "blocks": [
+          {
+            "id": "demo-block-001-source",
+            "text": "Emplacement de transcription de démonstration. Aucun texte d’archive n’est chargé.",
+            "uncertain": true,
+            "note": "Ce passage sert uniquement à vérifier l’affichage d’une incertitude."
+          }
+        ]
+      },
+      "modernFrenchTranslation": {
+        "id": "demo-text-001-translation",
+        "lang": "fr",
+        "status": "translation_draft",
+        "sourceLabel": "Traduction factice de contrôle d’interface",
+        "blocks": [
+          {
+            "id": "demo-block-001-translation",
+            "text": "Emplacement de traduction proposée. Aucun contenu historique n’est interprété.",
+            "uncertain": false
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "demo-view-001-recto",
+          "src": "media/demo-recto.svg",
+          "alt": "Repère graphique neutre portant la mention démonstration recto",
+          "caption": "Recto — substitut neutre pour le contrôle de la galerie.",
+          "viewType": "recto",
+          "scope": "page",
+          "certainty": "demo_only",
+          "placeholder": true
+        },
+        {
+          "id": "demo-view-001-verso",
+          "src": "media/demo-verso.svg",
+          "alt": "Repère graphique neutre portant la mention démonstration verso",
+          "caption": "Verso — substitut neutre pour le contrôle de la galerie.",
+          "viewType": "verso",
+          "scope": "page",
+          "certainty": "demo_only",
+          "placeholder": true
+        },
+        {
+          "id": "demo-view-001-detail",
+          "src": "media/demo-detail.svg",
+          "alt": "Repère graphique neutre portant la mention démonstration détail",
+          "caption": "Détail — substitut neutre pour tester le zoom sans scan réel.",
+          "viewType": "detail",
+          "scope": "page",
+          "certainty": "demo_only",
+          "placeholder": true
+        }
+      ],
+      "correctionHref": null
+    },
+    {
+      "id": "demo-act-002",
+      "slug": "demo-acte-b",
+      "title": "Démonstration — acte B",
+      "fonds": "Fixture locale — aucun fonds réel",
+      "cotes": [{ "id": "demo-cote-b", "label": "DEMO-B" }],
+      "dateClaims": [],
+      "people": [],
+      "identificationStatus": "demo_only",
+      "readingStatus": "untranscribed",
+      "publicationStatus": "public_draft",
+      "statusLabel": "Non transcrit — démonstration",
+      "revisionId": null,
+      "transcription": {
+        "id": "demo-text-002-source",
+        "lang": "und",
+        "status": "untranscribed",
+        "sourceLabel": "Aucune source textuelle chargée",
+        "blocks": []
+      },
+      "modernFrenchTranslation": {
+        "id": "demo-text-002-translation",
+        "lang": "fr",
+        "status": "unavailable",
+        "sourceLabel": "Aucune traduction disponible",
+        "blocks": []
+      },
+      "images": [
+        {
+          "id": "demo-view-002-copy",
+          "src": "media/demo-copy.svg",
+          "alt": "Repère graphique neutre portant la mention démonstration copie",
+          "caption": "Copie — substitut neutre, sans association archivistique réelle.",
+          "viewType": "copy",
+          "scope": "act",
+          "certainty": "demo_only",
+          "placeholder": true
+        }
+      ],
+      "correctionHref": null
+    },
+    {
+      "id": "demo-act-003",
+      "slug": "demo-acte-c",
+      "title": "Démonstration — acte C",
+      "fonds": "Fixture locale — aucun fonds réel",
+      "cotes": [{ "id": "demo-cote-c", "label": "DEMO-C" }],
+      "dateClaims": [],
+      "people": [],
+      "identificationStatus": "demo_only",
+      "readingStatus": "untranscribed",
+      "publicationStatus": "public_draft",
+      "statusLabel": "Notice incomplète — démonstration",
+      "revisionId": null,
+      "transcription": {
+        "id": "demo-text-003-source",
+        "lang": "und",
+        "status": "untranscribed",
+        "sourceLabel": "Aucune source textuelle chargée",
+        "blocks": []
+      },
+      "modernFrenchTranslation": {
+        "id": "demo-text-003-translation",
+        "lang": "fr",
+        "status": "unavailable",
+        "sourceLabel": "Aucune traduction disponible",
+        "blocks": []
+      },
+      "images": [
+        {
+          "id": "demo-view-003-register",
+          "src": "media/demo-register.svg",
+          "alt": "Repère graphique neutre portant la mention démonstration répertoire",
+          "caption": "Répertoire — substitut neutre, sans contenu documentaire.",
+          "viewType": "register",
+          "scope": "act",
+          "certainty": "demo_only",
+          "placeholder": true
+        }
+      ],
+      "correctionHref": null
+    }
+  ]
+}

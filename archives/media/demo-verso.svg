@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Démonstration verso</title>
+  <desc id="desc">Substitut graphique neutre, sans image d’archive.</desc>
+  <rect width="900" height="1200" fill="#d5e6db"/>
+  <rect x="42" y="42" width="816" height="1116" fill="none" stroke="#1a5c3a" stroke-width="3"/>
+  <path d="M115 230H785M115 290H690M115 350H735M115 410H610" stroke="#8fa89a" stroke-width="12"/>
+  <circle cx="680" cy="680" r="112" fill="none" stroke="#1a5c3a" stroke-width="6"/>
+  <text x="90" y="950" fill="#0d3d25" font-family="monospace" font-size="42">DÉMONSTRATION</text>
+  <text x="90" y="1010" fill="#1a5c3a" font-family="monospace" font-size="30">VERSO · AUCUN SCAN RÉEL</text>
+</svg>
