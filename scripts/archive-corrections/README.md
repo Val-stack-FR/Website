@@ -16,6 +16,8 @@ $env:ARCHIVE_CORRECTIONS_OWNER_TEST_SECRET = [Convert]::ToHexString([Security.Cr
 
 Le secret est créé dans l'environnement, sans être affiché ni enregistré. Le processus affiche seulement son URL locale, la version et le mode `local_test_secret`. `Ctrl+C` arrête le service. Un lancement avec le même nom `demo` retrouve les données. Le port `0` sélectionne un port libre, utile pour les tests.
 
+La [mini-interface MVP-D2](ui/README.md) est accessible sous `/demo/` sur ce même service. Elle utilise le passage inventé et les contrôles serveur du MVP-D. Le parcours à deux onglets et la conservation exacte de l’historique après redémarrage ont été vérifiés ; voir [le rapport navigateur](../../tests/archive-corrections/ui-browser-review.md).
+
 Le test automatisé réalise la démonstration complète avec **deux clients HTTP distincts** ; leurs secrets sont éphémères et générés dans le processus :
 
 ```powershell
@@ -46,4 +48,4 @@ L'authentification est un secret Bearer **local de test**, vérifié côté serv
 
 Le runtime doit rester sur un système de fichiers local, utilisé depuis une seule machine. L'emplacement d'essai `Z:` est déclaré `Fixed` / `NTFS` par Windows. Les vérifications démontrent la persistance après arrêt de processus, pas une résistance à une panne physique du disque. Les droits locaux hérités restent ceux de Windows ; `.gitignore` protège contre l'ajout accidentel au dépôt et ne constitue pas un chiffrement ou une ACL.
 
-Les routes n'acceptent pas de clients navigateur avec `Origin`, ni un `Host` autre que l'adresse loopback annoncée. Il n'y a ni interface, ni CORS, ni route publique, ni raccord au build/navigation/hébergement, ni publication, ni corpus, ni JWT. L'authentification réelle, PostgreSQL, protection des abus à l'échelle publique et tests équivalents en hébergement restent à réaliser avant toute ouverture publique.
+Les routes exigent le `Host` loopback annoncé. Un `Origin` absent ou exactement égal à l’origine normalisée du service est accepté ; les autres origines sont refusées. Seuls `/demo/` et ses quatre actifs explicitement sélectionnés servent l’interface fictive ; aucun en-tête CORS ne permet l’accès externe. Aucun raccord public, corpus, JWT ou hébergement n’est actif. L’authentification réelle, PostgreSQL, protection des abus à l’échelle publique et tests équivalents en hébergement restent à réaliser avant l’ouverture publique des corrections.
