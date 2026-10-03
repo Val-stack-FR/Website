@@ -335,8 +335,8 @@ export function renderReaderHtml(viewModel, { privatePreview = false } = {}) {
   <div class="page">
     <main class="archives-main">
       <header class="archives-header"><div><p class="archives-kicker">Prévisualisation locale · données réelles</p><h1>Consultation</h1></div><p class="archives-intro">Dossiers expérimentaux issus de l’export d’import. Une entrée n’est pas présentée comme un acte identifié lorsque ses IDs canoniques sont absents.</p></header>
-      <nav class="reader-actions" aria-label="Autres vues de l’atelier"><a class="reader-button" href="/archives/recherche/">Rechercher dans les fiches</a><a class="reader-button" href="/archives/avancement/">Avancement des travaux</a></nav>
-      <aside class="fixture-notice" aria-label="Avertissement de publication"><strong>Privé — droits en attente.</strong><span>Cette sortie sert à la consultation locale. Elle n’est pas autorisée pour la publication.</span></aside>
+      <nav class="reader-actions" aria-label="Autres vues de l’atelier"><a class="reader-button" href="/archives/recherche/">Rechercher dans les fiches</a><a class="reader-button" href="/archives/avancement/">Avancement des travaux</a><a class="reader-button" href="/archives/formes/">Une lacune à relire</a></nav>
+      <aside class="fixture-notice" aria-label="État de la prévisualisation"><strong>Consultation locale · diffusion en préparation.</strong><span>Cette version de travail prépare l’atelier public. Les crédits des images restent à documenter.</span></aside>
       <section class="archive-reader" id="archive-reader" aria-labelledby="reader-heading" data-item-singular="Dossier">
         <h2 class="visually-hidden" id="reader-heading">Lecteur horizontal des dossiers</h2>
         <div class="reader-toolbar" aria-label="Navigation entre les dossiers">
@@ -351,7 +351,7 @@ export function renderReaderHtml(viewModel, { privatePreview = false } = {}) {
         <div class="acts-viewport" id="acts-viewport" tabindex="0" aria-label="Dossiers de consultation sur une piste horizontale"><div class="acts-track">${viewModel.dossiers.map(renderDossier).join('')}</div></div>
       </section>
     </main>
-    <footer class="footer"><span class="footer-text">Prévisualisation privée · paquet ${escapeHtml(viewModel.packageId)}</span><span class="footer-text">Aucune publication autorisée</span></footer>
+    <footer class="footer"><span class="footer-text">Prévisualisation privée · paquet ${escapeHtml(viewModel.packageId)}</span><span class="footer-text">Crédits des images à documenter</span></footer>
   </div>
   <dialog class="image-dialog" id="image-dialog" aria-labelledby="image-dialog-caption"><form method="dialog" class="dialog-toolbar"><button class="dialog-close" value="close">Fermer <span aria-hidden="true">×</span></button></form><div class="dialog-media"><img id="image-dialog-img" alt="" /></div><p id="image-dialog-caption"></p></dialog>
   <script src="/js/archives-reader.js" defer></script>

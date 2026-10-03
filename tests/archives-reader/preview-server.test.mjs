@@ -159,6 +159,23 @@ test('optional annex search exposes only its page and two explicit assets', asyn
   await assert.rejects(createArchivePreview({ ...f, searchHtmlPath: f.htmlPath }), /outside the checkout/);
 });
 
+test('optional occurrence page exposes only its route and stylesheet', async t => {
+  const f = await fixture(t);
+  f.occurrenceHtmlPath = join(f.assetsRoot, 'private-occurrence.html');
+  await writeFile(f.occurrenceHtmlPath, '<!doctype html><html lang="fr"><body>One unreviewed context</body></html>');
+  await writeFile(join(f.assetsRoot, 'css/archives-occurrence.css'), '/* occurrence */');
+  const preview = await createArchivePreview(f);
+  const url = await preview.listen();
+  t.after(() => new Promise(resolveDone => preview.server.close(resolveDone)));
+  const origin = new URL(url).origin;
+  assert.match(await (await fetch(origin + '/archives/formes/')).text(), /One unreviewed context/);
+  assert.equal((await fetch(origin + '/css/archives-occurrence.css')).status, 200);
+  for (const forbidden of ['/private-occurrence.html', '/occurrence.json', '/archives/formes/?file=.env']) {
+    assert.equal((await fetch(origin + forbidden)).status, 404);
+  }
+  await assert.rejects(createArchivePreview({ ...f, occurrenceHtmlPath: f.htmlPath }), /outside the checkout/);
+});
+
 test('optional statusboard exposes its route and stylesheet while source files stay private', async t => {
   const f = await fixture(t);
   f.statusHtmlPath = join(f.assetsRoot, 'private-status.html');

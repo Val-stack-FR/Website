@@ -21,7 +21,7 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const fail = message => { throw new Error(message); };
 
 // Local verification only: every asset and source is explicitly selected.
-export async function createArchivePreview({ htmlPath, searchHtmlPath, statusHtmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath }) {
+export async function createArchivePreview({ htmlPath, searchHtmlPath, statusHtmlPath, occurrenceHtmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath }) {
   if (!corpusRoot) fail('PHD_CORPUS_ROOT is required.');
   const root = await realpath(corpusRoot);
   const assets = await realpath(assetsRoot);
@@ -40,6 +40,12 @@ export async function createArchivePreview({ htmlPath, searchHtmlPath, statusHtm
     if (!isInside(assets, statusFile)) fail('Statusboard page resolves outside the checkout.');
     pages.set('/archives/avancement/', await readFile(statusFile));
     routes.set('/css/archives-statusboard.css', ['css/archives-statusboard.css', 'text/css; charset=utf-8']);
+  }
+  if (occurrenceHtmlPath) {
+    const occurrenceFile = await realpath(occurrenceHtmlPath);
+    if (!isInside(assets, occurrenceFile)) fail('Occurrence page resolves outside the checkout.');
+    pages.set('/archives/formes/', await readFile(occurrenceFile));
+    routes.set('/css/archives-occurrence.css', ['css/archives-occurrence.css', 'text/css; charset=utf-8']);
   }
   const manifest = JSON.parse(await readFile(mediaManifestPath, 'utf8'));
   const preflight = JSON.parse(await readFile(preflightPath, 'utf8'));
@@ -156,7 +162,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try {
     const { values } = parseArgs({
       options: {
-        html: { type: 'string' }, 'search-html': { type: 'string' }, 'status-html': { type: 'string' }, 'media-manifest': { type: 'string' },
+        html: { type: 'string' }, 'search-html': { type: 'string' }, 'status-html': { type: 'string' }, 'occurrence-html': { type: 'string' }, 'media-manifest': { type: 'string' },
         preflight: { type: 'string' }, 'source-manifest': { type: 'string' }, port: { type: 'string', default: '8766' }
       }
     });
@@ -166,7 +172,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const port = Number(values.port);
     if (!Number.isInteger(port) || port < 0 || port > 65535) fail('Invalid port.');
     const preview = await createArchivePreview({
-      htmlPath: values.html, searchHtmlPath: values['search-html'], statusHtmlPath: values['status-html'], mediaManifestPath: values['media-manifest'], preflightPath: values.preflight,
+      htmlPath: values.html, searchHtmlPath: values['search-html'], statusHtmlPath: values['status-html'], occurrenceHtmlPath: values['occurrence-html'], mediaManifestPath: values['media-manifest'], preflightPath: values.preflight,
       sourceManifestPath: values['source-manifest'],
       assetsRoot: fileURLToPath(new URL('../..', import.meta.url)), corpusRoot: process.env.PHD_CORPUS_ROOT
     });

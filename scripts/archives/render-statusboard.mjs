@@ -33,6 +33,7 @@ const statusLabel = value => ({
   accepted: 'accepté',
   candidate: 'candidat',
   certain: 'certain',
+  disputed: 'contesté',
   partial: 'partiel',
   pending: 'en attente',
   'review-pending': 'revue en attente',

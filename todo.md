@@ -58,7 +58,10 @@
 - [x] Vérifier recherche sur cinq fiches M2 avant extension aux annexes : parcours fonctionnel et géométrie mobile ; capture raster indisponible sur cet hôte.
 - [x] MVP-G : renderer de statusboard limité à deux dossiers et cinq fiches ; tests portables et intégration réelle passés.
 - [x] Raccorder la route privée /archives/avancement/ et ses seuls assets ; huit contrôles HTTP et build 107 fichiers vérifiés sans page archives ni corpus publié.
-- [ ] QA navigateur du statusboard ; capture visuelle de publication sur un hôte fonctionnel reste nécessaire.
+- [x] QA navigateur du statusboard après correction de contraste du focus — tests/archives-reader/statusboard-browser-review.md ; la limite raster de cette passe est conservée.
+- [x] H2 : consultation d’une lacune réelle sous /archives/formes/, même photo/contextes/provenance ; neuf tests de renderer réels et sept tests de serveur.
+- [x] Revue indépendante H2 bureau/mobile, rendu réel observé ; défaut d’évitement clavier corrigé et revérifié — tests/archives-reader/occurrence-browser-review.md.
+- [x] Build répété après H2 : 108 fichiers, aucune page archives ni donnée privée ; neuf contrôles HTTP, image inchangée — tests/archives-reader/occurrence-coordinator-review.md.
 - [ ] Préparer la release publique réelle, navigation/métadonnées/médias et PR de revue ; aucun déploiement de l'atelier réalisé à ce stade.
 
 Le plan détaillé, les dépendances et les tâches parallèles restent suivis dans le TODO de l'atelier PERSO. Les GO locaux ne valident pas les lectures historiques ni la clôture canonique du corpus.

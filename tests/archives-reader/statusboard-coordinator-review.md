@@ -14,4 +14,4 @@ Les sorties de preuve sont ignorées dans `.private/archives-mvp/integrated-v2/`
 
 ## Conclusion et limite
 
-Le raccord HTTP et le rendu borné sont acceptés. La QA navigateur du statusboard reste à exécuter. Les rapports de navigation précédents n’en constituent pas une preuve, et les captures raster de cet hôte ne permettent toujours pas de revendiquer une inspection visuelle. Aucun export n’est devenu publiable et aucune lecture historique n’est confirmée par ces tests.
+Le raccord HTTP et le rendu borné sont acceptés. La [revue navigateur indépendante](statusboard-browser-review.md) a ensuite validé clavier, liens, détails et géométrie bureau/mobile après correction du contraste de focus ; elle ne constitue pas une inspection pixel, les captures raster restant inexploitables. Les incertitudes source sont conservées et les labels d’état peuvent être francisés sans modifier les assertions. Aucun export n’est devenu publiable et aucune lecture historique n’est confirmée par ces tests.
