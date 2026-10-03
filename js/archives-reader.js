@@ -10,6 +10,7 @@
   const positionValue = document.getElementById('reader-position-value');
   const currentTitle = document.getElementById('reader-current-title');
   const announcement = document.getElementById('reader-announcement');
+  const itemLabel = document.getElementById('archive-reader')?.dataset.itemSingular || 'Acte';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let currentIndex = 0;
   let scrollFrame = null;
@@ -50,11 +51,11 @@
     acts.forEach((item, itemIndex) => {
       item.toggleAttribute('data-current', itemIndex === index);
     });
-    setLinkState(prevLink, index - 1, 'Acte précédent');
-    setLinkState(nextLink, index + 1, 'Acte suivant');
+    setLinkState(prevLink, index - 1, `${itemLabel} précédent`);
+    setLinkState(nextLink, index + 1, `${itemLabel} suivant`);
 
     if (shouldAnnounce) {
-      announcement.textContent = `Acte ${index + 1} sur ${acts.length} : ${actTitle(act)}`;
+      announcement.textContent = `${itemLabel} ${index + 1} sur ${acts.length} : ${actTitle(act)}`;
     }
   };
 

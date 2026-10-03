@@ -228,6 +228,26 @@ a.reader-button:hover {
   margin-top: 12px;
 }
 
+.date-claims {
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.date-claims strong {
+  color: #754904;
+}
+
+.date-claims ul {
+  margin-top: 5px;
+  padding-left: 18px;
+}
+
+.date-claims small {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
 .act-statuses {
   display: flex;
   flex-direction: column;
@@ -345,6 +365,17 @@ a.reader-button:hover {
 .panel-source {
   padding-top: 16px;
   border-top: 1px solid var(--border);
+}
+
+.transcription-item + .transcription-item {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border-solid);
+}
+
+.uncertainty-note ul {
+  margin-top: 8px;
+  padding-left: 18px;
 }
 
 .empty-panel {
