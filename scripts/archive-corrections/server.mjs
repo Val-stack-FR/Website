@@ -1,11 +1,25 @@
 import { createServer } from 'node:http';
 import { timingSafeEqual } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { Store } from './store.mjs';
 import { PASSAGE } from './fixture.mjs';
 import { ApiError, canonical, ensure, envelope } from './contract.mjs';
 
 export const SECRET_ENV = 'ARCHIVE_CORRECTIONS_OWNER_TEST_SECRET';
+export const loopbackOrigin = port => new URL(`http://127.0.0.1:${port}`).origin;
+const demoAssets = new Map([
+  ['/demo/', ['index.html', 'text/html; charset=utf-8']],
+  ['/demo/styles.css', ['styles.css', 'text/css; charset=utf-8']],
+  ['/demo/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
+  ['/demo/state.mjs', ['state.mjs', 'text/javascript; charset=utf-8']],
+  ['/demo/render.mjs', ['render.mjs', 'text/javascript; charset=utf-8']],
+]);
+const securityHeaders = {
+  'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'no-referrer',
+  'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+};
 
 function validateOwnerSecret(ownerSecret) {
   ensure(typeof ownerSecret === 'string' && /^[\x21-\x7e]{32,256}$/.test(ownerSecret),
@@ -38,15 +52,24 @@ export function createLocalServer({ store, ownerSecret }) {
     const send = (status, body) => {
       response.writeHead(status, {
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff',
+        ...securityHeaders,
       });
       response.end(`${canonical(body)}\n`);
     };
     try {
       const port = server.address().port;
       const hosts = port === 80 ? ['127.0.0.1', '127.0.0.1:80'] : [`127.0.0.1:${port}`];
-      ensure(hosts.includes(request.headers.host) && !request.headers.origin,
-        403, 'local_clients_only', 'This MVP supports direct loopback HTTP clients only.');
+      const origin = loopbackOrigin(port);
+      ensure(hosts.includes(request.headers.host)
+        && (request.headers.origin === undefined || request.headers.origin === origin),
+        403, 'local_clients_only', 'Host and any Origin must match this exact loopback service.');
+      const asset = demoAssets.get(request.url);
+      if (request.method === 'GET' && asset) {
+        const [file, contentType] = asset;
+        const bytes = readFileSync(new URL(`./ui/${file}`, import.meta.url));
+        response.writeHead(200, { ...securityHeaders, 'Content-Type': contentType });
+        return response.end(bytes);
+      }
       if (request.method === 'GET' && request.url === '/v1/health') {
         return send(200, envelope({ status: 'ready', auth_mode: 'local_test_secret' }));
       }

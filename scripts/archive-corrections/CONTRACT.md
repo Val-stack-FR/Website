@@ -4,9 +4,9 @@ Version : `archive-corrections/v1`. Snapshot : `archive-corrections-snapshot/v1`
 
 ## Transport et droits
 
-HTTP direct sur `127.0.0.1`, JSON UTF-8, `Cache-Control: no-store`. Les routes et méthodes ci-dessous sont exactes, sans paramètres de requête. Aucun autre passage ni fichier de fixture n'est accepté. `Host` doit correspondre à `127.0.0.1:<port>` ; un en-tête `Origin` est refusé. Aucun HTML n'est produit.
+HTTP local sur `127.0.0.1`, API JSON UTF-8, `Cache-Control: no-store`. Les routes et méthodes ci-dessous sont exactes, sans paramètres de requête. Aucun autre passage ni fichier de fixture n'est accepté. `Host` doit correspondre à `127.0.0.1:<port>` (ou `127.0.0.1` sur le port 80). `Origin` peut être absent pour un client HTTP direct ; s'il existe, il doit être **exactement** l'origine normalisée du serveur par `new URL(...).origin`, par exemple `http://127.0.0.1:8787`, ou `http://127.0.0.1` sur le port 80. `localhost`, origine étrangère, `null`, protocole différent et suffixes sont refusés.
 
-Chaque réponse normale ou erreur porte `api_version`, `data_kind: synthetic` et `simulation: true`. Un snapshot porte également ces champs. Chaque proposition, décision et révision porte `simulation: true`, `passage_id` et `evidence_refs`. `actor_role` est **une sortie du serveur**, jamais un champ de requête autorisé. Les objets d'entrée ont exactement les champs documentés ; les champs inconnus sont refusés.
+Chaque réponse JSON de l'API, normale ou erreur, porte `api_version`, `data_kind: synthetic` et `simulation: true`. Un snapshot porte également ces champs. Chaque proposition, décision et révision porte `simulation: true`, `passage_id` et `evidence_refs`. `actor_role` est **une sortie du serveur**, jamais un champ de requête autorisé. Les objets d'entrée ont exactement les champs documentés ; les champs inconnus sont refusés.
 
 Les décisions et l'export HTTP exigent `Authorization: Bearer <secret local de test>`. Le secret attendu vient uniquement de `ARCHIVE_CORRECTIONS_OWNER_TEST_SECRET` côté serveur. L'égalité est comparée avec `timingSafeEqual`, sans stocker ni afficher le secret. Le rôle résultant est `owner_test`. Un visiteur ou un agent IA sans ce secret peut proposer mais ne peut décider. Un client doté du secret est un propriétaire **simulé** ; l'identité humaine n'est pas vérifiée dans ce MVP.
 
@@ -17,6 +17,8 @@ Les décisions et l'export HTTP exigent `Authorization: Bearer <secret local de 
 | `POST /v1/proposals` | Anonyme | Proposition enregistrée ; rôle serveur `anonymous` |
 | `POST /v1/decisions` | Propriétaire local de test | Décision enregistrée ; rôle serveur `owner_test` |
 | `GET /v1/export` | Propriétaire local de test | Snapshot déterministe complet avec clés de rejeu |
+
+Incrément W03 local : `GET /demo/` sert la démonstration HTML fictive, et seuls `GET /demo/styles.css`, `/demo/app.mjs`, `/demo/state.mjs`, `/demo/render.mjs` servent ses actifs. Aucune autre route/fichier/requête avec paramètres n'est servi. Les actifs ont une CSP `default-src 'none'`, scripts/styles/connexion `self`, images/fonts/objets interdits, base URI et frame ancestors interdits, form action `self`. Aucun `unsafe-inline`, `unsafe-eval`, CDN ou en-tête CORS ne permet un accès externe. La page n'autorise rien par elle-même : les décisions gardent exactement le contrôle Bearer serveur décrit ci-dessus. Son secret, ses brouillons et clés restent en mémoire de page ; voir [le lancement et handoff W03](ui/README.md).
 
 ## Proposition
 
