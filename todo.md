@@ -45,3 +45,14 @@
 - Ne cocher une étape qu'avec une preuve vérifiable (commande, lien, SHA ou compte rendu).
 - Conserver les décisions utilisateur et les blocages dans la section concernée, sans y exposer de données privées.
 
+
+## Atelier historique — corrections MVP-D, 3 octobre 2026
+
+- [x] Service local persistant sur un passage synthétique ; rôle propriétaire de test contrôlé côté serveur.
+- [x] Revue indépendante : trois écarts UUID/date/contrôles reproduits puis corrigés.
+- [x] Treize tests réussis : permissions, rejeu, conflits, rollback, redémarrage brutal et export/restauration identiques.
+- [x] Acceptation du coordinateur enregistrée dans tests/archive-corrections/coordinator-acceptance.md.
+- [ ] Interface bornée au passage inventé ; aucune correction historique raccordée.
+- [ ] Authentification réelle et stockage hébergé avant tout service public.
+
+Le suivi global et les dépendances restent dans le TODO de l'atelier PERSO. Ce MVP ne confirme aucune lecture historique.
