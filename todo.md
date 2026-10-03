@@ -55,7 +55,10 @@
 - [x] Build complet de Website : 104 fichiers, sans sortie privée ni page de démonstration dans dist ; runtime de build isolé et quatre tests — `tests/build-site.test.cjs`.
 - [x] Point de contrôle du coordinateur — `tests/archives-reader/mvp-coordinator-checkpoint.md`.
 - [ ] Raccorder le service de corrections après sa revue sur un passage synthétique ; authentification réelle et persistance hébergée restent à prouver.
-- [ ] Vérifier recherche sur cinq fiches M2 avant extension aux annexes.
+- [x] Vérifier recherche sur cinq fiches M2 avant extension aux annexes : parcours fonctionnel et géométrie mobile ; capture raster indisponible sur cet hôte.
+- [x] MVP-G : renderer de statusboard limité à deux dossiers et cinq fiches ; tests portables et intégration réelle passés.
+- [x] Raccorder la route privée /archives/avancement/ et ses seuls assets ; huit contrôles HTTP et build 107 fichiers vérifiés sans page archives ni corpus publié.
+- [ ] QA navigateur du statusboard ; capture visuelle de publication sur un hôte fonctionnel reste nécessaire.
 - [ ] Préparer la release publique réelle, navigation/métadonnées/médias et PR de revue ; aucun déploiement de l'atelier réalisé à ce stade.
 
 Le plan détaillé, les dépendances et les tâches parallèles restent suivis dans le TODO de l'atelier PERSO. Les GO locaux ne valident pas les lectures historiques ni la clôture canonique du corpus.

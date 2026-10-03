@@ -335,6 +335,7 @@ export function renderReaderHtml(viewModel, { privatePreview = false } = {}) {
   <div class="page">
     <main class="archives-main">
       <header class="archives-header"><div><p class="archives-kicker">Prévisualisation locale · données réelles</p><h1>Consultation</h1></div><p class="archives-intro">Dossiers expérimentaux issus de l’export d’import. Une entrée n’est pas présentée comme un acte identifié lorsque ses IDs canoniques sont absents.</p></header>
+      <nav class="reader-actions" aria-label="Autres vues de l’atelier"><a class="reader-button" href="/archives/recherche/">Rechercher dans les fiches</a><a class="reader-button" href="/archives/avancement/">Avancement des travaux</a></nav>
       <aside class="fixture-notice" aria-label="Avertissement de publication"><strong>Privé — droits en attente.</strong><span>Cette sortie sert à la consultation locale. Elle n’est pas autorisée pour la publication.</span></aside>
       <section class="archive-reader" id="archive-reader" aria-labelledby="reader-heading" data-item-singular="Dossier">
         <h2 class="visually-hidden" id="reader-heading">Lecteur horizontal des dossiers</h2>

@@ -158,3 +158,22 @@ test('optional annex search exposes only its page and two explicit assets', asyn
   }
   await assert.rejects(createArchivePreview({ ...f, searchHtmlPath: f.htmlPath }), /outside the checkout/);
 });
+
+test('optional statusboard exposes its route and stylesheet while source files stay private', async t => {
+  const f = await fixture(t);
+  f.statusHtmlPath = join(f.assetsRoot, 'private-status.html');
+  await writeFile(f.statusHtmlPath, '<!doctype html><html lang="fr"><body>Two dossiers and five fiches</body></html>');
+  await writeFile(join(f.assetsRoot, 'css/archives-statusboard.css'), '/* statusboard */');
+  const preview = await createArchivePreview(f);
+  const url = await preview.listen();
+  t.after(() => new Promise(resolveDone => preview.server.close(resolveDone)));
+  const origin = new URL(url).origin;
+  const page = await fetch(origin + '/archives/avancement/');
+  assert.equal(page.status, 200);
+  assert.match(await page.text(), /Two dossiers and five fiches/);
+  assert.equal((await fetch(origin + '/css/archives-statusboard.css')).status, 200);
+  for (const forbidden of ['/private-status.html', '/export-candidate.json', '/archives/avancement/?file=.env']) {
+    assert.equal((await fetch(origin + forbidden)).status, 404);
+  }
+  await assert.rejects(createArchivePreview({ ...f, statusHtmlPath: f.htmlPath }), /outside the checkout/);
+});

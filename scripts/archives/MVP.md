@@ -22,9 +22,11 @@ This increment is local. It is not the public Archives release.
 4. Run scripts/archives/preview-server.mjs with --html, --media-manifest, --preflight, --source-manifest and --port. The source manifest must match the exact hash checked by preflight, and the selected images must match its authorized entries.
 5. Check direct links, horizontal navigation, mobile layout, image decoding/zoom, source hashes and private-route refusal.
 
-Only these public paths are available in the preview: /archives/, /styles.css, /css/archives.css, /js/archives-reader.js, /favicon.svg and selected /__archive_media/<sha256> URLs. With the explicit --search-html private page option, /archives/recherche/ and its two dedicated CSS/JS assets are also available. The raw search index is never served.
+Only these public paths are available in the preview: /archives/, /styles.css, /css/archives.css, /js/archives-reader.js, /favicon.svg and selected /__archive_media/<sha256> URLs. With the explicit --search-html private page option, /archives/recherche/ and its two dedicated CSS/JS assets are also available. With --status-html, /archives/avancement/ and /css/archives-statusboard.css are available. The raw indexes and exports are never served. Use both optional page arguments for the integrated preview navigation.
 
 The annex renderer scripts/archives/render-annex-search.mjs reads only the bounded private index and writes HTML to stdout. Save this output under the validated private checkout directory before adding --search-html. This UI stays on the same five selected fiches; no wider absence, identity or historical title confirmation is implied.
+
+The statusboard renderer scripts/archives/render-statusboard.mjs takes --reader and --annex and emits static HTML to stdout. Save it under the same validated private checkout before adding --status-html. Exactly two consultation dossiers and five editorial fiches are allowed. Their states, priority reasons, blockers and next actions remain distinct; no percentage of the whole fonds is inferred.
 
 ## Passage to the next increment
 

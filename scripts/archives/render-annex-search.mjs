@@ -315,6 +315,7 @@ export function renderAnnexSearch(index) {
         <div><p class="annex-kicker">Consultation privée · index borné</p><h1>Rechercher dans cinq fiches</h1></div>
         <p>Cette recherche couvre uniquement cinq fiches expérimentales. Aucun résultat ne prouve une absence dans le reste du corpus.</p>
         <a class="annex-reader-link" href="/archives/">Ouvrir le lecteur d’archives <span aria-hidden="true">→</span></a>
+        <a class="annex-reader-link" href="/archives/avancement/">Avancement des travaux <span aria-hidden="true">→</span></a>
       </header>
       <aside class="annex-notice" aria-label="Limites de la consultation">
         <strong>Données non publiables · lecture et identités non validées.</strong>
