@@ -37,15 +37,24 @@ async function fixture(t) {
   };
   const mediaManifestPath = join(work, 'media.json');
   const preflightPath = join(work, 'preflight.json');
+  const sourceManifestPath = join(work, 'source-manifest.json');
+  const sourceBytes = Buffer.from(JSON.stringify({
+    corpus_root_reference: 'env:PHD_CORPUS_ROOT', objects: [{
+      ...entry, expected_sha256: entry.sha256, expected_byte_size: entry.byte_size,
+      rights: { local_consultation: 'authorized', permitted_uses: ['local-private-consultation'] }
+    }]
+  }));
+  const sourceManifestHash = createHash('sha256').update(sourceBytes).digest('hex');
+  await writeFile(sourceManifestPath, sourceBytes);
   await writeFile(mediaManifestPath, JSON.stringify({
     manifest_version: 'atelier-tuce-local-media/1.0.0', corpus_root_reference: 'env:PHD_CORPUS_ROOT',
     access_tier: 'project', publication_status: 'not-published', objects: [entry]
   }));
   await writeFile(preflightPath, JSON.stringify({
     passed: true, corpus_root_accessible: true, corpus_root_reference: 'env:PHD_CORPUS_ROOT',
-    input_manifest_sha256: 'a'.repeat(64), scope: 'synthetic'
+    input_manifest_sha256: sourceManifestHash, scope: 'synthetic'
   }));
-  return { htmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, entry, hash, bytes };
+  return { htmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath, sourceManifestHash, entry, hash, bytes };
 }
 
 test('only selected images and explicit assets are available on localhost', async t => {
@@ -80,7 +89,7 @@ test('startup refuses failed preflight, changed content and unsafe source paths'
   await assert.rejects(createArchivePreview(f), /preflight/);
   await writeFile(f.preflightPath, JSON.stringify({
     passed: true, corpus_root_accessible: true, corpus_root_reference: 'env:PHD_CORPUS_ROOT',
-    input_manifest_sha256: 'a'.repeat(64)
+    input_manifest_sha256: f.sourceManifestHash
   }));
   await writeFile(join(f.corpusRoot, 'selected.jpg'), 'changed');
   await assert.rejects(createArchivePreview(f), /hash has changed/);
@@ -99,13 +108,13 @@ test('startup rejects incoherent preflight and allowlist verification claims', a
   const f = await fixture(t);
   await writeFile(f.preflightPath, JSON.stringify({
     passed: true, corpus_root_accessible: false, corpus_root_reference: 'env:PHD_CORPUS_ROOT',
-    input_manifest_sha256: 'a'.repeat(64)
+    input_manifest_sha256: f.sourceManifestHash
   }));
   await assert.rejects(createArchivePreview(f), /preflight corpus configuration/);
 
   await writeFile(f.preflightPath, JSON.stringify({
     passed: true, corpus_root_accessible: true, corpus_root_reference: 'env:PHD_CORPUS_ROOT',
-    input_manifest_sha256: 'a'.repeat(64)
+    input_manifest_sha256: f.sourceManifestHash
   }));
   await writeFile(f.mediaManifestPath, JSON.stringify({
     manifest_version: 'atelier-tuce-local-media/1.0.0', corpus_root_reference: 'env:PHD_CORPUS_ROOT',
@@ -120,4 +129,10 @@ test('startup rejects incoherent preflight and allowlist verification claims', a
     objects: [{ ...f.entry, bytes_verified: false }]
   }));
   await assert.rejects(createArchivePreview(f), /verified allowlist entry/);
+});
+
+test('a passed preflight cannot be reused with a different source manifest', async t => {
+  const f = await fixture(t);
+  await writeFile(f.sourceManifestPath, '{}');
+  await assert.rejects(createArchivePreview(f), /Source manifest hash differs/);
 });

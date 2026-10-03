@@ -45,3 +45,18 @@
 - Ne cocher une étape qu'avec une preuve vérifiable (commande, lien, SHA ou compte rendu).
 - Conserver les décisions utilisateur et les blocages dans la section concernée, sans y exposer de données privées.
 
+## Atelier historique — MVP local du 3 octobre 2026
+
+- [x] Lecteur horizontal, transcription originale → traduction → images ; traduction absente explicitement conservée.
+- [x] Adaptateur privé sur deux dossiers de consultation, avec deux vues réelles liées par une décision existante ; aucune photo attribuée automatiquement à E.108.
+- [x] Vérification Chrome bureau/mobile, clavier, liens directs, zoom et décodage des deux JPEG — `tests/archives-reader/mvp-browser-report.md`.
+- [x] Serveur loopback limité aux routes et images sélectionnées, hashes/tailles contrôlés et manifeste lié au préflight ; routes internes refusées — `tests/archives-reader/preview-server.test.mjs`.
+- [x] Revue indépendante et corrections des limites de sortie physique/préflight — `tests/archives-reader/integrated-review-report.md`.
+- [x] Build complet de Website : 104 fichiers, sans sortie privée ni page de démonstration dans dist ; runtime de build isolé et quatre tests — `tests/build-site.test.cjs`.
+- [x] Point de contrôle du coordinateur — `tests/archives-reader/mvp-coordinator-checkpoint.md`.
+- [ ] Raccorder le service de corrections après sa revue sur un passage synthétique ; authentification réelle et persistance hébergée restent à prouver.
+- [ ] Vérifier recherche sur cinq fiches M2 avant extension aux annexes.
+- [ ] Préparer la release publique réelle, navigation/métadonnées/médias et PR de revue ; aucun déploiement de l'atelier réalisé à ce stade.
+
+Le plan détaillé, les dépendances et les tâches parallèles restent suivis dans le TODO de l'atelier PERSO. Les GO locaux ne valident pas les lectures historiques ni la clôture canonique du corpus.
+

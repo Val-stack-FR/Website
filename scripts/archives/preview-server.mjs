@@ -21,7 +21,7 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const fail = message => { throw new Error(message); };
 
 // Local verification only: every asset and source is explicitly selected.
-export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath }) {
+export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath }) {
   if (!corpusRoot) fail('PHD_CORPUS_ROOT is required.');
   const root = await realpath(corpusRoot);
   const assets = await realpath(assetsRoot);
@@ -32,6 +32,13 @@ export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, m
   if (preflight.corpus_root_accessible !== true || preflight.corpus_root_reference !== 'env:PHD_CORPUS_ROOT' ||
       !/^[a-f0-9]{64}$/.test(preflight.input_manifest_sha256)) {
     fail('Invalid preflight corpus configuration or evidence.');
+  }
+  if (!sourceManifestPath) fail('The source manifest bound to the preflight is required.');
+  const sourceBytes = await readFile(sourceManifestPath);
+  if (sha256(sourceBytes) !== preflight.input_manifest_sha256) fail('Source manifest hash differs from the passed preflight.');
+  const sources = JSON.parse(sourceBytes.toString('utf8'));
+  if (sources.corpus_root_reference !== 'env:PHD_CORPUS_ROOT' || !Array.isArray(sources.objects)) {
+    fail('Invalid source manifest.');
   }
   if (manifest.manifest_version !== 'atelier-tuce-local-media/1.0.0' ||
       manifest.corpus_root_reference !== 'env:PHD_CORPUS_ROOT' || manifest.access_tier !== 'project' ||
@@ -58,6 +65,16 @@ export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, m
     if (typeof item.relative_path !== 'string' || isAbsolute(item.relative_path) ||
         /^[A-Za-z]:/.test(item.relative_path) || item.relative_path.includes('\0') ||
         item.relative_path.split(/[\\/]/).some(part => part === '..')) fail('Unsafe source path.');
+    const input = sources.objects.find(source => source.digital_object_id === item.digital_object_id);
+    if (!input || input.view_id !== item.view_id || input.relative_path !== item.relative_path ||
+        input.expected_sha256 !== item.sha256 || input.expected_byte_size !== item.byte_size ||
+        input.media_type !== item.media_type || input.approved_review_id !== item.approved_review_id) {
+      fail('Source does not match its preflight manifest (path/hash/declared byte size).');
+    }
+    if (input.rights?.local_consultation !== 'authorized' ||
+        !input.rights?.permitted_uses?.includes('local-private-consultation')) {
+      fail('The source manifest does not authorize local consultation.');
+    }
     const candidate = resolve(root, item.relative_path);
     if (!isInside(root, candidate)) fail('Source is outside the configured corpus.');
     const file = await realpath(candidate);
@@ -124,16 +141,17 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const { values } = parseArgs({
       options: {
         html: { type: 'string' }, 'media-manifest': { type: 'string' },
-        preflight: { type: 'string' }, port: { type: 'string', default: '8766' }
+        preflight: { type: 'string' }, 'source-manifest': { type: 'string' }, port: { type: 'string', default: '8766' }
       }
     });
-    if (!values.html || !values['media-manifest'] || !values.preflight) {
-      fail('Required: --html, --media-manifest, --preflight.');
+    if (!values.html || !values['media-manifest'] || !values.preflight || !values['source-manifest']) {
+      fail('Required: --html, --media-manifest, --preflight, --source-manifest.');
     }
     const port = Number(values.port);
     if (!Number.isInteger(port) || port < 0 || port > 65535) fail('Invalid port.');
     const preview = await createArchivePreview({
       htmlPath: values.html, mediaManifestPath: values['media-manifest'], preflightPath: values.preflight,
+      sourceManifestPath: values['source-manifest'],
       assetsRoot: fileURLToPath(new URL('../..', import.meta.url)), corpusRoot: process.env.PHD_CORPUS_ROOT
     });
     console.log(await preview.listen(port));
