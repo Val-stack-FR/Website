@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -391,12 +391,28 @@ export function assertPrivateIgnoredOutput(outputPath, repositoryRoot = REPOSITO
   if (!relativeOutput || relativeOutput.startsWith('..') || isAbsolute(relativeOutput)) {
     throw new Error('Private preview output must stay inside the repository checkout.');
   }
-  const check = spawnSync('git', ['check-ignore', '--quiet', '--no-index', relativeOutput], {
-    cwd: repositoryRoot,
-    windowsHide: true
-  });
-  if (check.status !== 0) throw new Error(`Private preview output is not ignored by Git: ${relativeOutput}`);
-  return absoluteOutput;
+
+  let existingAncestor = absoluteOutput;
+  while (!existsSync(existingAncestor)) {
+    const parent = dirname(existingAncestor);
+    if (parent === existingAncestor) throw new Error('Private preview output has no resolvable parent directory.');
+    existingAncestor = parent;
+  }
+  const physicalRepositoryRoot = realpathSync(repositoryRoot);
+  const physicalOutput = resolve(realpathSync(existingAncestor), relative(existingAncestor, absoluteOutput));
+  const physicalRelativeOutput = relative(physicalRepositoryRoot, physicalOutput);
+  if (!physicalRelativeOutput || physicalRelativeOutput.startsWith('..') || isAbsolute(physicalRelativeOutput)) {
+    throw new Error('Private preview output resolves outside the repository checkout.');
+  }
+
+  for (const ignoredPath of new Set([relativeOutput, physicalRelativeOutput])) {
+    const check = spawnSync('git', ['check-ignore', '--quiet', '--no-index', ignoredPath], {
+      cwd: physicalRepositoryRoot,
+      windowsHide: true
+    });
+    if (check.status !== 0) throw new Error(`Private preview output is not ignored by Git: ${ignoredPath}`);
+  }
+  return physicalOutput;
 }
 
 export function writePrivatePreview({ inputPath, outputPath, mediaMode = 'local-preview', privatePreview = false }) {

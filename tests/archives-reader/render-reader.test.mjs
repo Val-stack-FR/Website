@@ -1,9 +1,21 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  symlinkSync,
+  unlinkSync,
+  writeFileSync
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { basename, dirname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import {
   adaptArchiveExport,
+  assertPrivateIgnoredOutput,
   buildMediaManifest,
   renderReaderHtml,
   writePrivatePreview
@@ -232,5 +244,36 @@ const cli = spawnSync(process.execPath, [
 assert.notEqual(cli.status, 0);
 assert.match(cli.stderr, /not ignored by Git/);
 assert.equal(existsSync(forbiddenOutput), false, 'Rejected public-like output must not be created.');
+
+const junctionParent = resolve('.private', 'archives-mvp');
+const junctionPath = resolve(junctionParent, `renderer-junction-${process.pid}`);
+const tempRoot = realpathSync(tmpdir());
+const outsideTarget = mkdtempSync(join(tempRoot, 'archive-renderer-escape-'));
+mkdirSync(junctionParent, { recursive: true });
+try {
+  symlinkSync(outsideTarget, junctionPath, 'junction');
+  assert.throws(
+    () => assertPrivateIgnoredOutput(junctionPath),
+    /resolves outside the repository checkout/,
+    'An ignored lexical path must not escape through a directory junction.'
+  );
+} finally {
+  if (existsSync(junctionPath)) unlinkSync(junctionPath);
+  const resolvedOutside = realpathSync(outsideTarget);
+  assert.equal(dirname(resolvedOutside).toLowerCase(), tempRoot.toLowerCase());
+  assert.ok(basename(resolvedOutside).startsWith('archive-renderer-escape-'));
+  rmSync(resolvedOutside, { recursive: true, force: true });
+}
+
+try {
+  symlinkSync(realpathSync(resolve('tests', 'archives-reader')), junctionPath, 'junction');
+  assert.throws(
+    () => assertPrivateIgnoredOutput(junctionPath),
+    /not ignored by Git/,
+    'An ignored lexical path must not target a tracked directory through a junction.'
+  );
+} finally {
+  if (existsSync(junctionPath)) unlinkSync(junctionPath);
+}
 
 console.log('Real-export adapter and private static renderer checks passed.');
