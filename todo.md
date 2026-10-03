@@ -60,3 +60,11 @@
 
 Le plan détaillé, les dépendances et les tâches parallèles restent suivis dans le TODO de l'atelier PERSO. Les GO locaux ne valident pas les lectures historiques ni la clôture canonique du corpus.
 
+
+### Incrément recherche sur cinq fiches — 3 octobre 2026
+
+- [x] Page privée raccordée sur /archives/recherche/ avec six facettes et provenance ; index brut non servi.
+- [x] Revue : dépendance obligatoire à l'index privé supprimée des tests ; fixture fictive portable, intégration réelle explicite.
+- [x] Coordinateur : quatre tests par défaut + une intégration ignorée explicitement ; cinq tests avec index réel.
+- [x] Build répété après les deux nouveaux assets : 106 fichiers, aucune page archives ni donnée privée dans dist.
+- [x] QA navigateur bureau/mobile et clavier sur le même échantillon — tests/archives-reader/annex-search-browser-report.md ; capture raster inutilisable, aucune fausse preuve visuelle jointe.

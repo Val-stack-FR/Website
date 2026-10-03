@@ -136,3 +136,25 @@ test('a passed preflight cannot be reused with a different source manifest', asy
   await writeFile(f.sourceManifestPath, '{}');
   await assert.rejects(createArchivePreview(f), /Source manifest hash differs/);
 });
+
+test('optional annex search exposes only its page and two explicit assets', async t => {
+  const f = await fixture(t);
+  f.searchHtmlPath = join(f.assetsRoot, 'private-search.html');
+  await writeFile(f.searchHtmlPath, '<!doctype html><html lang="fr"><body>Five selected fiches</body></html>');
+  await writeFile(join(f.assetsRoot, 'css/archives-search.css'), '/* search */');
+  await writeFile(join(f.assetsRoot, 'js/archives-search.js'), '// search');
+  const preview = await createArchivePreview(f);
+  const url = await preview.listen();
+  t.after(() => new Promise(resolveDone => preview.server.close(resolveDone)));
+  const origin = new URL(url).origin;
+  const page = await fetch(origin + '/archives/recherche/');
+  assert.equal(page.status, 200);
+  assert.match(await page.text(), /Five selected fiches/);
+  for (const asset of ['/css/archives-search.css', '/js/archives-search.js']) {
+    assert.equal((await fetch(origin + asset)).status, 200);
+  }
+  for (const forbidden of ['/private-search.html', '/query-index.json', '/archives/recherche/?file=.env']) {
+    assert.equal((await fetch(origin + forbidden)).status, 404);
+  }
+  await assert.rejects(createArchivePreview({ ...f, searchHtmlPath: f.htmlPath }), /outside the checkout/);
+});

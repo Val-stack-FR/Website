@@ -21,11 +21,20 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const fail = message => { throw new Error(message); };
 
 // Local verification only: every asset and source is explicitly selected.
-export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath }) {
+export async function createArchivePreview({ htmlPath, searchHtmlPath, assetsRoot, corpusRoot, mediaManifestPath, preflightPath, sourceManifestPath }) {
   if (!corpusRoot) fail('PHD_CORPUS_ROOT is required.');
   const root = await realpath(corpusRoot);
   const assets = await realpath(assetsRoot);
   const html = await readFile(htmlPath);
+  const pages = new Map([...htmlRoutes].map(route => [route, html]));
+  const routes = new Map(assetRoutes);
+  if (searchHtmlPath) {
+    const searchFile = await realpath(searchHtmlPath);
+    if (!isInside(assets, searchFile)) fail('Search page resolves outside the checkout.');
+    pages.set('/archives/recherche/', await readFile(searchFile));
+    routes.set('/css/archives-search.css', ['css/archives-search.css', 'text/css; charset=utf-8']);
+    routes.set('/js/archives-search.js', ['js/archives-search.js', 'text/javascript; charset=utf-8']);
+  }
   const manifest = JSON.parse(await readFile(mediaManifestPath, 'utf8'));
   const preflight = JSON.parse(await readFile(preflightPath, 'utf8'));
   if (preflight.passed !== true) fail('The corpus preflight has not passed.');
@@ -87,7 +96,7 @@ export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, m
     files.set(item.sha256, { file, contentType: 'image/jpeg', size: bytes.length });
   }
   const staticFiles = new Map();
-  for (const [url, [name, contentType]] of assetRoutes) {
+  for (const [url, [name, contentType]] of routes) {
     const file = await realpath(resolve(assets, name));
     if (!isInside(assets, file)) fail('Asset resolves outside the checkout.');
     const info = await stat(file);
@@ -110,9 +119,10 @@ export async function createArchivePreview({ htmlPath, assetsRoot, corpusRoot, m
       if (url.search) { response.writeHead(404).end('Not found'); return; }
       pathname = decodeURIComponent(url.pathname);
     } catch { response.writeHead(400).end('Invalid URL'); return; }
-    if (htmlRoutes.has(pathname)) {
-      response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': html.length });
-      response.end(request.method === 'HEAD' ? undefined : html);
+    const page = pages.get(pathname);
+    if (page) {
+      response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': page.length });
+      response.end(request.method === 'HEAD' ? undefined : page);
       return;
     }
     const match = /^\/__archive_media\/([a-f0-9]{64})$/.exec(pathname);
@@ -140,7 +150,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try {
     const { values } = parseArgs({
       options: {
-        html: { type: 'string' }, 'media-manifest': { type: 'string' },
+        html: { type: 'string' }, 'search-html': { type: 'string' }, 'media-manifest': { type: 'string' },
         preflight: { type: 'string' }, 'source-manifest': { type: 'string' }, port: { type: 'string', default: '8766' }
       }
     });
@@ -150,7 +160,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const port = Number(values.port);
     if (!Number.isInteger(port) || port < 0 || port > 65535) fail('Invalid port.');
     const preview = await createArchivePreview({
-      htmlPath: values.html, mediaManifestPath: values['media-manifest'], preflightPath: values.preflight,
+      htmlPath: values.html, searchHtmlPath: values['search-html'], mediaManifestPath: values['media-manifest'], preflightPath: values.preflight,
       sourceManifestPath: values['source-manifest'],
       assetsRoot: fileURLToPath(new URL('../..', import.meta.url)), corpusRoot: process.env.PHD_CORPUS_ROOT
     });
