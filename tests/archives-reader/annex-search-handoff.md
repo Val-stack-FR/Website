@@ -4,16 +4,16 @@ Date : 3 octobre 2026
 
 ## Livrable
 
-Ce mini-incrément transforme uniquement `mvp-f-annexes-20261003-v1/query-index.json` en une page HTML statique privée. Il couvre les mêmes cinq fiches : 28, 217, 225, 580 et 374. Il n’ajoute aucun catalogue, aucune identité, aucune source, aucune API et aucune persistance navigateur.
+Ce mini-incrément transforme un index conforme à `atelier-tuce-annex-query/0.1.0` en une page HTML statique privée. Le passage d’intégration couvre les cinq fiches sélectionnées par l’importeur. Il n’ajoute aucun catalogue, aucune identité, aucune source, aucune API et aucune persistance navigateur.
 
-Le passage réel contrôlé contient cinq fiches, dix mentions de nom issues des fiches, treize entrées de variantes d’index, 105 localisateurs et deux sources munies d’un SHA-256. Le renderer ne lit aucun CSV ni original ; il consomme seulement l’index transmis.
+Le renderer ne lit aucun CSV ni original ; il consomme seulement l’index transmis. La suite par défaut utilise une fixture entièrement inventée avec cinq fiches, dix mentions de nom, deux homonymes fictifs et des provenances synthétiques. Aucun contenu de l’index privé n’est recopié dans Git.
 
 ## Comportement
 
 - Recherche `contains` insensible à la casse et aux accents.
 - Portées : noms, variantes, qualificatifs, lieux, seigneuries et juridictions.
 - Les cinq fiches sont visibles sans JavaScript ; le script masque seulement les cartes qui ne correspondent pas.
-- Les fiches 217 et 225 restent deux cartes distinctes pour « Guillaume de Tucé ». Leur homonymie est affichée comme non résolue, sans fusion.
+- Deux fiches homonymes restent deux cartes distinctes. Leur homonymie est affichée comme non résolue, sans fusion.
 - Une variante héritée est répétée sur chaque fiche candidate concernée avec le libellé explicite « occurrence non attestée dans cette fiche · rattachement candidat ».
 - Chaque carte affiche la date littérale, les qualificatifs et autres expressions, puis la table, le numéro de fiche candidate, le numéro d’enregistrement, le champ et le SHA-256 de la source.
 - Les références éditoriales du tableau sont présentées comme non vérifiées sur les citations primaires.
@@ -60,6 +60,12 @@ node --check js/archives-search.js
 node --test tests/archives-reader/annex-search.test.mjs
 ```
 
-Résultat : quatre tests réussis. Ils couvrent l’index réel borné, les deux Guillaume distincts, la normalisation accent/casse, les six portées, la provenance complète, l’échappement XSS, la compatibilité CSP, les références invalides, les limites de périmètre, le refus d’un index publiable et l’identité exacte stdout du CLI.
+Résultat portable : quatre tests réussis et une intégration optionnelle ignorée. Ils couvrent les cinq fiches synthétiques, deux homonymes distincts, la normalisation accent/casse, les six portées, la provenance complète, l’échappement XSS, la compatibilité CSP, les références invalides, les limites de périmètre, le refus d’un index publiable et l’identité exacte stdout du CLI.
+
+Pour vérifier explicitement un index privé sans créer de dépendance inter-checkout :
+
+```text
+ARCHIVE_ANNEX_QUERY_INDEX=<chemin-absolu-query-index.json> node --test tests/archives-reader/annex-search.test.mjs
+```
 
 Le passage critique final a ajouté deux contrôles avant handoff : unicité du numéro de fiche et cohérence fiche/date/claim/mention. La QA navigateur reste à effectuer après raccord de la route privée par le coordinateur.

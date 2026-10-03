@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { basename, dirname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
@@ -10,30 +11,29 @@ import {
   prepareAnnexSearch,
   renderAnnexSearch
 } from '../../scripts/archives/render-annex-search.mjs';
+import { syntheticAnnexIndex } from './fixtures/synthetic-annex-index.mjs';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const indexPath = resolve(repositoryRoot, '..', 'PHD-Maine-archives-import', 'data', 'private', 'archive-import',
-  'mvp-f-annexes-20261003-v1', 'query-index.json');
-const source = JSON.parse(readFileSync(indexPath, 'utf8'));
+const source = syntheticAnnexIndex();
 
-test('the bounded real index produces five distinct, traceable fiche cards', () => {
+test('the bounded synthetic index produces five distinct, traceable fiche cards', () => {
   const model = prepareAnnexSearch(source);
   assert.equal(model.cards.length, 5);
   assert.equal(new Set(model.cards.map(card => card.id)).size, 5);
-  assert.deepEqual(model.cards.filter(card => card.label === 'Guillaume de Tucé').map(card => card.number), ['217', '225']);
-  assert.ok(model.cards.filter(card => card.label === 'Guillaume de Tucé').every(card => card.ambiguities.length === 1));
+  assert.deepEqual(model.cards.filter(card => card.label === 'Aubin du Rivage').map(card => card.number), ['101', '102']);
+  assert.ok(model.cards.filter(card => card.label === 'Aubin du Rivage').every(card => card.ambiguities.length === 1));
 
-  assert.equal(normalizeSearchText('  ÉCUYER À TUCÉ  '), 'ecuyer a tuce');
-  assert.deepEqual(filterAnnexCards(model.cards, 'GUILLAUME', 'name').map(card => card.number), ['217', '225']);
-  assert.deepEqual(filterAnnexCards(model.cards, 'écuyer', 'title').map(card => card.number), ['217', '580', '374']);
-  assert.deepEqual(filterAnnexCards(model.cards, 'Bouère', 'variant').map(card => card.number), ['217', '225']);
-  assert.deepEqual(filterAnnexCards(model.cards, 'Courteilloles', 'place').map(card => card.number), ['217']);
+  assert.equal(normalizeSearchText('  ÉCLAIREUR À L’ORÉE  '), 'eclaireur a l’oree');
+  assert.deepEqual(filterAnnexCards(model.cards, 'AUBIN', 'name').map(card => card.number), ['101', '102']);
+  assert.deepEqual(filterAnnexCards(model.cards, 'éclaireur', 'title').map(card => card.number), ['101']);
+  assert.deepEqual(filterAnnexCards(model.cards, 'Aîné', 'variant').map(card => card.number), ['101', '102']);
+  assert.deepEqual(filterAnnexCards(model.cards, 'Clairvallon', 'place').map(card => card.number), ['203']);
   assert.equal(filterAnnexCards(model.cards, 'personne hors lot', 'all').length, 0);
   assert.equal(filterAnnexCards(model.cards, '', 'all').length, 5);
 
   const entries = model.cards.flatMap(card => Object.values(card.groups).flat());
   assert.ok(entries.some(entry => entry.indexOnly));
-  assert.ok(entries.filter(entry => entry.indexOnly).every(entry => entry.origin.startsWith('legacy-index-')));
+  assert.ok(entries.filter(entry => entry.indexOnly).every(entry => entry.origin === 'synthetic-index-variant'));
   for (const entry of entries) {
     assert.match(entry.provenance.table, /\.csv$/);
     assert.ok(Number.isSafeInteger(entry.provenance.recordNumber));
@@ -52,10 +52,10 @@ test('static HTML is escaped, CSP-compatible and explicit about scope and proven
   assert.match(html, /Aucun résultat ne prouve une absence dans le reste du corpus/);
   assert.match(html, /Variante d’index uniquement · occurrence non attestée/);
   assert.match(html, /citations primaires non vérifiées/);
-  assert.match(html, /Fiche 217 · sélection expérimentale/);
-  assert.match(html, /Fiche 225 · sélection expérimentale/);
+  assert.match(html, /Fiche 101 · sélection expérimentale/);
+  assert.match(html, /Fiche 102 · sélection expérimentale/);
   assert.match(html, /SHA-256 source/);
-  assert.match(html, /506dce54039f55dc94f5c9939a168f34bc83b8b543d428010c0854f771aed0fa/);
+  assert.match(html, new RegExp('a{64}'));
   assert.doesNotMatch(html, /<style\b|\sstyle=/i);
   assert.doesNotMatch(html, /<[^>]+\son[a-z]+\s*=/i);
   assert.doesNotMatch(html, /<script(?![^>]+src=)/i);
@@ -105,10 +105,20 @@ test('invalid references, expanded scope and publishable inputs are refused', ()
   publishable.publication.approved_for_publication = true;
   assert.throws(() => prepareAnnexSearch(publishable), /private, non-publishable/);
 
-  assert.throws(() => filterAnnexCards(prepareAnnexSearch(source).cards, 'Tucé', 'unsupported'), /Unsupported search scope/);
+  assert.throws(() => filterAnnexCards(prepareAnnexSearch(source).cards, 'Aubin', 'unsupported'), /Unsupported search scope/);
 });
 
-test('CLI writes only the rendered document to stdout', () => {
+test('CLI writes only the rendered document to stdout from a safe temporary fixture', t => {
+  const temporaryRoot = realpathSync(tmpdir());
+  const temporaryDirectory = mkdtempSync(join(temporaryRoot, 'annex-search-test-'));
+  t.after(() => {
+    const target = realpathSync(temporaryDirectory);
+    assert.equal(dirname(target).toLowerCase(), temporaryRoot.toLowerCase());
+    assert.ok(basename(target).startsWith('annex-search-test-'));
+    rmSync(target, { recursive: true, force: true });
+  });
+  const indexPath = join(temporaryDirectory, 'query-index.json');
+  writeFileSync(indexPath, `${JSON.stringify(source)}\n`, 'utf8');
   const expected = `${renderAnnexSearch(source)}\n`;
   const result = spawnSync(process.execPath, [
     resolve(repositoryRoot, 'scripts', 'archives', 'render-annex-search.mjs'), '--index', indexPath
@@ -116,5 +126,15 @@ test('CLI writes only the rendered document to stdout', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.equal(result.stderr, '');
   assert.equal(result.stdout, expected);
+});
+
+test('optional private integration index remains bounded when explicitly provided', {
+  skip: !process.env.ARCHIVE_ANNEX_QUERY_INDEX
+}, () => {
+  const privateIndex = JSON.parse(readFileSync(resolve(process.env.ARCHIVE_ANNEX_QUERY_INDEX), 'utf8'));
+  const model = prepareAnnexSearch(privateIndex);
+  assert.equal(model.cards.length, 5);
+  assert.equal(new Set(model.cards.map(card => card.id)).size, 5);
+  assert.match(renderAnnexSearch(privateIndex), /data-annex-card/);
 });
 
