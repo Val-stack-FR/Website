@@ -52,7 +52,7 @@
 - [x] Revue indépendante : trois écarts UUID/date/contrôles reproduits puis corrigés.
 - [x] Treize tests réussis : permissions, rejeu, conflits, rollback, redémarrage brutal et export/restauration identiques.
 - [x] Acceptation du coordinateur enregistrée dans tests/archive-corrections/coordinator-acceptance.md.
-- [ ] Interface bornée au passage inventé ; aucune correction historique raccordée.
+- [x] Interface bornée au passage inventé ; aucune correction historique raccordée. Parcours à deux onglets et redémarrage vérifiés.
 - [ ] Authentification réelle et stockage hébergé avant tout service public.
 
 Le suivi global et les dépendances restent dans le TODO de l'atelier PERSO. Ce MVP ne confirme aucune lecture historique.
