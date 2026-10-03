@@ -1,0 +1,319 @@
+:root {
+  --status-ink: #0b3625;
+  --status-muted: #52655d;
+  --status-line: #adc3b8;
+  --status-paper: #e8f2ed;
+  --status-panel: #f7faf8;
+  --status-warn: #8a5a12;
+  --status-danger: #7b2d25;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.statusboard-page {
+  background: var(--status-paper);
+  color: #14221c;
+  overflow-x: hidden;
+}
+
+.statusboard-main {
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2.5rem) 5rem;
+}
+
+.statusboard-hero {
+  align-items: end;
+  border-bottom: 1px solid var(--status-line);
+  display: grid;
+  gap: 1.25rem 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.8fr);
+  padding-bottom: 2rem;
+}
+
+.statusboard-kicker,
+.statusboard-unit,
+.statusboard-section > header > p:first-child,
+.statusboard-meta dt,
+.statusboard-provenance dt,
+.statusboard-priority {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.statusboard-kicker,
+.statusboard-section > header > p:first-child {
+  color: var(--accent);
+}
+
+.statusboard-hero h1 {
+  color: var(--status-ink);
+  font-size: clamp(2.4rem, 6vw, 5.4rem);
+  line-height: 0.92;
+  margin: 0.35rem 0 0;
+}
+
+.statusboard-hero > p {
+  color: var(--status-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.statusboard-hero nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  grid-column: 1 / -1;
+}
+
+.statusboard-hero a {
+  color: var(--status-ink);
+  font-weight: 700;
+}
+
+.statusboard-notice {
+  align-items: baseline;
+  background: #fff0cf;
+  border: 1px solid #c28a32;
+  color: #57380b;
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.statusboard-section + .statusboard-section {
+  border-top: 2px solid var(--status-ink);
+  margin-top: 3.5rem;
+  padding-top: 3rem;
+}
+
+.statusboard-section > header {
+  display: grid;
+  gap: 0.35rem 2rem;
+  grid-template-columns: minmax(0, 0.65fr) minmax(18rem, 1fr);
+  margin-bottom: 1.5rem;
+}
+
+.statusboard-section > header > p:first-child,
+.statusboard-section > header h2 {
+  grid-column: 1;
+}
+
+.statusboard-section > header > p:last-child {
+  align-self: end;
+  color: var(--status-muted);
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  line-height: 1.55;
+}
+
+.statusboard-section h2 {
+  color: var(--status-ink);
+  font-size: clamp(1.8rem, 4vw, 3.3rem);
+  line-height: 1;
+}
+
+.statusboard-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.statusboard-card {
+  background: var(--status-panel);
+  border: 1px solid var(--status-line);
+  min-width: 0;
+  padding: clamp(1rem, 2.5vw, 1.8rem);
+}
+
+.statusboard-card-header {
+  align-items: start;
+  border-bottom: 1px solid var(--status-line);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-bottom: 1.1rem;
+}
+
+.statusboard-unit,
+.statusboard-reference,
+.statusboard-source,
+.statusboard-dates {
+  color: var(--status-muted);
+}
+
+.statusboard-card h3 {
+  color: var(--status-ink);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.05;
+  margin: 0.35rem 0 0.55rem;
+}
+
+.statusboard-reference {
+  line-height: 1.45;
+  margin: 0;
+}
+
+.statusboard-priority {
+  border: 1px solid var(--status-line);
+  padding: 0.35rem 0.55rem;
+}
+
+.statusboard-priority--prioritaire {
+  background: #fff0cf;
+  border-color: #c28a32;
+  color: #57380b;
+}
+
+.statusboard-priority-reason {
+  border-left: 3px solid var(--status-line);
+  line-height: 1.55;
+  margin: 1rem 0;
+  padding-left: 0.85rem;
+}
+
+.statusboard-meta {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  background: var(--status-line);
+  border: 1px solid var(--status-line);
+}
+
+.statusboard-state {
+  background: white;
+  min-width: 0;
+  padding: 0.75rem;
+}
+
+.statusboard-meta dt,
+.statusboard-provenance dt {
+  color: var(--status-muted);
+}
+
+.statusboard-meta dd,
+.statusboard-provenance dd {
+  line-height: 1.45;
+  margin: 0.3rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.statusboard-state--status dd {
+  color: var(--status-danger);
+  font-weight: 700;
+}
+
+.statusboard-state--owner dd {
+  color: var(--status-warn);
+}
+
+.statusboard-work {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.statusboard-work section {
+  border: 1px solid var(--status-line);
+  padding: 1rem;
+}
+
+.statusboard-work h4 {
+  color: var(--status-ink);
+  font-size: 0.95rem;
+  margin-bottom: 0.65rem;
+}
+
+.statusboard-work p,
+.statusboard-work li,
+.statusboard-dates,
+.statusboard-source,
+.statusboard-uncertainties,
+.statusboard-provenance {
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.statusboard-work ul,
+.statusboard-uncertainties ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.statusboard-dates,
+.statusboard-source,
+.statusboard-uncertainties {
+  margin-top: 1rem;
+}
+
+.statusboard-uncertainties summary {
+  color: var(--status-warn);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.statusboard-provenance {
+  border-top: 1px solid var(--status-line);
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+}
+
+.statusboard-provenance div {
+  min-width: 0;
+}
+
+.statusboard-page a:focus-visible,
+.statusboard-page summary:focus-visible {
+  outline: 3px solid #f4c95d;
+  outline-offset: 3px;
+}
+
+@media (max-width: 820px) {
+  .statusboard-hero,
+  .statusboard-section > header,
+  .statusboard-grid,
+  .statusboard-work {
+    grid-template-columns: 1fr;
+  }
+
+  .statusboard-section > header > p:last-child {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .statusboard-notice {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .statusboard-card-header,
+  .statusboard-meta,
+  .statusboard-provenance {
+    grid-template-columns: 1fr;
+  }
+
+  .statusboard-priority {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
