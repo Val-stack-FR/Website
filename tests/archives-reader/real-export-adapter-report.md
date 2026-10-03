@@ -41,6 +41,17 @@ L’export `atelier-e108-20261003-v5` produit un dossier E.108, zéro image et u
 
 `reader-media-selection.json` décrit les SHA effectivement référencés par le HTML ; ce n’est pas l’allowlist privée du serveur, qui conserve séparément les chemins relatifs contrôlés et les décisions approuvées.
 
+## Vérification sur l’export MVP-B Monbezon + E.108
+
+L’export `mvp-i2-monbezon-20261003-v1` produit deux dossiers de consultation dans `.private/archives-mvp/monbezon-v1` :
+
+- Monbezon conserve des identifiants d’acte et de document nuls, résout son texte par `source_object_id` exact et affiche seulement ses deux `view_ids` reliés par le lien accepté ;
+- E.108 conserve `view_ids: []`, affiche zéro image et ne récupère aucune photographie par voisinage ;
+- les deux SHA sélectionnés sont `9d5a034f86206015b0e0e1f2d857a0ae2875c97a5bab8f401f1de5f665f89e5c` et `82f590739d54c8c74dab7435323fdc3b9375e38422ec63a9166fd9f8d6be59c9` ;
+- le HTML ne contient aucun chemin local et reste ignoré par Git.
+
+La QA Chrome du rendu et du serveur local est consignée dans `tests/archives-reader/mvp-browser-report.md`.
+
 ## Assets attendus du serveur de preview
 
 - `/favicon.svg`
@@ -53,7 +64,6 @@ Aucune police ou ressource réseau n’est requise par le HTML généré.
 
 ## Limites
 
-- Le prochain run Monbezon + E.108 doit encore être passé dans le CLI lorsqu’il sera livré. Les tests synthétiques couvrent déjà deux dossiers, deux endpoints Monbezon acceptés et E.108 sans vue.
 - Le renderer ne lit pas les originaux et ne sert aucun fichier ; le serveur local contrôlé reste un composant de coordination séparé.
 - Les types recto/verso/copie ne sont pas déduits de `object_type: other`. Les vues restent numérotées tant que l’export ne porte pas un type attesté.
 - Seul le profil privé en attente de droits est accepté dans ce MVP. Une publication réelle exige un autre chemin de release et une revue explicite.
