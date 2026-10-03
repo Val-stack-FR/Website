@@ -275,7 +275,7 @@
 
 .statusboard-page a:focus-visible,
 .statusboard-page summary:focus-visible {
-  outline: 3px solid #f4c95d;
+  outline: 3px solid var(--status-ink);
   outline-offset: 3px;
 }
 
