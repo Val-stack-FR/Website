@@ -1,0 +1,8 @@
+import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import assert from 'node:assert/strict';
+import {digest} from './e108-two-photo-adapter.mjs';
+import {fourPin} from './e108-four-photo-composition.mjs';
+const run=resolve('.private/archives-next-readings/e108-four-photo-current-parent-delta-20261004-v1'),history=join(run,'history'),original=await readFile(join(run,'build-proof.json'));assert.equal(digest(original),'abecc31d5e35a5da0d02b29f3e37bcb667d407419520ce61cd2f921e26ab9ffd');await mkdir(history);
+for(const n of ['build-proof.json','preview-session.json','preview-requests.json'])await rename(join(run,n),join(history,n));await rename(join(run,'code-snapshot/e108-four-photo-preview.mjs'),join(history,'preview-initial.mjs'));
+const bytes=await readFile('scripts/archives-next-readings/e108-four-photo-preview.mjs'),proof=JSON.parse(original);await writeFile(join(run,'code-snapshot/e108-four-photo-preview.mjs'),bytes,{flag:'wx'});proof.outputs['code-snapshot/e108-four-photo-preview.mjs']=fourPin(bytes);proof.preview_repair={initial_build:fourPin(original),source_review_p2:'Private query preview did not bound page/size/scope/filter keys',correction:'Exact key allowlist; page1/page_size20/scopeclean and other filters empty, queryempty or13.jpg; JSON400 otherwise',product_composition_unchanged:true,initial_preview_stopped:true};const result=Buffer.from(JSON.stringify(proof,null,2)+'\n');await writeFile(join(run,'build-proof.json'),result,{flag:'wx'});await writeFile(join(run,'code-snapshot/repair-e108-four-photo-preview.mjs'),await readFile(new URL(import.meta.url)),{flag:'wx'});console.log(JSON.stringify({proof:fourPin(result),composition_unchanged:true},null,2));

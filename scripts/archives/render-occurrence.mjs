@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { bindOccurrenceMedia } from './reader-media-release.mjs';
 
 export const OCCURRENCE_PROFILE = 'h05-real-occurrence/0.1.0';
 const SHA256 = /^[a-f0-9]{64}$/;
@@ -160,8 +161,9 @@ export function prepareOccurrence(input) {
 
 const detail = (label, value) => `<div><dt>${escapeHtml(label)}</dt><dd><code>${escapeHtml(value)}</code></dd></div>`;
 
-export function renderOccurrence(input) {
-  const model = prepareOccurrence(input);
+export function renderOccurrence(input, { mediaRelease=null }={}) {
+  const originalModel = prepareOccurrence(input);
+  const model = mediaRelease ? bindOccurrenceMedia(originalModel,mediaRelease) : originalModel;
   const box = model.contextBox;
   const media = escapeHtml(model.mediaUrl);
   return `<!DOCTYPE html>
@@ -223,6 +225,7 @@ export function renderOccurrence(input) {
           ${detail('Occurrence', model.occurrenceId)}
           ${detail('Objet image et vue', model.viewId)}
           ${detail('SHA-256 de l’image', model.sourceSha256)}
+          ${model.derivativeSha256 ? detail('SHA-256 du dérivé affiché',model.derivativeSha256)+detail('Objet numérique du dérivé',model.derivativeObjectId)+detail('Repère technique du dérivé',model.referenceFrame+' · sans rotation') : ''}
           ${detail('Texte', model.textId)}
           ${detail('Source du texte', model.textSourceId)}
           ${detail('Révision du texte · SHA-256', model.textRevision)}

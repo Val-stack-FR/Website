@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { test } from 'node:test';
 import { createArchivePreview } from '../../scripts/archives/preview-server.mjs';
+import { inventedCatalogue } from '../archives-catalogue/fixtures/invented-catalogue.mjs';
 
 async function fixture(t) {
   const tempRoot = await realpath(tmpdir());
@@ -193,4 +194,73 @@ test('optional statusboard exposes its route and stylesheet while source files s
     assert.equal((await fetch(origin + forbidden)).status, 404);
   }
   await assert.rejects(createArchivePreview({ ...f, statusHtmlPath: f.htmlPath }), /outside the checkout/);
+});
+
+test('integrated catalogue serves static CLEAN cards and bounded data while refusing reserve and unverified links', async t => {
+  const f = await fixture(t);
+  const { mkdir } = await import('node:fs/promises');
+  await mkdir(join(f.assetsRoot, 'scripts/archives-catalogue'), { recursive: true });
+  await writeFile(join(f.assetsRoot, 'scripts/archives-catalogue/catalogue.css'), '/* catalogue */');
+  await writeFile(join(f.assetsRoot, 'scripts/archives-catalogue/catalogue.js'), '// catalogue');
+  await writeFile(join(f.assetsRoot, 'scripts/archives-catalogue/hierarchy.js'), '// hierarchy');
+  const catalogue = inventedCatalogue(70);
+  catalogue.records = catalogue.records.filter(record => record.collection_scope === 'clean');
+  for (const record of catalogue.records) {
+    record.consultation = { available: false, href: null, approval_id: null };
+    if (record.status === 'reader-linked') record.status = 'metadata-only';
+  }
+  catalogue.record_count = catalogue.records.length;
+  f.cataloguePath = join(f.assetsRoot, 'private-catalogue.json');
+  await writeFile(f.cataloguePath, JSON.stringify(catalogue));
+  const preview = await createArchivePreview(f);
+  t.after(() => new Promise(resolveDone => preview.server.close(resolveDone)));
+  const origin = new URL(await preview.listen()).origin;
+  const html = await (await fetch(origin + '/archives/catalogue/')).text();
+  assert.ok((html.match(/class="catalogue-card"/g) ?? []).length <= 50);
+  assert.ok(html.includes('Classement historique des dossiers conservé'));
+  const hierarchy = await (await fetch(origin + '/__catalogue_hierarchy')).json();
+  assert.equal(hierarchy.selected_folder.logicalPath, 'CLEAN');
+  assert.equal(hierarchy.counts.clean_image_files, catalogue.records.length);
+  assert.ok(hierarchy.entries.every(entry=>entry.kind === 'folder' || entry.kind === 'file'));
+  assert.ok(!html.includes('Toutes les collections'));
+  assert.ok(!html.includes('<img src=x'));
+  const data = await (await fetch(origin + '/__catalogue_data?collection_scope=all')).json();
+  assert.equal(data.records.length, 50);
+  assert.ok(data.records.every(record => record.collectionScope === 'clean'));
+  for (const query of ['page_size=51', 'page=0', 'file=.env', 'page=1&page=2']) assert.equal((await fetch(origin + '/__catalogue_data?' + query)).status, 400);
+  for (const route of ['/private-catalogue.json', '/scripts/archives-catalogue/catalogue.js']) assert.equal((await fetch(origin + route)).status, 404);
+  for (const route of ['/archives/catalogue/?file=.env','/__catalogue_hierarchy?folder=CLEAN&folder=other','/__catalogue_hierarchy?page_size=51','/__catalogue_hierarchy?collection_scope=all','/__catalogue_hierarchy?folder=CLEAN/../other']) assert.equal((await fetch(origin + route)).status, 400);
+  const reserve = inventedCatalogue(70);
+  await writeFile(f.cataloguePath, JSON.stringify(reserve));
+  await assert.rejects(createArchivePreview(f), /CLEAN only/);
+  catalogue.records[0].consultation = { available: true, href: '/archives/#invented', approval_id: 'review:invented' };
+  await writeFile(f.cataloguePath, JSON.stringify(catalogue));
+  await assert.rejects(createArchivePreview(f), /reader export is required/);
+});
+
+test('candidate gallery requires a separate manifest-bound selection and cannot enter the accepted media route', async t => {
+  const f = await fixture(t);
+  const bytes = Buffer.from([0xff, 0xd8, 0xff, 0x01, 5, 6, 7]);
+  const hash = createHash('sha256').update(bytes).digest('hex');
+  await writeFile(join(f.corpusRoot, 'candidate.jpg'), bytes);
+  await writeFile(f.htmlPath, `<html><img src="/__archive_draft_media/${hash}" data-draft-object-id="object:path-${'c'.repeat(64)}"></html>`);
+  await assert.rejects(createArchivePreview(f), /Candidate photographs require/);
+  f.draftMediaManifestPath = join(f.assetsRoot, 'draft-media.json');
+  await assert.rejects(createArchivePreview(f), /All three draft/);
+  f.draftSourceManifestPath = join(f.assetsRoot, 'draft-source.json');
+  f.draftPreflightPath = join(f.assetsRoot, 'draft-preflight.json');
+  const objectId = 'object:path-' + 'c'.repeat(64);
+  const sourceBytes = Buffer.from(JSON.stringify({ manifest_version: 'atelier-draft-source-input/1', corpus_root_reference: 'env:PHD_CORPUS_ROOT', objects: [{ digital_object_id: objectId, relative_path: 'candidate.jpg', expected_sha256: hash, expected_byte_size: bytes.length, media_type: 'image/jpeg', association_status: 'candidate', rights: { local_consultation: 'authorized', permitted_uses: ['local-private-consultation'] } }] }));
+  const sourceHash = createHash('sha256').update(sourceBytes).digest('hex');
+  await writeFile(f.draftSourceManifestPath, sourceBytes);
+  await writeFile(f.draftPreflightPath, JSON.stringify({ passed: true, corpus_root_accessible: true, corpus_root_reference: 'env:PHD_CORPUS_ROOT', input_manifest_sha256: sourceHash }));
+  await writeFile(f.draftMediaManifestPath, JSON.stringify({ manifest_version: 'atelier-draft-local-media/1', corpus_root_reference: 'env:PHD_CORPUS_ROOT', source_manifest_sha256: sourceHash, publication_status: 'not-published', link_status: 'candidate', objects: [{ digital_object_id: objectId, sha256: hash, byte_size: bytes.length, media_type: 'image/jpeg' }] }));
+  const preview = await createArchivePreview(f);
+  const origin = new URL(await preview.listen()).origin;
+  t.after(() => new Promise(resolveDone => preview.server.close(resolveDone)));
+  const image = await fetch(origin + '/__archive_draft_media/' + hash);
+  assert.equal(image.status, 200);
+  assert.deepEqual(Buffer.from(await image.arrayBuffer()), bytes);
+  for (const forbidden of ['/__archive_media/' + hash, '/__archive_draft_media/' + f.hash, '/draft-source.json', '/candidate.jpg']) assert.equal((await fetch(origin + forbidden)).status, 404);
+  assert.equal((await fetch(origin + '/__archive_media/' + f.hash)).status, 200);
 });

@@ -1,0 +1,7 @@
+.draft-fragments { margin-top: 24px; padding: 18px; border: 1px solid var(--border-solid); }
+.draft-fragments label { display: block; margin-bottom: 8px; }
+.draft-fragments select { width: 100%; min-width: 0; padding: 10px; color: var(--text); background: var(--bg); border: 1px solid var(--accent-dark); }
+.draft-fragments p { margin-top: 12px; line-height: 1.7; }
+.draft-fragments blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid var(--accent-dark); line-height: 1.8; overflow-wrap: anywhere; }
+.draft-fragments .reader-button { margin: 4px 0; }
+.text-reading h4, .text-reading h5 { margin: 20px 0 10px; font-family: var(--font-head); line-height: 1.3; }

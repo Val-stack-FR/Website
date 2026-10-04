@@ -249,6 +249,35 @@ export function filterAnnexCards(cards, query, scope = 'all') {
   return cards.filter(card => card.search[scope].includes(needle));
 }
 
+export function prepareAnnexSearchShards(indexes) {
+  ensure(Array.isArray(indexes) && indexes.length === 2, 'Exactly two separate annex index shards required.');
+  for (const index of indexes) {
+    for (const entry of array(index.entries, 'entries')) ensure(entry.identity_status === (entry.scope === 'variant' ? 'unknown' : 'unresolved'), 'Shard entry status must remain unknown for variants or unresolved for fiche expressions.');
+    for (const ambiguity of array(index.ambiguities, 'ambiguities')) ensure(ambiguity.status === 'unresolved-same-name' && ambiguity.merged === false, 'Shard ambiguity status must remain unresolved-same-name and unmerged.');
+  }
+  const models = indexes.map(prepareAnnexSearch);
+  ensure(models.every(model => model.cards.length === 5) && new Set(models.map(model => model.packageId)).size === 2, 'Two distinct five-fiche packages required.');
+  const cards = models.flatMap(model => model.cards.map(card => {
+    const exactSearch = Object.fromEntries([...ALLOWED_SCOPES, 'all'].map(scope => {
+      const names = scope === 'all' || scope === 'name' ? [card.label, card.heading] : [];
+      const entries = scope === 'all' ? Object.values(card.groups).flat() : card.groups[scope];
+      return [scope, [...new Set([...names, ...entries.map(entry => entry.literal)].map(normalizeSearchText))]];
+    }));
+    return { ...card, sourcePackageId: model.packageId, exactSearch };
+  }));
+  ensure(new Set(cards.map(card => card.id)).size === 10 && new Set(cards.map(card => card.number)).size === 10, 'Cross-shard duplicate fiche identities or numbers refused.');
+  return { cards, packageIds: models.map(model => model.packageId), limitations: [...new Set(models.flatMap(model => model.limitations))].map(item =>
+    item === 'Five selected fiches only; zero hits is not absence from the wider corpus.'
+      ? 'Dix fiches sélectionnées dans deux paquets distincts ; aucun résultat ne prouve une absence dans le reste du corpus.' : item) };
+}
+
+export function filterAnnexShardCards(cards, query, scope = 'all', { exact = false } = {}) {
+  ensure(scope === 'all' || ALLOWED_SCOPES.includes(scope), `Unsupported search scope: ${scope}`);
+  const needle = normalizeSearchText(query);
+  if (!exact || !needle) return filterAnnexCards(cards, query, scope);
+  return cards.filter(card => card.exactSearch[scope].includes(needle));
+}
+
 const renderProvenance = provenance => `<dl class="annex-provenance">
   <div><dt>Table</dt><dd><code>${escapeHtml(provenance.table)}</code></dd></div>
   <div><dt>Fiche candidate</dt><dd>${escapeHtml(provenance.ficheNumber)}</dd></div>
@@ -272,7 +301,8 @@ const renderGroup = (scope, entries) => entries.length === 0 ? '' : `<section cl
 
 const renderCard = card => {
   const attributes = ALLOWED_SCOPES.map(scope => `data-search-${scope}="${escapeHtml(card.search[scope])}"`).join(' ');
-  return `<article class="annex-card" data-annex-card data-search-all="${escapeHtml(card.search.all)}" ${attributes} aria-labelledby="fiche-${escapeHtml(card.number)}-title">
+  const shardAttributes = card.sourcePackageId ? ` data-annex-package="${escapeHtml(card.sourcePackageId)}" data-exact-search="${escapeHtml(JSON.stringify(card.exactSearch))}"` : '';
+  return `<article class="annex-card" data-annex-card${shardAttributes} data-search-all="${escapeHtml(card.search.all)}" ${attributes} aria-labelledby="fiche-${escapeHtml(card.number)}-title">
   <header class="annex-card-header">
     <p class="annex-fiche-number">Fiche ${escapeHtml(card.number)} · sélection expérimentale</p>
     <h2 id="fiche-${escapeHtml(card.number)}-title">${escapeHtml(card.label)}</h2>
@@ -296,13 +326,20 @@ const renderCard = card => {
 
 export function renderAnnexSearch(index) {
   const model = prepareAnnexSearch(index);
+  return renderAnnexSearchModel(model);
+}
+export function renderAnnexSearchShards(indexes) {
+  return renderAnnexSearchModel(prepareAnnexSearchShards(indexes), true);
+}
+function renderAnnexSearchModel(model, shards = false) {
+  const sizeLabel = shards ? 'dix' : 'cinq';
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
-  <title>Recherche dans cinq fiches d’annexes</title>
+  <title>Recherche dans ${sizeLabel} fiches d’annexes</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/css/archives-search.css" />
@@ -312,28 +349,30 @@ export function renderAnnexSearch(index) {
   <div class="page">
     <main class="annex-main">
       <header class="annex-hero">
-        <div><p class="annex-kicker">Consultation privée · index borné</p><h1>Rechercher dans cinq fiches</h1></div>
-        <p>Cette recherche couvre uniquement cinq fiches expérimentales. Aucun résultat ne prouve une absence dans le reste du corpus.</p>
+        <div><p class="annex-kicker">Consultation privée · index borné</p><h1>Rechercher dans ${sizeLabel} fiches</h1></div>
+        <p>Cette recherche couvre uniquement ${sizeLabel} fiches expérimentales. Aucun résultat ne prouve une absence dans le reste du corpus.</p>
         <a class="annex-reader-link" href="/archives/">Ouvrir le lecteur d’archives <span aria-hidden="true">→</span></a>
         <a class="annex-reader-link" href="/archives/avancement/">Avancement des travaux <span aria-hidden="true">→</span></a>
+        <a class="annex-reader-link" href="/archives/catalogue/">Catalogue CLEAN <span aria-hidden="true">→</span></a>
       </header>
       <aside class="annex-notice" aria-label="Limites de la consultation">
         <strong>Données non publiables · lecture et identités non validées.</strong>
         <p>Les variantes d’index désignent des candidats possibles. Elles ne sont ni des occurrences attestées dans les fiches, ni des identités fusionnées.</p>
       </aside>
-      <form class="annex-search" id="annex-search" role="search">
+      <form class="annex-search${shards ? ' annex-search--shards' : ''}" id="annex-search" role="search">
         <div class="annex-search-field"><label for="annex-query">Nom, variante, titre, lieu, seigneurie ou juridiction</label><input id="annex-query" name="q" type="search" autocomplete="off" aria-controls="annex-results" /></div>
         <div class="annex-scope-field"><label for="annex-scope">Chercher dans</label><select id="annex-scope" name="scope"><option value="all">Tous les champs</option>${ALLOWED_SCOPES.map(scope => `<option value="${scope}">${escapeHtml(SCOPE_LABELS[scope])}</option>`).join('')}</select></div>
+        ${shards ? '<div class="annex-scope-field"><label for="annex-match">Correspondance</label><select id="annex-match" name="match"><option value="exact">Expression exacte</option><option value="contains">Recherche élargie</option></select></div>' : ''}
         <button type="reset">Effacer</button>
       </form>
       <p class="annex-count" id="annex-count" role="status" aria-live="polite">${model.cards.length} fiches affichées sur ${model.cards.length}</p>
-      <p class="annex-empty" id="annex-empty" hidden>Aucune de ces cinq fiches ne correspond. Ce résultat ne concerne pas le reste du corpus.</p>
+      <p class="annex-empty" id="annex-empty" hidden>Aucune de ces ${sizeLabel} fiches ne correspond. Ce résultat ne concerne pas le reste du corpus.</p>
       <section class="annex-results" id="annex-results" aria-label="Fiches sélectionnées">${model.cards.map(renderCard).join('')}</section>
       <aside class="annex-limitations"><h2>Limites de l’index</h2><ul>${model.limitations.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside>
     </main>
-    <footer class="footer"><span class="footer-text">Prévisualisation privée · cinq fiches</span><span class="footer-text">Paquet ${escapeHtml(model.packageId)}</span></footer>
+    <footer class="footer"><span class="footer-text">Prévisualisation privée · ${sizeLabel} fiches</span><span class="footer-text">${shards ? 'Paquets distincts ' + model.packageIds.map(escapeHtml).join(' · ') : 'Paquet ' + escapeHtml(model.packageId)}</span></footer>
   </div>
-  <script src="/js/archives-search.js" defer></script>
+  <script src="/js/${shards ? 'archives-annex-shards' : 'archives-search'}.js" defer></script>
 </body>
 </html>`;
 }

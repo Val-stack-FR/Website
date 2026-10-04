@@ -36,15 +36,17 @@ test('configured npm CLI uses the current Node without a shell and preserves ci/
   const { spawned } = build({ env: { NPM_CLI_JS: cli } });
   assert.equal(spawned[0].executable, process.execPath);
   assert.equal(spawned[0].options.env.SITE_ROOT, path.join(root, 'dist'));
-  assert.deepEqual(spawned.slice(1).map(call => call.args), [
+  assert.deepEqual(spawned.slice(1, 3).map(call => call.args), [
     [cli, 'ci'],
     [cli, 'run', 'build', '--', '--outDir', '../dist/about'],
   ]);
-  for (const call of spawned.slice(1)) {
+  for (const call of spawned.slice(1, 3)) {
     assert.equal(call.executable, process.execPath);
     assert.equal(call.options.shell, false);
     assert.equal(call.options.cwd, path.join(root, 'Spaceship'));
   }
+  assert.equal(spawned[3].executable, process.execPath);
+  assert.deepEqual(spawned[3].args, [path.join(root, 'scripts', 'archives', 'build-public.mjs')]);
 });
 
 test('unconfigured Windows retains the npm.cmd fallback', () => {

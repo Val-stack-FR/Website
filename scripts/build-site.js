@@ -54,6 +54,7 @@ for (const name of [
 run(process.execPath, [path.join(__dirname, 'prerender.js')], root, { ...process.env, SITE_ROOT: dist });
 run('npm', ['ci'], path.join(root, 'Spaceship'));
 run('npm', ['run', 'build', '--', '--outDir', '../dist/about'], path.join(root, 'Spaceship'));
+run(process.execPath, [path.join(__dirname, 'archives', 'build-public.mjs')], root);
 
 console.log('✓ dist/ built from deployable public assets only');
 

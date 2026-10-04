@@ -1,0 +1,15 @@
+import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import assert from 'node:assert/strict';
+import {digest} from './e108-two-photo-adapter.mjs';
+const run=resolve('.private/archives-next-readings/e108-two-photo-ui-delta-20261004-v1'),pin=b=>({sha256:digest(b),bytes:b.length});
+const original=await readFile(join(run,'build-proof.json'));assert.equal(digest(original),'87cec0bdf27c05b2b79f415dc8c486877a8635e77d6a2ff2d177361a6f03cb6e');
+const history=join(run,'history');await mkdir(history);
+for(const name of ['build-proof.json','preview-session.json','preview-requests.json'])await rename(join(run,name),join(history,name));
+await rename(join(run,'code-snapshot/e108-two-photo-preview.mjs'),join(history,'preview-initial.mjs'));
+const runner=await readFile('scripts/archives-next-readings/e108-two-photo-preview.mjs'),proof=JSON.parse(original);
+await writeFile(join(run,'code-snapshot/e108-two-photo-preview.mjs'),runner,{flag:'wx'});proof.outputs['code-snapshot/e108-two-photo-preview.mjs']=pin(runner);
+proof.preview_repair={original_build:pin(original),reason:'Private preview missed collection_scope=clean sent by preserved parent catalogue form; initial HTTP400 observed and retained',product_delta_unchanged:true,repaired_preview_filters_bound_to_selected_scope:true,original_preview_stopped:true};
+const bytes=Buffer.from(JSON.stringify(proof,null,2)+'\n');await writeFile(join(run,'build-proof.json'),bytes,{flag:'wx'});
+await writeFile(join(run,'code-snapshot/repair-e108-two-photo-preview.mjs'),await readFile(new URL(import.meta.url)),{flag:'wx'});
+console.log(JSON.stringify({proof:pin(bytes),product_delta_unchanged:true},null,2));

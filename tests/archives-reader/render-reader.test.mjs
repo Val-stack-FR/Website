@@ -20,6 +20,7 @@ import {
   renderReaderHtml,
   writePrivatePreview
 } from '../../scripts/archives/render-reader.mjs';
+import { readerAllowlist } from '../../scripts/archives-catalogue/reader-allowlist.mjs';
 
 const SHA_A = 'a'.repeat(64);
 const SHA_B = 'b'.repeat(64);
@@ -276,4 +277,26 @@ try {
   if (existsSync(junctionPath)) unlinkSync(junctionPath);
 }
 
+const bindingSource = sourceExport();
+const bindingMedia = {
+  manifest_version: 'atelier-tuce-local-media/1.0.0', access_tier: 'project', publication_status: 'not-published',
+  objects: bindingSource.media.map(image => ({ digital_object_id: image.digital_object_id, view_id: image.view_id,
+    sha256: image.sha256, approved_review_id: bindingSource.approved_links.find(link => link.review_status === 'accepted').review_id,
+    bytes_verified: true, source_reading_status: 'unreviewed' }))
+};
+const binding = readerAllowlist(bindingSource, bindingMedia);
+assert.equal(binding.entries.length, 2);
+assert.ok(binding.entries.every(entry => entry.href === '/archives/#candidate-monbezon-test'));
+const driftedBinding = structuredClone(bindingMedia);
+driftedBinding.objects[0].approved_review_id = 'review:drift';
+assert.throws(() => readerAllowlist(bindingSource, driftedBinding), /verified media allowlist/);
+const bindingModel = adaptArchiveExport(bindingSource);
+const correctionHtml = renderReaderHtml(bindingModel, { privatePreview: true, correctionsOrigin: 'http://127.0.0.1:8789', correctionTextIds: ['text:monbezon'] });
+assert.equal((correctionHtml.match(/Proposer une lecture/g) ?? []).length, 1);
+assert.ok(correctionHtml.includes('passage=text%3Amonbezon'));
+assert.ok(!correctionHtml.includes('passage=text%3Ae108'));
+for (const correctionsOrigin of ['https://external.example', 'http://127.0.0.1:99999', 'http://127.0.0.1:8789/other']) {
+  assert.throws(() => renderReaderHtml(bindingModel, { privatePreview: true, correctionsOrigin }), /Corrections|corrections port/);
+}
+assert.throws(() => renderReaderHtml(bindingModel, { privatePreview: true, correctionTextIds: ['text:absent'] }), /explicit text IDs/);
 console.log('Real-export adapter and private static renderer checks passed.');

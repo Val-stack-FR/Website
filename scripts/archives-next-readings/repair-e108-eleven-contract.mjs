@@ -1,0 +1,16 @@
+import {readFile,writeFile,copyFile} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import assert from 'node:assert/strict';
+import {digest} from './e108-two-photo-adapter.mjs';
+const run=resolve('.private/archives-next-readings/e108-11-six-line-reader-ui-20261004-v1'),pin=b=>({sha256:digest(b),bytes:b.length});
+const proofBytes=await readFile(join(run,'build-proof.json'));assert.equal(digest(proofBytes),'5a694ec4257bf058640aa5d3f23d217bd064f37a30cb196a9aba96103a93fb26');const proof=JSON.parse(proofBytes);
+await copyFile(join(run,'build-proof.json'),join(run,'history/build-before-contract-pin.json'),1);await copyFile(join(run,'integration-contract.json'),join(run,'history/contract-photo-first-pin.json'),1);await copyFile(join(run,'browser-gate.json'),join(run,'history/gate-before-contract-pin.json'),1);
+const html=await readFile(join(run,'public/reader.html'));assert.deepEqual(pin(html),proof.outputs['public/reader.html']);const contract=JSON.parse(await readFile(join(run,'integration-contract.json')));Object.assign(contract.public_routes.find(p=>p.file==='public/reader.html'),pin(html));
+const b=Buffer.from(JSON.stringify(contract,null,2)+'\n');await writeFile(join(run,'integration-contract.json'),b);proof.outputs['integration-contract.json']=pin(b);proof.preview_repair.changed_outputs.push('integration-contract.json');
+proof.contract_pin_repair={reason:'Refresh reader HTML integration pin after panel-order change',all_public_product_bytes_unchanged:true,qualified_browser_observations_unchanged:true};
+const finalProof=Buffer.from(JSON.stringify(proof,null,2)+'\n');await writeFile(join(run,'build-proof.json'),finalProof);
+const gate=JSON.parse(await readFile(join(run,'browser-gate.json')));gate.build_proof=pin(finalProof);gate.integration_contract_pins_checked=true;await writeFile(join(run,'browser-gate.json'),JSON.stringify(gate,null,2)+'\n');
+for(const p of contract.public_routes)assert.deepEqual(pin(await readFile(join(run,p.file))),{sha256:p.sha256,bytes:p.bytes});
+await writeFile(join(run,'code-snapshot/repair-e108-eleven-reader-order.mjs'),await readFile('scripts/archives-next-readings/repair-e108-eleven-reader-order.mjs'));
+await writeFile(join(run,'code-snapshot/repair-e108-eleven-contract.mjs'),await readFile(new URL(import.meta.url)),{flag:'wx'});
+console.log(JSON.stringify({build:pin(finalProof),gate:pin(await readFile(join(run,'browser-gate.json'))),product_unchanged:true},null,2));

@@ -1,0 +1,33 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { resolve, extname } from 'node:path';
+import { loadLexicalSearch } from './lexical-search.mjs';
+import { loadDraftProjection } from './publication-drafts.mjs';
+import { loadPublicationData } from './publication-runtime.mjs';
+
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const ensure = (value, message) => { if (!value) throw new Error(message); };
+const roots = { imports: 'Z:/Codex/repos/PHD-Maine-archives-import', reader: 'Z:/Codex/repos/Website-archives-reader' };
+const cataloguePath = resolve(roots.reader, '.private/archives-mvp/site-annex-shards-v2/catalogue.json');
+const indexPath = resolve(roots.imports, 'data/private/coordinator-review/c07-complete-20261003-v1/reader-text-index.jsonl');
+const coveragePath = resolve(roots.imports, 'data/private/text-history/C07-remaining-clean-20261003-result-v1/coverage-C03-clean-transcriptions-166.json');
+const catalogueBytes = await readFile(cataloguePath), indexBytes = await readFile(indexPath), coverageBytes = await readFile(coveragePath);
+ensure(hash(catalogueBytes) === '8a92bf0998334abdd2611f8d17fc1424cb8581ed9971a56bda0d24e38b48a998' && hash(indexBytes) === '9a0f3b57aea6c21f72132ef1c8af58564eface9f1ca9d267942718fbac772afe' && hash(coverageBytes) === 'dbdd1ec2b01d679327ccc374904f59ae70f09fd654a8aa47c579bb5ed2c4fe79', 'Accepted publication inputs changed.');
+const catalogue = JSON.parse(catalogueBytes), text_records = indexBytes.toString('utf8').trimEnd().split('\n').map(JSON.parse);
+const coverageMap = new Map(JSON.parse(coverageBytes).records.map(row => [row.object_id, row]));
+const text_coverage = text_records.map(record => {
+  const source = coverageMap.get(record.object_id);
+  ensure(source && (source.fresh_source_sha256 ?? source.catalogue_sha256) === record.source_sha256 && source.source_byte_size === record.source_byte_size && source.catalogue_status === record.catalogue_discovery_status, 'Exact text coverage join failed.');
+  return { schema_version: 'coverage-object/1.0.0', object_id: source.object_id, object_id_basis: 'Stable object path ID in accepted C03/C07 derivative', logical_path: source.logical_path, path_provenance: 'C03 CLEAN inventory path, joined by exact object_id', collection: 'CLEAN', extension: extname(source.logical_path), size_bytes: record.source_byte_size, inventory_observed_at: null, discovery_role: source.discovery_role, role_basis: 'C03 discovery role', sha256: record.source_sha256, hash_freshness: 'historical_inventory_hash_not_rechecked', candidate_groups: [], status: record.catalogue_discovery_status, canonical_link_status: source.canonical_link_status === 'accepted' ? 'accepted' : 'not_in_examined_canonical_links', archive_content_inspected: false, rights_status: 'unknown' };
+});
+const lexical = await loadLexicalSearch(resolve(roots.imports, 'data/private/text-mentions/O01-quality-20261004-v041'));
+const draftProof = JSON.parse(await readFile(resolve(roots.reader, '.private/archives-integration/publication-drafts-20261004-v1/verification.json')));
+const drafts = await loadDraftProjection(resolve(roots.reader, '.private/archives-integration/publication-drafts-20261004-v1/draft-projection.json'), draftProof.sha256);
+const data = { format: 'archives-selected-runtime-data/1', historical_confirmation: false, source_pins: { catalogue: hash(catalogueBytes), text_index: hash(indexBytes), text_coverage: hash(coverageBytes), lexical_manifest: lexical.manifestSha256, lexical_index: lexical.indexSha256, drafts: draftProof.sha256 }, catalogue, text_records, text_coverage, lexical, drafts };
+const bytes = Buffer.from(JSON.stringify(data));
+ensure(!/(?:[CZ]:[\\/]|PHD_CORPUS_ROOT|file:\/\/|\.config\.private|SESSION_HMAC_KEY)/u.test(bytes.toString('utf8')), 'Internal locator in runtime projection.');
+const out = resolve(roots.reader, '.private/archives-integration/publication-data-20261004-v1');
+await mkdir(out); await writeFile(resolve(out, 'selected-runtime-data.json'), bytes, { flag: 'wx' });
+const sha256 = hash(bytes), prepared = await loadPublicationData(resolve(out, 'selected-runtime-data.json'), sha256);
+await writeFile(resolve(out, 'verification.json'), JSON.stringify({ passed: true, sha256, size_bytes: bytes.length, counts: { catalogue: prepared.catalogue.records.length, texts: text_records.length, lexical: prepared.lexical.rows.length, drafts: prepared.drafts.items.length }, source_pins: data.source_pins, originals_read: false, database_accessed: false, static_exposure: false }, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ prepared: true, sha256, bytes: bytes.length }));

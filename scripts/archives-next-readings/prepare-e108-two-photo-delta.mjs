@@ -1,0 +1,45 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve,join,dirname} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+import {digest,TWO_PHOTOS,E108_FOLDER,createTwoPhotoProjection} from './e108-two-photo-adapter.mjs';
+const parent=resolve('.private/archives-integration/publication-package-20261004-v24-r2'),run=resolve('.private/archives-next-readings/e108-two-photo-ui-delta-20261004-v1'),mediaRoot=resolve('../PHD-Maine-archives-import/data/private/media-release/e108-four-view-media-pilot-20261004-v3');
+const pin=b=>({sha256:digest(b),bytes:b.length}),json=x=>Buffer.from(JSON.stringify(x,null,2)+'\n'),outputs=new Map(),sources={};
+const assemblyBytes=await readFile(join(parent,'assembly.json'));assert.equal(digest(assemblyBytes),'aaa8b5c87cd7a7baf6d2d33489d0955f7f8940a8055789b76258ebaba9e61a11');const assembly=JSON.parse(assemblyBytes);
+const readParent=async name=>{const b=await readFile(join(parent,'site',name));assert.equal(digest(b),assembly.files[name].sha256,name);assert.equal(b.length,assembly.files[name].size_bytes);sources[name]=pin(b);return b;};
+const htmlBytes=await readParent('dist/archives/catalogue/index.html'),html=htmlBytes.toString('utf8');
+const template=html.match(/<template id="e108-ensemble-template"[\s\S]*?<\/template>\n/)?.[0];assert(template);
+const projection=createTwoPhotoProjection(template),composed=projection.project('/archives/catalogue/',html);assert.equal(projection.restore(composed),html);assert.equal(projection.project('/archives/fichiers/p09/',html),html);
+assert.throws(()=>projection.project('/archives/catalogue/',composed));assert.throws(()=>createTwoPhotoProjection(template.replace(TWO_PHOTOS[0].id,TWO_PHOTOS[1].id)));
+assert.throws(()=>projection.project('/archives/catalogue/',html.replace('</head>','</head></head>')));
+const runtimeBytes=await readParent('runtime/archives/selected-data.json'),data=JSON.parse(runtimeBytes);
+for(const name of ['scripts/archives-catalogue/contract.mjs','scripts/archives-catalogue/hierarchy.mjs'])await readParent(name);
+const {prepareCatalogue}=await import(pathToFileURL(join(parent,'site/scripts/archives-catalogue/contract.mjs')).href),{buildCatalogueHierarchy,queryCatalogueHierarchy}=await import(pathToFileURL(join(parent,'site/scripts/archives-catalogue/hierarchy.mjs')).href);
+const hierarchy=buildCatalogueHierarchy(prepareCatalogue(data.catalogue,{inputSha256:data.source_pins.catalogue}));
+const all=queryCatalogueHierarchy(hierarchy,{folder:E108_FOLDER,page:1,page_size:20}),partial=queryCatalogueHierarchy(hierarchy,{folder:E108_FOLDER,page:1,page_size:20,query:'11.jpg'});
+assert.equal(all.counts.matched_files,31);assert.equal(all.entries.length,20);assert.equal(partial.entries.length,1);
+const mediaManifestBytes=await readFile(join(mediaRoot,'media-manifest.json')),manifest=JSON.parse(mediaManifestBytes);assert.equal(manifest.objects.length,2);assert.equal(manifest.prepared_count,2);assert.equal(manifest.canonical_act_id,null);assert.equal(manifest.physical_order,null);
+const bindings=[];
+for(const photo of TWO_PHOTOS){
+ const item=manifest.objects.find(x=>x.source_object_id===photo.id);assert(item);assert.equal(item.filename,photo.filename);assert.equal(item.logical_path,photo.path);assert.equal(item.derivative.sha256,photo.sha);assert.equal(item.derivative.byte_size,photo.bytes);assert.equal(item.derivative.proposed_route,photo.route);
+ assert.deepEqual(item.native_dimensions,photo.dimensions);assert.deepEqual(item.EXIF_display_dimensions,photo.dimensions);assert.equal(item.derivative_EXIF_orientation,1);assert.equal(item.consultation_transform,'identity');assert.equal(item.raster_transform,'none');assert.equal(item.reencoding,false);
+ const source=all.entries.find(e=>e.record?.digitalObjectId===photo.id)?.record;assert(source);assert.equal(source.fileName.literal,photo.filename);assert.equal(source.logicalPath,photo.path);assert.equal(source.consultation.available,false);
+ const bytes=await readFile(join(mediaRoot,'media',photo.sha+'.jpg'));assert.deepEqual(pin(bytes),{sha256:photo.sha,bytes:photo.bytes});outputs.set('media/'+photo.sha+'.jpg',bytes);
+ bindings.push({...photo,source_current_sha256:item.source_current_sha256,source_current_bytes:item.source_current_byte_size,source_catalogue_content_sha256:null,historical_upright_orientation:'unknown',rights_status:'unknown',canonical_act_id:null,physical_order:null});
+}
+assert(manifest.deferred_objects.length===2&&manifest.deferred_objects.every(x=>['13.jpg','14.jpg'].includes(x.filename)&&!x.source_accessed&&x.derivative===null));
+outputs.set('preview.html',Buffer.from(composed));outputs.set('inputs/parent-catalogue.html',htmlBytes);outputs.set('inputs/parent-template.html',Buffer.from(template));outputs.set('inputs/hierarchy-e108-all.json',json(all));outputs.set('inputs/hierarchy-e108-partial.json',json(partial));outputs.set('metadata/two-photo-bindings.json',json({parent_assembly:pin(assemblyBytes),media_manifest:pin(mediaManifestBytes),bindings,deferred:['13.jpg','14.jpg'],independent_admission:'pending',native_browser_gate:'pending'}));
+outputs.set('e108-two-photo.css',await readFile('scripts/archives-next-readings/e108-two-photo.css'));outputs.set('e108-two-photo.js',await readFile('scripts/archives-next-readings/e108-two-photo.js'));
+const adapter=await readFile('scripts/archives-next-readings/e108-two-photo-adapter.mjs','utf8');outputs.set('e108-two-photo-response-projection.mjs',Buffer.from(adapter+'\nconst selectedProjection=createTwoPhotoProjection('+JSON.stringify(template)+');\nexport const projectE108TwoPhotoResponse=selectedProjection.project;\nexport const restoreE108TwoPhotoResponse=selectedProjection.restore;\n'));
+const parentAssets=[];
+for(const match of html.matchAll(/<(?:link|script)\b[^>]*(?:href|src)="([^"]+)"/g)){
+ const route=match[1];if(!route.endsWith('.css')&&!route.endsWith('.js'))continue;const name='parent-assets'+route;outputs.set(name,await readParent('dist'+route));parentAssets.push({route,file:name,type:(route.endsWith('.css')?'text/css':'text/javascript')+'; charset=utf-8'});
+}
+const routes=[{route:'/assets/archives-e108-two-photo.css',file:'e108-two-photo.css',type:'text/css; charset=utf-8'},{route:'/assets/archives-e108-two-photo.js',file:'e108-two-photo.js',type:'text/javascript; charset=utf-8'},...TWO_PHOTOS.map(p=>({route:p.route,file:'media/'+p.sha+'.jpg',type:'image/jpeg'}))];
+const contract={format:'e108-two-photo-ui-delta/1',parent_package:'publication-package-20261004-v24-r2',parent_assembly:pin(assemblyBytes),runtime_hook:{module:'e108-two-photo-response-projection.mjs',function:'projectE108TwoPhotoResponse',restore:'restoreE108TwoPhotoResponse',placement:'after existing E108 projected catalogue response; also static catalogue output',scope:'exact inert ensemble template plus own external CSS/client and dialog'},routes,bindings_file:'metadata/two-photo-bindings.json',candidate_local_preview_only_until_root_go:true,independent_admission_pending:true,root_assembled_gate_pending:true,hierarchy_and_h07_and_catalogue_data_unchanged:true,statusboard_counts_unchanged:true,same_act_probable_unconfirmed:true,views_13_14_without_preview:true,originals_read:0,public_activation:false};
+outputs.set('integration-contract.json',json(contract));
+for(const name of ['e108-two-photo-adapter.mjs','e108-two-photo.css','e108-two-photo.js','prepare-e108-two-photo-delta.mjs','e108-two-photo-preview.mjs'])outputs.set('code-snapshot/'+name,await readFile('scripts/archives-next-readings/'+name));
+await mkdir(run);for(const [name,b]of outputs){const target=join(run,name);await mkdir(dirname(target),{recursive:true});await writeFile(target,b,{flag:'wx'});}
+const generated=await import(pathToFileURL(join(run,'e108-two-photo-response-projection.mjs')).href);assert.equal(generated.projectE108TwoPhotoResponse('/archives/catalogue/',html),composed);assert.equal(generated.restoreE108TwoPhotoResponse(composed),html);
+const proof={format:'e108-two-photo-build/1',parent_assembly:pin(assemblyBytes),sources,media_manifest:pin(mediaManifestBytes),outputs:Object.fromEntries([...outputs].map(([n,b])=>[n,pin(b)])),routes,parent_assets:parentAssets,folder:E108_FOLDER,checks:{exact_two_source_bindings:true,natural_dimensions_exif_identity_from_manifest:true,all_four_members_preserved:true,views_13_14_pending:true,restore_parent_html_exact:true,other_route_unchanged:true,duplicate_and_identity_drift_refused:true,h07_hierarchy_unchanged:true,no_source_json_or_statusboard_change:true,no_original_or_other_photo_read:true,no_root_mutation:true,no_inline_script_style_or_handler:!/<script\b(?![^>]*\bsrc=)|\sstyle=|\son[a-z]+=/i.test(composed)},independent_admission_pending:true,browser_gate_pending:true};assert(proof.checks.no_inline_script_style_or_handler);
+const proofBytes=json(proof);await writeFile(join(run,'build-proof.json'),proofBytes,{flag:'wx'});console.log(JSON.stringify({run,proof:pin(proofBytes),routes:routes.map(x=>x.route)},null,2));

@@ -1,0 +1,8 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const run=resolve('.private/archives-next-readings/e99-p08-six-line-reader-addon-20261004-v1'),session=JSON.parse(await readFile(resolve(run,'final-preview-session.json'))),rows=[],sha=b=>createHash('sha256').update(b).digest('hex');assert.equal(session.host,'127.0.0.1');assert.equal(session.assets.length,7);
+for(const a of session.assets)for(const method of ['GET','HEAD']){const r=await fetch('http://127.0.0.1:'+session.port+a.url,{method});assert.equal(r.status,200);assert.equal(Number(r.headers.get('content-length')),a.bytes);const csp=r.headers.get('content-security-policy');assert(!csp.includes('unsafe-'));assert(csp.includes("default-src 'none'"));if(method==='GET')assert.equal(sha(Buffer.from(await r.arrayBuffer())),a.sha256);rows.push({url:a.url,method,status:r.status,sha256:a.sha256,bytes:a.bytes});}
+for(const [path,method,status]of [['/.private/','GET',404],['/archives/catalogue/','GET',404],[session.route,'POST',405]]){const r=await fetch('http://127.0.0.1:'+session.port+path,{method});assert.equal(r.status,status);rows.push({url:path,method,status});}
+await writeFile(resolve(run,'http-verification.json'),JSON.stringify({passed:true,exact_public_assets:7,requests:rows,csp_self_only:true,main_server_untouched:true},null,2)+'\n',{flag:'wx'});await writeFile(resolve(run,'http-check-snapshot.mjs'),await readFile(new URL(import.meta.url)),{flag:'wx'});console.log(JSON.stringify({passed:true,requests:rows.length}));

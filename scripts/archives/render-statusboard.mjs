@@ -244,7 +244,7 @@ export function renderStatusboard(readerExport, annexIndex) {
       <header class="statusboard-hero">
         <div><p class="statusboard-kicker">Consultation privée · lot borné</p><h1>État des unités</h1></div>
         <p>Deux dossiers de consultation et cinq fiches éditoriales, présentés comme des unités distinctes. Cette vue ne mesure ni le fonds entier ni l’avancement d’une équipe.</p>
-        <nav aria-label="Consultations liées"><a href="/archives/">Lecteur d’archives</a><a href="/archives/recherche/">Recherche dans cinq fiches</a></nav>
+        <nav aria-label="Consultations liées"><a href="/archives/">Lecteur d’archives</a><a href="/archives/catalogue/">Catalogue CLEAN</a><a href="/archives/recherche/">Recherche dans cinq fiches</a></nav>
       </header>
       <aside class="statusboard-notice" aria-label="Limites de publication"><strong>${escapeHtml(model.publicationNotice)}</strong><span>Aucun pourcentage global ou d’agent n’est calculé.</span></aside>
       <section class="statusboard-section" aria-labelledby="statusboard-dossiers">

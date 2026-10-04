@@ -12,6 +12,7 @@
 }
 
 .annex-search-page {
+  opacity: 1;
   background: var(--annex-paper);
   color: #14221c;
 }
@@ -96,6 +97,10 @@
 .annex-scope-field {
   display: grid;
   gap: 0.45rem;
+}
+
+.annex-search--shards {
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.5fr) minmax(12rem, 0.5fr) auto;
 }
 
 .annex-search label {
@@ -287,6 +292,7 @@
 @media (max-width: 760px) {
   .annex-hero,
   .annex-search,
+  .annex-search--shards,
   .annex-groups {
     grid-template-columns: 1fr;
   }

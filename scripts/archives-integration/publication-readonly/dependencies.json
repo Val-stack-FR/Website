@@ -1,0 +1,24 @@
+{
+  "format": "archives-publication-readonly-runtime-dependencies/1.0.0",
+  "runtime": "Node.js 20 or newer; no third-party runtime packages",
+  "node_builtins": ["node:crypto", "node:fs", "node:path", "node:fs/promises", "node:url", "node:util"],
+  "repository_modules": [
+    "scripts/archives-catalogue/contract.mjs",
+    "scripts/archives-catalogue/hierarchy.mjs",
+    "scripts/archives-catalogue/render-page.mjs",
+    "scripts/archives/preexisting-texts.mjs",
+    "scripts/archives-catalogue/adapt-coverage.mjs",
+    "scripts/archives-integration/lexical-search.mjs"
+  ],
+  "dependency_edges": [
+    "publication-readonly/handler.mjs -> archives-catalogue/contract.mjs",
+    "publication-readonly/handler.mjs -> archives-catalogue/hierarchy.mjs",
+    "publication-readonly/handler.mjs -> archives-catalogue/render-page.mjs",
+    "publication-readonly/handler.mjs -> archives/preexisting-texts.mjs",
+    "publication-readonly/handler.mjs -> archives-integration/lexical-search.mjs",
+    "archives/preexisting-texts.mjs -> archives-catalogue/adapt-coverage.mjs",
+    "archives-catalogue/adapt-coverage.mjs -> archives-catalogue/contract.mjs"
+  ],
+  "data_inputs": ["prepared catalogue model", "prepared private text index", "pinned lexical search index"],
+  "filesystem_access": "none at request time"
+}
