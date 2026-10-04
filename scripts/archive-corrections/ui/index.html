@@ -11,9 +11,9 @@
 <body>
   <main>
     <header>
-      <p class="eyebrow">Atelier local · démonstration fictive</p>
+      <p id="workshop-label" class="eyebrow">Atelier local · démonstration fictive</p>
       <h1>Proposer, comparer, décider</h1>
-      <p>Un seul passage entièrement inventé. Toutes les décisions sont simulées : <strong>aucune lecture historique n’est validée ici.</strong></p>
+      <p id="scope-help">Un seul passage entièrement inventé. Toutes les décisions sont simulées : <strong>aucune lecture historique n’est validée ici.</strong></p>
     </header>
     <noscript>Cette démonstration nécessite JavaScript. Le service reste consultable par ses routes HTTP locales.</noscript>
     <div class="toolbar">
@@ -40,7 +40,7 @@
           <button id="use-current" type="button" disabled>Utiliser la version affichée comme base</button>
           <label for="replacement-text">Texte proposé</label>
           <textarea id="replacement-text" rows="5" maxlength="5000" required disabled></textarea>
-          <label for="proposal-reason">Motif de cette variante fictive</label>
+          <label id="proposal-reason-label" for="proposal-reason">Motif de cette variante fictive</label>
           <textarea id="proposal-reason" rows="3" maxlength="1000" required disabled></textarea>
           <button id="proposal-submit" type="submit" disabled>Déposer la proposition</button>
         </form>
@@ -48,11 +48,25 @@
 
       <section aria-labelledby="owner-heading">
         <h2 id="owner-heading">Propriétaire de test · owner_test</h2>
+        <div id="session-controls" hidden>
+          <p class="muted">Accès propriétaire local enrôlé hors ligne. La session protège la file ; elle n’atteste pas l’identité de Val et ne valide aucune lecture historique.</p>
+          <p id="session-status" role="status" aria-live="polite">Déconnecté.</p>
+          <form id="login-form" method="post" action="/demo/">
+            <label for="owner-passphrase">Phrase secrète propriétaire locale</label>
+            <input id="owner-passphrase" type="password" minlength="20" maxlength="256" autocomplete="current-password" required disabled>
+            <button id="login" type="submit" disabled>Se connecter à la file locale</button>
+          </form>
+          <button id="logout" type="button" disabled>Fermer cette session</button>
+        </div>
+        <div id="legacy-help">
         <p id="secret-help" class="muted">Rôle simulé, réservé au détenteur du secret local. Saisie manuelle, gardée en mémoire dans cette page seulement. Ce n’est pas une authentification du propriétaire réel.</p>
+        </div>
         <form id="decision-form" method="post" action="/demo/" autocomplete="off">
+          <div id="legacy-secret">
           <label for="owner-secret">Secret local de test</label>
           <input id="owner-secret" type="password" minlength="32" maxlength="256" autocomplete="off" aria-describedby="secret-help" required>
           <button id="clear-secret" type="button">Effacer le secret</button>
+          </div>
           <label for="decision-proposal">Proposition à examiner</label>
           <select id="decision-proposal" required><option value="">Choisir une proposition</option></select>
           <p id="selected-status" class="metadata"></p>
@@ -75,12 +89,12 @@
     </section>
     <section id="history" aria-labelledby="history-heading">
       <h2 id="history-heading">Anciennes versions et décisions</h2>
-      <h3>Révisions du texte fictif</h3>
+      <h3 id="revision-heading">Révisions du texte fictif</h3>
       <div id="revisions"></div>
       <h3>Journal des décisions simulées</h3>
       <div id="decisions"></div>
     </section>
-    <footer>Service local uniquement · aucune archive réelle, aucune mémoire historique, aucune publication.</footer>
+    <footer id="scope-footer">Service local uniquement · aucune archive réelle, aucune mémoire historique, aucune publication.</footer>
   </main>
 </body>
 </html>

@@ -20,3 +20,7 @@ export const INITIAL_REVISION = Object.freeze({
   created_at: '2026-10-03T00:00:00.000Z',
   simulation: true,
 });
+export const SYNTHETIC_CONTEXT = Object.freeze({
+  passage: PASSAGE, initialRevision: INITIAL_REVISION, apiVersion: API_VERSION,
+  snapshotVersion: SNAPSHOT_VERSION, dataKind: 'synthetic', ownerRole: 'owner_test',
+});

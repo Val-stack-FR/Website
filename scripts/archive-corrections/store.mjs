@@ -1,7 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, existsSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { API_VERSION, SNAPSHOT_VERSION, PASSAGE, INITIAL_REVISION } from './fixture.mjs';
+import { SYNTHETIC_CONTEXT } from './fixture.mjs';
 import { canonical, digest, ensure, envelope, validateKey, validatePayload } from './contract.mjs';
 import { storePaths } from './runtime.mjs';
 import { validateSnapshot } from './snapshot-validation.mjs';
@@ -10,7 +10,9 @@ const schema = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
 const parseEntity = row => row && JSON.parse(row.entity_json);
 
 export class Store {
-  constructor(name, { seed = true, readOnly = false } = {}) {
+  constructor(name, { seed = true, readOnly = false, context = SYNTHETIC_CONTEXT } = {}) {
+    this.context = context;
+    this.passage = context.passage;
     const paths = storePaths(name, !readOnly);
     this.paths = paths;
     this.db = new DatabaseSync(paths.database, { timeout: 5000, readOnly });
@@ -26,14 +28,14 @@ export class Store {
         }
         if (seed) this.transaction(() => {
           if (!this.db.prepare('SELECT singleton FROM metadata').get()) {
-            this.db.prepare('INSERT INTO metadata VALUES (1, ?, ?)').run(canonical(PASSAGE), API_VERSION);
-            this.insertRevision(INITIAL_REVISION);
+            this.db.prepare('INSERT INTO metadata VALUES (1, ?, ?)').run(canonical(this.passage), context.apiVersion);
+            this.insertRevision(context.initialRevision);
           }
         });
       }
       if (seed || readOnly) {
         this.verifyFixture();
-        validateSnapshot(this.exportSnapshot());
+        validateSnapshot(this.exportSnapshot(), context);
       }
     } catch (error) {
       this.db.close();
@@ -45,8 +47,8 @@ export class Store {
 
   verifyFixture() {
     const meta = this.db.prepare('SELECT fixture_json, api_version FROM metadata').get();
-    ensure(meta?.fixture_json === canonical(PASSAGE) && meta.api_version === API_VERSION,
-      422, 'synthetic_only', 'The database must belong to this fixed synthetic fixture and API version.');
+    ensure(meta?.fixture_json === canonical(this.passage) && meta.api_version === this.context.apiVersion,
+      422, 'synthetic_only', 'The database must belong to this exact selected passage and API version.');
   }
 
   transaction(work, mode = 'IMMEDIATE') {
@@ -81,22 +83,22 @@ export class Store {
 
   history() {
     return this.transaction(() => envelope({
-      passage: PASSAGE,
+      passage: this.passage,
       current_revision: this.current(),
       revisions: this.db.prepare('SELECT entity_json FROM revisions ORDER BY revision_number').all().map(parseEntity),
       proposals: this.db.prepare('SELECT entity_json FROM proposals ORDER BY proposal_id').all().map(parseEntity),
       decisions: this.db.prepare('SELECT entity_json FROM decisions ORDER BY decision_id').all().map(parseEntity),
-    }), 'DEFERRED');
+    }, this.context), 'DEFERRED');
   }
 
   mutate(scope, key, payload) {
     validateKey(key);
-    validatePayload(scope, payload);
+    validatePayload(scope, payload, this.passage);
     return this.transaction(() => {
       const previous = this.db.prepare('SELECT payload_json, result_json FROM requests WHERE scope=? AND request_key=?').get(scope, key);
       if (previous) {
         ensure(previous.payload_json === canonical(payload), 409, 'idempotency_conflict', 'This key already belongs to a different payload.');
-        return { status: 200, body: envelope({ ...JSON.parse(previous.result_json), replayed: true }) };
+        return { status: 200, body: envelope({ ...JSON.parse(previous.result_json), replayed: true }, this.context) };
       }
       const current = this.current();
       ensure(payload.base_revision === current.text_revision, 409, 'revision_conflict', 'base_revision is stale; fetch the current passage before proposing again.');
@@ -116,31 +118,31 @@ export class Store {
           409, 'proposal_decided', 'This proposal already has a decision.');
         const decision_id = `decision_${randomUUID()}`;
         const text_revision = payload.outcome === 'accept'
-          ? `${PASSAGE.passage_id}:r${current.revision_number + 1}` : current.text_revision;
+          ? `${this.passage.passage_id}:r${current.revision_number + 1}` : current.text_revision;
         const decision = {
-          ...payload, decision_id, passage_id: PASSAGE.passage_id,
-          text_revision, actor_role: 'owner_test', created_at,
+          ...payload, decision_id, passage_id: this.passage.passage_id,
+          text_revision, actor_role: this.context.ownerRole, created_at,
         };
         if (payload.outcome === 'accept') {
           this.insertRevision({
-            passage_id: PASSAGE.passage_id, text_revision, revision_number: current.revision_number + 1,
+            passage_id: this.passage.passage_id, text_revision, revision_number: current.revision_number + 1,
             based_on_revision: current.text_revision, decision_id, text: proposal.replacement_text,
-            evidence_refs: payload.evidence_refs, actor_role: 'owner_test', created_at, simulation: true,
+            evidence_refs: payload.evidence_refs, actor_role: this.context.ownerRole, created_at, simulation: true,
           });
         }
         this.insertDecision(decision);
         result = { decision };
       }
       this.db.prepare('INSERT INTO requests VALUES (?, ?, ?, ?)').run(scope, key, canonical(payload), canonical(result));
-      return { status: 201, body: envelope({ ...result, replayed: false }) };
+      return { status: 201, body: envelope({ ...result, replayed: false }, this.context) };
     });
   }
 
   exportSnapshot() {
     return this.transaction(() => {
       const content = {
-        api_version: API_VERSION, snapshot_version: SNAPSHOT_VERSION,
-        data_kind: 'synthetic', simulation: true, passage: PASSAGE,
+        api_version: this.context.apiVersion, snapshot_version: this.context.snapshotVersion,
+        data_kind: this.context.dataKind, simulation: true, passage: this.passage,
         revisions: this.db.prepare('SELECT entity_json FROM revisions ORDER BY revision_number').all().map(parseEntity),
         proposals: this.db.prepare('SELECT entity_json FROM proposals ORDER BY proposal_id').all().map(parseEntity),
         decisions: this.db.prepare('SELECT entity_json FROM decisions ORDER BY decision_id').all().map(parseEntity),
@@ -153,14 +155,14 @@ export class Store {
 }
 
 // Used only by the offline restore command after full validation.
-export function restoreSnapshot(name, snapshot) {
-  validateSnapshot(snapshot);
+export function restoreSnapshot(name, snapshot, context = SYNTHETIC_CONTEXT) {
+  validateSnapshot(snapshot, context);
   const paths = storePaths(name);
   ensure(!existsSync(paths.directory), 409, 'store_exists', 'Restore requires a new store name; nothing is overwritten.');
-  const store = new Store(name, { seed: false });
+  const store = new Store(name, { seed: false, context });
   try {
     store.transaction(() => {
-      store.db.prepare('INSERT INTO metadata VALUES (1, ?, ?)').run(canonical(PASSAGE), API_VERSION);
+      store.db.prepare('INSERT INTO metadata VALUES (1, ?, ?)').run(canonical(context.passage), context.apiVersion);
       for (const revision of snapshot.revisions) store.insertRevision(revision);
       for (const proposal of snapshot.proposals) store.insertProposal(proposal);
       for (const decision of snapshot.decisions) store.insertDecision(decision);

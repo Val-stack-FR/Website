@@ -1,5 +1,7 @@
 # MVP-D — collaboration durable locale sur un passage inventé
 
+La tranche suivante [MVP-D3 — session propriétaire locale](OWNER-SESSION.md) conserve cette démonstration et ses 19 tests. Elle ajoute un enrôlement hors ligne, des sessions révocables, une file privée et un [raccord privé Monbezon fermé](READER-CONTRACT.md). Le mode D3 ne constitue pas une authentification humaine ni une publication ; tous ses événements restent des simulations locales.
+
 Le service permet à un visiteur anonyme de proposer un texte et au **propriétaire local de test** de l'accepter ou de le refuser. SQLite conserve propositions, décisions, anciennes révisions et clés d'idempotence. Le serveur écoute exclusivement `127.0.0.1`.
 
 Tout contenu est explicitement `data_kind: synthetic` / `simulation: true`. La seule entrée initiale est une phrase inventée dans `fixture.mjs`. Aucun fichier historique, photo, lecture validée ou autre checkout n'est ouvert. Une acceptation simule une décision ; elle ne confirme aucune lecture historique et n'envoie aucun événement vers la mémoire.

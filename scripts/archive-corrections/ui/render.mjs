@@ -34,7 +34,8 @@ export function revisionCard(document, revision) {
   card.append(
     textElement(document, 'h3', revision.text_revision),
     textElement(document, 'pre', revision.text, 'passage'),
-    textElement(document, 'p', revision.decision_id ? `Décision simulée : ${revision.decision_id}` : 'Texte initial entièrement inventé.', 'metadata'),
+    textElement(document, 'p', revision.decision_id ? `Décision simulée : ${revision.decision_id}`
+      : revision.actor_role === 'seed_reader_local' ? 'Transcription source préexistante, non relue. Droits publics en attente.' : 'Texte initial entièrement inventé.', 'metadata'),
   );
   return card;
 }

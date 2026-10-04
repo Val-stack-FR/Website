@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { API_VERSION, PASSAGE } from './fixture.mjs';
+import { PASSAGE, SYNTHETIC_CONTEXT } from './fixture.mjs';
 
 export class ApiError extends Error {
   constructor(status, code, message) {
@@ -38,11 +38,11 @@ export function boundedText(value, field, max = 1000) {
   422, 'invalid_text', `${field} must be nonempty text of at most ${max} characters.`);
 }
 
-export function evidence(value) {
+export function evidence(value, passage = PASSAGE) {
   ensure(Array.isArray(value) && value.length > 0 && value.length <= 8
     && new Set(value).size === value.length
-    && value.every(ref => PASSAGE.evidence_refs.includes(ref)),
-  422, 'invalid_evidence', 'Only the explicitly synthetic fixture evidence refs are supported.');
+    && value.every(ref => passage.evidence_refs.includes(ref)),
+  422, 'invalid_evidence', 'Only evidence refs in this explicitly selected passage are supported.');
 }
 
 const entityIdPatterns = {
@@ -54,19 +54,20 @@ export function isEntityId(value, kind) {
   return typeof value === 'string' && entityIdPatterns[kind]?.test(value) === true;
 }
 
-export function validatePayload(scope, payload) {
+export function validatePayload(scope, payload, passage = PASSAGE) {
   const fields = scope === 'proposal'
     ? ['passage_id', 'base_revision', 'replacement_text', 'reason', 'evidence_refs', 'simulation']
     : ['proposal_id', 'base_revision', 'outcome', 'reason', 'evidence_refs', 'simulation'];
   exactFields(payload, fields);
   ensure(payload.simulation === true, 422, 'simulation_required', 'This service accepts simulation:true only.');
   boundedText(payload.base_revision, 'base_revision', 100);
-  ensure(new RegExp(`^${PASSAGE.passage_id}:r[1-9][0-9]*$`).test(payload.base_revision),
-    422, 'invalid_revision', 'Use a text_revision from this synthetic passage.');
+  ensure(payload.base_revision.startsWith(`${passage.passage_id}:r`)
+    && /^[1-9][0-9]*$/.test(payload.base_revision.slice(passage.passage_id.length + 2)),
+    422, 'invalid_revision', 'Use a text_revision from this selected passage.');
   boundedText(payload.reason, 'reason');
-  evidence(payload.evidence_refs);
+  evidence(payload.evidence_refs, passage);
   if (scope === 'proposal') {
-    ensure(payload.passage_id === PASSAGE.passage_id, 422, 'synthetic_only', 'Only the fixed synthetic passage is supported.');
+    ensure(payload.passage_id === passage.passage_id, 422, 'synthetic_only', 'Only the explicitly selected passage is supported.');
     boundedText(payload.replacement_text, 'replacement_text', 5000);
   } else {
     ensure(isEntityId(payload.proposal_id, 'proposal'),
@@ -80,6 +81,6 @@ export function validateKey(key) {
     422, 'invalid_idempotency_key', 'Idempotency-Key must be 8–100 ASCII letters, digits or ._:-');
 }
 
-export function envelope(data) {
-  return { api_version: API_VERSION, data_kind: 'synthetic', simulation: true, ...data };
+export function envelope(data, context = SYNTHETIC_CONTEXT) {
+  return { api_version: context.apiVersion, data_kind: context.dataKind, simulation: true, ...data };
 }

@@ -54,3 +54,6 @@ Revue par le coordinateur du contrat B01 et des règles locales B02. Elle permet
 La porte hébergée reste ouverte : authentification réelle, stockage/sauvegarde hébergés et répétition des cas de permissions, concurrence, idempotence, restauration et reprise dans l'environnement raccordé. PostgreSQL et route publique sont futurs. Aucun original ne doit être raccordé automatiquement à ce service synthétique ni aucune décision locale présentée comme humaine. Le lecteur réel Monbezon/E108 et la mémoire sont des voies distinctes jusqu'à revue du raccord et de l'authentification.
 
 Aucune installation globale, publication, push, PR ou fusion. Le coordinateur conserve la responsabilité du suivi TODO et de l'acceptation du MVP ; la présence de ce handoff n'en coche pas l'acceptation.
+# Suite MVP-D3 — 3 octobre 2026
+
+Le backend/UI original reste reproductible. Voir [OWNER-SESSION.md](OWNER-SESSION.md), [READER-CONTRACT.md](READER-CONTRACT.md) et [la preuve D3](../../tests/archive-corrections/d3-review.md) pour l’extension locale : 31 tests réussis, session propriétaire enrôlée hors ligne, file protégée, passage Monbezon réellement chargé depuis six dérivés vérifiés, reprise et restauration privées. Aucun propriétaire humain n’a été authentifié ; aucune lecture historique ou publication n’a été approuvée.

@@ -1,5 +1,11 @@
 # Website — suivi de reprise
 
+## Archives — standby du week-end, 5 octobre 2026
+
+Les travaux de fond sont suspendus à la demande de Val. Le pilote de correction, les adaptations serveur et les preuves locales sont conservés ; les propres processus de qualification réseau/TLS de cette mission sont arrêtés. Le handoff privé de base durable distingue les résultats locaux, les dépendances et les étapes de récupération sur PC vierge.
+
+La conservation Git de cette branche ne constitue ni un déploiement public, ni la qualification d'une identité propriétaire ou d'un PostgreSQL/TLS durable. Les données de propositions, configurations locales et preuves privées restent hors des fichiers publiables. Reprise seulement sur demande explicite de Val ; les suivis antérieurs ci-dessous sont historiques.
+
 **Objectif :** préparer une unique PR révisable pour nettoyage, sécurité, GEO/SEO et continuité des instructions.
 
 ## En cours

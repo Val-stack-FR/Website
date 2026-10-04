@@ -4,10 +4,10 @@ import { Store, restoreSnapshot } from './store.mjs';
 import { storePaths } from './runtime.mjs';
 import { ApiError, canonical, ensure } from './contract.mjs';
 
-export function exportToFile(name) {
+export function exportToFile(name, context) {
   const paths = storePaths(name);
   ensure(existsSync(paths.database), 404, 'store_not_found', 'Source store does not exist.');
-  const store = new Store(name, { readOnly: true });
+  const store = new Store(name, { readOnly: true, context });
   try {
     const snapshot = store.exportSnapshot();
     writeFileSync(paths.snapshot, `${canonical(snapshot)}\n`, { flag: 'wx', mode: 0o600 });
@@ -15,12 +15,12 @@ export function exportToFile(name) {
   } finally { store.close(); }
 }
 
-export function restoreFromFile(sourceName, targetName) {
+export function restoreFromFile(sourceName, targetName, context) {
   const paths = storePaths(sourceName);
   ensure(existsSync(paths.snapshot) && statSync(paths.snapshot).size <= 2 * 1024 * 1024,
     422, 'invalid_snapshot', 'Source export.json must exist and be at most 2 MiB.');
   const snapshot = JSON.parse(readFileSync(paths.snapshot, 'utf8'));
-  restoreSnapshot(targetName, snapshot);
+  restoreSnapshot(targetName, snapshot, context);
   return snapshot.sha256;
 }
 
