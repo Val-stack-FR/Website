@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Atelier local — démonstration fictive</title>
+  <link rel="stylesheet" href="/demo/styles.css">
+  <script type="module" src="/demo/app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p id="workshop-label" class="eyebrow">Atelier local · démonstration fictive</p>
+      <h1>Proposer, comparer, décider</h1>
+      <p id="scope-help">Un seul passage entièrement inventé. Toutes les décisions sont simulées : <strong>aucune lecture historique n’est validée ici.</strong></p>
+    </header>
+    <noscript>Cette démonstration nécessite JavaScript. Le service reste consultable par ses routes HTTP locales.</noscript>
+    <div class="toolbar">
+      <button id="refresh" type="button">Actualiser l’historique</button>
+      <a href="#history">Voir les anciennes versions</a>
+    </div>
+    <p class="muted">L’actualisation de l’historique conserve vos saisies. Un rechargement complet de la page les réinitialise.</p>
+    <p id="status" class="status" role="status" aria-live="polite">Chargement du passage fictif…</p>
+
+    <section aria-labelledby="current-heading">
+      <h2 id="current-heading">Version courante</h2>
+      <p id="current-revision" class="metadata"></p>
+      <pre id="current-text" class="passage"></pre>
+      <p id="current-evidence" class="metadata"></p>
+    </section>
+
+    <div class="forms">
+      <section aria-labelledby="proposal-heading">
+        <h2 id="proposal-heading">Proposition anonyme</h2>
+        <p class="muted">Déposer une variante ne change pas le texte courant.</p>
+        <form id="proposal-form" method="post" action="/demo/">
+          <label for="proposal-base">Base de votre proposition</label>
+          <input id="proposal-base" readonly>
+          <button id="use-current" type="button" disabled>Utiliser la version affichée comme base</button>
+          <label for="replacement-text">Texte proposé</label>
+          <textarea id="replacement-text" rows="5" maxlength="5000" required disabled></textarea>
+          <label id="proposal-reason-label" for="proposal-reason">Motif de cette variante fictive</label>
+          <textarea id="proposal-reason" rows="3" maxlength="1000" required disabled></textarea>
+          <button id="proposal-submit" type="submit" disabled>Déposer la proposition</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="owner-heading">
+        <h2 id="owner-heading">Propriétaire de test · owner_test</h2>
+        <div id="session-controls" hidden>
+          <p class="muted">Accès propriétaire local enrôlé hors ligne. La session protège la file ; elle n’atteste pas l’identité de Val et ne valide aucune lecture historique.</p>
+          <p id="session-status" role="status" aria-live="polite">Déconnecté.</p>
+          <form id="login-form" method="post" action="/demo/">
+            <label for="owner-passphrase">Phrase secrète propriétaire locale</label>
+            <input id="owner-passphrase" type="password" minlength="20" maxlength="256" autocomplete="current-password" required disabled>
+            <button id="login" type="submit" disabled>Se connecter à la file locale</button>
+          </form>
+          <button id="logout" type="button" disabled>Fermer cette session</button>
+        </div>
+        <div id="legacy-help">
+        <p id="secret-help" class="muted">Rôle simulé, réservé au détenteur du secret local. Saisie manuelle, gardée en mémoire dans cette page seulement. Ce n’est pas une authentification du propriétaire réel.</p>
+        </div>
+        <form id="decision-form" method="post" action="/demo/" autocomplete="off">
+          <div id="legacy-secret">
+          <label for="owner-secret">Secret local de test</label>
+          <input id="owner-secret" type="password" minlength="32" maxlength="256" autocomplete="off" aria-describedby="secret-help" required>
+          <button id="clear-secret" type="button">Effacer le secret</button>
+          </div>
+          <label for="decision-proposal">Proposition à examiner</label>
+          <select id="decision-proposal" required><option value="">Choisir une proposition</option></select>
+          <p id="selected-status" class="metadata"></p>
+          <pre id="selected-text" class="passage"></pre>
+          <label for="decision-base">Base originale de cette proposition</label>
+          <input id="decision-base" readonly>
+          <label for="decision-reason">Motif de la décision simulée</label>
+          <textarea id="decision-reason" rows="3" maxlength="1000" required></textarea>
+          <div class="actions">
+            <button id="accept" type="submit" value="accept" disabled>Accepter · simulation</button>
+            <button id="reject" type="submit" value="reject" class="secondary" disabled>Refuser · simulation</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section aria-labelledby="proposals-heading">
+      <h2 id="proposals-heading">Propositions conservées</h2>
+      <div id="proposals"></div>
+    </section>
+    <section id="history" aria-labelledby="history-heading">
+      <h2 id="history-heading">Anciennes versions et décisions</h2>
+      <h3 id="revision-heading">Révisions du texte fictif</h3>
+      <div id="revisions"></div>
+      <h3>Journal des décisions simulées</h3>
+      <div id="decisions"></div>
+    </section>
+    <footer id="scope-footer">Service local uniquement · aucune archive réelle, aucune mémoire historique, aucune publication.</footer>
+  </main>
+</body>
+</html>

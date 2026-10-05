@@ -6,3 +6,6 @@ dist/
 Spaceship/node_modules/
 scripts/node_modules/
 
+# Local synthetic corrections MVP: databases, exports and test runtime only
+/.archive-corrections-private/
+

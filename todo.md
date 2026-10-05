@@ -1,5 +1,11 @@
 # Website — suivi de reprise
 
+## Archives — standby du week-end, 5 octobre 2026
+
+Les travaux de fond sont suspendus à la demande de Val. Le pilote de correction, les adaptations serveur et les preuves locales sont conservés ; les propres processus de qualification réseau/TLS de cette mission sont arrêtés. Le handoff privé de base durable distingue les résultats locaux, les dépendances et les étapes de récupération sur PC vierge.
+
+La conservation Git de cette branche ne constitue ni un déploiement public, ni la qualification d'une identité propriétaire ou d'un PostgreSQL/TLS durable. Les données de propositions, configurations locales et preuves privées restent hors des fichiers publiables. Reprise seulement sur demande explicite de Val ; les suivis antérieurs ci-dessous sont historiques.
+
 **Objectif :** préparer une unique PR révisable pour nettoyage, sécurité, GEO/SEO et continuité des instructions.
 
 ## En cours
@@ -45,3 +51,21 @@
 - Ne cocher une étape qu'avec une preuve vérifiable (commande, lien, SHA ou compte rendu).
 - Conserver les décisions utilisateur et les blocages dans la section concernée, sans y exposer de données privées.
 
+
+## Atelier historique — corrections MVP-D, 3 octobre 2026
+
+- [x] Service local persistant sur un passage synthétique ; rôle propriétaire de test contrôlé côté serveur.
+- [x] Revue indépendante : trois écarts UUID/date/contrôles reproduits puis corrigés.
+- [x] Treize tests réussis : permissions, rejeu, conflits, rollback, redémarrage brutal et export/restauration identiques.
+- [x] Acceptation du coordinateur enregistrée dans tests/archive-corrections/coordinator-acceptance.md.
+- [x] Interface bornée au passage inventé ; aucune correction historique raccordée. Parcours à deux onglets et redémarrage vérifiés.
+- [ ] Authentification réelle et stockage hébergé avant tout service public.
+
+Le suivi global et les dépendances restent dans le TODO de l'atelier PERSO. Ce MVP ne confirme aucune lecture historique.
+### Interface fictive MVP-D2 — 3 octobre 2026
+
+- [x] Consultation, proposition anonyme, acceptation/refus owner_test, historique et bases explicites.
+- [x] Dix-neuf tests backend/UI relancés par le coordinateur ; même origine exacte, permission serveur, rejeu et rendu texte.
+- [x] QA navigateur indépendante bureau/mobile et deux onglets — tests/archive-corrections/ui-browser-review.md ; capture raster inexploitable, preuve fonctionnelle et géométrique seulement.
+- [x] Démonstration réellement arrêtée et relancée : historique HTTP identique, deux propositions/deux décisions/r1+r2.
+- [ ] Raccord à une identité réelle et une persistance hébergée ; aucune archive réelle raccordée à cette démonstration.

@@ -1,0 +1,18 @@
+# Preparation only. Include in a reviewed HTTPS reverse-proxy virtual host.
+# The public canonical site routes these paths here; preserve the site's other routes.
+# Restrict the Node upstream to loopback and overwrite forwarded headers at this boundary.
+location ~ ^/(v1/|demo/) {
+    client_max_body_size 32k;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 15s;
+    proxy_pass http://127.0.0.1:8791;
+    proxy_set_header Host valerianteissier.com;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Host "";
+    proxy_set_header Forwarded "";
+    proxy_set_header Cookie $http_cookie;
+    proxy_hide_header X-Powered-By;
+    # Set-Cookie passes unchanged; never cache auth, proposals or snapshots.
+    proxy_no_cache 1;
+    proxy_cache_bypass 1;
+}

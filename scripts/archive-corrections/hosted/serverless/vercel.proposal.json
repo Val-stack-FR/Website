@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "api/archive/**/*.mjs": {
+      "maxDuration": 10,
+      "includeFiles": "scripts/archive-corrections/hosted/{migrations/001.sql,serverless/migrations/002.sql}"
+    }
+  },
+  "installCommand": "pnpm --dir scripts/archive-corrections/hosted/serverless install --frozen-lockfile --ignore-scripts --prod"
+}
