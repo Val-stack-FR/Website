@@ -1,4 +1,10 @@
 {
+  "git": {
+    "deploymentEnabled": {
+      "codex/archives-reader": false,
+      "codex/archive-corrections-mvp": false
+    }
+  },
   "buildCommand": "node scripts/build-site.js",
   "outputDirectory": "dist",
   "headers": [
