@@ -1,0 +1,5 @@
+.p09-tonal-help{margin:16px 0 0}
+.p09-tonal-help>summary{min-height:44px;display:list-item;cursor:pointer;color:#1a5c3a;padding:11px 0}
+.p09-tonal-help .tonal-review{margin-top:12px;width:100%;min-width:0}
+.p09-tonal-help .selection-row p{margin:0;overflow-wrap:anywhere}
+.p09-tonal-help>summary:focus-visible{outline:3px solid #1a5c3a;outline-offset:3px}

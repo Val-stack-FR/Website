@@ -1,0 +1,243 @@
+.occurrence-page {
+  --occurrence-ink: #0d3d25;
+  --occurrence-muted: #405b4b;
+  --occurrence-line: #a4bdaf;
+  opacity: 1;
+  color: #14221c;
+  background: #e8f2ed;
+}
+
+.occurrence-main {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2.5rem) 4rem;
+}
+
+.occurrence-skip {
+  position: fixed;
+  z-index: 500;
+  top: 8px;
+  left: 8px;
+  padding: 10px 14px;
+  background: #e8f2ed;
+  color: var(--occurrence-ink);
+  border: 2px solid var(--occurrence-ink);
+  transform: translateY(-180%);
+}
+
+.occurrence-skip:focus {
+  transform: translateY(0);
+}
+
+.occurrence-hero {
+  border-bottom: 1px solid var(--occurrence-line);
+  padding-bottom: 1.5rem;
+}
+
+.occurrence-kicker,
+.occurrence-details dt {
+  font-family: var(--font-mono), ui-monospace, Consolas, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--occurrence-muted);
+}
+
+.occurrence-hero h1 {
+  font-family: var(--font-head), sans-serif;
+  color: var(--occurrence-ink);
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  margin: 0.5rem 0 1rem;
+}
+
+.occurrence-hero > p:last-child {
+  color: var(--occurrence-muted);
+  max-width: 55rem;
+}
+
+.occurrence-notice {
+  background: #fff0cf;
+  border: 1px solid #9c6718;
+  color: #57380b;
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.25rem;
+}
+
+.occurrence-notice strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.occurrence-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.occurrence-panel {
+  min-width: 0;
+  background: #f7faf8;
+  border: 1px solid var(--occurrence-line);
+  padding: clamp(1rem, 2.5vw, 1.8rem);
+}
+
+.occurrence-panel h2 {
+  font-family: var(--font-head), sans-serif;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--occurrence-ink);
+  margin: 0.4rem 0 1rem;
+}
+
+.occurrence-panel p,
+.occurrence-details p {
+  margin-top: 0.75rem;
+  line-height: 1.65;
+}
+
+.occurrence-transcript {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono), ui-monospace, Consolas, monospace;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid var(--occurrence-line);
+  background: #e8f2ed;
+}
+
+.occurrence-gap {
+  color: #57380b;
+  background: #ffdfa0;
+  outline: 1px solid #9c6718;
+  font-weight: 700;
+  padding: 0.08em 0.12em;
+}
+
+.occurrence-note,
+.occurrence-panel figcaption {
+  color: var(--occurrence-muted);
+  font-size: 0.88rem;
+}
+
+.occurrence-context {
+  margin-top: 1.25rem;
+}
+
+.occurrence-context svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--occurrence-line);
+  background: #d5e6db;
+}
+
+.occurrence-panel figcaption {
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+.occurrence-full {
+  margin-top: 1.25rem;
+}
+
+.occurrence-full-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.occurrence-image-link {
+  display: inline-block;
+  border: 1px solid var(--occurrence-ink);
+  padding: 0.65rem 0.85rem;
+  color: var(--occurrence-ink);
+  font-weight: 700;
+  text-align: center;
+}
+
+.occurrence-image-link:hover {
+  background: #d5e6db;
+}
+
+.occurrence-full img {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--occurrence-line);
+}
+
+.occurrence-details {
+  border: 1px solid var(--occurrence-line);
+  background: #f7faf8;
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.occurrence-details summary {
+  color: var(--occurrence-ink);
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 1.5rem;
+}
+
+.occurrence-details dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  border-top: 1px solid var(--occurrence-line);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.occurrence-details dd {
+  margin-top: 0.3rem;
+}
+
+.occurrence-page code,
+.occurrence-details dd {
+  overflow-wrap: anywhere;
+}
+
+.occurrence-footer {
+  color: var(--occurrence-muted);
+  font-size: 0.85rem;
+}
+
+.occurrence-page a:focus-visible,
+.occurrence-page summary:focus-visible {
+  outline: 3px solid #0d3d25;
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .occurrence-comparison,
+  .occurrence-details dl {
+    grid-template-columns: 1fr;
+  }
+
+  .occurrence-full-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .occurrence-footer {
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .occurrence-page,
+  .occurrence-page * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}

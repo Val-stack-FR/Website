@@ -1,0 +1,493 @@
+.catalogue-page {
+  --catalogue-ink: #0d3d25;
+  --catalogue-muted: #496154;
+  --catalogue-line: #a7bdb1;
+  --catalogue-panel: #f7faf8;
+  --catalogue-warn: #70470d;
+  background: #e8f2ed;
+  color: #14221c;
+  opacity: 1;
+}
+
+.archive-preexisting-literal {
+  background: var(--catalogue-panel);
+  border: 1px solid var(--catalogue-line);
+  border-radius: 10px;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  padding: clamp(1rem, 3vw, 2rem);
+  white-space: pre-wrap;
+}
+
+.archive-preexisting-page .catalogue-hero h1 {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  overflow-wrap: anywhere;
+}
+
+.catalogue-main {
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2.5rem) 5rem;
+  width: 100%;
+}
+
+.catalogue-skip {
+  background: #e8f2ed;
+  border: 2px solid var(--catalogue-ink);
+  color: var(--catalogue-ink);
+  left: 8px;
+  padding: 10px 14px;
+  position: fixed;
+  top: 8px;
+  transform: translateY(-180%);
+  z-index: 100;
+}
+
+.catalogue-skip:focus {
+  transform: translateY(0);
+}
+
+.catalogue-hero {
+  align-items: end;
+  border-bottom: 1px solid var(--catalogue-line);
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  padding-bottom: 2rem;
+}
+
+.catalogue-kicker,
+.catalogue-card h3,
+.catalogue-facts dt,
+.catalogue-provenance dt,
+.catalogue-badge {
+  font-family: var(--font-mono), ui-monospace, Consolas, monospace;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.catalogue-kicker {
+  color: var(--catalogue-muted);
+  font-size: 0.75rem;
+}
+
+.catalogue-hero h1 {
+  color: var(--catalogue-ink);
+  font-family: var(--font-head), sans-serif;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-top: 0.45rem;
+}
+
+.catalogue-hero > p {
+  color: var(--catalogue-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.catalogue-notice {
+  background: #fff0cf;
+  border: 1px solid #9c6718;
+  color: #57380b;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+}
+
+.catalogue-notice p {
+  line-height: 1.6;
+  margin-top: 0.4rem;
+}
+
+.catalogue-metrics {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.catalogue-metrics > div {
+  background: var(--catalogue-ink);
+  color: #eef7f2;
+  display: grid;
+  gap: 0.35rem;
+  min-height: 7rem;
+  padding: 1rem;
+}
+
+.catalogue-metrics strong {
+  font-family: var(--font-head), sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.catalogue-metrics span {
+  align-self: end;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.catalogue-search {
+  background: #d5e6db;
+  border: 1px solid var(--catalogue-line);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(15rem, 1.7fr) repeat(2, minmax(10rem, 0.7fr));
+  padding: 1.25rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.catalogue-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.catalogue-field label {
+  color: var(--catalogue-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.catalogue-field input,
+.catalogue-field select,
+.catalogue-actions button,
+.catalogue-pagination button {
+  background: #fff;
+  border: 1px solid var(--catalogue-ink);
+  color: #14221c;
+  font: inherit;
+  min-height: 2.8rem;
+  padding: 0.6rem 0.7rem;
+}
+
+.catalogue-actions {
+  align-items: end;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.catalogue-actions button,
+.catalogue-pagination button {
+  font-weight: 700;
+}
+
+.catalogue-actions button:first-child {
+  background: var(--catalogue-ink);
+  color: #fff;
+}
+
+.catalogue-actions button:hover,
+.catalogue-pagination button:hover:not(:disabled),
+.catalogue-reader-link:hover {
+  background: #c5dbcf;
+}
+
+.catalogue-search:focus-visible,
+.catalogue-search :focus-visible,
+.catalogue-pagination :focus-visible,
+.catalogue-card :focus-visible,
+.catalogue-provenance summary:focus-visible,
+.catalogue-results:focus-visible {
+  outline: 3px solid var(--catalogue-ink);
+  outline-offset: 3px;
+}
+
+.catalogue-result-heading {
+  align-items: baseline;
+  border-bottom: 1px solid var(--catalogue-line);
+  display: flex;
+  gap: 1rem 2rem;
+  justify-content: space-between;
+  padding: 2rem 0 1rem;
+}
+
+.catalogue-result-heading h2 {
+  color: var(--catalogue-ink);
+  font-family: var(--font-head), sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.catalogue-result-heading p {
+  color: var(--catalogue-muted);
+  text-align: right;
+}
+
+.catalogue-error {
+  border: 1px solid #9c3f31;
+  color: #7a241b;
+  font-weight: 700;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.catalogue-results {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 1.25rem;
+}
+
+.catalogue-card {
+  align-content: start;
+  background: var(--catalogue-panel);
+  border: 1px solid var(--catalogue-line);
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+  padding: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.catalogue-card-header {
+  border-bottom: 1px solid var(--catalogue-line);
+  display: grid;
+  gap: 0.65rem;
+  padding-bottom: 1rem;
+}
+
+.catalogue-card-header h2 {
+  color: var(--catalogue-ink);
+  font-family: var(--font-head), sans-serif;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.catalogue-path {
+  color: var(--catalogue-muted);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.catalogue-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.catalogue-badge {
+  border: 1px solid var(--catalogue-line);
+  color: var(--catalogue-muted);
+  font-size: 0.64rem;
+  padding: 0.25rem 0.45rem;
+}
+
+.catalogue-badge--priority {
+  background: var(--catalogue-ink);
+  border-color: var(--catalogue-ink);
+  color: #fff;
+}
+
+.catalogue-file-not-act,
+.catalogue-candidate-note {
+  border-left: 3px solid var(--catalogue-warn);
+  color: #57380b;
+  line-height: 1.55;
+  padding-left: 0.85rem;
+}
+
+.catalogue-candidate-note {
+  background: #fff7e5;
+  border: 1px solid #b28138;
+  padding: 0.8rem;
+}
+
+.catalogue-candidate-note p,
+.catalogue-candidate-note code {
+  display: block;
+  margin-top: 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+.catalogue-card-section {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.catalogue-card h3,
+.catalogue-facts dt,
+.catalogue-provenance dt {
+  color: var(--catalogue-muted);
+  font-size: 0.68rem;
+}
+
+.catalogue-candidate-list,
+.catalogue-version-list {
+  list-style: none;
+}
+
+.catalogue-candidate-list li {
+  border-top: 1px solid var(--catalogue-line);
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.55rem 0;
+}
+
+.catalogue-candidate-list span,
+.catalogue-muted,
+.catalogue-version-list {
+  color: var(--catalogue-muted);
+  font-size: 0.8rem;
+}
+
+.catalogue-version-list li::before {
+  content: '— ';
+}
+
+.catalogue-facts,
+.catalogue-provenance dl {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.catalogue-facts div,
+.catalogue-provenance dl div {
+  min-width: 0;
+}
+
+.catalogue-facts dd,
+.catalogue-provenance dd {
+  margin-top: 0.2rem;
+  overflow-wrap: anywhere;
+}
+
+.catalogue-reader-link {
+  border: 1px solid var(--catalogue-ink);
+  color: var(--catalogue-ink);
+  display: inline-block;
+  font-weight: 700;
+  justify-self: start;
+  padding: 0.55rem 0.75rem;
+}
+
+.catalogue-record-provenance,
+.catalogue-provenance {
+  border: 1px solid var(--catalogue-line);
+  padding: 0.85rem 1rem;
+}
+
+.catalogue-record-provenance summary,
+.catalogue-provenance summary {
+  color: var(--catalogue-ink);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.catalogue-record-provenance[open] summary,
+.catalogue-provenance[open] summary {
+  margin-bottom: 1rem;
+}
+
+.catalogue-pagination {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.catalogue-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.catalogue-pagination span {
+  color: var(--catalogue-muted);
+  min-width: 9rem;
+  text-align: center;
+}
+
+.catalogue-provenance {
+  background: var(--catalogue-panel);
+  margin-top: 1rem;
+}
+
+.catalogue-provenance ul {
+  margin: 1rem 0 0 1.2rem;
+}
+
+.catalogue-provenance li {
+  margin-top: 0.35rem;
+}
+
+.catalogue-footer {
+  color: var(--catalogue-muted);
+  font-size: 0.78rem;
+}
+
+.catalogue-breadcrumbs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.catalogue-breadcrumbs a { color: var(--catalogue-ink); padding: .4rem .65rem; border: 1px solid var(--catalogue-line); overflow-wrap: anywhere; }
+.catalogue-breadcrumbs a + a::before { content: '› '; }
+.catalogue-folder h3, .catalogue-card .catalogue-photo-title { font-family: var(--font-head), sans-serif; font-size: 1.4rem; text-transform: none; letter-spacing: 0; line-height: 1.3; overflow-wrap: anywhere; }
+.catalogue-folder-link { color: var(--catalogue-ink); }
+.catalogue-breadcrumbs :focus-visible, .catalogue-folder-link:focus-visible { outline: 3px solid var(--catalogue-ink); outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .catalogue-search {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    position: static;
+  }
+
+  .catalogue-field--query,
+  .catalogue-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .catalogue-hero,
+  .catalogue-results {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogue-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalogue-result-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .catalogue-result-heading p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalogue-search,
+  .catalogue-metrics,
+  .catalogue-facts,
+  .catalogue-provenance dl {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogue-field--query,
+  .catalogue-actions {
+    grid-column: auto;
+  }
+
+  .catalogue-actions,
+  .catalogue-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .catalogue-pagination span {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-page,
+  .catalogue-page * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+

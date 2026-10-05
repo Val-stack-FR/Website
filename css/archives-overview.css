@@ -1,0 +1,44 @@
+.archives-overview .overview-content {
+  display: grid;
+  gap: 24px;
+  padding: 24px 48px 48px;
+}
+
+.archives-overview .panel-header {
+  min-height: 0;
+}
+
+.archives-overview .panel-header h2 {
+  font-family: var(--font-head);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.archives-overview .act-panel > p,
+.overview-notice p {
+  max-width: 85ch;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.overview-notice {
+  padding: 20px 24px;
+  border: 1px solid #9c6718;
+  background: #fff0cf;
+  color: #57380b;
+}
+
+@media (max-width: 720px) {
+  .archives-overview .overview-content {
+    padding: 20px 20px 32px;
+  }
+
+  .archives-overview .reader-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-notice {
+    padding: 18px;
+  }
+}

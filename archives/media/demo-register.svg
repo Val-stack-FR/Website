@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Démonstration répertoire</title>
+  <desc id="desc">Substitut graphique neutre pour une vue de répertoire, sans image d’archive.</desc>
+  <rect width="900" height="1200" fill="#d5e6db"/>
+  <rect x="42" y="42" width="816" height="1116" fill="none" stroke="#1a5c3a" stroke-width="3"/>
+  <path d="M90 180H810M90 280H810M90 380H810M90 480H810M90 580H810M260 120V760" stroke="#8fa89a" stroke-width="5"/>
+  <text x="90" y="950" fill="#0d3d25" font-family="monospace" font-size="42">DÉMONSTRATION</text>
+  <text x="90" y="1010" fill="#1a5c3a" font-family="monospace" font-size="30">RÉPERTOIRE · AUCUN SCAN RÉEL</text>
+</svg>

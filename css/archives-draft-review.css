@@ -1,0 +1,27 @@
+:root { color-scheme: light; --draft-ink: #133a2c; --draft-muted: #496354; --draft-line: #adc3b8; --draft-bg: #e8f2ed; }
+* { box-sizing: border-box; }
+body.draft-review-page { margin: 0; background: var(--draft-bg); color: var(--draft-ink); font: 16px/1.65 Georgia, serif; }
+.draft-review-page main { max-width: 1180px; margin: auto; padding: clamp(20px, 4vw, 48px); }
+.draft-review-page header { border-bottom: 2px solid var(--draft-ink); padding-bottom: 24px; }
+.draft-review-page h1 { font-size: clamp(32px, 6vw, 58px); line-height: 1.1; }
+.draft-review-page h2 { font-size: 24px; margin: 0; }
+.draft-review-kicker, .draft-review-meta, .draft-review-page dl { font: 13px/1.6 ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+.draft-review-kicker { letter-spacing: .08em; text-transform: uppercase; }
+.draft-review-meta { color: var(--draft-muted); }
+.draft-review-page a { color: var(--draft-ink); text-underline-offset: 3px; }
+#draft-review-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 10px 20px; align-items: end; margin: 28px 0; }
+#draft-review-form label { grid-row: 1; }
+#draft-review-form input, #draft-review-form select, #draft-review-form button { grid-row: 2; min-width: 0; font: inherit; min-height: 44px; padding: 9px; border: 1px solid var(--draft-ink); }
+#draft-review-form button { background: var(--draft-ink); color: white; cursor: pointer; }
+.draft-review-card { border-top: 1px solid var(--draft-line); padding: 24px 0; overflow-wrap: anywhere; }
+.draft-review-citation { white-space: pre-wrap; padding: 16px; background: #f6faf7; border-left: 3px solid var(--draft-ink); }
+.draft-review-page mark { background: #f7ddad; color: #422b08; }
+.draft-review-page details { margin: 14px 0; }
+.draft-review-page summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+.draft-review-page dt { font-weight: 700; }
+.draft-review-page dd { margin: 0 0 8px; }
+#draft-review-pagination { display: flex; justify-content: space-between; gap: 20px; }
+#draft-review-pagination a { padding: 8px 12px; border: 1px solid var(--draft-ink); min-height: 44px; }
+.draft-review-page :focus-visible { outline: 3px solid #7b4e0a; outline-offset: 3px; }
+.draft-review-page footer { border-top: 1px solid var(--draft-line); margin-top: 28px; padding-top: 20px; color: var(--draft-muted); font-size: 13px; }
+@media (max-width: 740px) { #draft-review-form { grid-template-columns: 1fr; } #draft-review-form label, #draft-review-form input, #draft-review-form select, #draft-review-form button { grid-row: auto; } .draft-review-page main { padding: 20px 16px; } }

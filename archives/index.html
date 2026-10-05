@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Prototype local du lecteur d’actes photographiés de Valérian Teissier." />
+  <link rel="canonical" href="https://valerianteissier.com/archives/" />
+  <meta property="og:url" content="https://valerianteissier.com/archives/" />
+  <meta property="og:title" content="Archives — Valérian Teissier" />
+  <meta property="og:description" content="Lecteur public d’actes photographiés, transcriptions et traductions proposées." />
+  <title>Archives — Valérian Teissier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../css/archives.css" />
+</head>
+<body class="archives-page">
+  <a class="skip-link" href="#archive-reader">Aller au lecteur</a>
+
+  <div class="page">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="/" class="nav-logo">VT—</a>
+      <div class="nav-links">
+        <a href="/essays.html" class="nav-link">Essays</a>
+        <a href="/books.html" class="nav-link">Books</a>
+        <a href="/research.html" class="nav-link">Research</a>
+        <a href="/archives/" class="nav-link active" aria-current="page">Archives</a>
+        <a href="/about/" class="nav-link">About</a>
+      </div>
+    </nav>
+
+    <main class="archives-main">
+      <header class="archives-header">
+        <div>
+          <p class="archives-kicker">Actes photographiés · lecteur public</p>
+          <h1>Archives</h1>
+        </div>
+        <p class="archives-intro">Chaque acte rassemble, dans l’ordre, la transcription originale, une traduction proposée en français moderne et les vues qui lui sont associées.</p>
+      </header>
+
+      <aside class="fixture-notice" aria-label="Avertissement sur les données">
+        <strong>Prototype local — fixture de démonstration.</strong>
+        <span>Ces trois notices ne décrivent aucun acte réel. Elles vérifient l’interface avant le raccord au corpus documenté.</span>
+      </aside>
+
+      <section class="archive-reader" id="archive-reader" aria-labelledby="reader-heading">
+        <h2 class="visually-hidden" id="reader-heading">Lecteur horizontal des actes</h2>
+
+        <div class="reader-toolbar" aria-label="Navigation entre les actes">
+          <div class="reader-position">
+            <span class="reader-position-label">Acte</span>
+            <strong id="reader-position-value">1 / 3</strong>
+            <span id="reader-current-title">Démonstration — acte A</span>
+          </div>
+          <p class="reader-hint">Glissez horizontalement ou utilisez les flèches gauche et droite. Avec une souris : Maj + molette.</p>
+          <div class="reader-actions">
+            <a class="reader-button" id="reader-prev" href="#demo-acte-a" aria-disabled="true" tabindex="-1" data-act-target="demo-acte-a"><span aria-hidden="true">←</span> Précédent</a>
+            <a class="reader-button" id="reader-next" href="#demo-acte-b" data-act-target="demo-acte-b">Suivant <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <p class="visually-hidden" id="reader-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+
+        <div class="acts-viewport" id="acts-viewport" tabindex="0" aria-label="Trois actes de démonstration sur une piste horizontale">
+          <div class="acts-track">
+            <article class="archive-act" id="demo-acte-a" tabindex="-1" data-act-index="0" aria-labelledby="demo-acte-a-title">
+              <header class="act-header">
+                <div class="act-sequence" aria-hidden="true">01 / 03</div>
+                <div class="act-title-block">
+                  <p class="act-fonds">Fixture locale — aucun fonds réel</p>
+                  <h2 id="demo-acte-a-title">Démonstration — acte A</h2>
+                  <p class="act-cote">Cote témoin <strong>DEMO-A</strong> · date non renseignée</p>
+                </div>
+                <div class="act-statuses" aria-label="États éditoriaux">
+                  <span class="status-badge status-draft">Publication · brouillon public</span>
+                  <span class="status-badge">Identification · démonstration</span>
+                  <span class="status-badge">Lecture · traduction en brouillon</span>
+                </div>
+              </header>
+
+              <div class="act-panels">
+                <section class="act-panel" aria-labelledby="demo-acte-a-transcription">
+                  <header class="panel-header">
+                    <span class="panel-number">01</span>
+                    <div>
+                      <h3 id="demo-acte-a-transcription">Transcription originale</h3>
+                      <p>Français médiéval · transcription en brouillon</p>
+                    </div>
+                  </header>
+                  <div class="text-reading" lang="frm">
+                    <p><mark class="uncertain-passage">Emplacement de transcription de démonstration. Aucun texte d’archive n’est chargé.</mark></p>
+                  </div>
+                  <details class="uncertainty-note">
+                    <summary>Pourquoi ce passage est-il signalé ?</summary>
+                    <p>Ce repère sert uniquement à vérifier l’affichage d’une incertitude. Il ne correspond pas à une lecture historique.</p>
+                  </details>
+                  <p class="panel-source">Source : texte factice de contrôle d’interface · révision témoin demo-revision-001</p>
+                </section>
+
+                <section class="act-panel" aria-labelledby="demo-acte-a-translation">
+                  <header class="panel-header">
+                    <span class="panel-number">02</span>
+                    <div>
+                      <h3 id="demo-acte-a-translation">Traduction proposée en français moderne</h3>
+                      <p>Français · traduction en brouillon</p>
+                    </div>
+                  </header>
+                  <div class="text-reading" lang="fr">
+                    <p>Emplacement de traduction proposée. Aucun contenu historique n’est interprété.</p>
+                  </div>
+                  <p class="panel-source">Source : traduction factice de contrôle d’interface</p>
+                </section>
+
+                <section class="act-panel images-panel" aria-labelledby="demo-acte-a-images">
+                  <header class="panel-header">
+                    <span class="panel-number">03</span>
+                    <div>
+                      <h3 id="demo-acte-a-images">Images associées</h3>
+                      <p>3 vues témoins · aucune photographie réelle</p>
+                    </div>
+                  </header>
+                  <div class="archive-gallery">
+                    <figure class="archive-view">
+                      <a href="media/demo-recto.svg" class="archive-image-link" data-zoom-image="media/demo-recto.svg" data-zoom-alt="Repère graphique neutre portant la mention démonstration recto" data-zoom-caption="Recto — substitut neutre pour le contrôle de la galerie.">
+                        <img src="media/demo-recto.svg" alt="Repère graphique neutre portant la mention démonstration recto" width="900" height="1200" loading="lazy" />
+                        <span class="zoom-label">Agrandir</span>
+                      </a>
+                      <figcaption><span class="view-type">Recto</span> Substitut neutre pour le contrôle de la galerie.</figcaption>
+                    </figure>
+                    <figure class="archive-view">
+                      <a href="media/demo-verso.svg" class="archive-image-link" data-zoom-image="media/demo-verso.svg" data-zoom-alt="Repère graphique neutre portant la mention démonstration verso" data-zoom-caption="Verso — substitut neutre pour le contrôle de la galerie.">
+                        <img src="media/demo-verso.svg" alt="Repère graphique neutre portant la mention démonstration verso" width="900" height="1200" loading="lazy" />
+                        <span class="zoom-label">Agrandir</span>
+                      </a>
+                      <figcaption><span class="view-type">Verso</span> Substitut neutre pour le contrôle de la galerie.</figcaption>
+                    </figure>
+                    <figure class="archive-view">
+                      <a href="media/demo-detail.svg" class="archive-image-link" data-zoom-image="media/demo-detail.svg" data-zoom-alt="Repère graphique neutre portant la mention démonstration détail" data-zoom-caption="Détail — substitut neutre pour tester le zoom sans scan réel.">
+                        <img src="media/demo-detail.svg" alt="Repère graphique neutre portant la mention démonstration détail" width="900" height="1200" loading="lazy" />
+                        <span class="zoom-label">Agrandir</span>
+                      </a>
+                      <figcaption><span class="view-type">Détail</span> Substitut neutre pour tester le zoom sans scan réel.</figcaption>
+                    </figure>
+                  </div>
+                </section>
+              </div>
+
+              <aside class="correction-state" aria-label="Propositions de correction">
+                <strong>Une lecture à préciser ?</strong>
+                <p>Le canal de proposition n’est pas encore raccordé. Aucune saisie locale ne sera présentée comme une correction enregistrée.</p>
+              </aside>
+
+              <nav class="act-bottom-nav" aria-label="Passer à un autre acte">
+                <span class="reader-button" aria-disabled="true"><span aria-hidden="true">←</span> Premier acte</span>
+                <a class="reader-button" href="#demo-acte-b" data-act-target="demo-acte-b">Acte B <span aria-hidden="true">→</span></a>
+              </nav>
+            </article>
+
+            <article class="archive-act" id="demo-acte-b" tabindex="-1" data-act-index="1" aria-labelledby="demo-acte-b-title">
+              <header class="act-header">
+                <div class="act-sequence" aria-hidden="true">02 / 03</div>
+                <div class="act-title-block">
+                  <p class="act-fonds">Fixture locale — aucun fonds réel</p>
+                  <h2 id="demo-acte-b-title">Démonstration — acte B</h2>
+                  <p class="act-cote">Cote témoin <strong>DEMO-B</strong> · date non renseignée</p>
+                </div>
+                <div class="act-statuses" aria-label="États éditoriaux">
+                  <span class="status-badge status-draft">Publication · brouillon public</span>
+                  <span class="status-badge">Identification · démonstration</span>
+                  <span class="status-badge status-missing">Lecture · non transcrit</span>
+                </div>
+              </header>
+
+              <div class="act-panels">
+                <section class="act-panel" aria-labelledby="demo-acte-b-transcription">
+                  <header class="panel-header">
+                    <span class="panel-number">01</span>
+                    <div>
+                      <h3 id="demo-acte-b-transcription">Transcription originale</h3>
+                      <p>Langue non renseignée · non transcrit</p>
+                    </div>
+                  </header>
+                  <div class="empty-panel">
+                    <strong>Transcription absente</strong>
+                    <p>Aucun texte source n’est chargé dans cette notice de démonstration.</p>
+                  </div>
+                </section>
+
+                <section class="act-panel" aria-labelledby="demo-acte-b-translation">
+                  <header class="panel-header">
+                    <span class="panel-number">02</span>
+                    <div>
+                      <h3 id="demo-acte-b-translation">Traduction proposée en français moderne</h3>
+                      <p>Français · indisponible</p>
+                    </div>
+                  </header>
+                  <div class="empty-panel">
+                    <strong>Traduction absente</strong>
+                    <p>La traduction sera proposée après établissement d’une transcription.</p>
+                  </div>
+                </section>
+
+                <section class="act-panel images-panel" aria-labelledby="demo-acte-b-images">
+                  <header class="panel-header">
+                    <span class="panel-number">03</span>
+                    <div>
+                      <h3 id="demo-acte-b-images">Images associées</h3>
+                      <p>1 vue témoin · aucune photographie réelle</p>
+                    </div>
+                  </header>
+                  <div class="archive-gallery">
+                    <figure class="archive-view">
+                      <a href="media/demo-copy.svg" class="archive-image-link" data-zoom-image="media/demo-copy.svg" data-zoom-alt="Repère graphique neutre portant la mention démonstration copie" data-zoom-caption="Copie — substitut neutre, sans association archivistique réelle.">
+                        <img src="media/demo-copy.svg" alt="Repère graphique neutre portant la mention démonstration copie" width="900" height="1200" loading="lazy" />
+                        <span class="zoom-label">Agrandir</span>
+                      </a>
+                      <figcaption><span class="view-type">Copie</span> Substitut neutre, sans association archivistique réelle.</figcaption>
+                    </figure>
+                  </div>
+                </section>
+              </div>
+
+              <aside class="correction-state" aria-label="Propositions de correction">
+                <strong>Une identification à compléter ?</strong>
+                <p>Le canal de proposition n’est pas encore raccordé. Cette page ne simule aucun enregistrement.</p>
+              </aside>
+
+              <nav class="act-bottom-nav" aria-label="Passer à un autre acte">
+                <a class="reader-button" href="#demo-acte-a" data-act-target="demo-acte-a"><span aria-hidden="true">←</span> Acte A</a>
+                <a class="reader-button" href="#demo-acte-c" data-act-target="demo-acte-c">Acte C <span aria-hidden="true">→</span></a>
+              </nav>
+            </article>
+
+            <article class="archive-act" id="demo-acte-c" tabindex="-1" data-act-index="2" aria-labelledby="demo-acte-c-title">
+              <header class="act-header">
+                <div class="act-sequence" aria-hidden="true">03 / 03</div>
+                <div class="act-title-block">
+                  <p class="act-fonds">Fixture locale — aucun fonds réel</p>
+                  <h2 id="demo-acte-c-title">Démonstration — acte C</h2>
+                  <p class="act-cote">Cote témoin <strong>DEMO-C</strong> · date non renseignée</p>
+                </div>
+                <div class="act-statuses" aria-label="États éditoriaux">
+                  <span class="status-badge status-draft">Publication · brouillon public</span>
+                  <span class="status-badge status-missing">Identification · incomplète</span>
+                  <span class="status-badge status-missing">Lecture · non transcrit</span>
+                </div>
+              </header>
+
+              <div class="act-panels">
+                <section class="act-panel" aria-labelledby="demo-acte-c-transcription">
+                  <header class="panel-header">
+                    <span class="panel-number">01</span>
+                    <div>
+                      <h3 id="demo-acte-c-transcription">Transcription originale</h3>
+                      <p>Langue non renseignée · non transcrit</p>
+                    </div>
+                  </header>
+                  <div class="empty-panel">
+                    <strong>Transcription absente</strong>
+                    <p>Cette notice montre l’état d’un acte encore dépourvu de lecture.</p>
+                  </div>
+                </section>
+
+                <section class="act-panel" aria-labelledby="demo-acte-c-translation">
+                  <header class="panel-header">
+                    <span class="panel-number">02</span>
+                    <div>
+                      <h3 id="demo-acte-c-translation">Traduction proposée en français moderne</h3>
+                      <p>Français · indisponible</p>
+                    </div>
+                  </header>
+                  <div class="empty-panel">
+                    <strong>Traduction absente</strong>
+                    <p>Aucune traduction n’est proposée tant que le texte source n’est pas établi.</p>
+                  </div>
+                </section>
+
+                <section class="act-panel images-panel" aria-labelledby="demo-acte-c-images">
+                  <header class="panel-header">
+                    <span class="panel-number">03</span>
+                    <div>
+                      <h3 id="demo-acte-c-images">Images associées</h3>
+                      <p>1 vue témoin · aucune photographie réelle</p>
+                    </div>
+                  </header>
+                  <div class="archive-gallery">
+                    <figure class="archive-view">
+                      <a href="media/demo-register.svg" class="archive-image-link" data-zoom-image="media/demo-register.svg" data-zoom-alt="Repère graphique neutre portant la mention démonstration répertoire" data-zoom-caption="Répertoire — substitut neutre, sans contenu documentaire.">
+                        <img src="media/demo-register.svg" alt="Repère graphique neutre portant la mention démonstration répertoire" width="900" height="1200" loading="lazy" />
+                        <span class="zoom-label">Agrandir</span>
+                      </a>
+                      <figcaption><span class="view-type">Répertoire</span> Substitut neutre, sans contenu documentaire.</figcaption>
+                    </figure>
+                  </div>
+                </section>
+              </div>
+
+              <aside class="correction-state" aria-label="Propositions de correction">
+                <strong>Une association à documenter ?</strong>
+                <p>Le futur flux distinguera une proposition d’une décision validée par le propriétaire. Il n’est pas simulé ici.</p>
+              </aside>
+
+              <nav class="act-bottom-nav" aria-label="Passer à un autre acte">
+                <a class="reader-button" href="#demo-acte-b" data-act-target="demo-acte-b"><span aria-hidden="true">←</span> Acte B</a>
+                <span class="reader-button" aria-disabled="true">Dernier acte <span aria-hidden="true">→</span></span>
+              </nav>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-text">Lecteur d’archives · prototype local</span>
+      <a href="/" class="footer-text">valerianteissier.com <span class="footer-accent">↗</span></a>
+    </footer>
+  </div>
+
+  <dialog class="image-dialog" id="image-dialog" aria-labelledby="image-dialog-caption">
+    <form method="dialog" class="dialog-toolbar">
+      <button class="dialog-close" value="close">Fermer <span aria-hidden="true">×</span></button>
+    </form>
+    <div class="dialog-media">
+      <img id="image-dialog-img" src="media/demo-recto.svg" alt="" width="900" height="1200" />
+    </div>
+    <p id="image-dialog-caption"></p>
+  </dialog>
+
+  <script src="../js/archives-reader.js" defer></script>
+</body>
+</html>

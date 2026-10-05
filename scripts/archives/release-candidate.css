@@ -1,0 +1,50 @@
+:root {color-scheme:light;--paper:#e9f4ed;--ink:#143c2b;--muted:#456858;--line:#b6cdbf;--panel:#f3f8f4;--accent:#cfdfd3}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth;scroll-padding-top:1rem}
+body {margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+a {color:inherit;text-underline-offset:.2em}
+button,a {touch-action:manipulation}
+button {font:inherit;cursor:pointer;color:var(--ink);background:var(--paper);border:1px solid var(--ink);padding:.65rem 1rem}
+a:focus-visible,button:focus-visible {outline:3px solid var(--ink);outline-offset:4px}
+.skip {position:absolute;top:-10rem;left:1rem;padding:1rem;background:white;z-index:5}.skip:focus {top:1rem}
+.site-header {display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line);padding:1.5rem 4vw;font: .85rem ui-monospace,monospace}
+.site-header a {font-weight:bold;text-decoration:none}
+main {max-width:1240px;margin:auto;padding:0 4vw}
+.intro {padding:4rem 0 2.5rem;max-width:850px}
+.eyebrow,.states,nav,.section-note,figcaption,footer,.notice {font-family:ui-monospace,monospace}
+.eyebrow {font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1 {font-size:clamp(2.6rem,6vw,5.6rem);letter-spacing:-.05em;line-height:1.03;margin:1rem 0 1.5rem}
+.lead {font-size:clamp(1.15rem,2.2vw,1.6rem);line-height:1.6;max-width:720px}
+.notice {display:inline-block;background:var(--accent);padding:.65rem .9rem;font-size:.8rem}
+article {border:1px solid var(--line);background:var(--panel)}
+.dossier-header {padding:2rem 2.5rem;border-bottom:1px solid var(--line)}
+h2 {font-size:clamp(1.7rem,3vw,2.7rem);line-height:1.2;letter-spacing:-.025em;margin:1rem 0}
+.dossier-header>p {line-height:1.6;max-width:770px}
+.states {list-style:none;display:flex;flex-wrap:wrap;gap:.65rem;padding:0;margin:1.5rem 0;font-size:.73rem}
+.states li {border:1px solid var(--line);padding:.5rem .7rem}
+nav {display:flex;flex-wrap:wrap;gap:1.3rem;font-size:.82rem;margin-top:1.8rem}
+.reading-grid {display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)}
+.reading-grid>section {padding:2.3rem 2.5rem;min-width:0}
+.reading-grid>section+section {border-left:1px solid var(--line)}
+h3 {font-size:1.7rem;line-height:1.3;margin:.7rem 0 1rem}
+.section-note {color:var(--muted);font-size:.78rem;line-height:1.7;min-height:3rem}
+.literal {white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.07rem;line-height:1.9;margin-top:2rem}
+.gallery {display:grid;gap:1.5rem;margin-top:2rem}
+figure {margin:0;min-width:0}
+.photo-link {display:block;background:#142e24;position:relative;text-decoration:none;border:1px solid var(--line)}
+.photo-link img {display:block;width:100%;height:auto;object-fit:contain}
+.photo-link span {display:block;padding:.8rem 1rem;background:var(--accent);font:.78rem ui-monospace,monospace}
+figcaption {font-size:.72rem;line-height:1.6;color:var(--muted);padding-top:.6rem}
+.translation {border-top:1px solid var(--line);padding:2.3rem 2.5rem;background:var(--accent)}
+.translation p {line-height:1.7}
+footer {font-size:.75rem;line-height:1.8;padding:2rem 0 3rem;max-width:760px;color:var(--muted)}
+dialog {width:min(96vw,1400px);max-width:96vw;height:92vh;max-height:92vh;padding:1rem;background:var(--panel);border:1px solid var(--line);color:var(--ink)}
+dialog::backdrop {background:rgb(10 28 20 / 88%)}
+.zoom-toolbar {display:flex;align-items:center;gap:1rem;margin-bottom:1rem}.zoom-toolbar h2 {font-size:1.2rem;margin:0 auto 0 0}
+#zoom-scroll {height:calc(100% - 7.5rem);overflow:auto;background:#142e24}
+#zoom-image {display:block;width:auto;height:auto;max-width:100%;max-height:100%;margin:auto;object-fit:contain}
+#zoom-scroll.is-native #zoom-image {width:3968px;height:2976px;max-width:none;max-height:none;margin:0}
+dialog>p {font:.72rem ui-monospace,monospace;line-height:1.5}
+body.zoom-open {overflow:hidden}
+@media(max-width:760px){.site-header {font-size:.72rem;flex-wrap:wrap}.intro {padding:2.5rem 0 1.5rem}.reading-grid {display:block}.reading-grid>section,.dossier-header,.translation {padding:1.5rem}.reading-grid>section+section {border-left:0;border-top:1px solid var(--line)}.literal {font-size:1rem}.zoom-toolbar {gap:.5rem;flex-wrap:wrap}.zoom-toolbar h2 {flex-basis:100%}.zoom-toolbar button {font-size:.8rem}.section-note {min-height:0}#zoom-scroll {height:calc(100% - 9rem)}}
+@media(prefers-reduced-motion:reduce){html {scroll-behavior:auto}}

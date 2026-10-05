@@ -1,0 +1,15 @@
+import {readFile,writeFile,readdir,realpath} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import assert from 'node:assert/strict';
+import {digest,FILE_READING_PINS} from './file-reading-adapter.mjs';
+const run=resolve('.private/archives-next-readings/p09-file-reading-ui-20261004-v1'),parent=resolve('.private/archives-integration/publication-package-20261004-v12-r2');
+assert.equal((await realpath(run)).toLowerCase(),run.toLowerCase());const read=async name=>readFile(join(run,name)),parse=async name=>JSON.parse(await read(name)),pin=bytes=>({sha256:digest(bytes),bytes:bytes.length});
+const proof=await parse('build-proof.json'),gate=await parse('browser-gate.json'),review=await parse('independent-review.json'),closeout=await parse('preview-closeout.json');
+assert.equal(gate.passed,true);assert.equal(review.findings.length,0);assert.equal(review.passed,true);assert.equal(closeout.stopped,true);assert.equal(closeout.connection_after_stop,'ECONNREFUSED');assert.equal(closeout.root_service_untouched,true);
+assert.equal(digest(await readFile(join(parent,'assembly.json'))),FILE_READING_PINS.assembly);
+for(const [name,p]of Object.entries(proof.outputs)){assert.deepEqual(pin(await read(name)),p);}
+const requests=await parse('preview-requests.json');assert(requests.every(r=>r.status===200||r.status===204));assert(requests.filter(r=>r.route?.endsWith('.png')).every(r=>proof.public_routes.some(a=>a.route===r.route)));assert(!requests.some(r=>/\.jpg|api\/|__archive/.test(r.route||'')));
+const record={format:'p09-file-reading-ui-closeout/1',status:'MVP-qualified-P09-only',source_file_count:1,source_edition:'author-full-view-r0',source_body_sha256:FILE_READING_PINS.body,build_proof:pin(await read('build-proof.json')),browser_gate:pin(await read('browser-gate.json')),independent_review:pin(await read('independent-review.json')),integration_contract:pin(await read('integration-contract.json')),parent_assembly_sha256:FILE_READING_PINS.assembly,crop_admission_sha256:FILE_READING_PINS.admission,root_inputs_unchanged:true,root_service_untouched:true,publication_executed:false,H07_extension:'not included; subsequent separately bound file required',new_photographic_views:0,review_crop_assets:3,canonical_updates:0,confirmed_memory:false,human_review:'pending',source_photo_bytes_read:0};
+await writeFile(join(run,'closeout.json'),JSON.stringify(record,null,2)+'\n',{flag:'wx'});
+const files={};async function visit(folder,prefix=''){for(const entry of await readdir(folder,{withFileTypes:true})){const name=prefix+entry.name;if(entry.isDirectory())await visit(join(folder,entry.name),name+'/');else if(entry.isFile()){assert.notEqual(name,'seal.json');files[name]=pin(await readFile(join(folder,entry.name)));}else throw Error('Unexpected filesystem entry');}}
+await visit(run);const seal=Buffer.from(JSON.stringify({format:'p09-file-reading-ui-closed-seal/1',status:'closed',files},null,2)+'\n');await writeFile(join(run,'seal.json'),seal,{flag:'wx'});console.log(JSON.stringify({run,seal:pin(seal),closed_files:Object.keys(files).length,closeout:record},null,2));

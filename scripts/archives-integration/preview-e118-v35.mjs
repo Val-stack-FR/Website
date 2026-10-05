@@ -1,0 +1,20 @@
+import {readFile,writeFile,appendFile,realpath} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
+import {createServer} from 'node:http';
+import assert from 'node:assert/strict';
+const out=resolve('.private/archives-integration/publication-package-20261004-v35'),site=resolve(out,'site');
+const sha=b=>createHash('sha256').update(b).digest('hex'),pin=b=>({size_bytes:b.length,sha256:sha(b)}),json=x=>JSON.stringify(x,null,2)+'\n';
+const ab=await readFile(resolve(out,'assembly.json')),a=JSON.parse(ab),c=JSON.parse(await readFile(resolve(out,'composition.json')));assert(c.passed);assert.deepEqual(pin(ab),c.assembly);assert.equal(a.e118_opening_reader.only_small_context,'O04');
+const read=async n=>{const p=resolve(site,n);assert.equal(await realpath(p),p);const b=await readFile(p);assert.deepEqual(pin(b),a.files[n]);return b;};
+// Initialize the inherited hierarchy handler solely to serve this mini; no native import qualification suite is executed.
+const hierarchy=(await import(pathToFileURL(resolve(site,'api/archives/hierarchy.mjs')).href)).default;
+const cache=new Map(),log=resolve(out,'preview-http.jsonl');await writeFile(log,'',{flag:'wx'});await writeFile(resolve(out,'preview-snapshot.mjs'),await readFile(new URL(import.meta.url)),{flag:'wx'});
+const mime=n=>n.endsWith('.html')?'text/html; charset=utf-8':n.endsWith('.css')?'text/css; charset=utf-8':n.endsWith('.js')?'text/javascript; charset=utf-8':n.endsWith('.svg')?'image/svg+xml':n.endsWith('.png')?'image/png':n.endsWith('.jpg')?'image/jpeg':'application/octet-stream';
+const server=createServer(async(req,res)=>{const u=new URL(req.url,'http://127.0.0.1');let source='packaged static';res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Cache-Control','no-store');try{if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end();}else if(u.pathname==='/__catalogue_hierarchy'){source='inherited hierarchy API runtime initialization';await hierarchy(req,res);}else{const n='dist'+u.pathname+(u.pathname.endsWith('/')?'index.html':'');if((u.search&&u.pathname!=='/archives/catalogue/')||!a.files[n]){res.writeHead(404);res.end();}else{if(!cache.has(n))cache.set(n,await read(n));const b=cache.get(n);res.writeHead(200,{'Content-Type':mime(n),'Content-Length':b.length});res.end(req.method==='HEAD'?undefined:b);}}}catch(e){source+=' failed: '+e.message;if(!res.headersSent)res.writeHead(503);res.end();}await appendFile(log,JSON.stringify({method:req.method,path:u.pathname,query:u.search,status:res.statusCode,source})+'\n');});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));const port=server.address().port;
+await writeFile(resolve(out,'preview-session.json'),json({host:'127.0.0.1',port,pid:process.pid,assembly:pin(ab),default_route:'packaged static',hierarchy_route:'inherited hierarchy API',native_import_gate_replayed:false,old_HTTP_gate_replayed:false,POST_count:0,DB_connections:0,main_service_modified:false,stores_touched:false}),{flag:'wx'});
+console.log(json({port,url:'http://127.0.0.1:'+port+'/archives/fichiers/',scope:'one actual E118 browser mini only; no automatic HTTP query suite'}));
+let stopping=false;const stop=async()=>{if(stopping)return;stopping=true;server.closeAllConnections();await new Promise(r=>server.close(r));await writeFile(resolve(out,'preview-stopped.json'),json({closed:true,port,served_asset_pins:[...cache.keys()].map(n=>({path:n,...a.files[n]})),main_service_modified:false,stores_touched:false}),{flag:'wx'});console.log('Own E118 v35 preview closed');process.exit(0);};
+process.stdin.setEncoding('utf8');process.stdin.on('data',s=>{if(s.trim()==='stop')void stop();});

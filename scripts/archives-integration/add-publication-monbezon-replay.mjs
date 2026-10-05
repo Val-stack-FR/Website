@@ -1,0 +1,28 @@
+import { readFile, writeFile, mkdir, lstat, realpath } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const ensure = (ok, message) => { if (!ok) throw Error(message); };
+const base = resolve('.private/archives-integration'), parent = resolve(base, 'publication-package-20261004-v22');
+const output = resolve(base, 'publication-package-20261004-v23'), site = resolve(output, 'site');
+try { await lstat(output); throw Error('Fresh output required.'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+const pinned = async (path, pin) => { ensure(await realpath(path) === path, 'Reparse source refused.'); const bytes = await readFile(path); ensure(sha(bytes) === pin.sha256 && (pin.bytes === undefined || pin.bytes === bytes.length), 'Changed selected source: ' + path); return bytes; };
+const parentBytes = await pinned(resolve(parent, 'assembly.json'), { sha256: '661cdadd20317e24132decb54a64efb97fb6851ca58622f6d3cfdd4701fe4ccc' });
+const previous = JSON.parse(parentBytes), files = {};
+const directory = resolve('Z:/Codex/repos/Website-archives-corrections/.archive-corrections-private/d20-monbezon-uncertain-replay-033baeb4-6781-4f2c-9c03-fd2b3d6c4e21');
+const delta = JSON.parse(await pinned(resolve(directory, 'delta-allowlist.json'), { sha256: '1b245eae8ff49d49cf09f275237f0983f76f2ed9218c342ac1a39645eb4ce2a7' }));
+const review = JSON.parse(await pinned(resolve('Z:/Codex/repos/PHD-Maine-paleography-harness/data/private/transcription-campaign/d20-independent-review-20261004-v1/review.json'), { sha256: '2fd23202e5724c7b70edf9786b2b2dc707d560b57c85ce6ef84907f52fb8e5be' }));
+ensure(delta.changed_files === 1 && delta.files.length === 1 && !delta.html_or_css_change && !delta.api_backend_selector_source_owner_authorization_change && review.verdict === 'BOUNDED-GO' && review.actionable_findings.length === 0, 'Bounded one-client independent admission required.');
+const entry = delta.files[0], target = 'dist/' + entry.target_relative_path;
+ensure(target === 'dist/assets/archives-integration-corrections.js' && review.client_sha256 === entry.proposed_sha256, 'Unexpected target or admitted client.');
+ensure(resolve(entry.proposed_path) === resolve(directory, 'proposed/assets/archives-integration-corrections.js'), 'Selected source escaped run.');
+const baseline = previous.files[target];
+ensure(baseline && [entry.expected_base_sha256, entry.known_upstream_v19_r2_sha256].includes(baseline.sha256), 'Client base diverged; rebase required.');
+const client = await pinned(resolve(entry.proposed_path), { sha256: entry.proposed_sha256, bytes: entry.bytes });
+const parentFile = name => pinned(resolve(parent, 'site', name), { sha256: previous.files[name].sha256, bytes: previous.files[name].size_bytes });
+const put = async (name, bytes) => { ensure(!files[name] && !name.startsWith('/') && !/[\\\u0000-\u001f]/u.test(name) && name.split('/').every(part => part && part !== '.' && part !== '..'), 'Unsafe package target.'); await mkdir(dirname(resolve(site, name)), { recursive: true }); await writeFile(resolve(site, name), bytes, { flag: 'wx' }); files[name] = { size_bytes: bytes.length, sha256: sha(bytes) }; };
+for (const name of Object.keys(previous.files)) if (name !== 'runtime/package-checksums.json') await put(name, name === target ? client : await parentFile(name));
+await put('runtime/package-checksums.json', Buffer.from(JSON.stringify(files, null, 2) + '\n'));
+await writeFile(resolve(output, 'assembly.json'), JSON.stringify({ ...previous, parent_assembly_sha256: sha(parentBytes), monbezon_uncertain_replay: { client_sha256: sha(client), accepted_baseline_sha256: baseline.sha256, baseline_is_exact_known_upstream: baseline.sha256 === entry.known_upstream_v19_r2_sha256, d19_human_messages_included: true, only_client_changed: true, browser_gate_pending: true, api_backend_and_sources_unchanged: true }, delta: { added: [], modified: [target, 'runtime/package-checksums.json'], removed: [] }, files }, null, 2) + '\n', { flag: 'wx' });
+await writeFile(resolve(output, 'preservation.json'), JSON.stringify({ parent_assembly_sha256: sha(parentBytes), changed_content_files: [target], same_inventory: true, source_texts_editions_h07_crops_catalogue_runtime_api_and_databases_unchanged: true, historical_confirmation: false }, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ assembled: true, changed_clients: 1, browser_gate_pending: true, static_files: previous.counts.static_files }));
