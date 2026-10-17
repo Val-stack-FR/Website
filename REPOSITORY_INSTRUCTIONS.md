@@ -12,6 +12,7 @@ The public deployment is built with `node scripts/build-site.js` into `dist/`. O
 - Content intended for discovery must be rendered to static HTML. Existing French translations must use real `/fr/.../` routes, reciprocal `hreflang`, a self canonical, French metadata and `inLanguage: fr`.
 - Do not invent credentials, awards, affiliations, dates or citations.
 - The reading-library source and its Google workbook are out of scope for public deployment. Do not restore a public mirror, log or expose workbook fields, or alter workbook sharing/publication settings.
+- Figures, raster images and illustrated tables in essays follow [docs/figures.md](docs/figures.md); run `node scripts/check-figures.js` before opening a pull request that touches `essays/figures/` or an essay's figures.
 
 ## Security
 

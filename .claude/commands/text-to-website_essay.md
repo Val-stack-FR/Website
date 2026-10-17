@@ -27,6 +27,7 @@ Rewrite the content in clean Markdown following the site's conventions:
 - Use `## Section title` for main sections (they auto-get a § prefix in the UI)
 - Wrap pull quotes: `<div class="pull-quote"><blockquote>"Quote text."</blockquote><cite>— Source</cite></div>`
 - Wrap footnote markers: `<span class="fn">[1]</span>` inline in text
+- Figures, images and tables: follow `docs/figures.md` (and run `node scripts/check-figures.js`)
 - Wrap inline highlights: `<span class="highlight">text</span>`
 - Put references at the end in a `<div class="references">` block with `.reference-item`, `.ref-num`, `.ref-text` structure
 - Keep the prose voice consistent with the existing essays: first-person, direct, field-observation style. Tighten and sharpen where needed — don't pad.
