@@ -18,6 +18,9 @@ const run = (command, args, cwd, env = process.env) => {
   if (result.status !== 0) process.exit(result.status || 1);
 };
 
+// Fail early on a broken figure (missing alt, forbidden inline style, absent file...).
+run('node', [path.join(__dirname, 'check-figures.js')], root);
+
 if (existsSync(dist)) rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 

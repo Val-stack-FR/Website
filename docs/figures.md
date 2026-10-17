@@ -103,7 +103,7 @@ The wrapper takes the keyboard focus (`tabindex="0"`) so that the scrollable are
 ## Verification
 
 ```
-node scripts/check-figures.js                                 # files, alt, sizes, FR/EN pairs, CSP-forbidden constructs
+node scripts/check-figures.js                                 # files, alt, sizes, FR/EN pairs, CSP-forbidden constructs (also run first by build-site.js: an error fails the build)
 SITE_ROOT=<temp copy> node scripts/prerender.js               # static render keeps every <figure> as is
 node scripts/build-site.js                                    # dist/essays/figures/ contains every asset
 ```
