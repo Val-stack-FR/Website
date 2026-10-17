@@ -41,19 +41,6 @@
     ]
   },
   {
-    "slug": "centralization-blackbox-double-blindness",
-    "title": "Centralization + blackbox double-blindness",
-    "status": "TO SEARCH",
-    "tags": ["AI", "CRISIS", "STRATEGY"],
-    "description": "Is there evidence that crisis-driven centralization degrades the distributed information environment in ways that make AI deployment more likely to fail silently? Who catches AI errors in organizations where upward honesty has been structurally suppressed?",
-    "queries": [
-      "authoritarian leadership \"AI adoption\" information asymmetry organization",
-      "\"crisis management\" \"AI deployment\" organizational sensing failure",
-      "\"blackbox AI\" organizational accountability distributed cognition",
-      "\"management control\" \"generative AI\" employee initiative epistemic"
-    ]
-  },
-  {
     "slug": "non-renewable-trust-stack",
     "title": "Non-renewable trust stack",
     "status": "DONE",
@@ -114,21 +101,6 @@
     ]
   },
   {
-    "slug": "deresponsabilisation-ai-surveillance",
-    "title": "Déresponsabilisation × AI in surveillance contexts",
-    "status": "DONE",
-    "tags": ["AI", "PHILOSOPHY", "CHANGE MANAGEMENT"],
-    "description": "Does AI tool use in already-surveilled workplaces accelerate diffusion of responsibility, or does it provide accountability artifacts that restore it?",
-    "link": "/essays/who-pays-when-ai-is-wrong/",
-    "linkLabel": "→ Who Pays When AI Is Wrong?",
-    "queries": [
-      "\"authorship\" \"AI-generated text\" identity professional accountability",
-      "\"moral disengagement\" automation \"professional identity\" knowledge work",
-      "Li Liang CHI 2024 \"authorial ownership\" AI writing",
-      "\"algorithmic management\" deresponsabilisation surveillance AI output attribution"
-    ]
-  },
-  {
     "slug": "slow-phase-onboarding-agentic-ai",
     "title": "Slow-phase onboarding for agentic AI",
     "status": "DONE",
@@ -180,7 +152,7 @@
     "tags": ["AI", "CHANGE MANAGEMENT"],
     "description": "Why adoption rate figures vary 5–40 points depending on method, and why peer-to-peer influence outperforms formal training as an adoption mechanism.",
     "link": "/essays/genai-adoption-people-in-the-middle/",
-    "linkLabel": "→ The People in the Middle",
+    "linkLabel": "→ The people in the middle of GenAI adoption",
     "queries": [
       "Burton-Jones Straub \"lean adoption\" \"rich adoption\" technology measurement",
       "\"peer influence\" generative AI adoption training comparison RCT",
