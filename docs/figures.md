@@ -1,6 +1,6 @@
-# Figures, images and illustrated tables in essays
+# Figures, images, tables and lists in essays
 
-Canonical conventions for anything visual inside an essay. Check your work with `node scripts/check-figures.js` (no dependency; exits 1 on any error). Security rules from `REPOSITORY_INSTRUCTIONS.md` apply: no inline style, script or event handler, anywhere, SVG included; CSP stays as in `vercel.json` (`img-src 'self' data:`).
+Canonical conventions for anything visual or structured inside an essay (figures, images, tables, lists, links to other essays). Check your work with `node scripts/check-figures.js` (no dependency; exits 1 on any error). Security rules from `REPOSITORY_INSTRUCTIONS.md` apply: no inline style, script or event handler, anywhere, SVG included; CSP stays as in `vercel.json` (`img-src 'self' data:`).
 
 ## Files
 
@@ -74,6 +74,25 @@ The wrapper takes the keyboard focus (`tabindex="0"`) so that the scrollable are
 - Weight: 30 KB maximum (checker error).
 - Information is never carried by colour alone: add direct labels, values, patterns or position. Use one accent colour plus neutrals when the data allows.
 - Not focusable, no links, no animation.
+
+## Lists and links
+
+Lists are written in Markdown, one item per line, **with no blank line between items** (a blank line ends the list: `scripts/prerender.js` splits the text on blank lines, so each separate block would become its own list).
+
+```
+- First parallel item.
+- Second item that wraps on
+  two lines (an indented line continues the item).
+- Third item.
+```
+
+Ordered lists use `1. `, `2. `... Styling uses the essay tokens: 15 px, `--text-muted`, 1.9 line height, 10 px between items, bullet or number in `--accent-dark`, indent 1.4 em (about 21 px at 390 px). Nested lists are written in HTML (`<ul>` inside the `<li>`). Footnote markers (`<span class="fn">[n]</span>`) and `**bold**` work inside items. The legacy route (`marked@9.1.6`) produces the same `<ul>`/`<ol>` structure.
+
+Links to another essay:
+- a standalone cross-reference card: `<div class="article-ref" data-slug="<slug>" data-type="essay">One bridging sentence.</div>`; the build resolves it to the French page in the French file;
+- an inline link: `[text](/essays/<slug>/)` in the English file and `[texte](/fr/essays/<slug>/)` in the French file. A link starting with `/` opens in the same tab; an external `http(s)` link opens in a new tab with `rel="noopener"`. Links in paragraphs and list items are underlined in `--accent-dark`.
+
+Stable URL formats: English `/essays/<slug>/`, French `/fr/essays/<slug>/` (real static folders; no rewrite in `vercel.json`; reciprocal `hreflang` in the page and `sitemap.xml`). The slug is the file name in `essays/index.json`.
 
 ## Accessibility checklist
 

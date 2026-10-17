@@ -402,6 +402,7 @@ function inlineMd(text) {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\((\/[^)]*)\)/g, '<a href="$2">$1</a>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
@@ -414,6 +415,16 @@ function renderMarkdown(md) {
       const text = block.slice(3).trim();
       const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
       return `<h2 id="${id}">${inlineMd(text)}</h2>`;
+    }
+    // Lists: every line is an item ("- ", "* " or "1. "); indented lines continue the item.
+    const items = block.split('\n');
+    const ordered = /^\d+\. /.test(items[0]);
+    const marker = ordered ? /^\d+\. / : /^[-*] /;
+    if (marker.test(items[0]) && items.every(line => marker.test(line) || /^\s+\S/.test(line))) {
+      const lis = [];
+      items.forEach(line => marker.test(line) ? lis.push(line.replace(marker, '')) : (lis[lis.length - 1] += ' ' + line.trim()));
+      const tag = ordered ? 'ol' : 'ul';
+      return `<${tag}>${lis.map(li => `<li>${inlineMd(li)}</li>`).join('')}</${tag}>`;
     }
     return `<p>${inlineMd(block.replace(/\n/g, ' '))}</p>`;
   }).filter(Boolean).join('\n');
