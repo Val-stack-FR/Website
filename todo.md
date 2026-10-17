@@ -37,7 +37,7 @@
 
 ## Blocages et décisions en attente
 
-- Figures de l'essai « La demi-heure introuvable » (PR brouillon, à relire) : slug et version EN de l'essai ; police des SVG (système actuellement) ; largeur 520 px ; légende longue sur mobile (repli ?) ; numérotation « Figure 1-3 » ; commit ou non des pages `index.html` régénérées.
+- Figures de l'essai « La demi-heure introuvable » (PR brouillon, à relire) : slug et version EN de l'essai (essai en cours de rédaction) ; police des SVG (système, recommandé) ; numérotation « Figure 1-3 ». Décidé le 2026-10-17 : légende repliée (`<details>`) sur bureau et mobile, image centrée, pages `index.html` régénérées non commitées.
 
 - Corrections factuelles des deux essais FR/EN : [PR brouillon #42](https://github.com/Val-stack-FR/Website/pull/42), à relire et fusionner ; contrôles ciblés réussis, aucune fusion automatique.
 

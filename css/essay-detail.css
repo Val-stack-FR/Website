@@ -352,6 +352,7 @@ body { opacity: 1; }
   width: 100%;
   max-width: 520px;
   height: auto;
+  margin: 0 auto;
   border: 1px solid var(--border-solid);
   background: var(--surface-2);
 }
@@ -393,6 +394,7 @@ body { opacity: 1; }
   line-height: 1.7;
   color: var(--text);
 }
+.essay-figure figcaption .essay-figure-long { margin-top: 6px; }
 .essay-figure-long summary {
   cursor: pointer;
   color: var(--accent-dark);

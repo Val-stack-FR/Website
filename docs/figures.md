@@ -21,11 +21,11 @@ Paste the block in `essays/<slug>.md` and `essays/fr/<slug>.md` between two blan
 ```html
 <figure class="essay-figure">
   <img src="/essays/figures/<slug>/<id>.en.svg" alt="What a reader who cannot see it needs to know." width="460" height="361" loading="lazy" decoding="async">
-  <figcaption><strong>Figure 1. Title.</strong> What it shows, values, scope and caveats. <span class="essay-figure-source">Source: author (year), publication, table or page.</span></figcaption>
+  <figcaption><strong>Figure 1. Title.</strong><details class="essay-figure-long"><summary>Caption and sources</summary>What it shows, values, scope and caveats. <span class="essay-figure-source">Source: author (year), publication, table or page.</span></details></figcaption>
 </figure>
 ```
 
-Rules: `alt` is always present and describes the content (at least a full sentence; the checker rejects very short alts); `width` and `height` are the intrinsic size (no layout shift); `loading="lazy"`; `<figcaption>` with number, title and a source line (data source, population, period, whether values are self-reported or derived). Numbers, alt and captions are never edited here if they come from a research card: change them at their source.
+Rules: `alt` is always present and describes the content (at least a full sentence; the checker rejects very short alts); `width` and `height` are the intrinsic size (no layout shift); `loading="lazy"`; `<figcaption>` with number and title always visible, and the full caption plus source line inside a collapsed `<details class="essay-figure-long">` (desktop and mobile; the text stays in the static HTML, so crawlers and screen readers read it, and `summary` is keyboard-operable). The caption states data source, population, period, and whether values are self-reported or derived. French: `<summary>Légende et sources</summary>`. Numbers, alt and captions are never edited here if they come from a research card: change them at their source (wrapping the caption in the `<details>` does not change its text). The image is centred in the text column.
 
 ### Variants (classes on `<figure>`)
 
@@ -48,16 +48,6 @@ Prefer WebP (PNG for sharp line art, JPEG for photographs). Provide three widths
 ```
 
 `width`/`height` are those of the `src` file. Text rendered inside a raster is a last resort: it must be legible at 350 px wide, and the same information goes in the caption.
-
-### Long description
-
-When the caption cannot carry the whole reading of a complex chart, add after the caption, still without blank lines:
-
-```html
-<details class="essay-figure-long"><summary>Detailed description</summary>One factual paragraph or a plain list of the values.</details>
-```
-
-(`Description détaillée` in French.)
 
 ### Illustrated tables
 
@@ -88,7 +78,7 @@ The wrapper takes the keyboard focus (`tabindex="0"`) so that the scrollable are
 ## Accessibility checklist
 
 1. `alt` states the finding or the content, not "chart".
-2. Caption restates values for anyone who cannot read the image; long description for complex charts.
+2. Caption (in the collapsed `<details>`) restates values for anyone who cannot read the image.
 3. Contrast: text 4.5:1, marks 3:1; caption text uses `--text`, not `--text-muted` (about 4.3:1 on the essay background).
 4. Figures have no tab stop; only scrollable tables do.
 5. Check at 390 px and 1280 px: no horizontal page scroll, text legible.
