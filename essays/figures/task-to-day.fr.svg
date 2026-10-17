@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Généré par build_figures.py à partir de figures.json : ne pas éditer à la main. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 570" width="460" height="570" role="img" aria-labelledby="t d" lang="fr" font-family="'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<title id="t">De la tâche à la journée</title>
+<desc id="d">Deux panneaux. A : onze minutes gagnées représentent 40 % d'une tâche de 27 minutes, mais environ 2 % d'une journée de 8 heures. B : gains quotidiens déclarés de 26 minutes (fonction publique britannique), environ 14 minutes (adoptants danois) et environ 7 minutes (ensemble des actifs américains). Les deux panneaux n'ont pas d'axe commun.</desc>
+<rect width="460" height="570" fill="#f9f6f1"/>
+<text x="16.0" y="28.0" font-size="14" fill="#111810" font-weight="700">A · Les mêmes 11 minutes, deux bases</text>
+<text x="16.0" y="48.0" font-size="14" fill="#565a53">Barre pleine = 100 % de la base</text>
+<text x="16.0" y="82.0" font-size="14" fill="#111810">Une tâche de 27 minutes</text>
+<text x="444.0" y="82.0" font-size="15" fill="#1a5c3a" text-anchor="end" font-weight="700">−40 %</text>
+<rect x="16.0" y="91.0" width="171.2" height="18.0" fill="#1a5c3a"/>
+<rect x="16.8" y="91.8" width="426.5" height="16.5" fill="none" stroke="#80867d" stroke-width="1.5"/>
+<text x="16.0" y="129.0" font-size="14" fill="#565a53">11 min de moins · temps déclaré</text>
+<text x="16.0" y="156.0" font-size="14" fill="#111810">Une journée de 8 h (480 min)</text>
+<text x="444.0" y="156.0" font-size="15" fill="#1a5c3a" text-anchor="end" font-weight="700">≈ 2 %</text>
+<rect x="16.0" y="165.0" width="9.8" height="18.0" fill="#1a5c3a"/>
+<rect x="16.8" y="165.8" width="426.5" height="16.5" fill="none" stroke="#80867d" stroke-width="1.5"/>
+<text x="16.0" y="203.0" font-size="14" fill="#565a53">11 ÷ 480 = 2,3 % [dérivé]</text>
+<line x1="16.0" y1="225.0" x2="444.0" y2="225.0" stroke="#80867d" stroke-width="1"/>
+<text x="16.0" y="253.0" font-size="14" fill="#111810" font-weight="700">B · Gain par jour, déclaré (minutes)</text>
+<text x="16.0" y="287.0" font-size="14" fill="#111810">Fonction publique britannique</text>
+<text x="444.0" y="287.0" font-size="15" fill="#1a5c3a" text-anchor="end" font-weight="700">26 min</text>
+<rect x="16.0" y="296.0" width="370.9" height="16.0" fill="#1a5c3a"/>
+<text x="16.0" y="331.0" font-size="14" fill="#565a53">déclaré · 7 115 réponses · sans groupe témoin</text>
+<text x="16.0" y="363.0" font-size="14" fill="#111810">Adoptants danois, 11 professions</text>
+<text x="444.0" y="363.0" font-size="15" fill="#1a5c3a" text-anchor="end" font-weight="700">≈ 14 min</text>
+<rect x="16.0" y="372.0" width="205.4" height="16.0" fill="#1a5c3a"/>
+<text x="16.0" y="407.0" font-size="14" fill="#565a53">déclaré : 3 % des heures · converti [dérivé]</text>
+<text x="16.0" y="439.0" font-size="14" fill="#111810">Ensemble des actifs américains</text>
+<text x="444.0" y="439.0" font-size="15" fill="#1a5c3a" text-anchor="end" font-weight="700">≈ 7 min</text>
+<rect x="16.0" y="448.0" width="95.9" height="16.0" fill="#1a5c3a"/>
+<text x="16.0" y="483.0" font-size="14" fill="#565a53">déclaré : 1,4 % des heures · converti [dérivé]</text>
+<line x1="16.0" y1="499.0" x2="444.0" y2="499.0" stroke="#80867d" stroke-width="1"/>
+<line x1="16.0" y1="499.0" x2="16.0" y2="504.0" stroke="#80867d" stroke-width="1"/>
+<line x1="158.7" y1="499.0" x2="158.7" y2="504.0" stroke="#80867d" stroke-width="1"/>
+<line x1="301.3" y1="499.0" x2="301.3" y2="504.0" stroke="#80867d" stroke-width="1"/>
+<line x1="444.0" y1="499.0" x2="444.0" y2="504.0" stroke="#80867d" stroke-width="1"/>
+<text x="16.0" y="520.0" font-size="14" fill="#565a53">0</text>
+<text x="158.7" y="520.0" font-size="14" fill="#565a53" text-anchor="middle">10</text>
+<text x="301.3" y="520.0" font-size="14" fill="#565a53" text-anchor="middle">20</text>
+<text x="444.0" y="520.0" font-size="14" fill="#565a53" text-anchor="end">30 min</text>
+<text x="16.0" y="554.0" font-size="14" fill="#565a53">A en % d'une base, B en minutes par jour : pas d'axe commun.</text>
+</svg>

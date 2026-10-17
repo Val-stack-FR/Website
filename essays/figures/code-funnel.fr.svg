@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Généré par build_figures.py à partir de figures.json : ne pas éditer à la main. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 361" width="460" height="361" role="img" aria-labelledby="t d" lang="fr" font-family="'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<title id="t">L'entonnoir du code</title>
+<desc id="d">Barres horizontales : après l'adoption d'un agent de code synchrone, les lignes de code modifiées sont multipliées par 10,6, les commits par 2,5, les demandes de fusion par 1,9 et les versions publiées par 1,2, par rapport à la base 1.</desc>
+<rect width="460" height="361" fill="#f9f6f1"/>
+<text x="16.0" y="28.0" font-size="14" fill="#111810" font-weight="700">Après adoption d'un agent de code synchrone</text>
+<text x="16.0" y="48.0" font-size="14" fill="#565a53">semaines 21 à 30, par rapport à des pairs : base 100</text>
+<text x="16.0" y="86.0" font-size="14" fill="#111810">Lignes de code modifiées</text>
+<text x="444.0" y="86.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×10,6</tspan><tspan font-weight="400"> (+957,5 %)</tspan></text>
+<rect x="16.0" y="95.0" width="428.0" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="91.0" x2="56.5" y2="115.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="140.0" font-size="14" fill="#111810">Commits</text>
+<text x="444.0" y="140.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×2,5</tspan><tspan font-weight="400"> (+153,2 %)</tspan></text>
+<rect x="16.0" y="149.0" width="102.5" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="145.0" x2="56.5" y2="169.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="194.0" font-size="14" fill="#111810">Demandes de fusion</text>
+<text x="444.0" y="194.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×1,9</tspan><tspan font-weight="400"> (+86,0 %)</tspan></text>
+<rect x="16.0" y="203.0" width="75.3" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="199.0" x2="56.5" y2="223.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="248.0" font-size="14" fill="#111810">Versions publiées</text>
+<text x="444.0" y="248.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×1,2</tspan><tspan font-weight="400"> (+19,8 %)</tspan></text>
+<rect x="16.0" y="257.0" width="48.5" height="16.0" fill="#1a5c3a"/>
+<line x1="56.5" y1="253.0" x2="56.5" y2="277.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="62.5" y="291.0" font-size="14" fill="#565a53">base 100 (×1)</text>
+<text x="16.0" y="325.0" font-size="14" fill="#565a53">Associations observées sur des dépôts publics ;</text>
+<text x="16.0" y="345.0" font-size="14" fill="#565a53">aucune durée ni rémunération mesurée.</text>
+</svg>
