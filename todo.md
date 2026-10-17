@@ -8,6 +8,8 @@
 
 - [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
 
+- [ ] Audit factuel de la page Research (`research.html`, `research/index.json`, `js/research.js`) contre BLOG_RECHERCHE `main` (commit `85661e6`) — 2026-10-17 : 3 écarts de statut/lien soumis en questions, aucune reformulation éditoriale appliquée. Branche `research/audit-factuel` ; PR brouillon : à renseigner.
+
 ## À faire
 
 - [x] Lire les instructions, vérifier `main`, les PR, les branches et l'état local — 2026-08-22.
@@ -34,7 +36,7 @@
 
 ## Blocages et décisions en attente
 
-- Corrections factuelles des deux essais FR/EN : [PR brouillon #42](https://github.com/Val-stack-FR/Website/pull/42), à relire et fusionner ; contrôles ciblés réussis, aucune fusion automatique.
+- [x] Corrections factuelles des deux essais FR/EN : [PR #42](https://github.com/Val-stack-FR/Website/pull/42) fusionnée dans `main` (commit de fusion `3763681`, 2026-09-27, constaté via `git log` de `main`) ; ligne mise à jour par l'audit Research.
 
 - [x] Scripts natifs de build `esbuild` et `@swc/core` approuvés — 2026-08-23.
 - PR distante : https://github.com/Val-stack-FR/Website/pull/41
