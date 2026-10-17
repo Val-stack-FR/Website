@@ -4,6 +4,8 @@
 
 ## En cours
 
+- [ ] Figures SVG FR/EN pour l'essai « La demi-heure introuvable » (non publié) — 2026-10-17 : branche `figures/essai-temps-gagne` ; 6 SVG copiés dans `essays/figures/` (aucun `style`, script ni lien) et CSS `.essay-figure` ajouté à `css/essay-detail.css`, sans insertion dans un essai publié. Preuves : blocs insérés dans une copie jetable de `who-pays-when-ai-is-wrong` (EN/FR) ; `prerender.js` avec `SITE_ROOT` → 3 `<figure>` intactes par page, aucune enveloppée dans `<p>` ; Chromium 390 et 1280 px sur `/essays/…/` et `/fr/essays/…/` : 3/3 images chargées, aucun défilement horizontal, aucun arrêt de Tab dans les figures, aucune violation de CSP ; route héritée (marked 9.1.6, EN) : 3 `figure.essay-figure` conservées ; `node scripts/build-site.js` → exit 0, `dist/essays/figures/` contient les 6 SVG. Décisions en attente ci-dessous.
+
 - [x] Corrections factuelles FR/EN de *All the Unwritten Processes* et *Who Pays When AI Is Wrong?* — 2026-09-27 : outils radiologiques distincts ; corrélation Buçinca non établie retirée ; résultats expérimentaux et hypothèse d'ownership bornés. Branche `codex/fix-published-essay-evidence` ; sources : audits directs C-apprentissage-02 et C-apprentissage-06 dans BLOG_RECHERCHE. Rendu statique contrôlé sur les quatre routes, numéros de citations inchangés, quatre miroirs identiques octet par octet ; diff sans erreur d'espacement. Relecture manuelle ciblée FR/EN : mêmes dénominateurs et réserves, aucun problème restant identifié dans les passages modifiés. PR de revue à ouvrir, sans fusion automatique.
 
 - [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
@@ -33,6 +35,8 @@
 - [x] Création de ce suivi — 2026-08-22.
 
 ## Blocages et décisions en attente
+
+- Figures de l'essai « La demi-heure introuvable » (PR brouillon, à relire) : slug et version EN de l'essai ; police des SVG (système actuellement) ; largeur 520 px ; légende longue sur mobile (repli ?) ; numérotation « Figure 1-3 » ; commit ou non des pages `index.html` régénérées.
 
 - Corrections factuelles des deux essais FR/EN : [PR brouillon #42](https://github.com/Val-stack-FR/Website/pull/42), à relire et fusionner ; contrôles ciblés réussis, aucune fusion automatique.
 

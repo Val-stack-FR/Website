@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Généré par build_figures.py à partir de figures.json : ne pas éditer à la main. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 361" width="460" height="361" role="img" aria-labelledby="t d" lang="en" font-family="'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<title id="t">The code funnel</title>
+<desc id="d">Horizontal bars: after adopting a synchronous coding agent, lines of code changed are multiplied by 10.6, commits by 2.5, pull requests by 1.9 and published releases by 1.2, compared with a baseline of 1.</desc>
+<rect width="460" height="361" fill="#f9f6f1"/>
+<text x="16.0" y="28.0" font-size="14" fill="#111810" font-weight="700">After adopting a synchronous coding agent</text>
+<text x="16.0" y="48.0" font-size="14" fill="#565a53">weeks 21–30, compared with matched peers: base 100</text>
+<text x="16.0" y="86.0" font-size="14" fill="#111810">Lines of code changed</text>
+<text x="444.0" y="86.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×10.6</tspan><tspan font-weight="400"> (+957.5%)</tspan></text>
+<rect x="16.0" y="95.0" width="428.0" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="91.0" x2="56.5" y2="115.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="140.0" font-size="14" fill="#111810">Commits</text>
+<text x="444.0" y="140.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×2.5</tspan><tspan font-weight="400"> (+153.2%)</tspan></text>
+<rect x="16.0" y="149.0" width="102.5" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="145.0" x2="56.5" y2="169.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="194.0" font-size="14" fill="#111810">Pull requests</text>
+<text x="444.0" y="194.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×1.9</tspan><tspan font-weight="400"> (+86.0%)</tspan></text>
+<rect x="16.0" y="203.0" width="75.3" height="16.0" fill="#6b7168"/>
+<line x1="56.5" y1="199.0" x2="56.5" y2="223.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="16.0" y="248.0" font-size="14" fill="#111810">Published releases</text>
+<text x="444.0" y="248.0" font-size="14" fill="#111810" text-anchor="end"><tspan font-weight="700">×1.2</tspan><tspan font-weight="400"> (+19.8%)</tspan></text>
+<rect x="16.0" y="257.0" width="48.5" height="16.0" fill="#1a5c3a"/>
+<line x1="56.5" y1="253.0" x2="56.5" y2="277.0" stroke="#111810" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="62.5" y="291.0" font-size="14" fill="#565a53">base 100 (×1)</text>
+<text x="16.0" y="325.0" font-size="14" fill="#565a53">Associations observed in public repositories;</text>
+<text x="16.0" y="345.0" font-size="14" fill="#565a53">no duration or pay measured.</text>
+</svg>
