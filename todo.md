@@ -8,7 +8,7 @@
 
 - [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
 
-- [ ] Audit factuel de la page Research (`research.html`, `research/index.json`, `js/research.js`) contre BLOG_RECHERCHE `main` (commit `85661e6`) — 2026-10-17 : 3 écarts de statut/lien soumis en questions, aucune reformulation éditoriale appliquée. Branche `research/audit-factuel` ; PR brouillon : à renseigner.
+- [ ] Audit factuel de la page Research (`research.html`, `research/index.json`, `js/research.js`) contre BLOG_RECHERCHE `main` (commit `85661e6`) — 2026-10-17 : 3 écarts de statut/lien soumis en questions, aucune reformulation éditoriale appliquée. Branche `research/audit-factuel` ; PR brouillon : https://github.com/Val-stack-FR/Website/pull/45
 
 ## À faire
 
