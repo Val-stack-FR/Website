@@ -4,6 +4,7 @@
 
 ## En cours
 
+- [ ] Pages pré-rendues régénérées — 2026-10-17 : branche `chore/regenerate-prerendered-pages` (depuis `main`) ; `node scripts/prerender.js` → 31 pages (essais EN/FR, critiques) + `llms.txt`. Les copies commitées ne contenaient que le premier paragraphe du corps ; elles contiennent maintenant le texte complet (sans JS, pour les robots). Preuves : exit 0, aucune ligne ajoutée avec `style=`, `<script` ni gestionnaire en ligne, `sitemap.xml` et `research.html` inchangés.
 - [x] Corrections factuelles FR/EN de *All the Unwritten Processes* et *Who Pays When AI Is Wrong?* — 2026-09-27 : outils radiologiques distincts ; corrélation Buçinca non établie retirée ; résultats expérimentaux et hypothèse d'ownership bornés. Branche `codex/fix-published-essay-evidence` ; sources : audits directs C-apprentissage-02 et C-apprentissage-06 dans BLOG_RECHERCHE. Rendu statique contrôlé sur les quatre routes, numéros de citations inchangés, quatre miroirs identiques octet par octet ; diff sans erreur d'espacement. Relecture manuelle ciblée FR/EN : mêmes dénominateurs et réserves, aucun problème restant identifié dans les passages modifiés. PR de revue à ouvrir, sans fusion automatique.
 
 - [x] Redéploiement Vercel final vérifié ; PR #41 conservée en brouillon pour revue utilisateur — 2026-08-23 (commit `001982a`, check Vercel en succès, aucune fusion).
