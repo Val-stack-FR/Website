@@ -445,7 +445,7 @@ const PAGE_SIZE = 10;
 let cardPage = 0;
 
 let nodes = [];
-let activeStatus = 'ALL';
+let activeStatus = 'ONGOING';  // DONE nodes stay hidden until the reader asks for them
 let activeTag = 'ALL';
 let logs = [];
 let logIntervalMs = 900;
@@ -780,7 +780,8 @@ function updateHud(cx, cy, sx) {
 
 function getFiltered() {
   return nodes.filter(n => {
-    const matchStatus = activeStatus === 'ALL' || n.status === activeStatus;
+    const matchStatus = activeStatus === 'ALL'
+      || (activeStatus === 'ONGOING' ? n.status !== 'DONE' : n.status === activeStatus);
     const matchTag = activeTag === 'ALL' || (n.tags && n.tags.includes(activeTag));
     return matchStatus && matchTag;
   });
@@ -982,9 +983,9 @@ function renderFilters() {
     return row;
   }
 
-  const dynamicStatuses = [...new Set(nodes.map(n => n.status))];
-  const orderedStatuses = ['TO REVIEW', 'TO SEARCH', 'DONE'].filter(s => dynamicStatuses.includes(s));
-  const statusValues = ['ALL', ...orderedStatuses];
+  const hasOngoing = nodes.some(n => n.status !== 'DONE');
+  const statusValues = ['ONGOING', 'DONE', 'ALL'];
+  if (!hasOngoing) activeStatus = 'ALL';
 
   const allTags = ['ALL', ...new Set(nodes.flatMap(n => n.tags || []))];
 

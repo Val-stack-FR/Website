@@ -341,10 +341,12 @@ function patchPageCount(html, file, text) {
   // Wrap in #cards-flex so the horizontal desktop layout is correct before JS hydrates.
   const cardsHtml = `<div id="cards-flex">\n    ${cardsInner}\n  </div>`;
 
-  const allStatuses = ['TO REVIEW', 'TO SEARCH', 'DONE']
-    .filter(s => research.some(n => n.status === s));
-  const statusBtns = ['ALL', ...allStatuses].map((s, i) =>
-    `<button class="filter-btn${i === 0 ? ' active' : ''}">${esc(s)}</button>`
+  // Mirrors js/research.js: ongoing nodes first, DONE nodes on request. Every
+  // card stays in the static HTML so crawlers and no-JS readers see them all.
+  const statusValues = ['ONGOING', 'DONE', 'ALL'];
+  const defaultStatus = research.some(n => n.status !== 'DONE') ? 'ONGOING' : 'ALL';
+  const statusBtns = statusValues.map(s =>
+    `<button class="filter-btn${s === defaultStatus ? ' active' : ''}">${esc(s)}</button>`
   ).join('\n      ');
   const allTopics = [...new Set(research.flatMap(n => n.tags || []))];
   const topicBtns = ['ALL', ...allTopics].map((t, i) =>
